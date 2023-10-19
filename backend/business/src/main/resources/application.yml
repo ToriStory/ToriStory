@@ -1,0 +1,56 @@
+health:
+  diskspace:
+    enabled: "true"
+  default:
+    enabled: "true"
+  db:
+    enabled: "true"
+servlet:
+  context-path: /manage
+spa:
+  default-file: /dist/index.html
+
+spring:
+  profiles:
+    active: develop
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+  web:
+    resources:
+      static-locations: classpath:/dist/
+      add-mappings: "false"
+  jpa:
+    hibernate:
+      naming:
+        implicit-strategy: org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy
+        physical-strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
+      ddl-auto: none
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+        show_sql: true
+        format_sql: true
+  data:
+    web:
+      pageable:
+        one-indexed-parameters: "true"
+  mvc:
+    throw-exception-if-no-handler-found: "true"
+  devtools:
+    livereload:
+      enabled: "true"
+logging:
+  level:
+    org:
+      org.hibernate.SQL: DEBUG
+      org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+      org.springframework.boot: DEBUG
+      org.springframework.security: DEBUG
+      org.springframework.web: DEBUG
+      apache:
+        tiles: INFO
+    root: INFO
+server:
+  port: 8202
