@@ -1,4 +1,4 @@
-package com.business.domain.challenge.entity;
+package com.challenge.domain.challenge.entity;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -7,7 +7,6 @@ import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.Date;
 
 @Entity
 @Getter
