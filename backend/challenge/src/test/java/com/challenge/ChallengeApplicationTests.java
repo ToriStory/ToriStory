@@ -1,10 +1,10 @@
-package com.business;
+package com.challenge;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class BusinessApplicationTests {
+class ChallengeApplicationTests {
 
     @Test
     void contextLoads() {

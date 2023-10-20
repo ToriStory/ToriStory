@@ -1,4 +1,4 @@
-package com.business.domain.challenge.entity;
+package com.challenge.domain.challenge.entity;
 
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -9,10 +9,10 @@ import javax.persistence.*;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class PlaceChallenge {
+public class PhotoChallenge {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer placeChallengeId;
+    private Integer photoChallengeId;
 
     @Column(length = 20, nullable = false)
     private String content;
