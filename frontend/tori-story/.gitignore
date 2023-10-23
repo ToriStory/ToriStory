@@ -25,3 +25,6 @@ dist-ssr
 
 # lock
 *lock*
+
+# dotenv environment variable files
+.env

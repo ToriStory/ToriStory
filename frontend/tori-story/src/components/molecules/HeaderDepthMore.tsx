@@ -3,33 +3,22 @@ import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import { Bell, ChevronLeft, Settings } from 'lucide-react';
+import { ChevronLeft } from 'lucide-react';
 import useAppNavigation from 'hooks/useAppNavigation';
 import { useNavigate } from 'react-router-dom';
 
 export default function HeaderDepthMore({ pathname }: { pathname: string }) {
   const navigation = useAppNavigation();
   const navigate = useNavigate();
-  const navItems = [
-    {
-      name: '알림',
-      to: navigation.navigateToNotification,
-      icon: <Bell />,
-    },
-    {
-      name: '설정',
-      to: navigation.navigateToSetting,
-      icon: <Settings />,
-    },
-  ];
+
   const handleGoBack = () => {
     navigate(-1);
   };
 
   return (
     <Box sx={{ display: 'flex' }}>
-      <AppBar component='nav'>
-        <Toolbar sx={{ color: 'white' }} style={{ minHeight: 56 }}>
+      <AppBar component='nav' sx={{ backgroundColor: 'white', color: 'black' }}>
+        <Toolbar sx={{ color: ' black' }} style={{ minHeight: 56 }}>
           <IconButton
             color='inherit'
             edge='start'
@@ -45,13 +34,9 @@ export default function HeaderDepthMore({ pathname }: { pathname: string }) {
           >
             {pathname}
           </Typography>
-          <div className='flex gap-4 justify-center items-center'>
-            {navItems.map((item) => (
-              <button key={item.name} className=' text-white' onClick={item.to}>
-                {item.icon}
-              </button>
-            ))}
-          </div>
+          {pathname === '도전 생성' && (
+            <div className='flex gap-4 justify-center items-center'>저장</div>
+          )}
         </Toolbar>
       </AppBar>
     </Box>

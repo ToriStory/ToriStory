@@ -23,18 +23,18 @@ export default function HeaderDepthOne({ pathname }: { pathname: string }) {
 
   return (
     <Box sx={{ display: 'flex' }}>
-      <AppBar component='nav'>
+      <AppBar component='nav' sx={{ backgroundColor: 'white', color: 'black' }}>
         <Toolbar sx={{ color: 'white' }} style={{ minHeight: 56 }}>
           <Typography
             variant='h6'
             component='div'
-            sx={{ flexGrow: 1, display: 'block', textAlign: 'justify' }}
+            sx={{ flexGrow: 1, display: 'block', textAlign: 'justify', color: 'black' }}
           >
             {pathname}
           </Typography>
           <div className='flex gap-4 justify-center items-center'>
             {navItems.map((item) => (
-              <button key={item.name} className=' text-white' onClick={item.to}>
+              <button key={item.name} className=' text-black' onClick={item.to}>
                 {item.icon}
               </button>
             ))}
