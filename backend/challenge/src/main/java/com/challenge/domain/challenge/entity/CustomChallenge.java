@@ -7,6 +7,9 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.math.BigInteger;
+import java.util.Date;
+
+import org.hibernate.annotations.CreationTimestamp;
 
 @Entity
 @Getter
@@ -28,6 +31,14 @@ public class CustomChallenge {
 
     @Column(nullable = false, columnDefinition = "INT UNSIGNED")
     private long reportCnt;
+
+    @Column(nullable = false)
+    @CreationTimestamp
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date regDtm;
+
+    @Column(nullable = false, columnDefinition = "TINYINT(1)")
+    private boolean displayFlag;
 
     @Builder
     public CustomChallenge(Long memberId, String content) {
