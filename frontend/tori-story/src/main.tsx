@@ -13,6 +13,9 @@ import MyPage from 'pages/MyPage/index.tsx';
 import Notification from 'pages/Notification/index.tsx';
 import Setting from 'pages/Setting/index.tsx';
 import { TogetherChallengeCreate } from 'pages/TogetherChallengeCreate/index.tsx';
+import Landing from 'pages/Landing/index.tsx';
+import SignIn from 'pages/Auth/SignIn.tsx';
+import SignUp from 'pages/Auth/SignUp.tsx';
 
 const router = createBrowserRouter([
   {
@@ -32,16 +35,16 @@ const router = createBrowserRouter([
         element: <Test />,
       },
       {
-        path: '/start/landing',
-        element: <Test />,
+        path: '/landing',
+        element: <Landing />,
       },
       {
-        path: '/member/signin',
-        element: <Test />,
+        path: '/auth/signin',
+        element: <SignIn />,
       },
       {
-        path: '/member/signup',
-        element: <Test />,
+        path: '/auth/signup',
+        element: <SignUp />,
       },
       {
         path: '/totori',

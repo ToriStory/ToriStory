@@ -7,14 +7,13 @@ import { pathname } from './constants/pathname';
 function App() {
   const location = useLocation();
   const label = (pathname.find((item) => item.path === location.pathname) || {}).label;
-
   return (
     <>
       <Header pathname={label!} />
       <div className='w-full h-full pt-4 px-4'>
         <Outlet />
       </div>
-      <BottomTabNavigation />
+      <BottomTabNavigation pathname={label!} />
     </>
   );
 }
