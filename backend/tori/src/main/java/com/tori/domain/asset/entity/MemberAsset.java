@@ -22,19 +22,20 @@ public class MemberAsset {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer memberAssetId;
+	@Column(columnDefinition = "INT UNSIGNED")
+	private Long memberAssetId;
 
-	@Column(nullable = false)
-	private Integer memberId;
+	@Column(nullable = false, columnDefinition = "INT UNSIGNED")
+	private Long memberId;
 
-	@Column(nullable = false)
+	@Column(nullable = false, columnDefinition = "SMALLINT UNSIGNED")
 	private int assetCnt;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Asset asset;
 
 	@Builder
-	public MemberAsset(Integer memberId, int assetCnt) {
+	public MemberAsset(Long memberId, int assetCnt) {
 		this.memberId = memberId;
 		this.assetCnt = assetCnt;
 	}

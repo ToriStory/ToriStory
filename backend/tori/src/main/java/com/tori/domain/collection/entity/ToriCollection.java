@@ -19,13 +19,14 @@ public class ToriCollection {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(columnDefinition = "TINYINT UNSIGNED")
 	private Byte toriCollectionId;
 
 	@Column(length = 10, unique = true, nullable = false)
 	private String toriNm;
 
-	@Column(nullable = false)
-	private short price;
+	@Column(nullable = false, columnDefinition = "SMALLINT UNSIGNED")
+	private int price;
 
 	@Column(length = 2048, nullable = false)
 	private String imgUrl;

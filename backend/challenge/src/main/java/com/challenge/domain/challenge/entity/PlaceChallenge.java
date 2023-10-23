@@ -12,7 +12,8 @@ import javax.persistence.*;
 public class PlaceChallenge {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer placeChallengeId;
+    @Column(columnDefinition = "INT UNSIGNED")
+    private Long placeChallengeId;
 
     @Column(length = 20, nullable = false)
     private String content;

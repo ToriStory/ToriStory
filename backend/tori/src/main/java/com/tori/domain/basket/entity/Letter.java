@@ -19,6 +19,7 @@ public class Letter {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(columnDefinition = "TINYINT UNSIGNED")
 	private Byte letterId;
 
 	@Column(nullable = false)

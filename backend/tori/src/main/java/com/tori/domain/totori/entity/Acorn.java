@@ -1,10 +1,6 @@
 package com.tori.domain.totori.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -17,11 +13,12 @@ import lombok.NoArgsConstructor;
 public class Acorn {
 
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(columnDefinition = "TINYINT UNSIGNED")
 	private Byte acornId;
 
-	@Column(nullable = false)
-	private byte cnt;
+	@Column(nullable = false, columnDefinition = "SMALLINT UNSIGNED")
+	private int cnt;
 
 	@Column(nullable = false)
 	private float percent;

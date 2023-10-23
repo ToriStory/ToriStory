@@ -19,10 +19,11 @@ public class Quest {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(nullable = false, columnDefinition = "TINYINT UNSIGNED")
 	private Byte questId;
 
-	@Column(nullable = false)
-	private Integer memberId;
+	@Column(nullable = false, columnDefinition = "INT UNSIGNED")
+	private Long memberId;
 
 	@Column(nullable = false, columnDefinition = "TINYINT(1)")
 	private boolean compFlag;

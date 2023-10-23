@@ -19,6 +19,7 @@ public class Totori {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(columnDefinition = "TINYINT UNSIGNED")
 	private Byte totoriId;
 
 	@Column(length = 10, nullable = false)

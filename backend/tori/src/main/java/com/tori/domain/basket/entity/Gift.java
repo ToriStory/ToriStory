@@ -19,6 +19,7 @@ public class Gift {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(columnDefinition = "TINYINT UNSIGNED")
 	private Byte giftId;
 
 	@Column(nullable = false)

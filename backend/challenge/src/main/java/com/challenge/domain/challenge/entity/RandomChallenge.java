@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
+import java.math.BigInteger;
 import java.time.LocalDate;
 
 @Entity
@@ -15,13 +16,14 @@ import java.time.LocalDate;
 public class RandomChallenge {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer randomChallengeId;
+    @Column(columnDefinition = "BIGINT UNSIGNED")
+    private BigInteger randomChallengeId;
 
-    @Column(nullable = false)
-    private Integer memberId;
+    @Column(nullable = false, columnDefinition = "INT UNSIGNED")
+    private Long memberId;
 
-    @Column(nullable = false)
-    private Integer challengeId;
+    @Column(nullable = false, columnDefinition = "INT UNSIGNED")
+    private Long challengeId;
 
     @CreatedDate
     @Column(nullable = false)
@@ -30,11 +32,12 @@ public class RandomChallenge {
     @Column(nullable = false, columnDefinition = "TINYINT(1)")
     private boolean compFlag;
 
+    @Enumerated(EnumType.STRING)
     @Column(length = 5, nullable = false)
     private Category category;
 
     @Builder
-    public RandomChallenge(Integer memberId, Integer challengeId, Category category) {
+    public RandomChallenge(Long memberId, Long challengeId, Category category) {
         this.memberId = memberId;
         this.challengeId = challengeId;
         this.category = category;
