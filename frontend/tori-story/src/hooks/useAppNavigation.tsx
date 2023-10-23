@@ -10,16 +10,16 @@ export const useAppNavigation = () => {
 
   // Landing
   const navigateToLanding = () => {
-    navigate('/start/landing');
+    navigate('/landing');
   };
 
   // Member
   const navigateToSignin = () => {
-    navigate('/member/signin');
+    navigate('/auth/signin');
   };
 
   const navigateToSignup = () => {
-    navigate('/member/signup');
+    navigate('/auth/signup');
   };
 
   // 토토리

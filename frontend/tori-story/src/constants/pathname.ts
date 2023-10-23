@@ -12,15 +12,15 @@ export const pathname = [
     label: '스플래시',
   },
   {
-    path: '/start/landing',
+    path: '/landing',
     label: '랜딩',
   },
   {
-    path: '/member/signin',
+    path: '/auth/signin',
     label: '로그인',
   },
   {
-    path: '/member/signup',
+    path: '/auth/signup',
     label: '회원가입',
   },
   {

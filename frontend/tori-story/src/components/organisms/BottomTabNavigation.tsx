@@ -6,7 +6,7 @@ import Paper from '@mui/material/Paper';
 import { useEffect, useRef, useState } from 'react';
 import useAppNavigation from 'hooks/useAppNavigation';
 
-function BottomTabNavigation() {
+function BottomTabNavigation({ pathname }: { pathname: string }) {
   const [value, setValue] = useState(0);
   const ref = useRef<HTMLDivElement>(null);
   const navigation = useAppNavigation();
@@ -44,30 +44,38 @@ function BottomTabNavigation() {
   ];
 
   return (
-    <Box sx={{ pb: 7 }} ref={ref}>
-      <CssBaseline />
-      <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }} elevation={3}>
-        <BottomNavigation
-          showLabels
-          value={value}
-          onChange={(event, newValue) => {
-            setValue(newValue);
-          }}
-        >
-          {bottomTabMenu.map((v, idx) => {
-            return (
-              <BottomNavigationAction
-                key={idx}
-                label={v.label}
-                icon={v.icon}
-                sx={{ minWidth: 'auto', whiteSpace: 'nowrap' }}
-                onClick={v.to}
-              />
-            );
-          })}
-        </BottomNavigation>
-      </Paper>
-    </Box>
+    <div>
+      <Box sx={{ pb: 7 }} ref={ref}>
+        {pathname === '랜딩' || pathname === '로그인' || pathname === '회원가입' ? (
+          <div></div>
+        ) : (
+          <>
+            <CssBaseline />
+            <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }} elevation={3}>
+              <BottomNavigation
+                showLabels
+                value={value}
+                onChange={(event, newValue) => {
+                  setValue(newValue);
+                }}
+              >
+                {bottomTabMenu.map((v, idx) => {
+                  return (
+                    <BottomNavigationAction
+                      key={idx}
+                      label={v.label}
+                      icon={v.icon}
+                      sx={{ minWidth: 'auto', whiteSpace: 'nowrap' }}
+                      onClick={v.to}
+                    />
+                  );
+                })}
+              </BottomNavigation>
+            </Paper>
+          </>
+        )}
+      </Box>
+    </div>
   );
 }
 
