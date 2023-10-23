@@ -26,6 +26,7 @@ public class Report {
     private byte reason;
 
     @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="custom_challenge_id", nullable = false)
     private CustomChallenge customChallenge;
 
     @Builder
