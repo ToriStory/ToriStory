@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
+import java.math.BigInteger;
 import java.time.LocalDate;
 
 @Entity
@@ -15,10 +16,11 @@ import java.time.LocalDate;
 public class CustomEntry {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer customEntryId;
+    @Column(columnDefinition = "BIGINT UNSIGNED")
+    private BigInteger customEntryId;
 
-    @Column(nullable = false)
-    private Integer memberId;
+    @Column(nullable = false, columnDefinition = "INT UNSIGNED")
+    private Long memberId;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="custom_challenge_id", nullable = false)
@@ -37,10 +39,10 @@ public class CustomEntry {
     private String imgUrl;
 
     @Column(nullable = false, columnDefinition = "TINYINT(1)")
-    private boolean delFlage;
+    private boolean delFlag;
 
     @Builder
-    public CustomEntry(Integer memberId, CustomChallenge customChallenge, LocalDate endDt) {
+    public CustomEntry(Long memberId, CustomChallenge customChallenge, LocalDate endDt) {
         this.memberId = memberId;
         this.customChallenge = customChallenge;
         this.endDt = endDt;

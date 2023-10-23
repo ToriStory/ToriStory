@@ -13,26 +13,27 @@ public class Report {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer reportId;
+    @Column(columnDefinition = "INT UNSIGNED")
+    private Long reportId;
 
-    @Column(nullable = false)
-    private Integer reporterId;
+    @Column(nullable = false, columnDefinition = "INT UNSIGNED")
+    private Long reporterId;
 
-    @Column(nullable = false)
-    private Integer reportedId;
+    @Column(nullable = false, columnDefinition = "INT UNSIGNED")
+    private Long reportedId;
 
-    @Column(nullable = false)
-    private int reason;
+    @Column(nullable = false, columnDefinition = "TINYINT UNSIGNED")
+    private byte reason;
 
-    @Column(nullable = false)
-    private Integer challengeId;
+    @OneToOne(fetch = FetchType.LAZY)
+    private CustomChallenge customChallenge;
 
     @Builder
-    public Report(Integer reporterId, Integer reportedId, int reason, Integer challengeId) {
+    public Report(Long reporterId, Long reportedId, byte reason, CustomChallenge customChallenge) {
         this.reporterId = reporterId;
         this.reportedId = reportedId;
         this.reason = reason;
-        this.challengeId = challengeId;
+        this.customChallenge = customChallenge;
     }
 
 }

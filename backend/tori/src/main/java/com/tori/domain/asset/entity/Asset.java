@@ -19,6 +19,7 @@ public class Asset {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(columnDefinition = "TINYINT UNSIGNED")
 	private Byte assetId;
 
 	@Column(length = 10, unique = true, nullable = false)

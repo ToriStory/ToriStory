@@ -21,10 +21,11 @@ public class MemberCollection {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer memberCollectionId;
+	@Column(columnDefinition = "INT UNSIGNED")
+	private Long memberCollectionId;
 
-	@Column(nullable = false)
-	private Integer memberId;
+	@Column(nullable = false, columnDefinition = "INT UNSIGNED")
+	private Long memberId;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	private ToriCollection toriCollection;

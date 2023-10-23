@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.math.BigInteger;
 
 @Entity
 @Getter
@@ -12,11 +13,13 @@ public class CommonChallenge {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer commonChallengeId;
+    @Column(columnDefinition = "BIGINT UNSIGNED")
+    private BigInteger commonChallengeId;
 
     @Column(nullable = false, length = 20)
     private String content;
 
+    @Enumerated(EnumType.STRING)
     @Column(length = 5, nullable = false)
     private Category category;
 

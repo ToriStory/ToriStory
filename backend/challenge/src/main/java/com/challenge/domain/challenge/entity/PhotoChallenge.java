@@ -12,7 +12,8 @@ import javax.persistence.*;
 public class PhotoChallenge {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer photoChallengeId;
+    @Column(columnDefinition = "INT UNSIGNED")
+    private Long photoChallengeId;
 
     @Column(length = 20, nullable = false)
     private String content;

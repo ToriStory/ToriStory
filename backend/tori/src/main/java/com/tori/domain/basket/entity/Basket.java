@@ -24,10 +24,11 @@ public class Basket {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer basketId;
+	@Column(columnDefinition = "INT UNSIGNED")
+	private Long basketId;
 
-	@Column(nullable = false)
-	private Integer memberId;
+	@Column(nullable = false, columnDefinition = "INT UNSIGNED")
+	private Long memberId;
 
 	@OneToOne(fetch = FetchType.LAZY)
 	private Letter letter;
@@ -35,7 +36,7 @@ public class Basket {
 	@OneToOne(fetch = FetchType.LAZY)
 	private Gift gift;
 
-	@Column(nullable = false)
+	@Column(nullable = false, columnDefinition = "TINYINT UNSIGNED")
 	private byte giftCnt;
 
 	@Column(nullable = false)
@@ -45,7 +46,7 @@ public class Basket {
 	private boolean openFlag;
 
 	@Builder
-	public Basket(Integer memberId, byte giftCnt, LocalDate sendDt) {
+	public Basket(Long memberId, byte giftCnt, LocalDate sendDt) {
 		this.memberId = memberId;
 		this.giftCnt = giftCnt;
 		this.sendDt = sendDt;
