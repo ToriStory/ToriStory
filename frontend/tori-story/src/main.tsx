@@ -12,6 +12,7 @@ import MyTori from 'pages/MyTori/index.tsx';
 import MyPage from 'pages/MyPage/index.tsx';
 import Notification from 'pages/Notification/index.tsx';
 import Setting from 'pages/Setting/index.tsx';
+import { TogetherChallengeCreate } from 'pages/TogetherChallengeCreate/index.tsx';
 
 const router = createBrowserRouter([
   {
@@ -52,7 +53,7 @@ const router = createBrowserRouter([
       },
       {
         path: '/challenge/together/create',
-        element: <Test />,
+        element: <TogetherChallengeCreate />,
       },
       {
         path: '/challenge/my/certification/gps',

@@ -11,7 +11,7 @@ function App() {
   return (
     <>
       <Header pathname={label!} />
-      <div className='w-full h-max p-4'>
+      <div className='w-full h-full pt-4 px-4'>
         <Outlet />
       </div>
       <BottomTabNavigation />
