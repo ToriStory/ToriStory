@@ -3,14 +3,37 @@ import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
+import { useAtom, useAtomValue } from 'jotai';
 import { ChevronLeft } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import {
+  createChallengeDate,
+  createChallengeDisplayFlag,
+  createChallengeTitle,
+} from 'stores/challengeStore';
 
 export default function HeaderDepthMore({ pathname }: { pathname: string }) {
   const navigate = useNavigate();
 
+  const [challengeTitle, setChallengeTitle] = useAtom(createChallengeTitle);
+  const challengeDate = useAtomValue(createChallengeDate);
+  const [challengeisplayFlag, setChallengeisplayFlag] = useAtom(createChallengeDisplayFlag);
+
   const handleGoBack = () => {
     navigate(-1);
+  };
+
+  const handleCreateChallenge = () => {
+    const createChallengeResponse = {
+      content: challengeTitle,
+      endDt: challengeDate,
+      displayFlag: challengeisplayFlag,
+    };
+    console.log(createChallengeResponse);
+
+    navigate(-1);
+    setChallengeTitle('');
+    setChallengeisplayFlag(true);
   };
 
   return (
@@ -33,7 +56,12 @@ export default function HeaderDepthMore({ pathname }: { pathname: string }) {
             {pathname}
           </Typography>
           {pathname === '도전 생성' && (
-            <div className='flex gap-4 justify-center items-center font-jua'>저장</div>
+            <div
+              className='flex gap-4 justify-center items-center font-jua'
+              onClick={handleCreateChallenge}
+            >
+              저장
+            </div>
           )}
         </Toolbar>
       </AppBar>
