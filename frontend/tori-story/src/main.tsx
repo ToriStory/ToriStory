@@ -16,70 +16,89 @@ import { TogetherChallengeCreate } from 'pages/TogetherChallengeCreate/index.tsx
 import Landing from 'pages/Landing/index.tsx';
 import SignIn from 'pages/Auth/SignIn.tsx';
 import SignUp from 'pages/Auth/SignUp.tsx';
+import {
+  appPage,
+  createChallengePage,
+  gpsCertificationPage,
+  imageCertificationPage,
+  landingPage,
+  myChallengePage,
+  myPagePage,
+  myToriPage,
+  notificationPage,
+  settingPage,
+  signInPage,
+  signUpPage,
+  splashPage,
+  testPage,
+  togetherChallengePage,
+  totoriPage,
+} from 'constants/pathname.ts';
 
 const router = createBrowserRouter([
   {
-    path: '/',
+    path: splashPage.path,
+    element: <Test />,
+  },
+  {
+    path: landingPage.path,
+    element: <Landing />,
+  },
+  {
+    path: appPage.path,
     element: <App />,
     children: [
       {
-        path: '/challenge/my',
+        path: myChallengePage.path,
         element: <MyChallenge />,
       },
       {
-        path: '/test',
+        path: testPage.path,
         element: <Test />,
       },
+
       {
-        path: '/start',
-        element: <Test />,
-      },
-      {
-        path: '/landing',
-        element: <Landing />,
-      },
-      {
-        path: '/auth/signin',
+        path: signInPage.path,
         element: <SignIn />,
       },
       {
-        path: '/auth/signup',
+        path: signUpPage.path,
         element: <SignUp />,
       },
       {
-        path: '/totori',
+        path: totoriPage.path,
         element: <Totori />,
       },
       {
-        path: '/challenge/together',
+        path: togetherChallengePage.path,
         element: <TogetherChallenge />,
       },
       {
-        path: '/challenge/together/create',
+        path: createChallengePage.path,
         element: <TogetherChallengeCreate />,
       },
       {
-        path: '/challenge/my/certification/gps',
+        path: gpsCertificationPage.path,
         element: <Test />,
       },
       {
-        path: '/challenge/my/certification/picture',
+        path: imageCertificationPage.path,
         element: <Test />,
       },
       {
-        path: '/mytori',
+        path: myToriPage.path,
         element: <MyTori />,
       },
       {
-        path: '/mypage',
+        path: myPagePage.path,
         element: <MyPage />,
       },
       {
-        path: '/notification',
+        path: notificationPage.path,
         element: <Notification />,
       },
       {
-        path: '/setting',
+        path: settingPage.path,
         element: <Setting />,
       },
     ],
