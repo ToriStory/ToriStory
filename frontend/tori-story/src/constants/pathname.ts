@@ -12,11 +12,11 @@ export const appPage = {
   label: '초기화면',
 };
 export const signInPage = {
-  path: '/app/auth/signin',
+  path: '/auth/signin',
   label: '로그인',
 };
 export const signUpPage = {
-  path: '/app/auth/signup',
+  path: '/auth/signup',
   label: '회원가입',
 };
 export const myChallengePage = {

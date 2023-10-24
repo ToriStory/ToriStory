@@ -46,6 +46,14 @@ const router = createBrowserRouter([
     element: <Landing />,
   },
   {
+    path: signInPage.path,
+    element: <SignIn />,
+  },
+  {
+    path: signUpPage.path,
+    element: <SignUp />,
+  },
+  {
     path: appPage.path,
     element: <App />,
     children: [
@@ -58,14 +66,6 @@ const router = createBrowserRouter([
         element: <Test />,
       },
 
-      {
-        path: signInPage.path,
-        element: <SignIn />,
-      },
-      {
-        path: signUpPage.path,
-        element: <SignUp />,
-      },
       {
         path: totoriPage.path,
         element: <Totori />,
@@ -114,7 +114,7 @@ const orangeTheme = createTheme({
   },
   typography: {
     fontFamily: '"omyu","jua", sans-serif',
-  },  
+  },
 });
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
