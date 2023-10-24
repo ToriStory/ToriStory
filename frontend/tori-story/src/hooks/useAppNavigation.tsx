@@ -1,3 +1,18 @@
+import {
+  createChallengePage,
+  gpsCertificationPage,
+  imageCertificationPage,
+  landingPage,
+  myPagePage,
+  myToriPage,
+  notificationPage,
+  settingPage,
+  signInPage,
+  signUpPage,
+  splashPage,
+  togetherChallengePage,
+  totoriPage,
+} from 'constants/pathname';
 import { useNavigate } from 'react-router-dom';
 
 export const useAppNavigation = () => {
@@ -5,68 +20,68 @@ export const useAppNavigation = () => {
 
   // Splash
   const navigateToSplash = () => {
-    navigate('/start');
+    navigate(splashPage.path);
   };
 
   // Landing
   const navigateToLanding = () => {
-    navigate('/landing');
+    navigate(landingPage.path);
   };
 
   // Member
   const navigateToSignin = () => {
-    navigate('/auth/signin');
+    navigate(signInPage.path);
   };
 
   const navigateToSignup = () => {
-    navigate('/auth/signup');
+    navigate(signUpPage.path);
   };
 
   // 토토리
   const navigateToTotori = () => {
-    navigate('/totori');
+    navigate(totoriPage.path);
   };
 
   // 나도 도전
   const navigateToTogetherChallenge = () => {
-    navigate('/challenge/together');
+    navigate(togetherChallengePage.path);
   };
 
   const navigateToTogetherChallengeCreate = () => {
-    navigate('/challenge/together/create');
+    navigate(createChallengePage.path);
   };
 
   // 나의 도전
   const navigateToMyChallenge = () => {
-    navigate('/challenge/my');
+    navigate(myPagePage.path);
   };
 
   const navigateToCertificationGPS = () => {
-    navigate('/challenge/my/certification/gps');
+    navigate(gpsCertificationPage.path);
   };
 
   const navigateToCertificationPicture = () => {
-    navigate('/challenge/my/certification/picture');
+    navigate(imageCertificationPage.path);
   };
 
   // MyTory
   const navigateToMyTori = () => {
-    navigate('/mytori');
+    navigate(myToriPage.path);
   };
 
   // MyPage
   const navigateToMyPage = () => {
-    navigate('/mypage');
+    navigate(myPagePage.path);
   };
 
   // Alarm
   const navigateToNotification = () => {
-    navigate('/notification');
+    navigate(notificationPage.path);
   };
 
   // Setting
   const navigateToSetting = () => {
-    navigate('/setting');
+    navigate(settingPage.path);
   };
 
   return {
