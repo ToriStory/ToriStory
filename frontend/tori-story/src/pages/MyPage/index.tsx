@@ -1,5 +1,11 @@
+import UserInfo from 'components/organisms/userInfo/UserInfo';
+
 const MyPage = () => {
-  return <>나의 추억 화면</>;
+  return (
+    <>
+      <UserInfo />
+    </>
+  );
 };
 
 export default MyPage;
