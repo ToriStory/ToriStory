@@ -36,11 +36,25 @@ public class RandomChallenge {
     @Column(length = 5, nullable = false)
     private Category category;
 
+    @PrePersist
+    public void prePersist() {
+        this.challengeDt = LocalDate.now();
+    }
+
     @Builder
     public RandomChallenge(Long memberId, Long challengeId, Category category) {
         this.memberId = memberId;
         this.challengeId = challengeId;
         this.category = category;
+    }
+
+    public void renewal(Category category, Long challengeId) {
+        this.category = category;
+        this.challengeId = challengeId;
+    }
+
+    public void complete() {
+        this.compFlag = true;
     }
 
 }
