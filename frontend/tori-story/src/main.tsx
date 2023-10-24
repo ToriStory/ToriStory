@@ -17,6 +17,7 @@ import { TogetherChallengeCreate } from 'pages/TogetherChallengeCreate/index.tsx
 import Landing from 'pages/Landing/index.tsx';
 import SignIn from 'pages/Auth/SignIn.tsx';
 import SignUp from 'pages/Auth/SignUp.tsx';
+import { orange400 } from 'constants/color.ts';
 import {
   appPage,
   createChallengePage,
@@ -109,7 +110,8 @@ const router = createBrowserRouter([
 const orangeTheme = createTheme({
   palette: {
     primary: {
-      main: '#FF762E',
+      main: orange400,
+      contrastText: 'white',
     },
   },
   typography: {

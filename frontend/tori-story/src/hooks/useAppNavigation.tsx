@@ -3,6 +3,7 @@ import {
   gpsCertificationPage,
   imageCertificationPage,
   landingPage,
+  myChallengePage,
   myPagePage,
   myToriPage,
   notificationPage,
@@ -53,15 +54,19 @@ export const useAppNavigation = () => {
 
   // 나의 도전
   const navigateToMyChallenge = () => {
-    navigate(myPagePage.path);
+    navigate(myChallengePage.path);
   };
 
   const navigateToCertificationGPS = () => {
     navigate(gpsCertificationPage.path);
   };
 
-  const navigateToCertificationPicture = () => {
+  const navigateToCertificationPhoto = () => {
     navigate(imageCertificationPage.path);
+  };
+
+  const navigateToMemory = () => {
+    navigate('/challenge/my/memory');
   };
 
   // MyTory
@@ -93,7 +98,8 @@ export const useAppNavigation = () => {
     navigateToLanding,
     navigateToMyChallenge,
     navigateToCertificationGPS,
-    navigateToCertificationPicture,
+    navigateToCertificationPhoto,
+    navigateToMemory,
     navigateToSignup,
     navigateToMyTori,
     navigateToMyPage,

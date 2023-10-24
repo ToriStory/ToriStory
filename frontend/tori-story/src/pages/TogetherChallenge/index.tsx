@@ -7,7 +7,7 @@ const TogetherChallenge = () => {
 
   return (
     <div className={cls('relative h-full')}>
-      <div className={cls('overflow-y-auto h-full')}>
+      <div className='relative h-full'>
         <div>나도 도전 화면</div>
       </div>
       <div className={cls('absolute bottom-3 right-0')}>
