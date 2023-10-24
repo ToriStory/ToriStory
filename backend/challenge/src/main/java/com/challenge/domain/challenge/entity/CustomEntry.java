@@ -4,7 +4,6 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
 import java.math.BigInteger;
@@ -26,7 +25,6 @@ public class CustomEntry {
     @JoinColumn(name="custom_challenge_id", nullable = false)
     private CustomChallenge customChallenge;
 
-    @CreatedDate
     @Column(nullable = false)
     private LocalDate startDt;
 
@@ -40,6 +38,11 @@ public class CustomEntry {
 
     @Column(nullable = false, columnDefinition = "TINYINT(1)")
     private boolean delFlag;
+
+    @PrePersist
+    public void initStartDt() {
+        this.startDt = LocalDate.now();
+    }
 
     @Builder
     public CustomEntry(Long memberId, CustomChallenge customChallenge, LocalDate endDt) {

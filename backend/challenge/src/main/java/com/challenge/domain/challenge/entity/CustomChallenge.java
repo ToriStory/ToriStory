@@ -41,9 +41,10 @@ public class CustomChallenge {
     private boolean displayFlag;
 
     @Builder
-    public CustomChallenge(Long memberId, String content) {
+    public CustomChallenge(Long memberId, String content, boolean displayFlag) {
         this.memberId = memberId;
         this.content = content;
+        this.displayFlag = displayFlag;
     }
 
 }
