@@ -14,6 +14,7 @@ public class Member {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(columnDefinition = "INT UNSIGNED")
     private Integer memberId;
 
     @Column(nullable = false, unique = true, length = 320)
@@ -33,7 +34,8 @@ public class Member {
         this.email = email;
         this.pw = pw;
         this.nickname = nickname;
-        this.imgUrl = imgUrl;
+        // TODO: 추후 기본 이미지 경로 수정
+        this.imgUrl = (imgUrl != null) ? imgUrl : "/img/default_profile.png";
     }
 
 }
