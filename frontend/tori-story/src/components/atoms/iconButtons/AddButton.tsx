@@ -1,7 +1,7 @@
 import { LucidePlusCircle } from 'lucide-react';
 
 export interface AddButtonProps {
-  onClick: (e: any) => void;
+  onClick: (e: React.MouseEvent<HTMLButtonElement>) => void;
   color?: string;
   size?: number;
   className?: string;

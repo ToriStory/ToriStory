@@ -1,0 +1,23 @@
+@font-face {
+  font-family: 'jua';
+  font-weight: 400;
+  src: url('./Jua-Regular.ttf') format('truetype');
+}
+
+@font-face {
+  font-weight: 700;
+  font-family: 'unbee puding bold';
+  src: url('./UnBee puding Bold.ttf') format('truetype');
+}
+
+@font-face {
+  font-weight: 400;
+  font-family: 'unbee puding bold';
+  src: url('./UnBee puding.ttf') format('truetype');
+}
+
+@font-face {
+  font-weight: 400;
+  font-family: 'omyu';
+  src: url('./오뮤_다예쁨체.ttf') format('truetype');
+}

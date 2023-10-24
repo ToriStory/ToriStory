@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App.tsx';
 import './index.css';
+import './assets/fonts/Font.css';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import MyChallenge from 'pages/MyChallenge/index.tsx';
@@ -111,6 +112,9 @@ const orangeTheme = createTheme({
       main: '#FF762E',
     },
   },
+  typography: {
+    fontFamily: '"omyu","jua", sans-serif',
+  },  
 });
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
