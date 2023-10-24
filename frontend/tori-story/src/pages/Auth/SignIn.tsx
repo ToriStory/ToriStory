@@ -10,6 +10,7 @@ import Container from '@mui/material/Container';
 import { signUpPage } from 'constants/pathname';
 import { Link } from 'react-router-dom';
 import AuthBackground from 'components/atoms/background/AuthBackground';
+import useAppNavigation from 'hooks/useAppNavigation';
 
 // function Copyright(props: any) {
 //   return (
@@ -26,6 +27,8 @@ import AuthBackground from 'components/atoms/background/AuthBackground';
 
 // TODO remove, this demo shouldn't need to reset the theme.
 export default function SignIn() {
+  const navigation = useAppNavigation();
+
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -81,6 +84,7 @@ export default function SignIn() {
                 fullWidth
                 variant='contained'
                 sx={{ mt: 3, mb: 2, fontWeight: 'bold', color: 'white', fontSize: 20 }}
+                onClick={() => navigation.navigateToMyChallenge()}
               >
                 로그인
               </Button>

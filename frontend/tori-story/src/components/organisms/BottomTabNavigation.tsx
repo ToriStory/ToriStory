@@ -5,12 +5,33 @@ import CssBaseline from '@mui/material/CssBaseline';
 import Paper from '@mui/material/Paper';
 import { useEffect, useRef, useState } from 'react';
 import useAppNavigation from 'hooks/useAppNavigation';
+import {
+  myChallengePage,
+  myPagePage,
+  myToriPage,
+  togetherChallengePage,
+  totoriPage,
+} from 'constants/pathname';
 
 function BottomTabNavigation({ pathname }: { pathname: string }) {
   const [value, setValue] = useState(0);
   const ref = useRef<HTMLDivElement>(null);
   const navigation = useAppNavigation();
 
+  useEffect(() => {
+    console.log(pathname);
+    if (pathname === totoriPage.label) {
+      setValue(0);
+    } else if (pathname === togetherChallengePage.label) {
+      setValue(1);
+    } else if (pathname === myChallengePage.label) {
+      setValue(2);
+    } else if (pathname === myToriPage.label) {
+      setValue(3);
+    } else if (pathname === myPagePage.label) {
+      setValue(4);
+    }
+  }, [pathname]);
   useEffect(() => {
     (ref.current as HTMLDivElement).ownerDocument.body.scrollTop = 0;
   }, [value]);
