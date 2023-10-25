@@ -37,6 +37,7 @@ const cardStyle = {
   border: `2px solid ${orange400}`,
   borderRadius: '0.6rem',
   padding: '16px',
+  marginTop: '1rem',
 };
 
 const cardHeaderBottomStyle = {
@@ -48,6 +49,7 @@ const cardContentStyle = {
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
+  margin: '16px 0px',
 };
 
 export default Challenge;

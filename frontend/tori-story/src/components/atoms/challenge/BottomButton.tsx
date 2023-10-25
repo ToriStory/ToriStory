@@ -8,22 +8,10 @@ interface CardButtonProps {
 }
 
 const CardButton = ({ title, onClick }: CardButtonProps) => {
-  // const navigation = useAppNavigation();
-
-  // const handleOnClick = () => {
-  //   if (category === CATEGORY.photo) {
-  //     navigation.navigateToCertificationPhoto();
-  //   } else if (category === CATEGORY.gps) {
-  //     navigation.navigateToCertificationGPS();
-  //   } else {
-  //     navigation.navigateToMemory();
-  //   }
-  // };
-
   return (
     <Button
       variant='contained'
-      sx={{ boxShadow: 'none' }}
+      sx={{ boxShadow: 'none', borderRadius: '0.6rem' }}
       size='medium'
       style={{ marginLeft: 'auto' }}
       onClick={onClick}
