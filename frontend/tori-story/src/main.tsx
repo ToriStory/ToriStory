@@ -23,6 +23,7 @@ import {
   createChallengePage,
   gpsCertificationPage,
   imageCertificationPage,
+  imageMemoryPage,
   landingPage,
   myChallengePage,
   myPagePage,
@@ -85,6 +86,10 @@ const router = createBrowserRouter([
       },
       {
         path: imageCertificationPage.path,
+        element: <Test />,
+      },
+      {
+        path: imageMemoryPage.path,
         element: <Test />,
       },
       {

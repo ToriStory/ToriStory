@@ -44,6 +44,10 @@ export const imageCertificationPage = {
   path: '/app/challenge/my/certification/picture',
   label: '사진 인증',
 };
+export const imageMemoryPage = {
+  path: '/app/challenge/my/memory/picture',
+  label: '추억 남기기',
+};
 export const myToriPage = {
   path: '/app/mytori',
   label: '나의 토리',
@@ -76,6 +80,7 @@ export const pathname = [
   createChallengePage,
   gpsCertificationPage,
   imageCertificationPage,
+  imageMemoryPage,
   myToriPage,
   myPagePage,
   notificationPage,

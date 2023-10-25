@@ -2,6 +2,7 @@ import {
   createChallengePage,
   gpsCertificationPage,
   imageCertificationPage,
+  imageMemoryPage,
   landingPage,
   myChallengePage,
   myPagePage,
@@ -66,7 +67,7 @@ export const useAppNavigation = () => {
   };
 
   const navigateToMemory = () => {
-    navigate('/challenge/my/memory');
+    navigate(imageMemoryPage.path);
   };
 
   // MyTory
