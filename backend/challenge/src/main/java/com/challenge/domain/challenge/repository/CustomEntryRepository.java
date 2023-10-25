@@ -14,4 +14,7 @@ public interface CustomEntryRepository extends JpaRepository<CustomEntry, BigInt
     @Query("select ce from CustomEntry ce join fetch ce.customChallenge where ce.memberId = :memberId order by ce.endDt")
     List<CustomEntry> findAllByMemberId(Long memberId);
 
+    @Query("select ce from CustomEntry ce join fetch ce.customChallenge where ce.memberId = :memberId and ce.startDt <= current_date and ce.endDt >= current_date order by ce.endDt")
+    List<CustomEntry> findAllByMemberIdAndEndDt(Long memberId);
+
 }

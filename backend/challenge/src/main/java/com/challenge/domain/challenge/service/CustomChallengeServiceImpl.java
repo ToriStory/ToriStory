@@ -75,6 +75,26 @@ public class CustomChallengeServiceImpl implements CustomChallengeService {
     }
 
     @Override
+    public List<FindCustomRes> findMyTodayCustomChallenge(String accessToken) {
+        Long memberId = 1L;
+
+        List<CustomEntry> customEntryList = customEntryRepository.findAllByMemberIdAndEndDt(memberId);
+
+        return customEntryList.stream()
+            .map(customEntry -> {
+                return FindCustomRes.builder()
+                    .id(customEntry.getCustomEntryId())
+                    .content(customEntry.getCustomChallenge().getContent())
+                    .startDt(customEntry.getStartDt())
+                    .endDt(customEntry.getEndDt())
+                    .compFlag(customEntry.isCompFlag())
+                    .imgUrl(customEntry.getImgUrl())
+                    .build();
+            })
+            .collect(Collectors.toList());
+    }
+
+    @Override
     public void addScrapCustom(String accessToken, BigInteger customChallengeId, AddScrapCustomReq addScrapCustomReq) {
         Long memberId = 2L;
 

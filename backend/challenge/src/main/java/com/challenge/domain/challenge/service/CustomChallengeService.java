@@ -16,6 +16,8 @@ public interface CustomChallengeService {
 
     List<FindCustomRes> findMyCustomChallenge(String accessToken);
 
+    List<FindCustomRes> findMyTodayCustomChallenge(String accessToken);
+
     void addScrapCustom(String accessToken, BigInteger customChallengeId, AddScrapCustomReq addScrapCustomReq);
 
     void modifyCustomCompFlag(String accessToken, BigInteger customEntryId);
