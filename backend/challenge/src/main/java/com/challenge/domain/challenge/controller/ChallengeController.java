@@ -96,4 +96,12 @@ public class ChallengeController {
         return EnvelopRes.builder().build();
     }
 
+    @DeleteMapping("/custom/{customEntryId}")
+    public EnvelopRes removeCustom(@RequestHeader("Authorization") String accessToken, @PathVariable BigInteger customEntryId) {
+
+        customChallengeService.removeCustom(accessToken, customEntryId);
+
+        return EnvelopRes.builder().build();
+    }
+
 }

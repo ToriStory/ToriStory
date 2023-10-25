@@ -8,6 +8,8 @@ import com.challenge.domain.challenge.dto.request.AddScrapCustomReq;
 
 import java.math.BigInteger;
 
+import java.math.BigInteger;
+
 public interface CustomChallengeService {
 
     void addCustom(String accessToken, AddCustomReq addCustomReq);
@@ -17,5 +19,7 @@ public interface CustomChallengeService {
     void addScrapCustom(String accessToken, BigInteger customChallengeId, AddScrapCustomReq addScrapCustomReq);
 
     void modifyCustomCompFlag(String accessToken, BigInteger customEntryId);
+
+    void removeCustom(String accessToken, BigInteger customEntryId);
 
 }
