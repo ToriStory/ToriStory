@@ -88,6 +88,15 @@ public class ChallengeController {
                 .build();
     }
 
+    @GetMapping("/custom/my")
+    public EnvelopRes<List<FindCustomRes>> findMyTodayCustomChallenge(@RequestHeader("Authorization") String accessToken) {
+
+        return EnvelopRes.<List<FindCustomRes>>builder()
+            .code(200)
+            .data(customChallengeService.findMyTodayCustomChallenge(accessToken))
+            .build();
+    }
+
     @PatchMapping("/comp/{customEntryId}")
     public EnvelopRes completeCustomChallenge(@RequestHeader("Authorization") String accessToken, @PathVariable BigInteger customEntryId) {
 
