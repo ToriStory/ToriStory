@@ -44,8 +44,8 @@ pipeline {
 		stage('React Build') {
 			steps {
 				dir('frontend/tori-story') {
-					sh 'npm install'
-					sh 'npm run build'
+					sh 'pnpm install'
+					sh 'pnpm build'
 				}
 			}
 		}
