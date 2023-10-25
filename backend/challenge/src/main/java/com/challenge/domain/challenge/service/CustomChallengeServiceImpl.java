@@ -86,4 +86,18 @@ public class CustomChallengeServiceImpl implements CustomChallengeService {
     }
 
 
+    @Override
+    public void modifyCustomCompFlag(String accessToken, BigInteger customEntryId) {
+        Long memberId = 1L;
+
+        CustomEntry customEntry = customEntryRepository.findById(customEntryId)
+                .orElseThrow(() -> new ChallengeException(ErrorCode.CUSTOM_CHALLENGE_NOT_FOUND));
+
+        if (customEntry.getMemberId() != memberId) {
+            throw new ChallengeException(ErrorCode.CUSTOM_MEMBER_NOT_MATCH);
+        }
+
+        customEntry.complete();
+    }
+
 }

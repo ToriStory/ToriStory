@@ -16,4 +16,6 @@ public interface CustomChallengeService {
 
     void addScrapCustom(String accessToken, BigInteger customChallengeId, AddScrapCustomReq addScrapCustomReq);
 
+    void modifyCustomCompFlag(String accessToken, BigInteger customEntryId);
+
 }

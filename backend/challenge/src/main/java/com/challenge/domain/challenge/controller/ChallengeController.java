@@ -88,4 +88,12 @@ public class ChallengeController {
                 .build();
     }
 
+    @PatchMapping("/comp/{customEntryId}")
+    public EnvelopRes completeCustomChallenge(@RequestHeader("Authorization") String accessToken, @PathVariable BigInteger customEntryId) {
+
+        customChallengeService.modifyCustomCompFlag(accessToken, customEntryId);
+
+        return EnvelopRes.builder().build();
+    }
+
 }
