@@ -2,9 +2,9 @@ package com.challenge.domain.challenge.dto.request;
 
 import java.time.LocalDate;
 
-import lombok.Data;
+import lombok.Getter;
 
-@Data
+@Getter
 public class AddScrapCustomReq {
 
 	private LocalDate endDt;

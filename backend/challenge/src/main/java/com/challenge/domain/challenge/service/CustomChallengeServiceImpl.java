@@ -2,9 +2,11 @@ package com.challenge.domain.challenge.service;
 
 import java.util.List;
 import java.util.stream.Collectors;
+import java.math.BigInteger;
 
 import com.challenge.domain.challenge.dto.request.AddCustomReq;
 import com.challenge.domain.challenge.dto.response.FindCustomRes;
+import com.challenge.domain.challenge.dto.request.AddScrapCustomReq;
 import com.challenge.domain.challenge.entity.CustomChallenge;
 import com.challenge.domain.challenge.entity.CustomEntry;
 import com.challenge.domain.challenge.repository.CustomChallengeRepository;
@@ -71,5 +73,17 @@ public class CustomChallengeServiceImpl implements CustomChallengeService {
                 })
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public void addScrapCustom(String accessToken, BigInteger customChallengeId, AddScrapCustomReq addScrapCustomReq) {
+        Long memberId = 2L;
+
+        customEntryRepository.save(CustomEntry.builder()
+                .memberId(memberId)
+                .customChallenge(customChallengeRepository.findById(customChallengeId).orElseThrow(() -> new ChallengeException(ErrorCode.CUSTOM_CHALLENGE_NOT_FOUND)))
+                .endDt(addScrapCustomReq.getEndDt())
+                .build());
+    }
+
 
 }
