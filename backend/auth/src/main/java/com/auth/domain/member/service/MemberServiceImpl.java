@@ -1,5 +1,6 @@
 package com.auth.domain.member.service;
 
+import com.auth.domain.member.dto.request.JoinReq;
 import com.auth.domain.member.entity.Member;
 import com.auth.domain.member.repository.MemberRepository;
 import com.auth.global.exception.AuthException;
@@ -19,6 +20,18 @@ public class MemberServiceImpl implements MemberService {
     public Member findByEmail(String email) {
         return memberRepository.findByEmail(email)
                 .orElseThrow(() -> new AuthException(ErrorCode.NO_SUCH_MEMBER));
+    }
+
+    @Override
+    public void join(JoinReq joinReq) {
+
+        log.debug("Member Service: join() method called.........");
+
+        memberRepository.save(Member.builder()
+                .email(joinReq.getEmail())
+                .nickname(joinReq.getNickname())
+                .pw(joinReq.getPassword())
+                .build());
     }
 
 }
