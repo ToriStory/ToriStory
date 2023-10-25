@@ -1,4 +1,4 @@
-import { orange100, orange400, orange600 } from 'constants/color';
+import { orange100, orange600 } from 'constants/color';
 
 const ChallengeCategory = ({ title }: { title: string }) => {
   return <div style={divStyle}>{title}</div>;
