@@ -1,9 +1,9 @@
 package com.challenge.domain.challenge.controller;
 
 import com.challenge.domain.challenge.dto.request.AddCustomReq;
+import com.challenge.domain.challenge.dto.response.FindCustomRes;
 import com.challenge.domain.challenge.dto.response.FindRandomRes;
 import com.challenge.domain.challenge.dto.response.FindTotalChallengeRes;
-import com.challenge.domain.challenge.entity.RandomChallenge;
 import com.challenge.domain.challenge.service.CustomChallengeService;
 import com.challenge.domain.challenge.service.RandomChallengeService;
 import com.challenge.global.response.EnvelopRes;
@@ -11,9 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.math.BigInteger;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
@@ -58,11 +56,20 @@ public class ChallengeController {
     }
 
     @PostMapping("/custom")
-    public EnvelopRes addCustom(@RequestBody @Valid AddCustomReq addCustomReq) {
+    public EnvelopRes addCustom(@RequestHeader("Authorization") String accessToken, @RequestBody @Valid AddCustomReq addCustomReq) {
 
-        customChallengeService.addCustom(addCustomReq);
+        customChallengeService.addCustom(accessToken, addCustomReq);
 
         return EnvelopRes.builder().code(201).build();
+    }
+
+    @GetMapping("/custom")
+    public EnvelopRes<List<FindCustomRes>> findMyCustomChallenge(@RequestHeader("Authorization") String accessToken) {
+
+        return EnvelopRes.<List<FindCustomRes>>builder()
+                .code(200)
+                .data(customChallengeService.findMyCustomChallenge(accessToken))
+                .build();
     }
 
 }
