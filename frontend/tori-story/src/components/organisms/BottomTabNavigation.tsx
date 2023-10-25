@@ -73,7 +73,8 @@ function BottomTabNavigation({ pathname }: { pathname: string }) {
         pathname === '알림' ||
         pathname === '도전 생성' ||
         pathname === '사진 인증' ||
-        pathname === 'GPS 인증' ? (
+        pathname === 'GPS 인증' ||
+        pathname === '추억 남기기' ? (
           <div></div>
         ) : (
           <>

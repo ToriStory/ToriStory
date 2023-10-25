@@ -13,6 +13,7 @@ const cardStyle = {
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
+  marginTop: '1rem',
 };
 
 export default SuccessChallenge;

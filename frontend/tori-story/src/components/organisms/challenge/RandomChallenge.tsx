@@ -1,12 +1,13 @@
 import { CATEGORY } from 'constants/certificationCategory';
-import { Camera, MapPin } from 'lucide-react';
+import { Camera, MapPin, RotateCw } from 'lucide-react';
 import Challenge from './Challenge';
 import HeaderLeft from 'components/molecules/challenge/HeaderLeft';
 import BottomButton from 'components/atoms/challenge/BottomButton';
 import SuccessChallenge from './SuccessChallenge';
-import useAppNavigation from 'hooks/useAppNavigation';
 import { orange300 } from 'constants/color';
-// import { IconButton } from '@mui/material';
+import { IconButton } from '@mui/material';
+import HeaderRight from 'components/molecules/challenge/HeaderRight';
+import useAppNavigation from 'hooks/useAppNavigation';
 
 interface RandomChallengeResponse {
   id: number;
@@ -17,6 +18,7 @@ interface RandomChallengeResponse {
 
 const RandomChallenge = () => {
   const navigate = useAppNavigation();
+
   const response: RandomChallengeResponse = {
     id: 1,
     content: '바나나 우유 1000개 맛있게 마시기',
@@ -39,6 +41,16 @@ const RandomChallenge = () => {
     }
   };
 
+  const handleRenew = () => {
+    alert('갱신하시겠습니까?');
+  };
+
+  const button = (
+    <IconButton onClick={handleRenew}>
+      <RotateCw />
+    </IconButton>
+  );
+
   return (
     <>
       {response.compFlag === true ? (
@@ -48,11 +60,7 @@ const RandomChallenge = () => {
           headerLeft={
             <HeaderLeft challengeCategory='랜덤' certificationCategory={certificationIcon} />
           }
-          // headerRight={
-          //   <IconButton>
-          //     <RotateCw />
-          //   </IconButton>
-          // }
+          headerRight={<HeaderRight button={button} />}
           bottomRight={<BottomButton title='인증' onClick={handleCertification} />}
           content={response.content}
         />
