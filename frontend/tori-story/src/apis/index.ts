@@ -69,8 +69,10 @@ export interface query {
 // secondArgsFetcher 함수는 함수(func)를 입력으로 받아 새로운 함수를 반환하는 함수
 // 반환된 함수는 두 개의 인자를 받으며,
 // 첫 번째 인자(url)는 무시되고, 두 번째 인자(args)는 입력으로 받은 함수(func)에 전달
-export function secondArgsFetcher<T, TT>(func: (a: T) => TT) {
-  return (url: any, args: T) => func(args);
-}
+// <편지>
+//build에러나서 그냥 주석처리함
+// export function secondArgsFetcher<T, TT>(func: (a: T) => TT) {
+//   return (url: any, args: T) => func(args);
+// }
 
 export default axios;

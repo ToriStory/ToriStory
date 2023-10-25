@@ -19,7 +19,6 @@ function BottomTabNavigation({ pathname }: { pathname: string }) {
   const navigation = useAppNavigation();
 
   useEffect(() => {
-    console.log(pathname);
     if (pathname === totoriPage.label) {
       setValue(0);
     } else if (pathname === togetherChallengePage.label) {
@@ -83,7 +82,7 @@ function BottomTabNavigation({ pathname }: { pathname: string }) {
               <BottomNavigation
                 showLabels
                 value={value}
-                onChange={(event, newValue) => {
+                onChange={(_, newValue) => {
                   setValue(newValue);
                 }}
               >

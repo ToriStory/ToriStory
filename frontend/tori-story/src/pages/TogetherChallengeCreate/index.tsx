@@ -29,7 +29,7 @@ export const TogetherChallengeCreate = () => {
   const [alignment, setAlignment] = useState<string>('당일');
   const [selectedDate, setSelectedDate] = useState<Dayjs | null>(currentDate);
 
-  const handleCategoryChange = (event: React.MouseEvent<HTMLElement>, category: string) => {
+  const handleCategoryChange = (_: React.MouseEvent<HTMLElement>, category: string) => {
     setAlignment(category);
     if (category === '당일') {
       setSelectedDate(currentDate);
