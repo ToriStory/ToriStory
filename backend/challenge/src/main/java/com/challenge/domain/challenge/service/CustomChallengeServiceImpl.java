@@ -1,8 +1,8 @@
 package com.challenge.domain.challenge.service;
 
+import java.math.BigInteger;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.math.BigInteger;
 
 import com.challenge.domain.challenge.dto.request.AddCustomReq;
 import com.challenge.domain.challenge.dto.response.FindCustomRes;
@@ -98,6 +98,20 @@ public class CustomChallengeServiceImpl implements CustomChallengeService {
         }
 
         customEntry.complete();
+    }
+
+    @Override
+    public void removeCustom(String accessToken, BigInteger customEntryId) {
+        Long memberId = 1L;
+
+        CustomEntry customEntry = customEntryRepository.findById(customEntryId)
+                .orElseThrow(() -> new ChallengeException(ErrorCode.CUSTOM_CHALLENGE_NOT_FOUND));
+
+        if (customEntry.getMemberId() != memberId) {
+            throw new ChallengeException(ErrorCode.CUSTOM_MEMBER_NOT_MATCH);
+        }
+
+        customEntryRepository.deleteById(customEntryId);
     }
 
 }
