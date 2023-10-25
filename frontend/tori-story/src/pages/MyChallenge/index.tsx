@@ -11,6 +11,9 @@ const MyChallenge = () => {
       <RandomChallenge />
       <br />
       <Label title={`${nickname}님의 도전`} />
+      <RandomChallenge />
+      <RandomChallenge />
+      <RandomChallenge />
     </div>
   );
 };

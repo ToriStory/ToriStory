@@ -5,6 +5,7 @@ import HeaderLeft from 'components/molecules/challenge/HeaderLeft';
 import BottomButton from 'components/atoms/challenge/BottomButton';
 import SuccessChallenge from './SuccessChallenge';
 import useAppNavigation from 'hooks/useAppNavigation';
+import { orange300 } from 'constants/color';
 // import { IconButton } from '@mui/material';
 
 interface RandomChallengeResponse {
@@ -23,7 +24,12 @@ const RandomChallenge = () => {
     category: 'PHOTO',
   };
 
-  const certificationIcon = response.category === CATEGORY.photo ? <Camera /> : <MapPin />;
+  const certificationIcon =
+    response.category === CATEGORY.photo ? (
+      <Camera color={orange300} />
+    ) : (
+      <MapPin color={orange300} />
+    );
 
   const handleCertification = () => {
     if (response.category === CATEGORY.photo) {
