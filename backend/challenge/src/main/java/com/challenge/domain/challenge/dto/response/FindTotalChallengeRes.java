@@ -9,8 +9,8 @@ import java.util.List;
 @Builder
 public class FindTotalChallengeRes {
 
-    private List<FindRandomRes> randomList;
+    private FindRandomRes randomRes;
 
-    private List<FindCustomRes> customList;
+    private List<FindCustomRes> customResList;
 
 }

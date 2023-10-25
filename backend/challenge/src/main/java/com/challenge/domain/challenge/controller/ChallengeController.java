@@ -23,7 +23,13 @@ public class ChallengeController {
 
     @GetMapping
     public EnvelopRes<FindTotalChallengeRes> findTotalChallenge(@RequestHeader("Authorization") String accessToken) {
-        FindTotalChallengeRes response = null;
+        FindRandomRes randomRes = randomChallengeService.findRandomChallenge(accessToken);
+        List<FindCustomRes> customResList = customChallengeService.findMyCustomChallenge(accessToken);
+
+        FindTotalChallengeRes response = FindTotalChallengeRes.builder()
+                .randomRes(randomRes)
+                .customResList(customResList)
+                .build();
 
         return EnvelopRes.<FindTotalChallengeRes>builder()
                 .data(response)
