@@ -51,4 +51,8 @@ public class CustomEntry {
         this.endDt = endDt;
     }
 
+    public void complete() {
+        this.compFlag = true;
+    }
+
 }
