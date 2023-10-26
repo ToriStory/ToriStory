@@ -70,9 +70,10 @@ const ImageUpload = ({ buttonTitle, takePhotoOption, selectPhotoOption }: ImageU
     }
   };
 
-  const handleFileChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    if (files && files.length > 0) {
+      const file = files[0];
       // 선택된 파일을 업로드 또는 처리할 수 있습니다.
       console.log('Selected file:', file);
       const imageUrl = URL.createObjectURL(file);
