@@ -1,6 +1,8 @@
 package com.auth.domain.member.controller;
 
 import com.auth.domain.member.dto.request.JoinReq;
+import com.auth.domain.member.dto.request.LoginReq;
+import com.auth.domain.member.dto.response.LoginRes;
 import com.auth.domain.member.service.MemberService;
 import com.auth.global.response.EnvelopRes;
 import lombok.RequiredArgsConstructor;
@@ -9,6 +11,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.validation.Valid;
 
 @Slf4j
 @RestController
@@ -29,6 +33,16 @@ public class MemberController {
                 .code(201)
                 .build();
 
+    }
+
+    @PostMapping("/login")
+    public EnvelopRes<LoginRes> login(@Valid @RequestBody LoginReq loginReq) {
+
+        log.debug("Member Controller: login() method called.........");
+
+        return EnvelopRes.<LoginRes>builder()
+                .data(memberService.login(loginReq))
+                .build();
     }
 
 }
