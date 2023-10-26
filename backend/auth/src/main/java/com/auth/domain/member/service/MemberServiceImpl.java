@@ -70,4 +70,14 @@ public class MemberServiceImpl implements MemberService {
                 .build();
     }
 
+    @Override
+    public void logout(String accessToken) {
+
+        String email = jwtProvider.extractEmail(accessToken);
+
+        jwtProvider.setBlackList(accessToken, email);
+        jwtProvider.deleteRefreshToken(email);
+
+    }
+
 }
