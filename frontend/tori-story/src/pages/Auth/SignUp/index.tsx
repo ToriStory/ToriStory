@@ -6,7 +6,7 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { signInPage } from 'constants/pathname';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import AuthBackground from 'components/atoms/background/AuthBackground';
 import { useForm } from 'react-hook-form';
 import { FormInputText } from 'components/atoms/input/FormInputText';
@@ -33,6 +33,7 @@ interface SignUpInput {
   confirmPassword: string;
 }
 export default function SignUp() {
+  const navigate = useNavigate();
   const { handleSubmit, control, watch } = useForm({
     defaultValues: {
       nickname: '',
@@ -47,7 +48,9 @@ export default function SignUp() {
       nickname: data.nickname,
       password: data.password,
     });
-    console.log(res);
+    if (res.status === 201) {
+      navigate(signInPage.path, { replace: true });
+    }
   };
   return (
     <AuthBackground>
@@ -101,7 +104,6 @@ export default function SignUp() {
                         message: '이메일 형식을 따라 작성해주세요!',
                       },
                     }}
-                    autoFocus
                   />
                 </Grid>
                 <Grid item xs={12}>
@@ -120,7 +122,6 @@ export default function SignUp() {
                         message: '영어와 숫자를 모두 사용하여 8~20자로 작성해주세요!',
                       },
                     }}
-                    autoFocus
                   />
                 </Grid>
                 <Grid item xs={12}>
@@ -137,7 +138,6 @@ export default function SignUp() {
                       validate: (value: string) =>
                         value === watch('password') || '비밀번호가 일치하지 않아요!',
                     }}
-                    autoFocus
                   />
                 </Grid>
                 {/* <Grid item xs={12}>
