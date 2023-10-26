@@ -16,4 +16,6 @@ public interface MemberService {
 
     FindIdRes findId(String email);
 
+    void logout(String accessToken);
+
 }

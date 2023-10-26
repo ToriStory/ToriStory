@@ -46,6 +46,18 @@ public class MemberController {
                 .build();
     }
 
+    @PostMapping("/logout")
+    public EnvelopRes logout(@ApiIgnore @RequestHeader("Authorization") String accessToken) {
+
+        log.debug("Member Controller: logout() method called.........");
+
+        memberService.logout(accessToken);
+
+        return EnvelopRes.builder()
+                .code(200)
+                .build();
+    }
+
     @PostMapping("/id")
     public EnvelopRes<FindIdRes> findId(@ApiIgnore @RequestHeader("Authorization") String accessToken){
 
