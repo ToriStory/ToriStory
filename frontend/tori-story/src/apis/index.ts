@@ -7,7 +7,7 @@ import Axios from 'axios';
 
 // Axios의 'create' 메서드를 사용하여 Axios 인스턴스 생성
 const axios = Axios.create({
-  baseURL: `/backend/v1/api`,
+  baseURL: `/api`,
   // validateStatus: (status) => status < 500,
   withCredentials: true,
 });

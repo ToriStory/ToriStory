@@ -7,7 +7,7 @@ interface FormInputProps extends StandardTextFieldProps {
   label: string;
   rules?: any;
 }
-export const FormInputText = ({ name, control, label, rules }: FormInputProps) => {
+export const FormInputText = ({ name, control, label, rules, ...etc }: FormInputProps) => {
   return (
     <Controller
       name={name}
@@ -23,6 +23,7 @@ export const FormInputText = ({ name, control, label, rules }: FormInputProps) =
           fullWidth
           label={label}
           variant='outlined'
+          {...etc}
         />
       )}
     />

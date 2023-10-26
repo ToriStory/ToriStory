@@ -10,6 +10,7 @@ import { Link } from 'react-router-dom';
 import AuthBackground from 'components/atoms/background/AuthBackground';
 import { useForm } from 'react-hook-form';
 import { FormInputText } from 'components/atoms/input/FormInputText';
+import { signUpAPI } from 'apis/auth';
 
 // function Copyright(props: any) {
 //   return (
@@ -25,7 +26,12 @@ import { FormInputText } from 'components/atoms/input/FormInputText';
 // }
 
 // TODO remove, this demo shouldn't need to reset the theme.
-
+interface SignUpInput {
+  nickname: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
+}
 export default function SignUp() {
   const { handleSubmit, control, watch } = useForm({
     defaultValues: {
@@ -35,8 +41,13 @@ export default function SignUp() {
       confirmPassword: '',
     },
   });
-  const onSubmit = (data: any) => {
-    console.log(data);
+  const onSubmit = async (data: SignUpInput) => {
+    const res = await signUpAPI({
+      email: data.email,
+      nickname: data.nickname,
+      password: data.password,
+    });
+    console.log(res);
   };
   return (
     <AuthBackground>
@@ -61,7 +72,6 @@ export default function SignUp() {
                     control={control}
                     label='닉네임'
                     margin='normal'
-                    required
                     fullWidth
                     type='email'
                     id='nickname'
@@ -103,7 +113,6 @@ export default function SignUp() {
                     fullWidth
                     type='password'
                     id='password'
-                    autoComplete='current-password'
                     rules={{
                       required: { value: true, message: '비밀번호를 입력해주세요!' },
                       pattern: {
@@ -123,7 +132,6 @@ export default function SignUp() {
                     fullWidth
                     type='password'
                     id='confirmPassword'
-                    autoComplete='confirm-password'
                     rules={{
                       required: { value: true, message: '비밀번호 확인을 입력해주세요!' },
                       validate: (value: string) =>
