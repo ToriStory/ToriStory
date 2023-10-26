@@ -3,8 +3,10 @@ package com.challenge.domain.challenge.controller;
 import com.challenge.domain.challenge.dto.request.AddCustomReq;
 import com.challenge.domain.challenge.dto.response.FindCustomRes;
 import com.challenge.domain.challenge.dto.request.AddScrapCustomReq;
+import com.challenge.domain.challenge.dto.request.FindCustomSearchReq;
 import com.challenge.domain.challenge.dto.response.FindRandomRes;
 import com.challenge.domain.challenge.dto.response.FindTotalChallengeRes;
+import com.challenge.domain.challenge.dto.response.FindTotalCustomRes;
 import com.challenge.domain.challenge.service.CustomChallengeService;
 import com.challenge.domain.challenge.service.RandomChallengeService;
 import com.challenge.global.response.EnvelopRes;
@@ -85,6 +87,15 @@ public class ChallengeController {
         return EnvelopRes.<List<FindCustomRes>>builder()
                 .code(200)
                 .data(customChallengeService.findMyCustomChallenge(accessToken))
+                .build();
+    }
+
+    @GetMapping("/custom/all")
+    public EnvelopRes<FindTotalCustomRes> findAllCustomChallenge(@Valid FindCustomSearchReq findCustomSearchReq) {
+
+        return EnvelopRes.<FindTotalCustomRes>builder()
+                .code(200)
+                .data(customChallengeService.findAllCustomChallenge(findCustomSearchReq))
                 .build();
     }
 

@@ -3,9 +3,13 @@ package com.challenge.domain.challenge.service;
 import java.math.BigInteger;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.ArrayList;
 
 import com.challenge.domain.challenge.dto.request.AddCustomReq;
 import com.challenge.domain.challenge.dto.response.FindCustomRes;
+import com.challenge.domain.challenge.dto.request.FindCustomSearchReq;
+import com.challenge.domain.challenge.dto.response.FindTotalCustomRes;
+import com.challenge.domain.challenge.dto.response.TotalCustomDto;
 import com.challenge.domain.challenge.dto.request.AddScrapCustomReq;
 import com.challenge.domain.challenge.entity.CustomChallenge;
 import com.challenge.domain.challenge.entity.CustomEntry;
@@ -17,6 +21,7 @@ import com.challenge.global.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -72,6 +77,47 @@ public class CustomChallengeServiceImpl implements CustomChallengeService {
                         .build();
                 })
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public FindTotalCustomRes findAllCustomChallenge(FindCustomSearchReq findCustomSearchReq) {
+        List<CustomChallenge> customChallengeList = new ArrayList<>();
+
+        switch (findCustomSearchReq.getSort()) {
+            case 0:
+                customChallengeList = customChallengeRepository.findAllByRegDtmWithCursor(
+                        findCustomSearchReq.getKeyword(),
+                        PageRequest.of(findCustomSearchReq.getPage(), findCustomSearchReq.getLimit())
+                );
+                break;
+            case 1:
+                customChallengeList = customChallengeRepository.findAllByScrapCntWithCursor(
+                        findCustomSearchReq.getKeyword(),
+                        PageRequest.of(findCustomSearchReq.getPage(), findCustomSearchReq.getLimit())
+                );
+                break;
+            default:
+                throw new ChallengeException(ErrorCode.CUSTOM_CHALLENGE_SEARCH_ERROR);
+        }
+
+        List<TotalCustomDto> totalCustomDtoList = customChallengeList.stream()
+                .map(customChallenge -> {
+                    return TotalCustomDto.builder()
+                            .id(customChallenge.getCustomChallengeId())
+                            .content(customChallenge.getContent())
+                            .scrapCnt(customChallenge.getScrapCnt())
+                            .reportCnt(customChallenge.getReportCnt())
+                            .regDtm(customChallenge.getRegDtm())
+                            .build();
+                })
+                .collect(Collectors.toList());
+
+        return FindTotalCustomRes.builder()
+                .totalCustomChallengeList(totalCustomDtoList)
+                .nextCursor(totalCustomDtoList.size() != 0 ? totalCustomDtoList.get(totalCustomDtoList.size() - 1).getId() : BigInteger.ZERO)
+                .nextPage(findCustomSearchReq.getPage() + 1)
+                .hasNext(totalCustomDtoList.size() >= findCustomSearchReq.getLimit() ? true : false)
+                .build();
     }
 
     @Override
