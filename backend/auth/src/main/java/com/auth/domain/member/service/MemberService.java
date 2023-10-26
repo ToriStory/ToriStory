@@ -1,5 +1,6 @@
 package com.auth.domain.member.service;
 
+import com.auth.domain.member.dto.response.FindIdRes;
 import com.auth.domain.member.entity.Member;
 import com.auth.domain.member.dto.request.JoinReq;
 import com.auth.domain.member.dto.request.LoginReq;
@@ -12,5 +13,7 @@ public interface MemberService {
     void join(JoinReq joinReq);
 
     LoginRes login(LoginReq loginReq);
+
+    FindIdRes findId(String email);
 
 }
