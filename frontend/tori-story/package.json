@@ -20,6 +20,7 @@
     "lucide-react": "^0.288.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-hook-form": "^7.47.0",
     "react-router-dom": "^6.17.0",
     "swr": "^2.2.4"
   },
