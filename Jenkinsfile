@@ -45,6 +45,7 @@ pipeline {
 			steps {
 				dir('frontend/tori-story') {
 				    sh 'npm i -g pnpm'
+                    sh 'rm -rf pnpm-lock.yaml'
 					sh 'pnpm install'
 					sh 'pnpm build'
 				}
