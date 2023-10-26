@@ -37,6 +37,7 @@ import {
   togetherChallengePage,
   totoriPage,
 } from 'constants/pathname.ts';
+import CertificationGPS from 'pages/CertificationGPS/index.tsx';
 
 const router = createBrowserRouter([
   {
@@ -82,7 +83,7 @@ const router = createBrowserRouter([
       },
       {
         path: gpsCertificationPage.path,
-        element: <Test />,
+        element: <CertificationGPS />,
       },
       {
         path: imageCertificationPage.path,

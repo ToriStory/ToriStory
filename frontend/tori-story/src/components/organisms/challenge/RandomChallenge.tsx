@@ -7,7 +7,8 @@ import SuccessChallenge from './SuccessChallenge';
 import { orange300 } from 'constants/color';
 import { IconButton } from '@mui/material';
 import HeaderRight from 'components/molecules/challenge/HeaderRight';
-import useAppNavigation from 'hooks/useAppNavigation';
+import { useNavigate } from 'react-router-dom';
+import { gpsCertificationPage, imageCertificationPage } from 'constants/pathname';
 
 interface RandomChallengeResponse {
   id: number;
@@ -17,13 +18,13 @@ interface RandomChallengeResponse {
 }
 
 const RandomChallenge = () => {
-  const navigate = useAppNavigation();
+  const navigate = useNavigate();
 
   const response: RandomChallengeResponse = {
     id: 1,
     content: '바나나 우유 1000개 맛있게 마시기',
     compFlag: false,
-    category: 'PHOTO',
+    category: 'GPS',
   };
 
   const certificationIcon =
@@ -35,9 +36,9 @@ const RandomChallenge = () => {
 
   const handleCertification = () => {
     if (response.category === CATEGORY.photo) {
-      navigate.navigateToCertificationPhoto();
+      navigate(imageCertificationPage.path, { state: { id: response.id, type: 'random' } });
     } else {
-      navigate.navigateToCertificationGPS();
+      navigate(gpsCertificationPage.path, { state: { id: response.id, type: 'random' } });
     }
   };
 
