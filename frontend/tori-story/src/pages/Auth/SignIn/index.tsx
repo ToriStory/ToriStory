@@ -5,11 +5,12 @@ import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import { signUpPage } from 'constants/pathname';
-import { Link } from 'react-router-dom';
+import { myChallengePage, signUpPage } from 'constants/pathname';
+import { Link, useNavigate } from 'react-router-dom';
 import AuthBackground from 'components/atoms/background/AuthBackground';
 import { useForm } from 'react-hook-form';
 import { FormInputText } from 'components/atoms/input/FormInputText';
+import { signInAPI } from 'apis/auth';
 
 // function Copyright(props: any) {
 //   return (
@@ -26,6 +27,7 @@ import { FormInputText } from 'components/atoms/input/FormInputText';
 
 // TODO remove, this demo shouldn't need to reset the theme.
 export default function SignIn() {
+  const navigate = useNavigate();
   const { handleSubmit, control } = useForm({
     defaultValues: {
       email: '',
@@ -33,8 +35,16 @@ export default function SignIn() {
     },
   });
 
-  const onSubmit = (data: any) => {
-    console.log(data);
+  const onSubmit = async (data: any) => {
+    const res = await signInAPI({
+      email: data.email,
+      password: data.password,
+    });
+    console.log(res);
+    if (res.status === 200) {
+      localStorage.setItem('accessToken', res.data.data.accessToken);
+      navigate(myChallengePage.path, { replace: true });
+    }
   };
 
   return (
@@ -81,7 +91,6 @@ export default function SignIn() {
                 fullWidth
                 type='password'
                 id='password'
-                autoComplete='current-password'
                 rules={{
                   required: { value: true, message: '비밀번호를 입력해주세요!' },
                   pattern: {
@@ -89,7 +98,6 @@ export default function SignIn() {
                     message: '영어와 숫자를 모두 사용하여 8~20자로 작성해주세요!',
                   },
                 }}
-                autoFocus
               />
               {/* <FormControlLabel
               control={<Checkbox value='remember' color='primary' />}
