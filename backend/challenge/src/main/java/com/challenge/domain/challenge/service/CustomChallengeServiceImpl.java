@@ -11,6 +11,7 @@ import com.challenge.domain.challenge.dto.request.FindCustomSearchReq;
 import com.challenge.domain.challenge.dto.response.FindTotalCustomRes;
 import com.challenge.domain.challenge.dto.response.TotalCustomDto;
 import com.challenge.domain.challenge.dto.request.AddScrapCustomReq;
+import com.challenge.domain.challenge.dto.response.FindMemoryRes;
 import com.challenge.domain.challenge.entity.CustomChallenge;
 import com.challenge.domain.challenge.entity.CustomEntry;
 import com.challenge.domain.challenge.repository.CustomChallengeRepository;
@@ -23,6 +24,7 @@ import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
 
@@ -34,6 +36,7 @@ public class CustomChallengeServiceImpl implements CustomChallengeService {
 
     private final CustomChallengeRepository customChallengeRepository;
     private final CustomEntryRepository customEntryRepository;
+    private final AwsS3Service awsS3Service;
 
     @Override
     public void addCustom(String accessToken, AddCustomReq addCustomReq) {
@@ -178,6 +181,41 @@ public class CustomChallengeServiceImpl implements CustomChallengeService {
         }
 
         customEntryRepository.deleteById(customEntryId);
+    }
+
+    @Override
+    public List<FindMemoryRes> findMemoryCustom(String accessToken) {
+        Long memberId = 1L;
+
+        List<CustomEntry> customEntryList = customEntryRepository.findAllByMemberId(memberId);
+
+        return customEntryList.stream()
+                .map(customEntry -> {
+                    return FindMemoryRes.builder()
+                            .id(customEntry.getCustomEntryId())
+                            .content(customEntry.getCustomChallenge().getContent())
+                            .imgUrl(customEntry.getImgUrl())
+                            .build();
+                })
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public void modifyCustomImage(String accessToken, BigInteger customEntryId, MultipartFile image) {
+        Long memberId = 1L;
+
+        CustomEntry customEntry = customEntryRepository.findById(customEntryId)
+                .orElseThrow(() -> new ChallengeException(ErrorCode.CUSTOM_CHALLENGE_NOT_FOUND));
+
+        if (customEntry.getMemberId() != memberId) {
+            throw new ChallengeException(ErrorCode.CUSTOM_MEMBER_NOT_MATCH);
+        }
+
+        if (image != null) {
+            String savedUrl = awsS3Service.uploadFile(image);
+
+            customEntry.modifyImage(savedUrl);
+        }
     }
 
 }

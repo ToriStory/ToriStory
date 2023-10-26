@@ -14,6 +14,9 @@ public enum ErrorCode {
 	CUSTOM_CHALLENGE_NOT_FOUND(404, "존재하지 않은 자유 도전 과제"),
 	CUSTOM_MEMBER_NOT_MATCH(403, "사용자의 자유 도전 과제가 아님"),
 
+	// S3
+	S3_IMAGE_LOAD_FAIl(500, "S3서버 이미지 업로드 실패"),
+
 	;
 
 	private final int code;
