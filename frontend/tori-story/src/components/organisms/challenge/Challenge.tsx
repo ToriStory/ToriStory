@@ -33,10 +33,12 @@ const Challenge = ({
 
 /* style */
 const cardStyle = {
+  backgroundColor: 'white',
+  opacity: 0.95,
   borderColor: orange400,
   border: `2px solid ${orange400}`,
   borderRadius: '0.6rem',
-  padding: '16px',
+  padding: '8px 16px ',
   marginTop: '1rem',
 };
 
@@ -49,7 +51,8 @@ const cardContentStyle = {
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
-  margin: '16px 0px',
+  fontSize: '1.4rem',
+  margin: '8px 0px',
 };
 
 export default Challenge;

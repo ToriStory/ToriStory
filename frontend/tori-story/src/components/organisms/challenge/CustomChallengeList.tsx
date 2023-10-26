@@ -11,7 +11,7 @@ const CustumChallengeList = () => {
     data: [
       {
         id: 2,
-        content: '낙엽 5개 밟기1',
+        content: '바나나 우유 1000개 맛있게 마시기',
         startDt: '2022-10-17',
         endDt: '2022-10-18',
         compFlag: false,
@@ -39,6 +39,15 @@ const CustumChallengeList = () => {
       {
         id: 5,
         content: '낙엽 5개 밟기4',
+        startDt: '2022-10-17',
+        endDt: '2022-10-18',
+        compFlag: false,
+        imgUrl:
+          'https://images.mypetlife.co.kr/content/uploads/2021/10/22152410/IMG_2087-scaled-e1634883900174.jpg',
+      },
+      {
+        id: 6,
+        content: '낙엽 5개 밟기5',
         startDt: '2022-10-17',
         endDt: '2022-10-18',
         compFlag: false,

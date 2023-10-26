@@ -11,6 +11,7 @@ import {
   createChallengeDisplayFlag,
   createChallengeTitle,
 } from 'stores/challengeStore';
+import { customChallengeCreateProps } from 'types/challenge';
 
 export default function HeaderDepthMore({ pathname }: { pathname: string }) {
   const navigate = useNavigate();
@@ -24,7 +25,7 @@ export default function HeaderDepthMore({ pathname }: { pathname: string }) {
   };
 
   const handleCreateChallenge = () => {
-    const createChallengeResponse = {
+    const createChallengeResponse: customChallengeCreateProps = {
       content: challengeTitle,
       endDt: challengeDate,
       displayFlag: challengeisplayFlag,
