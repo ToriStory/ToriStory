@@ -3,6 +3,7 @@ package com.challenge.domain.challenge.controller;
 import com.challenge.domain.challenge.dto.request.AddCustomReq;
 import com.challenge.domain.challenge.dto.response.FindCustomRes;
 import com.challenge.domain.challenge.dto.request.AddScrapCustomReq;
+import com.challenge.domain.challenge.dto.response.FindMemoryRes;
 import com.challenge.domain.challenge.dto.request.FindCustomSearchReq;
 import com.challenge.domain.challenge.dto.response.FindRandomRes;
 import com.challenge.domain.challenge.dto.response.FindTotalChallengeRes;
@@ -12,6 +13,7 @@ import com.challenge.domain.challenge.service.RandomChallengeService;
 import com.challenge.global.response.EnvelopRes;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import java.math.BigInteger;
@@ -124,4 +126,19 @@ public class ChallengeController {
         return EnvelopRes.builder().build();
     }
 
+    @GetMapping("/memory")
+    public EnvelopRes<List<FindMemoryRes>> findMemoryCustom(@RequestHeader("Authorization") String accessToken) {
+
+        return EnvelopRes.<List<FindMemoryRes>>builder()
+                .data(customChallengeService.findMemoryCustom(accessToken))
+                .build();
+    }
+
+    @PatchMapping("/memory/{customEntryId}")
+    public EnvelopRes modifyCustomImage(@RequestHeader("Authorization") String accessToken, @PathVariable BigInteger customEntryId, @RequestPart(required = false) MultipartFile image) {
+
+        customChallengeService.modifyCustomImage(accessToken, customEntryId, image);
+
+        return EnvelopRes.builder().build();
+    }
 }

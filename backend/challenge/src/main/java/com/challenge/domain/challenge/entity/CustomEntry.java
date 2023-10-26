@@ -55,4 +55,8 @@ public class CustomEntry {
         this.compFlag = true;
     }
 
+    public void modifyImage(String imgUrl) {
+        this.imgUrl = imgUrl;
+    }
+
 }

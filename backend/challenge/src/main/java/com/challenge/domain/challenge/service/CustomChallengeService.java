@@ -10,6 +10,9 @@ import com.challenge.domain.challenge.dto.request.AddScrapCustomReq;
 
 import java.math.BigInteger;
 
+import com.challenge.domain.challenge.dto.response.FindMemoryRes;
+import org.springframework.web.multipart.MultipartFile;
+
 import com.challenge.domain.challenge.dto.request.FindCustomSearchReq;
 import com.challenge.domain.challenge.dto.response.FindTotalCustomRes;
 
@@ -28,5 +31,9 @@ public interface CustomChallengeService {
     void modifyCustomCompFlag(String accessToken, BigInteger customEntryId);
 
     void removeCustom(String accessToken, BigInteger customEntryId);
+
+    List<FindMemoryRes> findMemoryCustom(String accessToken);
+
+    void modifyCustomImage(String accessToken, BigInteger customEntryId, MultipartFile image);
 
 }
