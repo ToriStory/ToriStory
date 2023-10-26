@@ -44,6 +44,7 @@ pipeline {
 		stage('React Build') {
 			steps {
 				dir('frontend/tori-story') {
+				    sh 'npm i -g pnpm'
 					sh 'pnpm install'
 					sh 'pnpm build'
 				}
@@ -91,10 +92,10 @@ pipeline {
 //                 sh 'docker rm -f flask'
 
                 // 새로운 이미지로 컨테이너를 백그라운드에서 실행
-                sh 'docker run -d --name back -p 8200:8200 -u root toristory-backend-gateway:latest'
-                sh 'docker run -d --name back -p 8201:8201 -u root toristory-backend-auth:latest'
-                sh 'docker run -d --name back -p 8202:8202 -u root toristory-backend-challenge:latest'
-                sh 'docker run -d --name back -p 8203:8203 -u root toristory-backend-tori:latest'
+                sh 'docker run -d --name back-gateway -p 8200:8200 -u root toristory-backend-gateway:latest'
+                sh 'docker run -d --name back-auth -p 8201:8201 -u root toristory-backend-auth:latest'
+                sh 'docker run -d --name back-challenge -p 8202:8202 -u root toristory-backend-challenge:latest'
+                sh 'docker run -d --name back-tori -p 8203:8203 -u root toristory-backend-tori:latest'
 				sh 'docker run -d --name front -p 3126:3126 -u root toristory-frontend:latest'
 //                 sh 'docker run -d --name flask -p 5000:5000 -u root toristory-flask:latest'
             }
@@ -107,7 +108,7 @@ pipeline {
                 sh 'docker rm $(docker ps -a -q) || true'
 
                 // 사용되지 않는 (dangling) 이미지를 찾아 제거합니다.
-                sh 'docker images -qf dangling=true | xargs -I{} docker rmi {}'
+                // sh 'docker images -qf dangling=true | xargs -I{} docker rmi {}'
             }
         }
     }
