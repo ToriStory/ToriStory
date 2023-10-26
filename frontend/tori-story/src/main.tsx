@@ -38,6 +38,7 @@ import {
   totoriPage,
 } from 'constants/pathname.ts';
 import CertificationGPS from 'pages/CertificationGPS/index.tsx';
+import CertificationAI from 'pages/CertificationAI/index.tsx';
 
 const router = createBrowserRouter([
   {
@@ -87,7 +88,7 @@ const router = createBrowserRouter([
       },
       {
         path: imageCertificationPage.path,
-        element: <Test />,
+        element: <CertificationAI />,
       },
       {
         path: imageMemoryPage.path,

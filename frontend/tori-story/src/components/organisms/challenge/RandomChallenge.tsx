@@ -24,7 +24,7 @@ const RandomChallenge = () => {
     id: 1,
     content: '바나나 우유 1000개 맛있게 마시기',
     compFlag: false,
-    category: 'GPS',
+    category: 'PHOTO',
   };
 
   const certificationIcon =
