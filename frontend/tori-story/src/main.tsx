@@ -15,8 +15,8 @@ import Notification from 'pages/Notification/index.tsx';
 import Setting from 'pages/Setting/index.tsx';
 import { TogetherChallengeCreate } from 'pages/TogetherChallengeCreate/index.tsx';
 import Landing from 'pages/Landing/index.tsx';
-import SignIn from 'pages/Auth/SignIn.tsx';
-import SignUp from 'pages/Auth/SignUp.tsx';
+import SignIn from 'pages/Auth/SignIn/index.tsx';
+import SignUp from 'pages/Auth/SignUp/index.tsx';
 import { orange400 } from 'constants/color.ts';
 import {
   appPage,

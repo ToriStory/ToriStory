@@ -1,8 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import * as React from 'react';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
@@ -10,6 +8,8 @@ import Container from '@mui/material/Container';
 import { signInPage } from 'constants/pathname';
 import { Link } from 'react-router-dom';
 import AuthBackground from 'components/atoms/background/AuthBackground';
+import { useForm } from 'react-hook-form';
+import { FormInputText } from 'components/atoms/input/FormInputText';
 
 // function Copyright(props: any) {
 //   return (
@@ -27,17 +27,17 @@ import AuthBackground from 'components/atoms/background/AuthBackground';
 // TODO remove, this demo shouldn't need to reset the theme.
 
 export default function SignUp() {
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      nickname: data.get('nickname'),
-      email: data.get('email'),
-      password: data.get('password'),
-      confirmPassword: data.get('confirmPassword'),
-    });
+  const { handleSubmit, control, watch } = useForm({
+    defaultValues: {
+      nickname: '',
+      email: '',
+      password: '',
+      confirmPassword: '',
+    },
+  });
+  const onSubmit = (data: any) => {
+    console.log(data);
   };
-
   return (
     <AuthBackground>
       <Container component='main' maxWidth='xs'>
@@ -53,50 +53,83 @@ export default function SignUp() {
             <Typography component='h1' variant='h4'>
               회원가입
             </Typography>
-            <Box component='form' noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
+            <Box component='form' noValidate onSubmit={handleSubmit(onSubmit)} sx={{ mt: 3 }}>
               <Grid container spacing={2}>
                 <Grid item xs={12}>
-                  <TextField
+                  <FormInputText
+                    name='nickname'
+                    control={control}
+                    label='닉네임'
+                    margin='normal'
                     required
                     fullWidth
+                    type='email'
                     id='nickname'
-                    label='닉네임'
-                    name='nickname'
                     autoComplete='nickname'
+                    rules={{
+                      required: { value: true, message: '닉네임을 입력해주세요!' },
+                      maxLength: { value: 8, message: '8자 이내로 작성해주세요!' },
+                    }}
                     autoFocus
                   />
                 </Grid>
                 <Grid item xs={12}>
-                  <TextField
-                    required
+                  <FormInputText
+                    name='email'
+                    control={control}
+                    label='이메일'
+                    margin='normal'
                     fullWidth
                     type='email'
                     id='email'
-                    label='이메일'
-                    name='email'
                     autoComplete='email'
+                    rules={{
+                      required: { value: true, message: '이메일을 입력해주세요!' },
+                      maxLength: { value: 320, message: '320자 이내로 작성해주세요!' },
+                      pattern: {
+                        value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
+                        message: '이메일 형식을 따라 작성해주세요!',
+                      },
+                    }}
+                    autoFocus
                   />
                 </Grid>
                 <Grid item xs={12}>
-                  <TextField
-                    required
-                    fullWidth
+                  <FormInputText
                     name='password'
+                    control={control}
                     label='비밀번호'
+                    margin='normal'
+                    fullWidth
                     type='password'
                     id='password'
-                    autoComplete='new-password'
+                    autoComplete='current-password'
+                    rules={{
+                      required: { value: true, message: '비밀번호를 입력해주세요!' },
+                      pattern: {
+                        value: /^(?=.*[a-zA-Z])(?=.*[0-9]).{8,20}$/,
+                        message: '영어와 숫자를 모두 사용하여 8~20자로 작성해주세요!',
+                      },
+                    }}
+                    autoFocus
                   />
                 </Grid>
                 <Grid item xs={12}>
-                  <TextField
-                    required
-                    fullWidth
+                  <FormInputText
                     name='confirmPassword'
+                    control={control}
                     label='비밀번호 확인'
+                    margin='normal'
+                    fullWidth
                     type='password'
                     id='confirmPassword'
                     autoComplete='confirm-password'
+                    rules={{
+                      required: { value: true, message: '비밀번호 확인을 입력해주세요!' },
+                      validate: (value: string) =>
+                        value === watch('password') || '비밀번호가 일치하지 않아요!',
+                    }}
+                    autoFocus
                   />
                 </Grid>
                 {/* <Grid item xs={12}>
