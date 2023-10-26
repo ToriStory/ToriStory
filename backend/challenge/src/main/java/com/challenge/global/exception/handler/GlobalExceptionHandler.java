@@ -5,6 +5,7 @@ import com.challenge.global.response.EnvelopRes;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -34,7 +35,7 @@ public class GlobalExceptionHandler {
      *  HttpMessageConverter 에서 등록한 HttpMessageConverter binding 못할경우 발생
      *  주로 @RequestBody, @RequestPart 어노테이션에서 발생
      */
-    @ExceptionHandler({MethodArgumentNotValidException.class, UnexpectedTypeException.class})
+    @ExceptionHandler({MethodArgumentNotValidException.class, UnexpectedTypeException.class, BindException.class})
     protected ResponseEntity<EnvelopRes<String>> handleValidationException(Exception e) {
         log.error("handleIllegalArgumentException", e.getMessage());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
