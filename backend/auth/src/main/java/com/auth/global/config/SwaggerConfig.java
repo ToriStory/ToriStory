@@ -20,6 +20,8 @@ import java.util.List;
 @Configuration
 public class SwaggerConfig {
 
+//    http://localhost:8201/swagger-ui/index.html
+
     @Bean
     public Docket api() {
         return new Docket(DocumentationType.OAS_30)

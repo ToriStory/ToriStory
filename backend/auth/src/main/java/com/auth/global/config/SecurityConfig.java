@@ -28,7 +28,7 @@ public class SecurityConfig {
                                 .antMatchers(HttpMethod.OPTIONS).permitAll()  // preflight 로 보내는 요청
 
                                 // swagger 요청은 모두 허용
-                                .antMatchers("/v2/api-docs", "/swagger-resources/**", "/swagger-ui.html", "/webjars/**", "/swagger/**", "/swagger-ui/**").permitAll()
+                                .antMatchers("/v3/api-docs", "/swagger-resources/**", "/swagger-ui.html", "/webjars/**", "/swagger/**", "/swagger-ui/**").permitAll()
 
                                 // member 요청은 일부 허용
                                 .antMatchers(HttpMethod.POST, "/member/login").permitAll()

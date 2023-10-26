@@ -1,10 +1,13 @@
 package com.auth.domain.member.service;
 
 import com.auth.domain.member.dto.request.JoinReq;
+import com.auth.domain.member.dto.request.LoginReq;
+import com.auth.domain.member.dto.response.LoginRes;
 import com.auth.domain.member.entity.Member;
 import com.auth.domain.member.repository.MemberRepository;
 import com.auth.global.exception.AuthException;
 import com.auth.global.exception.ErrorCode;
+import com.auth.global.jwt.JwtProvider;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -15,6 +18,7 @@ import org.springframework.stereotype.Service;
 public class MemberServiceImpl implements MemberService {
 
     private final MemberRepository memberRepository;
+    private final JwtProvider jwtProvider;
 
     @Override
     public Member findByEmail(String email) {
@@ -32,6 +36,26 @@ public class MemberServiceImpl implements MemberService {
                 .nickname(joinReq.getNickname())
                 .pw(joinReq.getPassword())
                 .build());
+    }
+
+    @Override
+    public LoginRes login(LoginReq loginReq) {
+
+        log.debug("Member Service: login() method called.........");
+
+        Member member = memberRepository.findByEmail(loginReq.getEmail())
+                .orElseThrow(() -> new AuthException(ErrorCode.NO_SUCH_MEMBER));
+
+        // 비밀번호가 일치하지 않는 경우
+        if (!member.getPw().equals(loginReq.getPassword())) {
+            throw new AuthException(ErrorCode.NOT_MATCH_PASSWORD);
+        }
+
+        return LoginRes.builder()
+                .accessToken(jwtProvider.generateAccessToken(member.getEmail()))
+                .refreshToken(jwtProvider.generateRefreshToken(member.getEmail()))
+                .build();
+
     }
 
 }

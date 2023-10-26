@@ -6,7 +6,6 @@ import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 
@@ -45,7 +44,15 @@ public class JwtProvider {
      * @param token
      * @return email
      */
-    public String getEmail(String token) {
+    public String extractEmail(String token) {
+
+        log.debug("JwtProvider::extractEmail() called");
+
+        token = removeBearer(token);
+
+        log.debug("token: " + token);
+        log.debug("email: " + extractAllClaims(token).get("email", String.class));
+
         return extractAllClaims(token).get("email", String.class);
     }
 
@@ -80,13 +87,15 @@ public class JwtProvider {
     }
 
     /**
-     * 사용자 email로 refreshToken 생성
+     * 사용자 email로 refreshToken 생성 및 저장
      *
      * @param email
      * @return 생성된 refreshToken
      */
     public String generateRefreshToken(String email) {
-        return generateToken(email, jwtProperties.getRefreshTokenValidity());
+        String refreshToken = generateToken(email, jwtProperties.getRefreshTokenValidity());
+        storeToken(refreshToken, email);
+        return refreshToken;
     }
 
     /**
@@ -111,8 +120,8 @@ public class JwtProvider {
      */
     public void setBlackList(String token, String email) {
         redisBlackListTemplate.opsForValue().set(
-                email,
                 token,
+                email,
                 getRemainMilliSeconds(token),
                 TimeUnit.MILLISECONDS);
     }
@@ -143,7 +152,15 @@ public class JwtProvider {
      * @return 유효 여부
      */
     public boolean validateToken(String token) {
+
+        log.debug("JwtProvider::validateToken() called");
+
         try {
+
+            token = removeBearer(token);
+
+            log.debug("token: " + token);
+            log.debug("getSigningKey(): " + getSigningKey());
             Jwts.parserBuilder().setSigningKey(getSigningKey()).build().parseClaimsJws(token);
             if (redisBlackListTemplate.hasKey(token)) {
                 throw new AuthException(ErrorCode.NOT_VALID_TOKEN);
@@ -164,7 +181,7 @@ public class JwtProvider {
      * @return 유효 여부
      */
     public Boolean validateRefreshToken(String refreshToken) {
-        String email = getEmail(refreshToken);
+        String email = extractEmail(refreshToken);
         String storedRefreshToken = redisTemplate.opsForValue().get(email);
         if (!Objects.equals(refreshToken, storedRefreshToken)) {
             throw new AuthException(ErrorCode.NOT_VALID_TOKEN);
@@ -174,16 +191,18 @@ public class JwtProvider {
 
     /**
      * refreshToken 검증 이후 accessToken 재발급
+     *
      * @param refreshToken
      * @return 재발급된 accessToken
      */
     public String reIssue(String refreshToken) {
         validateRefreshToken(refreshToken);
-        return generateAccessToken(getEmail(refreshToken));
+        return generateAccessToken(extractEmail(refreshToken));
     }
 
     /**
      * 토큰 만료까지 남은 시간
+     *
      * @param token
      * @return 남은 시간
      */
@@ -191,6 +210,21 @@ public class JwtProvider {
         Date expiration = extractAllClaims(token).getExpiration();
         Date now = new Date();
         return expiration.getTime() - now.getTime();
+    }
+
+    private String removeBearer(String token) {
+        if (token.startsWith("Bearer "))
+            return token.substring(7);
+        return token;
+    }
+
+    /**
+     * 로그아웃시 refresh 토큰 삭제
+     *
+     * @param email
+     */
+    public void deleteRefreshToken(String email) {
+        redisTemplate.delete(email);
     }
 
 }

@@ -40,7 +40,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             return;
         }
 
-        String email = jwtProvider.getEmail(token);
+        String email = jwtProvider.extractEmail(token);
         AbstractAuthenticationToken authentication = UsernamePasswordAuthenticationToken.authenticated(
                 email,
                 token,
