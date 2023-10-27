@@ -5,6 +5,7 @@ import com.auth.domain.member.dto.request.JoinReq;
 import com.auth.domain.member.dto.request.LoginReq;
 import com.auth.domain.member.dto.response.FindIdRes;
 import com.auth.domain.member.dto.response.LoginRes;
+import com.auth.domain.member.dto.response.MyInfoRes;
 import com.auth.domain.member.service.MemberService;
 import com.auth.global.jwt.JwtProvider;
 import com.auth.global.response.EnvelopRes;
@@ -37,7 +38,6 @@ public class MemberController {
                 .body(EnvelopRes.builder()
                         .code(201)
                         .build());
-
     }
 
     @PostMapping("/login")
@@ -47,7 +47,6 @@ public class MemberController {
 
         return ResponseEntity.status(HttpStatus.OK)
                 .body(EnvelopRes.<LoginRes>builder()
-                        .code(200)
                         .data(memberService.login(loginReq))
                         .build());
     }
@@ -61,7 +60,6 @@ public class MemberController {
 
         return ResponseEntity.status(HttpStatus.OK)
                 .body(EnvelopRes.builder()
-                        .code(200)
                         .build());
     }
 
@@ -74,7 +72,6 @@ public class MemberController {
 
         return ResponseEntity.status(HttpStatus.OK)
                 .body(EnvelopRes.<FindIdRes>builder()
-                        .code(200)
                         .data(memberService.findId(email))
                         .build());
     }
@@ -88,7 +85,17 @@ public class MemberController {
 
         return ResponseEntity.status(HttpStatus.OK)
                 .body(EnvelopRes.builder()
-                        .code(200)
+                        .build());
+    }
+
+    @GetMapping("")
+    public ResponseEntity<EnvelopRes<MyInfoRes>> myInfo(@ApiIgnore @RequestHeader("Authorization") String accessToken){
+
+        log.debug("Member Controller: myInfo() method called.........");
+
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(EnvelopRes.<MyInfoRes>builder()
+                        .data(memberService.findMyInfo(accessToken))
                         .build());
     }
 

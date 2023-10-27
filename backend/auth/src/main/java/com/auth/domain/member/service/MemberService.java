@@ -4,6 +4,7 @@ import com.auth.domain.member.dto.request.JoinReq;
 import com.auth.domain.member.dto.request.LoginReq;
 import com.auth.domain.member.dto.response.FindIdRes;
 import com.auth.domain.member.dto.response.LoginRes;
+import com.auth.domain.member.dto.response.MyInfoRes;
 import com.auth.domain.member.entity.Member;
 
 public interface MemberService {
@@ -19,5 +20,7 @@ public interface MemberService {
     void logout(String accessToken);
 
     void checkEmail(String email);
+
+    MyInfoRes findMyInfo(String accessToken);
 
 }

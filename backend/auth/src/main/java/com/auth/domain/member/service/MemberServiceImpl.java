@@ -4,6 +4,7 @@ import com.auth.domain.member.dto.request.JoinReq;
 import com.auth.domain.member.dto.request.LoginReq;
 import com.auth.domain.member.dto.response.FindIdRes;
 import com.auth.domain.member.dto.response.LoginRes;
+import com.auth.domain.member.dto.response.MyInfoRes;
 import com.auth.domain.member.entity.Member;
 import com.auth.domain.member.repository.MemberRepository;
 import com.auth.global.exception.AuthException;
@@ -92,6 +93,20 @@ public class MemberServiceImpl implements MemberService {
                 log.debug("--------------Duplicate Email--------------");
                 throw new AuthException(ErrorCode.DUPLICATED_EMAIL);
             }
+    }
+
+    @Override
+    public MyInfoRes findMyInfo(String accessToken) {
+
+        log.debug("Member Service: findMyInfo() method called.........");
+
+        Member member = findByEmail(jwtProvider.extractEmail(accessToken));
+
+        return MyInfoRes.builder()
+                .email(member.getEmail())
+                .nickname(member.getNickname())
+                .imgUrl(member.getImgUrl())
+                .build();
     }
 
 }
