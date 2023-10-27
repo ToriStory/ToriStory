@@ -1,0 +1,19 @@
+server:
+  port: 8200
+
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: auth-service
+          uri: http://k9a402.p.ssafy.io:8201
+          predicates:
+            - Path=/member/**
+        - id: challenge-service
+          uri: http://k9a402.p.ssafy.io:8202
+          predicates:
+            - Path=/challenge/**
+        - id: tori-service
+          uri: http://k9a402.p.ssafy.io:8203
+          predicates:
+            - Path=/tori/**

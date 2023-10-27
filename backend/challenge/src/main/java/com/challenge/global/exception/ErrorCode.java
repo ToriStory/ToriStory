@@ -1,0 +1,30 @@
+package com.challenge.global.exception;
+
+import lombok.Getter;
+
+@Getter
+public enum ErrorCode {
+
+	// 자유 도전 에러
+	CONTENT_LENGTH_OVER(400, "자유 도전 과제 글자수 초과"),
+	CUSTOM_CHALLENGE_NOT_SAVED(404, "자유 도전 과제 등록 오류"),
+	RANDOM_CHALLENGE_NOT_FOUND(401, "존재하지 않는 랜덤 도전 과제"),
+	CATEGORY_NOT_FOUND(401, "존재하지 않는 인증 방식"),
+	CUSTOM_CHALLENGE_SEARCH_ERROR(400, "도전 과제 검색 정렬 기준 오류"),
+	CUSTOM_CHALLENGE_NOT_FOUND(404, "존재하지 않은 자유 도전 과제"),
+	CUSTOM_MEMBER_NOT_MATCH(403, "사용자의 자유 도전 과제가 아님"),
+
+	// S3
+	S3_IMAGE_LOAD_FAIl(500, "S3서버 이미지 업로드 실패"),
+
+	;
+
+	private final int code;
+	private final String message;
+
+	ErrorCode(int code, String message) {
+		this.code = code;
+		this.message = message;
+	}
+
+}

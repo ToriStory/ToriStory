@@ -1,0 +1,27 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: 'jua';
+  font-weight: 400;
+  src: url('./assets/fonts/Jua-Regular.ttf') format('truetype');
+}
+
+@font-face {
+  font-weight: 700;
+  font-family: 'unbeePudingBold';
+  src: url('./assets/fonts/puding Bold.ttf') format('truetype');
+}
+
+@font-face {
+  font-weight: 400;
+  font-family: 'unbeePuding';
+  src: url('./assets/fonts/UnBee puding.ttf') format('truetype');
+}
+
+@font-face {
+  font-weight: 400;
+  font-family: 'omyu';
+  src: url('./assets/fonts/오뮤_다예쁨체.ttf') format('truetype');
+}
