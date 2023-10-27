@@ -36,6 +36,8 @@ public class MemberServiceImpl implements MemberService {
 
         log.debug("Member Service: join() method called.........");
 
+        checkEmail(joinReq.getEmail());
+
         memberRepository.save(Member.builder()
                 .email(joinReq.getEmail())
                 .nickname(joinReq.getNickname())
@@ -78,6 +80,18 @@ public class MemberServiceImpl implements MemberService {
         jwtProvider.setBlackList(accessToken, email);
         jwtProvider.deleteRefreshToken(email);
 
+    }
+
+    @Override
+    public void checkEmail(String email) {
+
+            log.debug("Member Service: checkEmail() method called.........");
+            log.debug("email: {}", email);
+
+            if (memberRepository.existsByEmail(email)) {
+                log.debug("--------------Duplicate Email--------------");
+                throw new AuthException(ErrorCode.DUPLICATED_EMAIL);
+            }
     }
 
 }
