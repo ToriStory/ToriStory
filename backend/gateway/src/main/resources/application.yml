@@ -10,7 +10,7 @@ spring:
           predicates:
             - Path=/member/**
         - id: challenge-service
-          uri: http://localhost:8202
+          uri: http://k9a402.p.ssafy.io:8202
           filters:
             - AuthFilter
           predicates:
