@@ -10,8 +10,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import AuthBackground from 'components/atoms/background/AuthBackground';
 import { useForm } from 'react-hook-form';
 import { FormInputText } from 'components/atoms/input/FormInputText';
-import { signUpAPI } from 'apis/auth';
-
+import { signUpAPI } from 'apis/user';
+import { toast } from 'react-toastify';
 // function Copyright(props: any) {
 //   return (
 //     <Typography variant='body2' color='text.secondary' align='center' {...props}>
@@ -43,11 +43,18 @@ export default function SignUp() {
     },
   });
   const onSubmit = async (data: SignUpInput) => {
-    const res = await signUpAPI({
-      email: data.email,
-      nickname: data.nickname,
-      password: data.password,
-    });
+    const res = await toast.promise(
+      signUpAPI({
+        email: data.email,
+        nickname: data.nickname,
+        password: data.password,
+      }),
+      {
+        pending: '회원가입 중입니다',
+        success: '회원가입에 성공했습니다!',
+        error: '회원가입에 실패했습니다',
+      }
+    );
     if (res.status === 201) {
       navigate(signInPage.path, { replace: true });
     }
@@ -68,7 +75,7 @@ export default function SignUp() {
               회원가입
             </Typography>
             <Box component='form' noValidate onSubmit={handleSubmit(onSubmit)} sx={{ mt: 3 }}>
-              <Grid container spacing={2}>
+              <Grid container>
                 <Grid item xs={12}>
                   <FormInputText
                     name='nickname'
