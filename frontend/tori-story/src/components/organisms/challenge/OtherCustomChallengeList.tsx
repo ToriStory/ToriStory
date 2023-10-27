@@ -3,8 +3,9 @@ import useInfiniteFetcher from 'hooks/useInfiniteFetcher';
 import { ArrowDownUp } from 'lucide-react';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { cls } from 'utils/cls';
-import CustomChallengeList from 'components/organisms/challenge/CustomChallengeList';
 import { customChallengeProps } from 'types/challenge';
+import CustomChallenge from './CustomChallenge';
+import { Skeleton } from '@mui/material';
 
 const OtherCustomChallengeList = () => {
   const observeTarget = useRef(null);
@@ -12,10 +13,14 @@ const OtherCustomChallengeList = () => {
   const [param, setParam] = useState<string>('');
   const [sortValue, setSortValue] = useState<number>(0); // 0: 최신순, 1: 스크랩순
 
-  const { data: searchResults, isLoading, setSize } = useInfiniteFetcher(param);
+  const { data: searchResults, isLoading, error, setSize } = useInfiniteFetcher(param);
 
   useEffect(() => {
-    setParam(`?keyword=${searchText}&sort=${sortValue}`);
+    if (searchText === '') {
+      setParam(`sort=${sortValue}`);
+    } else {
+      setParam(`keyword=${searchText}&sort=${sortValue}`);
+    }
   }, [searchText, sortValue]);
 
   const onIntersect = useCallback(
@@ -59,12 +64,24 @@ const OtherCustomChallengeList = () => {
         </div>
       </div>
       <div className={cls('max-h-[calc(100%-56px)] overflow-y-auto pb-12')}>
-        <CustomChallengeList />
-        {isLoading && <div>로딩중..</div>}
+        {isLoading && (
+          <Skeleton
+            variant='rounded'
+            width='100%'
+            height={150}
+            sx={{
+              backgroundColor: 'rgba(255, 255, 255, 0.5)',
+              marginTop: '16px',
+            }}
+          />
+        )}
+        {error && <div>{error.message}</div>}
         {searchResults &&
-          searchResults.map((searchResultItem) =>
-            searchResultItem?.totalCustomChallenge.map((result: customChallengeProps) => (
-              <div key={result.id}>하윙</div>
+          searchResults?.map((searchResultItem) =>
+            searchResultItem?.totalCustomChallengeList.map((result: customChallengeProps) => (
+              <div key={result.id}>
+                <CustomChallenge props={result} />
+              </div>
             ))
           )}
         <div ref={observeTarget}></div>

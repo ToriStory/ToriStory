@@ -7,7 +7,7 @@ export interface customChallengeProps {
 }
 
 export interface customChallengeListProps {
-  totalCustomChallenge: customChallengeProps[];
+  totalCustomChallengeList: customChallengeProps[];
   hasNext: boolean;
   nextCursor: number;
   nextPage: number;
