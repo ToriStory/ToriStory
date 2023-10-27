@@ -3,6 +3,7 @@ import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
+import { createCustomChallengeApi } from 'apis/challengeApi';
 import { useAtom, useAtomValue } from 'jotai';
 import { ChevronLeft } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
@@ -24,17 +25,20 @@ export default function HeaderDepthMore({ pathname }: { pathname: string }) {
     navigate(-1);
   };
 
-  const handleCreateChallenge = () => {
-    const createChallengeResponse: customChallengeCreateProps = {
-      content: challengeTitle,
-      endDt: challengeDate,
-      displayFlag: challengeisplayFlag,
-    };
-    console.log(createChallengeResponse);
+  const handleCreateChallenge = async () => {
+    if (challengeTitle !== '') {
+      const createChallengeResponse: customChallengeCreateProps = {
+        content: challengeTitle,
+        endDt: challengeDate,
+        displayFlag: challengeisplayFlag,
+      };
+      const result = await createCustomChallengeApi(createChallengeResponse);
+      console.log(result);
 
-    navigate(-1);
-    setChallengeTitle('');
-    setChallengeisplayFlag(true);
+      navigate(-1);
+      setChallengeTitle('');
+      setChallengeisplayFlag(true);
+    }
   };
 
   return (
@@ -58,7 +62,7 @@ export default function HeaderDepthMore({ pathname }: { pathname: string }) {
           </Typography>
           {pathname === '도전 생성' && (
             <div
-              className='flex gap-4 justify-center items-center font-jua'
+              className='flex gap-4 justify-center items-center font-jua text-orange-400'
               onClick={handleCreateChallenge}
             >
               저장

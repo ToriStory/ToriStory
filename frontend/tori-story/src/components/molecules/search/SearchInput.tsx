@@ -16,13 +16,11 @@ export const SearchInput = ({ onSearch }: SearchProps) => {
   const handleEnterDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
     if (event.key === 'Enter') {
       onSearch(searchText);
-      setSearchText('');
     }
   };
 
   const handleIconClick = () => {
     onSearch(searchText);
-    setSearchText('');
   };
 
   return (
@@ -33,7 +31,7 @@ export const SearchInput = ({ onSearch }: SearchProps) => {
         variant='outlined'
         fullWidth
         size='small'
-        sx={{ background: 'white' }}
+        sx={{ background: 'white', borderRadius: '4px' }}
         onChange={(word) => handleSearchText(word.target.value)}
         onKeyDown={handleEnterDown}
         value={searchText}

@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from 'apis';
 import { customChallengeCreateProps } from 'types/challenge';
 
 const apiUrl = '/challenge';
