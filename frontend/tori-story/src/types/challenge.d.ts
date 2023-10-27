@@ -22,3 +22,8 @@ export interface customChallengeCreateProps {
 export interface customChallengeScrapProps {
   endDt: string | null;
 }
+
+/* AI 인증 */
+export interface CertificationResponse {
+  result: boolean;
+}
