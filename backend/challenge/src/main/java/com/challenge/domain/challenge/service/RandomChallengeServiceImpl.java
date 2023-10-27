@@ -32,6 +32,25 @@ public class RandomChallengeServiceImpl implements RandomChallengeService {
     private final PlaceChallengeRepository placeChallengeRepository;
 
     @Override
+    public FindRandomRes findRandomChallenge(Long memberId) {
+        Optional<RandomChallenge> randomChallenge = randomChallengeRepository.findByMemberIdAndChallengeDt(memberId, LocalDate.now());
+
+        if (randomChallenge.isEmpty()) {
+            addRandomChallenge(memberId);
+            randomChallenge = randomChallengeRepository.findByMemberIdAndChallengeDt(memberId, LocalDate.now());
+        }
+
+        RandomChallenge challenge = randomChallenge.get();
+
+        return FindRandomRes.builder()
+                .id(challenge.getRandomChallengeId())
+                .content(getChallengeContent(challenge.getCategory().toString(), challenge.getChallengeId()))
+                .compFlag(challenge.isCompFlag())
+                .category(challenge.getCategory().toString())
+                .build();
+    }
+
+    @Override
     public FindRandomRes findRandomChallenge(String accessToken) {
         // 사용자 아이디 가져오는 것으로 수정하기!!
         long memberId = 3;
