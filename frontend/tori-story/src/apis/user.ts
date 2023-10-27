@@ -59,7 +59,7 @@ export const signOutAPI = async () => {
 export const getUserInfoAPI = async () => {
   const url = memberUrl;
   const res = await axios.get<UserResponse>(url);
-  return res;
+  return res.data;
 };
 
 export const getUserIdAPI = async () => {
