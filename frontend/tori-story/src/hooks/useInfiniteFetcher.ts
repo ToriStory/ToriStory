@@ -5,11 +5,11 @@ import { customChallengeListProps } from 'types/challenge';
 export default function useInfiniteFetcher(params: string = '') {
   const getKey = (pageIndex: number, previousPageData: customChallengeListProps) => {
     // 끝에 도달
-    console.log('previousPageData', previousPageData);
-
     if (previousPageData && !previousPageData.totalCustomChallengeList) {
       return null;
     }
+
+    if (previousPageData && !previousPageData.hasNext) return null;
 
     // 첫 페이지, `previousPageData`가 없음
     if (pageIndex === 0) return `/challenge/custom/all?${params}&cursor=0&page=0&limit=10`;

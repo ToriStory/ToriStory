@@ -34,12 +34,13 @@ const Challenge = ({
 /* style */
 const cardStyle = {
   backgroundColor: 'white',
+  display: 'relative',
   opacity: 0.95,
   borderColor: orange400,
   border: `2px solid ${orange400}`,
   borderRadius: '0.6rem',
   padding: '8px 16px ',
-  marginTop: '1rem',
+  marginBottom: '1rem',
 };
 
 const cardHeaderBottomStyle = {

@@ -1,5 +1,5 @@
-import { IconButton, TextField } from '@mui/material';
-import { SearchIcon } from 'lucide-react';
+import { IconButton, InputAdornment, TextField } from '@mui/material';
+import { SearchIcon, X } from 'lucide-react';
 import { useState } from 'react';
 
 type SearchProps = {
@@ -23,6 +23,10 @@ export const SearchInput = ({ onSearch }: SearchProps) => {
     onSearch(searchText);
   };
 
+  const handleClearText = () => {
+    setSearchText('');
+  };
+
   return (
     <div>
       <TextField
@@ -37,9 +41,16 @@ export const SearchInput = ({ onSearch }: SearchProps) => {
         value={searchText}
         InputProps={{
           endAdornment: (
-            <IconButton onClick={() => handleIconClick()}>
-              <SearchIcon />
-            </IconButton>
+            <InputAdornment position='end'>
+              {searchText && (
+                <IconButton onClick={handleClearText}>
+                  <X size='16' />
+                </IconButton>
+              )}
+              <IconButton onClick={handleIconClick}>
+                <SearchIcon />
+              </IconButton>
+            </InputAdornment>
           ),
         }}
       />

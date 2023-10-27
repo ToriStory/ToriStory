@@ -20,5 +20,5 @@ export interface customChallengeCreateProps {
 }
 
 export interface customChallengeScrapProps {
-  endDt: string;
+  endDt: string | null;
 }

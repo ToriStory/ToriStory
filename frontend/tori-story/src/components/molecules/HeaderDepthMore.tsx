@@ -3,19 +3,21 @@ import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import { createCustomChallengeApi } from 'apis/challengeApi';
+import { createCustomChallengeApi, createOtherCustomChallengeApi } from 'apis/challengeApi';
 import { useAtom, useAtomValue } from 'jotai';
 import { ChevronLeft } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import {
   createChallengeDate,
   createChallengeDisplayFlag,
   createChallengeTitle,
 } from 'stores/challengeStore';
-import { customChallengeCreateProps } from 'types/challenge';
+import { customChallengeCreateProps, customChallengeScrapProps } from 'types/challenge';
 
 export default function HeaderDepthMore({ pathname }: { pathname: string }) {
   const navigate = useNavigate();
+
+  const { content, id } = useLocation().state;
 
   const [challengeTitle, setChallengeTitle] = useAtom(createChallengeTitle);
   const challengeDate = useAtomValue(createChallengeDate);
@@ -23,17 +25,35 @@ export default function HeaderDepthMore({ pathname }: { pathname: string }) {
 
   const handleGoBack = () => {
     navigate(-1);
+    if (pathname === '도전 생성') {
+      setChallengeTitle('');
+      setChallengeisplayFlag(true);
+    }
   };
 
   const handleCreateChallenge = async () => {
     if (challengeTitle !== '') {
-      const createChallengeResponse: customChallengeCreateProps = {
-        content: challengeTitle,
-        endDt: challengeDate,
-        displayFlag: challengeisplayFlag,
-      };
-      const result = await createCustomChallengeApi(createChallengeResponse);
-      console.log(result);
+      if (content === null) {
+        const createChallengeResponse: customChallengeCreateProps = {
+          content: challengeTitle,
+          endDt: challengeDate,
+          displayFlag: challengeisplayFlag,
+        };
+        const result = await createCustomChallengeApi(createChallengeResponse);
+        console.log(result);
+      } else {
+        if (id !== null) {
+          const customChallengeId = parseInt(id);
+          const updateChallengeResponse: customChallengeScrapProps = {
+            endDt: challengeDate,
+          };
+          const result = await createOtherCustomChallengeApi(
+            customChallengeId,
+            updateChallengeResponse
+          );
+          console.log(result);
+        }
+      }
 
       navigate(-1);
       setChallengeTitle('');
