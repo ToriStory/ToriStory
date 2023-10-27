@@ -7,7 +7,9 @@ import java.math.BigInteger;
 
 public interface RandomChallengeService {
 
-    FindRandomRes findRandomChallenge(String accessToken);
+    FindRandomRes findRandomChallenge(Long memberId);
+
+    FindRandomRes findRandomChallenge(String AccessToken);
 
     FindRandomRes modifyRandomId(String accessToken);
 
