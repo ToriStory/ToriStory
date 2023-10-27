@@ -33,11 +33,19 @@ export default function HeaderDepthOne({ pathname }: { pathname: string }) {
             {pathname}
           </Typography>
           <div className='flex gap-4 justify-center items-center'>
-            {navItems.map((item) => (
-              <button key={item.name} className=' text-black' onClick={item.to}>
-                {item.icon}
-              </button>
-            ))}
+            {navItems.map((item) =>
+              pathname !== '마이페이지' ? (
+                item.name !== '설정' && (
+                  <button key={item.name} className=' text-black' onClick={item.to}>
+                    {item.icon}
+                  </button>
+                )
+              ) : (
+                <button key={item.name} className=' text-black' onClick={item.to}>
+                  {item.icon}
+                </button>
+              )
+            )}
           </div>
         </Toolbar>
       </AppBar>

@@ -23,9 +23,9 @@ function BottomTabNavigation({ pathname }: { pathname: string }) {
       setValue(0);
     } else if (pathname === togetherChallengePage.label) {
       setValue(1);
-    } else if (pathname === myChallengePage.label) {
-      setValue(2);
     } else if (pathname === myToriPage.label) {
+      setValue(2);
+    } else if (pathname === myChallengePage.label) {
       setValue(3);
     } else if (pathname === myPagePage.label) {
       setValue(4);
@@ -37,27 +37,27 @@ function BottomTabNavigation({ pathname }: { pathname: string }) {
 
   const bottomTabMenu = [
     {
-      label: '토토리',
+      label: totoriPage.label,
       icon: <Gift />,
       to: navigation.navigateToTotori,
     },
     {
-      label: '나도 도전',
+      label: togetherChallengePage.label,
       icon: <HeartHandshake />,
       to: navigation.navigateToTogetherChallenge,
     },
     {
-      label: '나의 도전',
-      icon: <Trophy />,
-      to: navigation.navigateToMyChallenge,
-    },
-    {
-      label: '나의 토리',
+      label: myToriPage.label,
       icon: <Squirrel />,
       to: navigation.navigateToMyTori,
     },
     {
-      label: '나의 추억',
+      label: myChallengePage.label,
+      icon: <Trophy />,
+      to: navigation.navigateToMyChallenge,
+    },
+    {
+      label: myPagePage.label,
       icon: <User2 />,
       to: navigation.navigateToMyPage,
     },
@@ -67,8 +67,6 @@ function BottomTabNavigation({ pathname }: { pathname: string }) {
     <div>
       <Box sx={{ pb: 7 }} ref={ref}>
         {pathname === '랜딩' ||
-        pathname === '로그인' ||
-        pathname === '회원가입' ||
         pathname === '설정' ||
         pathname === '알림' ||
         pathname === '도전 생성' ||

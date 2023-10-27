@@ -5,12 +5,13 @@ import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import { myChallengePage, signUpPage } from 'constants/pathname';
+import { myToriPage, signUpPage } from 'constants/pathname';
 import { Link, useNavigate } from 'react-router-dom';
 import AuthBackground from 'components/atoms/background/AuthBackground';
 import { useForm } from 'react-hook-form';
 import { FormInputText } from 'components/atoms/input/FormInputText';
-import { signInAPI } from 'apis/auth';
+import { signInAPI } from 'apis/user';
+import { toast } from 'react-toastify';
 
 // function Copyright(props: any) {
 //   return (
@@ -26,6 +27,12 @@ import { signInAPI } from 'apis/auth';
 // }
 
 // TODO remove, this demo shouldn't need to reset the theme.
+
+interface SignInInput {
+  email: string;
+  password: string;
+}
+
 export default function SignIn() {
   const navigate = useNavigate();
   const { handleSubmit, control } = useForm({
@@ -35,15 +42,21 @@ export default function SignIn() {
     },
   });
 
-  const onSubmit = async (data: any) => {
-    const res = await signInAPI({
-      email: data.email,
-      password: data.password,
-    });
-    console.log(res);
+  const onSubmit = async (data: SignInInput) => {
+    const res = await toast.promise(
+      signInAPI({
+        email: data.email,
+        password: data.password,
+      }),
+      {
+        pending: '로그인 중입니다',
+        success: '로그인에 성공했습니다!',
+        error: '로그인에 실패했습니다',
+      }
+    );
     if (res.status === 200) {
       localStorage.setItem('accessToken', res.data.data.accessToken);
-      navigate(myChallengePage.path, { replace: true });
+      navigate(myToriPage.path, { replace: true });
     }
   };
 
@@ -82,7 +95,6 @@ export default function SignIn() {
                 }}
                 autoFocus
               />
-              <div className='h-5' />
               <FormInputText
                 name='password'
                 control={control}

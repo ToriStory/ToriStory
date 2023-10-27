@@ -5,6 +5,8 @@ import './index.css';
 import './assets/fonts/Font.css';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { Slide, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import MyChallenge from 'pages/MyChallenge/index.tsx';
 import Test from 'pages/Test.tsx';
 import Totori from 'pages/Totori/index.tsx';
@@ -50,17 +52,17 @@ const router = createBrowserRouter([
     element: <Landing />,
   },
   {
-    path: signInPage.path,
-    element: <SignIn />,
-  },
-  {
-    path: signUpPage.path,
-    element: <SignUp />,
-  },
-  {
     path: appPage.path,
     element: <App />,
     children: [
+      {
+        path: signInPage.path,
+        element: <SignIn />,
+      },
+      {
+        path: signUpPage.path,
+        element: <SignUp />,
+      },
       {
         path: myChallengePage.path,
         element: <MyChallenge />,
@@ -130,6 +132,20 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <ThemeProvider theme={orangeTheme}>
       <RouterProvider router={router} />
+      <ToastContainer
+        position='bottom-center'
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss={false}
+        draggable
+        pauseOnHover={false}
+        theme='colored'
+        transition={Slide}
+        style={{ marginBottom: 16, fontFamily: 'jua' }}
+      />
     </ThemeProvider>
   </React.StrictMode>
 );
