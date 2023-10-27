@@ -33,6 +33,7 @@ public class SecurityConfig {
                                 // member 요청은 일부 허용
                                 .antMatchers(HttpMethod.POST, "/member/login").permitAll()
                                 .antMatchers(HttpMethod.POST, "/member/join").permitAll()
+                                .antMatchers(HttpMethod.POST, "/member/checkEmail").permitAll()
 
                                 // auth 테스트
                                 .antMatchers(HttpMethod.GET, "/auth/test").permitAll()
