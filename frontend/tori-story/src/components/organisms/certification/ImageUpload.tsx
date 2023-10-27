@@ -1,128 +1,135 @@
-import { Button } from '@mui/material';
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+} from '@mui/material';
 import { AddSquareButton } from 'components/atoms/iconButtons/AddSquareButton';
 import { orange300 } from 'constants/color';
-import { useRef, useState } from 'react';
+import { atom, useAtom } from 'jotai';
+import { useEffect, useRef, useState } from 'react';
 import { cls } from 'utils/cls';
 
 interface ImageUploadProps {
-  buttonTitle: string;
-  takePhotoOption: boolean;
-  selectPhotoOption: boolean;
+  buttonProps: ButtonProps;
+  optionProps?: PhotoOptionProps;
 }
 
-const ImageUpload = ({ buttonTitle, takePhotoOption, selectPhotoOption }: ImageUploadProps) => {
-  const videoRef = useRef<HTMLVideoElement | null>(null);
-  const canvasRef = useRef<HTMLCanvasElement | null>(null);
-  const imageRef = useRef<HTMLImageElement | null>(null);
-  let stream: MediaStream | null = null;
+export interface ButtonProps {
+  title: string;
+  onClick: (image: File) => void;
+}
 
+export interface PhotoOptionProps {
+  takePhoto?: boolean;
+  selectPhoto?: boolean;
+}
+
+export const fileAtom = atom<File | null>(null);
+export const selectedImageAtom = atom<string>('');
+
+const ImageUpload = ({ buttonProps, optionProps = {} }: ImageUploadProps) => {
   const fileInputRef = useRef<HTMLInputElement | null>(null);
-  const [selectedImage, setSelectedImage] = useState<string>('');
+  const [file, setFile] = useAtom(fileAtom);
+  const [selectedImage, setSelectedImage] = useAtom(selectedImageAtom);
+  const [usingModal, setUsingModal] = useState(false);
+  const [openModal, setOpenModal] = useState(false);
+  const { title, onClick } = buttonProps;
+  const { takePhoto = true, selectPhoto = false } = optionProps;
 
-  const [photoURL, setPhotoURL] = useState<string | null>('');
-
-  const startCamera = async () => {
-    try {
-      if (!stream) {
-        stream = await navigator.mediaDevices.getUserMedia({ video: true });
-      }
-
-      if (videoRef.current) {
-        videoRef.current.srcObject = stream;
-        videoRef.current.play();
-      }
-    } catch (error) {
-      console.log(selectPhotoOption);
-      console.error('카메라 액세스 오류:', error);
+  useEffect(() => {
+    if (takePhoto && selectPhoto) {
+      setUsingModal(true);
     }
-  };
-
-  const takePhoto = () => {
-    if (!canvasRef.current || !videoRef.current) {
-      return;
-    }
-
-    const video = videoRef.current;
-    const canvas = canvasRef.current;
-    const context = canvas.getContext('2d');
-
-    if (!context) {
-      return;
-    }
-
-    canvas.width = video.videoWidth;
-    canvas.height = video.videoHeight;
-
-    context.drawImage(video, 0, 0, canvas.width, canvas.height);
-
-    const photoDataURL = canvas.toDataURL('image/jpeg');
-    setPhotoURL(photoDataURL); // 이미지 URL을 상태로 설정
-
-    if (imageRef.current) {
-      imageRef.current.src = photoDataURL; // 이미지 요소에 URL 설정
-    }
-  };
+  }, []);
 
   const handleTakePhoto = () => {
-    // 파일 입력 요소 클릭
     if (fileInputRef.current) {
       fileInputRef.current.click();
     }
+    handleCloseModal();
   };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
     if (files && files.length > 0) {
-      const file = files[0];
-      // 선택된 파일을 업로드 또는 처리할 수 있습니다.
-      console.log('Selected file:', file);
-      const imageUrl = URL.createObjectURL(file);
+      const newFile = files[0];
+      const imageUrl = URL.createObjectURL(newFile);
+      setFile(newFile);
       setSelectedImage(imageUrl);
     }
   };
 
+  const handleOpenModal = () => {
+    setOpenModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setOpenModal(false);
+  };
+
   return (
-    <div className={cls('flex flex-col justify-center items-center')}>
-      <AddSquareButton
-        size={100}
-        color={orange300}
-        onClick={startCamera}
-        className={cls('flex justify-center items-center')}
-      />
+    <div className={cls('h-full flex flex-col justify-center items-center relative')}>
+      {selectedImage ? (
+        <img
+          src={selectedImage}
+          alt='Selected Image'
+          onClick={usingModal ? handleOpenModal : handleTakePhoto}
+          className={cls('max-w-full max-h-[400px]')}
+        />
+      ) : (
+        <div>
+          <AddSquareButton
+            size={100}
+            color={orange300}
+            onClick={usingModal ? handleOpenModal : handleTakePhoto}
+            className={cls('flex justify-center items-center')}
+          />
+        </div>
+      )}
       <Button
         fullWidth
         variant='contained'
-        sx={{ mt: 3, mb: 2, fontWeight: 'bold', color: 'white', fontSize: 20 }}
+        sx={{
+          fontWeight: 'bold',
+          color: 'white',
+          fontSize: 20,
+          position: 'absolute',
+          bottom: 0,
+        }}
+        disabled={!selectedImage || !file}
+        onClick={() => {
+          if (file) {
+            onClick(file);
+          }
+        }}
       >
-        {buttonTitle}
+        {title}
       </Button>
-
-      {/* <button onClick={startCamera}>Start Camera</button> */}
-      {takePhotoOption && (
-        <>
-          <button onClick={takePhoto}>Take Photo</button>
-          {photoURL && <img ref={imageRef} src={photoURL} alt='Taken Photo' className='mt-4' />}
-        </>
-      )}
-      <video ref={videoRef} autoPlay={takePhotoOption} className='mt-4' />
-      <canvas ref={canvasRef} style={{ display: 'none' }} />
-
-      <button onClick={handleTakePhoto}>사진 찍기</button>
       <input
         type='file'
         accept='image/*'
         capture='environment'
         ref={fileInputRef}
-        style={{ display: 'none' }}
+        className={cls('hidden')}
         onChange={handleFileChange}
       />
-      {selectedImage && (
-        <img
-          src={selectedImage}
-          alt='Selected Image'
-          style={{ maxWidth: '100%', maxHeight: '400px' }}
-        />
-      )}
+
+      <Dialog open={openModal} onClose={handleCloseModal}>
+        <DialogTitle>사진 선택 옵션</DialogTitle>
+        <DialogContent sx={{ display: 'flex', flexDirection: 'column' }}>
+          <DialogContentText></DialogContentText>
+          {takePhoto && <Button onClick={handleTakePhoto}>사진 촬영하기</Button>}
+          {selectPhoto && <Button onClick={handleCloseModal}>앨범에서 선택하기</Button>}
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseModal} color='primary'>
+            닫기
+          </Button>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 };
