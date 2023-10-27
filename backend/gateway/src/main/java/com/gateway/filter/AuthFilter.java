@@ -15,7 +15,7 @@ public class AuthFilter extends AbstractGatewayFilterFactory<AuthFilter.Config> 
     private WebClient.Builder webClientBuilder;
 
     public AuthFilter(WebClient.Builder webClientBuilder) {
-        super(Config.class);  // 이 부분을 추가
+        super(Config.class);
         this.webClientBuilder = webClientBuilder;
     }
 
