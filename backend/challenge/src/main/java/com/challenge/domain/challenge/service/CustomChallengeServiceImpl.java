@@ -39,9 +39,7 @@ public class CustomChallengeServiceImpl implements CustomChallengeService {
     private final AwsS3Service awsS3Service;
 
     @Override
-    public void addCustom(String accessToken, AddCustomReq addCustomReq) {
-        Long memberId = 1L;
-
+    public void addCustom(Long memberId, AddCustomReq addCustomReq) {
         if (addCustomReq.getContent().length() > 20) {
             throw new ChallengeException(ErrorCode.CONTENT_LENGTH_OVER);
         }
@@ -63,9 +61,7 @@ public class CustomChallengeServiceImpl implements CustomChallengeService {
                 .build());
     }
 
-    public List<FindCustomRes> findMyCustomChallenge(String accessToken) {
-        Long memberId = 1L;
-
+    public List<FindCustomRes> findMyCustomChallenge(Long memberId) {
         List<CustomEntry> customEntryList = customEntryRepository.findAllByMemberId(memberId);
 
         return customEntryList.stream()
@@ -124,9 +120,7 @@ public class CustomChallengeServiceImpl implements CustomChallengeService {
     }
 
     @Override
-    public List<FindCustomRes> findMyTodayCustomChallenge(String accessToken) {
-        Long memberId = 1L;
-
+    public List<FindCustomRes> findMyTodayCustomChallenge(Long memberId) {
         List<CustomEntry> customEntryList = customEntryRepository.findAllByMemberIdAndEndDt(memberId);
 
         return customEntryList.stream()
@@ -144,9 +138,7 @@ public class CustomChallengeServiceImpl implements CustomChallengeService {
     }
 
     @Override
-    public void addScrapCustom(String accessToken, BigInteger customChallengeId, AddScrapCustomReq addScrapCustomReq) {
-        Long memberId = 2L;
-
+    public void addScrapCustom(Long memberId, BigInteger customChallengeId, AddScrapCustomReq addScrapCustomReq) {
         customEntryRepository.save(CustomEntry.builder()
                 .memberId(memberId)
                 .customChallenge(customChallengeRepository.findById(customChallengeId).orElseThrow(() -> new ChallengeException(ErrorCode.CUSTOM_CHALLENGE_NOT_FOUND)))
@@ -156,9 +148,7 @@ public class CustomChallengeServiceImpl implements CustomChallengeService {
 
 
     @Override
-    public void modifyCustomCompFlag(String accessToken, BigInteger customEntryId) {
-        Long memberId = 1L;
-
+    public void modifyCustomCompFlag(Long memberId, BigInteger customEntryId) {
         CustomEntry customEntry = customEntryRepository.findById(customEntryId)
                 .orElseThrow(() -> new ChallengeException(ErrorCode.CUSTOM_CHALLENGE_NOT_FOUND));
 
@@ -170,9 +160,7 @@ public class CustomChallengeServiceImpl implements CustomChallengeService {
     }
 
     @Override
-    public void removeCustom(String accessToken, BigInteger customEntryId) {
-        Long memberId = 1L;
-
+    public void removeCustom(Long memberId, BigInteger customEntryId) {
         CustomEntry customEntry = customEntryRepository.findById(customEntryId)
                 .orElseThrow(() -> new ChallengeException(ErrorCode.CUSTOM_CHALLENGE_NOT_FOUND));
 
@@ -184,9 +172,7 @@ public class CustomChallengeServiceImpl implements CustomChallengeService {
     }
 
     @Override
-    public List<FindMemoryRes> findMemoryCustom(String accessToken) {
-        Long memberId = 1L;
-
+    public List<FindMemoryRes> findMemoryCustom(Long memberId) {
         List<CustomEntry> customEntryList = customEntryRepository.findAllByMemberId(memberId);
 
         return customEntryList.stream()
@@ -201,9 +187,7 @@ public class CustomChallengeServiceImpl implements CustomChallengeService {
     }
 
     @Override
-    public void modifyCustomImage(String accessToken, BigInteger customEntryId, MultipartFile image) {
-        Long memberId = 1L;
-
+    public void modifyCustomImage(Long memberId, BigInteger customEntryId, MultipartFile image) {
         CustomEntry customEntry = customEntryRepository.findById(customEntryId)
                 .orElseThrow(() -> new ChallengeException(ErrorCode.CUSTOM_CHALLENGE_NOT_FOUND));
 
