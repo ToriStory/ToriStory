@@ -1,14 +1,19 @@
 package com.gateway.filter;
 
-import lombok.RequiredArgsConstructor;
+import com.gateway.response.EnvelopRes;
+import com.gateway.response.FindIdRes;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
 @Component
+@Slf4j
 public class AuthFilter extends AbstractGatewayFilterFactory<AuthFilter.Config> {
 
     @Autowired
@@ -24,18 +29,24 @@ public class AuthFilter extends AbstractGatewayFilterFactory<AuthFilter.Config> 
         return (exchange, chain) -> {
             String token = exchange.getRequest().getHeaders().getFirst("Authorization");
             if (token != null && !token.isEmpty()) {
-                Mono<String> userIdMono = webClientBuilder.build()
+                Mono<EnvelopRes<FindIdRes>> memberIdMono = webClientBuilder.build()
                         .post()
-                        .uri("http://k9a402.p.ssafy.io:8201/member/id")
-                        .bodyValue(token)
+                        .uri("http://localhost:8201/member/id")
+                        .header("Authorization", token)
                         .retrieve()
-                        .bodyToMono(String.class);
+                        .bodyToMono(new ParameterizedTypeReference<EnvelopRes<FindIdRes>>() {
+                        });
 
-                return userIdMono.flatMap(userId -> {
-                    // 헤더에 userId를 추가
-                    exchange.getRequest().mutate().header("userId", userId).build();
-                    return chain.filter(exchange.mutate().request(exchange.getRequest()).build());
-                }).onErrorResume(e -> chain.filter(exchange));
+                return memberIdMono.flatMap(response -> {
+                    Long memberId = response.getData().getId();
+                    ServerHttpRequest mutatedRequest = exchange.getRequest().mutate()
+                            .header("memberId", Long.toString(memberId))
+                            .build();
+                    return chain.filter(exchange.mutate().request(mutatedRequest).build());
+                }).onErrorResume(e -> {
+                    log.info("Error occurred: {}", e.getMessage());
+                    return chain.filter(exchange);
+                });
             }
             return chain.filter(exchange);
         };

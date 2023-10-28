@@ -1,3 +1,7 @@
+logging:
+  level:
+    org.springframework.cloud.gateway: DEBUG
+
 server:
   port: 8200
 
