@@ -12,7 +12,6 @@ import com.challenge.domain.challenge.service.CustomChallengeService;
 import com.challenge.domain.challenge.service.RandomChallengeService;
 import com.challenge.global.response.EnvelopRes;
 
-import feign.Response;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.http.HttpStatus;
@@ -33,9 +32,9 @@ public class ChallengeController {
     private final CustomChallengeService customChallengeService;
 
     @GetMapping
-    public ResponseEntity<EnvelopRes<FindTotalChallengeRes>> findTotalChallenge(@RequestHeader("Authorization") String accessToken) {
-        FindRandomRes randomRes = randomChallengeService.findRandomChallenge(accessToken);
-        List<FindCustomRes> customResList = customChallengeService.findMyCustomChallenge(accessToken);
+    public ResponseEntity<EnvelopRes<FindTotalChallengeRes>> findTotalChallenge(@RequestHeader("memberId") Long memberId) {
+        FindRandomRes randomRes = randomChallengeService.findRandomChallenge(memberId);
+        List<FindCustomRes> customResList = customChallengeService.findMyCustomChallenge(memberId);
 
         FindTotalChallengeRes response = FindTotalChallengeRes.builder()
                 .randomRes(randomRes)
@@ -48,8 +47,8 @@ public class ChallengeController {
     }
 
     @GetMapping("/random")
-    public ResponseEntity<EnvelopRes<FindRandomRes>> findRandomChallenge(@RequestHeader("Authorization") String accessToken) {
-        FindRandomRes response = randomChallengeService.findRandomChallenge(accessToken);
+    public ResponseEntity<EnvelopRes<FindRandomRes>> findRandomChallenge(@RequestHeader("memberId") Long memberId) {
+        FindRandomRes response = randomChallengeService.findRandomChallenge(memberId);
 
         return ResponseEntity.status(HttpStatus.OK).body(EnvelopRes.<FindRandomRes>builder()
                 .data(response)
@@ -57,8 +56,8 @@ public class ChallengeController {
     }
 
     @PatchMapping("/renewal")
-    public ResponseEntity<EnvelopRes<FindRandomRes>> renewalRandomChallenge(@RequestHeader("Authorization") String accessToken) {
-        FindRandomRes response = randomChallengeService.modifyRandomId(accessToken);
+    public ResponseEntity<EnvelopRes<FindRandomRes>> renewalRandomChallenge(@RequestHeader("memberId") Long memberId) {
+        FindRandomRes response = randomChallengeService.modifyRandomId(memberId);
 
         return ResponseEntity.status(HttpStatus.OK).body(EnvelopRes.<FindRandomRes>builder()
                 .data(response)
@@ -66,33 +65,33 @@ public class ChallengeController {
     }
 
     @PatchMapping("/comp")
-    public ResponseEntity<EnvelopRes> completeRandomChallenge(@RequestHeader("Authorization") String accessToken) {
-        randomChallengeService.modifyRandomCompFlag(accessToken);
+    public ResponseEntity<EnvelopRes> completeRandomChallenge(@RequestHeader("memberId") Long memberId) {
+        randomChallengeService.modifyRandomCompFlag(memberId);
 
         return ResponseEntity.status(HttpStatus.OK).body(EnvelopRes.builder().build());
     }
 
     @PostMapping("/custom")
-    public ResponseEntity<EnvelopRes> addCustom(@RequestHeader("Authorization") String accessToken, @RequestBody @Valid AddCustomReq addCustomReq) {
+    public ResponseEntity<EnvelopRes> addCustom(@RequestHeader("memberId") Long memberId, @RequestBody @Valid AddCustomReq addCustomReq) {
 
-        customChallengeService.addCustom(accessToken, addCustomReq);
+        customChallengeService.addCustom(memberId, addCustomReq);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(EnvelopRes.builder().code(201).build());
     }
 
     @PostMapping("/scrap/{customChallengeId}")
-    public ResponseEntity<EnvelopRes> addScrapCustom(@RequestHeader("Authorization") String accessToken, @PathVariable BigInteger customChallengeId, @RequestBody AddScrapCustomReq addScrapCustomReq) {
+    public ResponseEntity<EnvelopRes> addScrapCustom(@RequestHeader("memberId") Long memberId, @PathVariable BigInteger customChallengeId, @RequestBody AddScrapCustomReq addScrapCustomReq) {
 
-        customChallengeService.addScrapCustom(accessToken, customChallengeId, addScrapCustomReq);
+        customChallengeService.addScrapCustom(memberId, customChallengeId, addScrapCustomReq);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(EnvelopRes.builder().code(201).build());
     }
 
     @GetMapping("/custom")
-    public ResponseEntity<EnvelopRes<List<FindCustomRes>>> findMyCustomChallenge(@RequestHeader("Authorization") String accessToken) {
+    public ResponseEntity<EnvelopRes<List<FindCustomRes>>> findMyCustomChallenge(@RequestHeader("memberId") Long memberId) {
 
         return ResponseEntity.status(HttpStatus.OK).body(EnvelopRes.<List<FindCustomRes>>builder()
-                .data(customChallengeService.findMyCustomChallenge(accessToken))
+                .data(customChallengeService.findMyCustomChallenge(memberId))
                 .build());
     }
 
@@ -105,41 +104,41 @@ public class ChallengeController {
     }
 
     @GetMapping("/custom/my")
-    public ResponseEntity<EnvelopRes<List<FindCustomRes>>> findMyTodayCustomChallenge(@RequestHeader("Authorization") String accessToken) {
+    public ResponseEntity<EnvelopRes<List<FindCustomRes>>> findMyTodayCustomChallenge(@RequestHeader("memberId") Long memberId) {
 
         return ResponseEntity.status(HttpStatus.OK).body(EnvelopRes.<List<FindCustomRes>>builder()
-            .data(customChallengeService.findMyTodayCustomChallenge(accessToken))
+            .data(customChallengeService.findMyTodayCustomChallenge(memberId))
             .build());
     }
 
     @PatchMapping("/comp/{customEntryId}")
-    public ResponseEntity<EnvelopRes> completeCustomChallenge(@RequestHeader("Authorization") String accessToken, @PathVariable BigInteger customEntryId) {
+    public ResponseEntity<EnvelopRes> completeCustomChallenge(@RequestHeader("memberId") Long memberId, @PathVariable BigInteger customEntryId) {
 
-        customChallengeService.modifyCustomCompFlag(accessToken, customEntryId);
+        customChallengeService.modifyCustomCompFlag(memberId, customEntryId);
 
         return ResponseEntity.status(HttpStatus.OK).body(EnvelopRes.builder().build());
     }
 
     @DeleteMapping("/custom/{customEntryId}")
-    public ResponseEntity<EnvelopRes> removeCustom(@RequestHeader("Authorization") String accessToken, @PathVariable BigInteger customEntryId) {
+    public ResponseEntity<EnvelopRes> removeCustom(@RequestHeader("memberId") Long memberId, @PathVariable BigInteger customEntryId) {
 
-        customChallengeService.removeCustom(accessToken, customEntryId);
+        customChallengeService.removeCustom(memberId, customEntryId);
 
         return ResponseEntity.status(HttpStatus.OK).body(EnvelopRes.builder().build());
     }
 
     @GetMapping("/memory")
-    public ResponseEntity<EnvelopRes<List<FindMemoryRes>>> findMemoryCustom(@RequestHeader("Authorization") String accessToken) {
+    public ResponseEntity<EnvelopRes<List<FindMemoryRes>>> findMemoryCustom(@RequestHeader("memberId") Long memberId) {
 
         return ResponseEntity.status(HttpStatus.OK).body(EnvelopRes.<List<FindMemoryRes>>builder()
-                .data(customChallengeService.findMemoryCustom(accessToken))
+                .data(customChallengeService.findMemoryCustom(memberId))
                 .build());
     }
 
     @PatchMapping("/memory/{customEntryId}")
-    public ResponseEntity<EnvelopRes> modifyCustomImage(@RequestHeader("Authorization") String accessToken, @PathVariable BigInteger customEntryId, @RequestPart(required = false) MultipartFile image) {
+    public ResponseEntity<EnvelopRes> modifyCustomImage(@RequestHeader("memberId") Long memberId, @PathVariable BigInteger customEntryId, @RequestPart(required = false) MultipartFile image) {
 
-        customChallengeService.modifyCustomImage(accessToken, customEntryId, image);
+        customChallengeService.modifyCustomImage(memberId, customEntryId, image);
 
         return ResponseEntity.status(HttpStatus.OK).body(EnvelopRes.builder().build());
     }

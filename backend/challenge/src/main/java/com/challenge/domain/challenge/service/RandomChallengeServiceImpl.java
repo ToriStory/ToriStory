@@ -18,8 +18,6 @@ import javax.transaction.Transactional;
 import java.math.BigInteger;
 import java.time.LocalDate;
 import java.util.*;
-import java.util.concurrent.ThreadLocalRandom;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -32,10 +30,7 @@ public class RandomChallengeServiceImpl implements RandomChallengeService {
     private final PlaceChallengeRepository placeChallengeRepository;
 
     @Override
-    public FindRandomRes findRandomChallenge(String accessToken) {
-        // 사용자 아이디 가져오는 것으로 수정하기!!
-        long memberId = 3;
-
+    public FindRandomRes findRandomChallenge(Long memberId) {
         Optional<RandomChallenge> randomChallenge = randomChallengeRepository.findByMemberIdAndChallengeDt(memberId, LocalDate.now());
 
         if (randomChallenge.isEmpty()) {
@@ -104,10 +99,7 @@ public class RandomChallengeServiceImpl implements RandomChallengeService {
     }
 
     @Override
-    public FindRandomRes modifyRandomId(String accessToken) {
-        // 사용자 아이디 가져오는 것으로 수정하기!!
-        long memberId = 3;
-
+    public FindRandomRes modifyRandomId(Long memberId) {
         Optional<RandomChallenge> randomChallenge = randomChallengeRepository.findByMemberIdAndChallengeDt(memberId, LocalDate.now());
         if (randomChallenge.isEmpty()) {
             throw new ChallengeException(ErrorCode.RANDOM_CHALLENGE_NOT_FOUND);
@@ -136,10 +128,7 @@ public class RandomChallengeServiceImpl implements RandomChallengeService {
     }
 
     @Override
-    public void modifyRandomCompFlag(String accessToken) {
-        // 사용자 아이디 가져오는 것으로 수정하기!!
-        long memberId = 3;
-
+    public void modifyRandomCompFlag(Long memberId) {
         Optional<RandomChallenge> randomChallenge = randomChallengeRepository.findByMemberIdAndChallengeDt(memberId, LocalDate.now());
         if (randomChallenge.isEmpty()) {
             throw new ChallengeException(ErrorCode.RANDOM_CHALLENGE_NOT_FOUND);
