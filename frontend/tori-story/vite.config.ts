@@ -34,7 +34,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'http://k9a402.p.ssafy.io/',
+        target: 'https://tori-story.com',
         changeOrigin: true,
         secure: true,
       },

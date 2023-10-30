@@ -2,7 +2,7 @@ import { customChallengeProps } from 'types/challenge';
 import ChoiceModal from '../modals/ChoiceModal';
 import { cls } from 'utils/cls';
 import { Chip, Stack } from '@mui/material';
-import { SIRENTYPE } from 'constants/sirenType';
+import { REPORTTYPE } from 'constants/sirenType';
 import { useState } from 'react';
 
 interface TogetherModalProps {
@@ -11,7 +11,7 @@ interface TogetherModalProps {
   customChallenge: customChallengeProps | undefined;
 }
 
-export const SirenModal = ({ openModal, setOpenModal, customChallenge }: TogetherModalProps) => {
+export const ReportModal = ({ openModal, setOpenModal, customChallenge }: TogetherModalProps) => {
   const [selectedSiren, setSelectedSiren] = useState<number | null>(null);
 
   const handleSirenClick = (sirenValue: number) => {
@@ -51,23 +51,23 @@ export const SirenModal = ({ openModal, setOpenModal, customChallenge }: Togethe
             </div>
             <div className={cls('bg-gray-200 rounded-lg p-2 pb-1')}>
               <Stack direction='column'>
-                {SIRENTYPE.map((sirenItem) => (
+                {REPORTTYPE.map((reportItem) => (
                   <Chip
-                    key={sirenItem.value}
-                    label={sirenItem.content}
+                    key={reportItem.value}
+                    label={reportItem.content}
                     sx={{
                       marginBottom: '4px',
                       borderRadius: '8px',
                       border: `2px solid ${
-                        selectedSiren === sirenItem.value ? '#FF762E' : 'transparent'
+                        selectedSiren === reportItem.value ? '#FF762E' : 'transparent'
                       }`,
                       '&:focus': {
                         color: '#FF762E',
                         backgroundColor: '#FFF1EA',
                       },
-                      backgroundColor: selectedSiren === sirenItem.value ? '#FFF1EA' : 'white',
+                      backgroundColor: selectedSiren === reportItem.value ? '#FFF1EA' : 'white',
                     }}
-                    onClick={() => handleSirenClick(sirenItem.value)}
+                    onClick={() => handleSirenClick(reportItem.value)}
                   />
                 ))}
               </Stack>
