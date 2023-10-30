@@ -34,6 +34,7 @@ public class SecurityConfig {
                                 .antMatchers(HttpMethod.POST, "/member/login").permitAll()
                                 .antMatchers(HttpMethod.POST, "/member/join").permitAll()
                                 .antMatchers(HttpMethod.POST, "/member/checkEmail").permitAll()
+                                .antMatchers(HttpMethod.POST, "/member/refresh").permitAll()
 
                                 // auth 테스트
                                 .antMatchers(HttpMethod.GET, "/auth/test").permitAll()

@@ -61,7 +61,6 @@ public class MemberServiceImpl implements MemberService {
 
         return LoginRes.builder()
                 .accessToken(jwtProvider.generateAccessToken(member.getEmail()))
-                .refreshToken(jwtProvider.generateRefreshToken(member.getEmail()))
                 .build();
 
     }

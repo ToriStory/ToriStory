@@ -6,16 +6,22 @@ import com.auth.domain.member.dto.request.LoginReq;
 import com.auth.domain.member.dto.response.FindIdRes;
 import com.auth.domain.member.dto.response.LoginRes;
 import com.auth.domain.member.dto.response.MyInfoRes;
+import com.auth.domain.member.dto.response.RefreshRes;
 import com.auth.domain.member.service.MemberService;
+import com.auth.global.exception.AuthException;
 import com.auth.global.jwt.JwtProvider;
 import com.auth.global.response.EnvelopRes;
+import com.auth.global.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 @Slf4j
@@ -26,6 +32,9 @@ public class MemberController {
 
     private final MemberService memberService;
     private final JwtProvider jwtProvider;
+
+    @Value("${jwt.cookieName}")
+    private String jwtCookieName;
 
     @PostMapping("/join")
     public ResponseEntity<EnvelopRes> join(@Valid @RequestBody JoinReq joinReq) {
@@ -46,6 +55,7 @@ public class MemberController {
         log.debug("Member Controller: login() method called.........");
 
         return ResponseEntity.status(HttpStatus.OK)
+                .header("Set-Cookie", jwtCookieName + "=" + jwtProvider.generateRefreshToken(loginReq.getEmail()) + "; Path=/member; HttpOnly; Max-Age=" + 60 * 60 * 24 + "; SameSite=None; Secure")
                 .body(EnvelopRes.<LoginRes>builder()
                         .data(memberService.login(loginReq))
                         .build());
@@ -60,6 +70,31 @@ public class MemberController {
 
         return ResponseEntity.status(HttpStatus.OK)
                 .body(EnvelopRes.builder()
+                        .build());
+    }
+
+    @PostMapping("/refresh")
+    public ResponseEntity<EnvelopRes<RefreshRes>> refresh(HttpServletRequest request){
+        Cookie[] cookies = request.getCookies();
+
+        String refreshToken = null;
+
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if (jwtCookieName.equals(cookie.getName())) {
+                    refreshToken = cookie.getValue();
+                    log.debug("refreshToken: " + refreshToken);
+                }
+            }
+        }else{
+            throw new AuthException(ErrorCode.INVALID_REFRESH_TOKEN);
+        }
+
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(EnvelopRes.<RefreshRes>builder()
+                        .data(RefreshRes.builder()
+                                .accessToken(jwtProvider.reIssue(refreshToken))
+                                .build())
                         .build());
     }
 
