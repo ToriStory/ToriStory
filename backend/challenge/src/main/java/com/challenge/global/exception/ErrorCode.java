@@ -17,6 +17,9 @@ public enum ErrorCode {
 
 	PHOTO_CHALLENGE_NOT_FOUND(401, "존재하지 않는 장소 도전 과제"),
 
+	// 신고
+	ALREADY_REPORT_CHALLENGE(400, "이미 신고한 도전 과제"),
+
 	// S3
 	S3_IMAGE_LOAD_FAIl(500, "S3서버 이미지 업로드 실패"),
 

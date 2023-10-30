@@ -1,6 +1,7 @@
 package com.challenge.domain.challenge.service;
 
 import com.challenge.domain.challenge.dto.request.AddCustomReq;
+import com.challenge.domain.challenge.dto.request.AddReportReq;
 import com.challenge.domain.challenge.dto.response.FindCustomRes;
 
 import java.util.List;
@@ -32,5 +33,7 @@ public interface CustomChallengeService {
     List<FindMemoryRes> findMemoryCustom(Long memberId);
 
     void modifyCustomImage(Long memberId, BigInteger customEntryId, MultipartFile image);
+
+    void addReportCustom(Long memberId, AddReportReq addReportReq);
 
 }

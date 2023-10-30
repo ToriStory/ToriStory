@@ -1,6 +1,7 @@
 package com.challenge.domain.challenge.controller;
 
 import com.challenge.domain.challenge.dto.request.AddCustomReq;
+import com.challenge.domain.challenge.dto.request.AddReportReq;
 import com.challenge.domain.challenge.dto.response.FindCertRes;
 import com.challenge.domain.challenge.dto.response.FindCustomRes;
 import com.challenge.domain.challenge.dto.request.AddScrapCustomReq;
@@ -156,4 +157,18 @@ public class ChallengeController {
                         .build()
                 ).build());
     }
+
+    @PostMapping("/report")
+    public ResponseEntity<EnvelopRes> reportChallenge(@RequestHeader("memberId") Long memberId, @RequestBody
+        AddReportReq addReportReq) {
+
+        customChallengeService.addReportCustom(memberId, addReportReq);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(
+            EnvelopRes.builder()
+                .code(201)
+                .build()
+        );
+    }
+
 }
