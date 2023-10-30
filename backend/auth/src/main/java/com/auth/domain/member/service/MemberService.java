@@ -1,5 +1,6 @@
 package com.auth.domain.member.service;
 
+import com.auth.domain.member.dto.request.CheckCodeReq;
 import com.auth.domain.member.dto.request.JoinReq;
 import com.auth.domain.member.dto.request.LoginReq;
 import com.auth.domain.member.dto.response.FindIdRes;
@@ -19,8 +20,12 @@ public interface MemberService {
 
     void logout(String accessToken);
 
-    void checkEmail(String email);
+    void checkDuplicateEmail(String email);
 
     MyInfoRes findMyInfo(String accessToken);
+
+    void sendCodeToEmail(String toEmail);
+
+    void checkCode(CheckCodeReq checkCodeReq);
 
 }

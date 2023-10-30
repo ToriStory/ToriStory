@@ -20,7 +20,7 @@ import java.util.List;
 @Configuration
 public class SwaggerConfig {
 
-//    http://localhost:8201/swagger-ui/index.html
+//    http://localhost:8201/member/swagger-ui/index.html
 
     @Bean
     public Docket api() {

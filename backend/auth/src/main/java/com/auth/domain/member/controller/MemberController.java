@@ -3,6 +3,7 @@ package com.auth.domain.member.controller;
 import com.auth.domain.member.dto.request.CheckEmailReq;
 import com.auth.domain.member.dto.request.JoinReq;
 import com.auth.domain.member.dto.request.LoginReq;
+import com.auth.domain.member.dto.request.CheckCodeReq;
 import com.auth.domain.member.dto.response.FindIdRes;
 import com.auth.domain.member.dto.response.LoginRes;
 import com.auth.domain.member.dto.response.MyInfoRes;
@@ -26,7 +27,7 @@ import javax.validation.Valid;
 
 @Slf4j
 @RestController
-@RequestMapping("/member")
+@RequestMapping
 @RequiredArgsConstructor
 public class MemberController {
 
@@ -55,7 +56,7 @@ public class MemberController {
         log.debug("Member Controller: login() method called.........");
 
         return ResponseEntity.status(HttpStatus.OK)
-                .header("Set-Cookie", jwtCookieName + "=" + jwtProvider.generateRefreshToken(loginReq.getEmail()) + "; Path=/member; HttpOnly; Max-Age=" + 60 * 60 * 24 + "; SameSite=None; Secure")
+                .header("Set-Cookie", jwtCookieName + "=" + jwtProvider.generateRefreshToken(loginReq.getEmail()) + "; Path=/member/refresh; HttpOnly; Max-Age=" + 60 * 60 * 24 + "; SameSite=None; Secure")
                 .body(EnvelopRes.<LoginRes>builder()
                         .data(memberService.login(loginReq))
                         .build());
@@ -116,7 +117,19 @@ public class MemberController {
 
         log.debug("Member Controller: checkEmail() method called.........");
 
-        memberService.checkEmail(checkEmailReq.getEmail());
+        memberService.sendCodeToEmail(checkEmailReq.getEmail());
+
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(EnvelopRes.builder()
+                        .build());
+    }
+
+    @PostMapping("/checkCode")
+    public ResponseEntity<EnvelopRes> checkCode(@RequestBody CheckCodeReq checkCodeReq){
+
+        log.debug("Member Controller: checkCode() method called.........");
+
+        memberService.checkCode(checkCodeReq);
 
         return ResponseEntity.status(HttpStatus.OK)
                 .body(EnvelopRes.builder()

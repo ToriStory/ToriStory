@@ -57,3 +57,5 @@ logging:
     com.auth: DEBUG
 server:
   port: 8201
+  servlet:
+    context-path: /member
