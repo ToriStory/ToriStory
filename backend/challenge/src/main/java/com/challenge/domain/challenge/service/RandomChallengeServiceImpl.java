@@ -8,11 +8,13 @@ import com.challenge.domain.challenge.entity.RandomChallenge;
 import com.challenge.domain.challenge.repository.PhotoChallengeRepository;
 import com.challenge.domain.challenge.repository.PlaceChallengeRepository;
 import com.challenge.domain.challenge.repository.RandomChallengeRepository;
+import com.challenge.domain.challenge.util.CertUtil;
 import com.challenge.global.exception.ChallengeException;
 import com.challenge.global.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
 import java.math.BigInteger;
@@ -28,6 +30,7 @@ public class RandomChallengeServiceImpl implements RandomChallengeService {
     private final RandomChallengeRepository randomChallengeRepository;
     private final PhotoChallengeRepository photoChallengeRepository;
     private final PlaceChallengeRepository placeChallengeRepository;
+    private final CertUtil certUtil;
 
     @Override
     public FindRandomRes findRandomChallenge(Long memberId) {
@@ -136,6 +139,22 @@ public class RandomChallengeServiceImpl implements RandomChallengeService {
 
         RandomChallenge challenge = randomChallenge.get();
         challenge.complete();
+    }
+
+    @Override
+    public boolean findRandomCertAi(Long memberId, BigInteger challengeId, MultipartFile image) {
+
+        RandomChallenge randomChallenge = randomChallengeRepository.findById(challengeId)
+            .orElseThrow(() -> new ChallengeException(ErrorCode.RANDOM_CHALLENGE_NOT_FOUND));
+
+        if (randomChallenge.getMemberId() != memberId) {
+            throw new ChallengeException(ErrorCode.RANDOM_MEMBER_NOT_MATCH);
+        }
+
+        PhotoChallenge photoChallenge = photoChallengeRepository.findById(randomChallenge.getChallengeId())
+            .orElseThrow(() -> new ChallengeException(ErrorCode.PHOTO_CHALLENGE_NOT_FOUND));
+
+        return certUtil.certAiUtil(image).equals(photoChallenge.getKeyword());
     }
 
 }

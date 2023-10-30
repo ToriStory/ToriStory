@@ -1,6 +1,7 @@
 package com.challenge.domain.challenge.controller;
 
 import com.challenge.domain.challenge.dto.request.AddCustomReq;
+import com.challenge.domain.challenge.dto.response.FindCertRes;
 import com.challenge.domain.challenge.dto.response.FindCustomRes;
 import com.challenge.domain.challenge.dto.request.AddScrapCustomReq;
 import com.challenge.domain.challenge.dto.response.FindMemoryRes;
@@ -15,6 +16,7 @@ import com.challenge.global.response.EnvelopRes;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -141,5 +143,17 @@ public class ChallengeController {
         customChallengeService.modifyCustomImage(memberId, customEntryId, image);
 
         return ResponseEntity.status(HttpStatus.OK).body(EnvelopRes.builder().build());
+    }
+
+    @PostMapping(value = "/cert/random/ai")
+    public ResponseEntity<EnvelopRes<FindCertRes>> certAIChallenge(@RequestHeader("memberId") Long memberId, @RequestParam BigInteger challengeId, @RequestParam MultipartFile image) {
+
+        return ResponseEntity.status(HttpStatus.OK).body(
+            EnvelopRes.<FindCertRes>builder()
+                .data(
+                    FindCertRes.builder()
+                        .result(randomChallengeService.findRandomCertAi(memberId, challengeId, image))
+                        .build()
+                ).build());
     }
 }
