@@ -1,4 +1,4 @@
-export const SIRENTYPE = [
+export const REPORTTYPE = [
   { value: 1, content: '광고성 내용' },
   { value: 2, content: '음란물 내용' },
   { value: 3, content: '불법정보 내용' },

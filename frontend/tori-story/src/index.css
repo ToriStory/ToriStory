@@ -25,3 +25,11 @@
   font-family: 'omyu';
   src: url('./assets/fonts/오뮤_다예쁨체.ttf') format('truetype');
 }
+
+body {
+  -ms-overflow-style: none;
+}
+
+::-webkit-scrollbar {
+  display: none;
+}

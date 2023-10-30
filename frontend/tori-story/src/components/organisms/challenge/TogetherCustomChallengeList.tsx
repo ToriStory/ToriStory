@@ -10,7 +10,7 @@ import BottomButton from 'components/atoms/challenge/BottomButton';
 import Challenge from './Challenge';
 import { TogetherModal } from 'components/molecules/challenge/TogetherModal';
 import ErrorMushRoom from 'assets/images/ErrorMushroom.png';
-import { SirenModal } from 'components/molecules/challenge/SirenModal';
+import { ReportModal } from 'components/molecules/challenge/ReportModal';
 
 const TogetherCustomChallengeList = () => {
   const observeTarget = useRef(null);
@@ -43,7 +43,7 @@ const TogetherCustomChallengeList = () => {
   };
 
   // 신고 버튼 클릭시
-  const handleSirenButton = (result: customChallengeProps) => {
+  const handleReportButton = (result: customChallengeProps) => {
     setClickButtonValue('신고');
     setOpenModal(true);
     setClickResultValue(result);
@@ -119,7 +119,7 @@ const TogetherCustomChallengeList = () => {
                   <Challenge
                     headerLeft={<HeaderLeft challengeCategory='자유' />}
                     headerRight={
-                      <IconButton onClick={() => handleSirenButton(result)}>
+                      <IconButton onClick={() => handleReportButton(result)}>
                         <Siren size={20} className={cls('text-gray-400')} />
                       </IconButton>
                     }
@@ -149,7 +149,7 @@ const TogetherCustomChallengeList = () => {
               customChallenge={clickResult}
             />
           ) : (
-            <SirenModal
+            <ReportModal
               openModal={openModal}
               setOpenModal={setOpenModal}
               customChallenge={clickResult}
