@@ -9,8 +9,8 @@ import { Button, Dialog, DialogActions, DialogContent, IconButton } from '@mui/m
 import HeaderRight from 'components/molecules/challenge/HeaderRight';
 import { useNavigate } from 'react-router-dom';
 import { gpsCertificationPage, imageCertificationPage } from 'constants/pathname';
-import { useState } from 'react';
-import { patchRandomChallengeApi } from 'apis/challengeApi';
+import { useEffect, useState } from 'react';
+import { patchRandomChallengeApi, readRandomChallengeApi } from 'apis/challengeApi';
 import { toast } from 'react-toastify';
 
 interface RandomChallengeResponse {
@@ -22,12 +22,7 @@ interface RandomChallengeResponse {
 
 const RandomChallenge = () => {
   const [openModal, setOpenModal] = useState<boolean>(false);
-  const [response, setResponse] = useState<RandomChallengeResponse>({
-    id: 1,
-    content: '바나나 우유 1000개 맛있게 마시기',
-    compFlag: false,
-    category: 'PHOTO',
-  });
+  const [response, setResponse] = useState<RandomChallengeResponse>();
   const navigate = useNavigate();
 
   // const response: RandomChallengeResponse = {
@@ -37,14 +32,27 @@ const RandomChallenge = () => {
   //   category: 'PHOTO',
   // };
 
+  useEffect(() => {
+    getRandomChallenge();
+  }, []);
+
+  const getRandomChallenge = async () => {
+    const result = await readRandomChallengeApi();
+    if (result.status === 200) {
+      setResponse(result.data.data);
+    }
+  };
+
   const certificationIcon =
-    response.category === CATEGORY.photo ? (
+    response && response.category === CATEGORY.photo ? (
       <Camera color={orange300} />
     ) : (
       <MapPin color={orange300} />
     );
 
   const handleCertification = () => {
+    if (!response) return;
+
     if (response.category === CATEGORY.photo) {
       navigate(imageCertificationPage.path, { state: { id: response.id, type: 'random' } });
     } else {
@@ -62,13 +70,14 @@ const RandomChallenge = () => {
   };
 
   const handleRenewButton = async () => {
+    setOpenModal(false);
     const result = await toast.promise(patchRandomChallengeApi(), {
       pending: '랜덤 도전을 갱신 중입니다',
-      success: '랜덤 도전 갱신에 성공했습니다!',
       error: '랜덤 도전 갱신에 실패했습니다',
     });
     if (result.status === 200) {
-      setResponse(result.data);
+      console.log(result.data);
+      setResponse(result.data.data);
     }
   };
 
@@ -80,17 +89,19 @@ const RandomChallenge = () => {
 
   return (
     <>
-      {response.compFlag === true ? (
+      {response && response.compFlag === true ? (
         <SuccessChallenge title='오늘의 랜덤 도전을 성공했어요!' />
       ) : (
-        <Challenge
-          headerLeft={
-            <HeaderLeft challengeCategory='랜덤' certificationCategory={certificationIcon} />
-          }
-          headerRight={<HeaderRight button={button} />}
-          bottomRight={<BottomButton title='인증' onClick={handleCertification} />}
-          content={response?.content}
-        />
+        response && (
+          <Challenge
+            headerLeft={
+              <HeaderLeft challengeCategory='랜덤' certificationCategory={certificationIcon} />
+            }
+            headerRight={<HeaderRight button={button} />}
+            bottomRight={<BottomButton title='인증' onClick={handleCertification} />}
+            content={response.content}
+          />
+        )
       )}
       {openModal && (
         <Dialog fullWidth open={openModal} onClose={handleCancelButton}>

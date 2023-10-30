@@ -51,6 +51,14 @@ export const patchCustomChallengeApi = async (customEntryId: number) => {
   return res;
 };
 
+// 랜덤 도전과제 가져오기
+export const readRandomChallengeApi = async () => {
+  const res = await axios.get(`${apiUrl}/random`);
+  console.log('random', res);
+
+  return res;
+};
+
 // 랜덤 도전과제 갱신
 export const patchRandomChallengeApi = async () => {
   const res = await axios.patch(`${apiUrl}/renewal`);
