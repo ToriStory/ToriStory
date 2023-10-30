@@ -4,9 +4,11 @@ import IconButton from '@mui/material/IconButton';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import { createCustomChallengeApi, createOtherCustomChallengeApi } from 'apis/challengeApi';
+import useAppNavigation from 'hooks/useAppNavigation';
 import { useAtom, useAtomValue } from 'jotai';
 import { ChevronLeft } from 'lucide-react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import {
   createChallengeDate,
   createChallengeDisplayFlag,
@@ -16,8 +18,9 @@ import { customChallengeCreateProps, customChallengeScrapProps } from 'types/cha
 
 export default function HeaderDepthMore({ pathname }: { pathname: string }) {
   const navigate = useNavigate();
+  const navigation = useAppNavigation();
 
-  const { content, id } = useLocation().state;
+  const { content, id } = useLocation().state || { content: '', id: -1 };
 
   const [challengeTitle, setChallengeTitle] = useAtom(createChallengeTitle);
   const challengeDate = useAtomValue(createChallengeDate);
@@ -33,31 +36,39 @@ export default function HeaderDepthMore({ pathname }: { pathname: string }) {
 
   const handleCreateChallenge = async () => {
     if (challengeTitle !== '') {
-      if (content === null) {
+      let result;
+      if (content === '') {
         const createChallengeResponse: customChallengeCreateProps = {
           content: challengeTitle,
           endDt: challengeDate,
           displayFlag: challengeisplayFlag,
         };
-        const result = await createCustomChallengeApi(createChallengeResponse);
-        console.log(result);
+        result = await toast.promise(createCustomChallengeApi(createChallengeResponse), {
+          pending: '나도 도전 생성 중입니다',
+          success: '나도 도전을 생성했습니다!',
+          error: '나도 도전 생성에 실패했습니다',
+        });
       } else {
-        if (id !== null) {
+        if (id !== -1) {
           const customChallengeId = parseInt(id);
           const updateChallengeResponse: customChallengeScrapProps = {
             endDt: challengeDate,
           };
-          const result = await createOtherCustomChallengeApi(
-            customChallengeId,
-            updateChallengeResponse
+          result = await toast.promise(
+            createOtherCustomChallengeApi(customChallengeId, updateChallengeResponse),
+            {
+              pending: '도전을 스크랩 중입니다',
+              success: '도전을 스크랩 했습니다!',
+              error: '도전 스크랩에 실패했습니다',
+            }
           );
-          console.log(result);
         }
       }
-
-      navigate(-1);
-      setChallengeTitle('');
-      setChallengeisplayFlag(true);
+      if (result?.data.code === 201) {
+        navigation.navigateToMyChallenge();
+        setChallengeTitle('');
+        setChallengeisplayFlag(true);
+      }
     }
   };
 

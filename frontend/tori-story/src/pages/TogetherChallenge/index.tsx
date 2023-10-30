@@ -1,10 +1,20 @@
 import { AddButton } from 'components/atoms/iconButtons/AddButton';
 import TogetherCustomChallengeList from 'components/organisms/challenge/TogetherCustomChallengeList';
-import useAppNavigation from 'hooks/useAppNavigation';
+import { createChallengePage } from 'constants/pathname';
+import { useNavigate } from 'react-router-dom';
 import { cls } from 'utils/cls';
 
 const TogetherChallenge = () => {
-  const navigation = useAppNavigation();
+  const navigate = useNavigate();
+
+  const handleCreateChallengeButton = () => {
+    navigate(createChallengePage.path, {
+      state: {
+        content: '',
+        id: -1,
+      },
+    });
+  };
 
   return (
     <>
@@ -12,7 +22,7 @@ const TogetherChallenge = () => {
       <div className={cls(' h-full ')}>
         <TogetherCustomChallengeList />
         <div className={cls('fixed bottom-16 right-4')}>
-          <AddButton onClick={navigation.navigateToTogetherChallengeCreate} size={36} />
+          <AddButton onClick={() => handleCreateChallengeButton()} size={36} />
         </div>
       </div>
     </>
