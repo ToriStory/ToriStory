@@ -46,7 +46,7 @@ const CertificationResultModal = ({
   }, []);
 
   return (
-    <Dialog open={open} onClose={handleClose}>
+    <Dialog fullWidth open={open} onClose={handleClose}>
       <DialogTitle>{result === true ? '인증 성공' : '인증 실패'}</DialogTitle>
       <DialogContent>
         <DialogContentText>

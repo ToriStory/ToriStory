@@ -38,6 +38,25 @@ export const readInProgressCustomChallengeApi = async () => {
   const res = await axios.get(`${apiUrl}/custom/my`);
   return res;
 };
+
+// 자유 도전 과제 삭제
+export const deleteCustomChallengeApi = async (customEntryId: number) => {
+  const res = await axios.delete(`${apiUrl}/custom/${customEntryId}`);
+  return res;
+};
+
+// 자유 도전 과제 달성
+export const patchCustomChallengeApi = async (customEntryId: number) => {
+  const res = await axios.patch(`${apiUrl}/comp/${customEntryId}`);
+  return res;
+};
+
+// 랜덤 도전과제 갱신
+export const patchRandomChallengeApi = async () => {
+  const res = await axios.patch(`${apiUrl}/renewal`);
+  return res;
+};
+
 // 랜덤 도전과제 AI 인증
 export const certificationAIRandomApi = async (props: FormData) => {
   const res: CertificationResponse = await axios.post(`${apiUrl}/cert/random/ai`, props, {
