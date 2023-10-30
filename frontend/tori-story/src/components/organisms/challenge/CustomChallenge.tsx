@@ -2,11 +2,12 @@ import Challenge from './Challenge';
 import HeaderLeft from 'components/molecules/challenge/HeaderLeft';
 import BottomButton from 'components/atoms/challenge/BottomButton';
 // import useAppNavigation from 'hooks/useAppNavigation';
-import { IconButton } from '@mui/material';
+import { Button, Dialog, DialogActions, DialogContent, IconButton } from '@mui/material';
 import HeaderRight from 'components/molecules/challenge/HeaderRight';
 import { BadgeCheck, BadgeX, X } from 'lucide-react';
 import { cls } from 'utils/cls';
 import { gray400, orange300 } from 'constants/color';
+import { useState } from 'react';
 
 export interface CustomChallengeProps {
   id: number;
@@ -28,6 +29,7 @@ const CustomChallenge = ({
   completeChallenge?: (id: number) => void;
   isMyChallenge?: boolean;
 }) => {
+  const [openModal, setOpenModal] = useState<boolean>(false);
   // const navigate = useAppNavigation();
 
   const handleCompleted = () => {
@@ -38,10 +40,20 @@ const CustomChallenge = ({
   };
 
   const handleDelete = () => {
+    setOpenModal(true);
+  };
+
+  // 모달 - 닫히는 부분
+  const handleCancelButton = () => {
+    setOpenModal(false);
+  };
+
+  //모달 열린 후 페이지 이동하는 부분
+  const handleDeleteButton = () => {
+    setOpenModal(false);
     if (deleteChallenge) {
-      alert('삭제하시겠습니까?');
+      console.log('props:', props);
       deleteChallenge(props.id);
-      // 삭제 request
     }
   };
 
@@ -55,9 +67,7 @@ const CustomChallenge = ({
 
   return (
     <>
-      {props.compFlag === true ? (
-        <></>
-      ) : isMyChallenge ? (
+      {isMyChallenge ? (
         <Challenge
           headerLeft={<HeaderLeft challengeCategory='자유' />}
           headerRight={<HeaderRight button={button} />}
@@ -74,6 +84,8 @@ const CustomChallenge = ({
           }
           content={props.content}
         />
+      ) : props.compFlag === true ? (
+        <></>
       ) : (
         <Challenge
           headerLeft={<HeaderLeft challengeCategory='자유' />}
@@ -82,6 +94,23 @@ const CustomChallenge = ({
           bottomRight={<BottomButton title='완료' onClick={handleCompleted} />}
           content={props.content}
         />
+      )}
+      {openModal && (
+        <Dialog fullWidth open={openModal} onClose={handleCancelButton}>
+          <DialogContent sx={{ display: 'flex', justifyContent: 'center' }}>
+            삭제하시겠습니까?
+          </DialogContent>
+          <DialogActions sx={{ display: 'flex', justifyContent: 'space-between' }}>
+            <>
+              <Button variant='contained' onClick={handleCancelButton} color='primary'>
+                취소
+              </Button>
+              <Button variant='contained' onClick={handleDeleteButton} color='primary'>
+                삭제
+              </Button>
+            </>
+          </DialogActions>
+        </Dialog>
       )}
     </>
   );
