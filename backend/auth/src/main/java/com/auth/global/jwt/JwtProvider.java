@@ -119,6 +119,9 @@ public class JwtProvider {
      * @param email
      */
     public void setBlackList(String token, String email) {
+
+        token = removeBearer(token);
+
         redisBlackListTemplate.opsForValue().set(
                 token,
                 email,
@@ -156,11 +159,9 @@ public class JwtProvider {
         log.debug("JwtProvider::validateToken() called");
 
         try {
-
-            token = removeBearer(token);
-
             log.debug("token: " + token);
             log.debug("getSigningKey(): " + getSigningKey());
+
             Jwts.parserBuilder().setSigningKey(getSigningKey()).build().parseClaimsJws(token);
             if (redisBlackListTemplate.hasKey(token)) {
                 throw new AuthException(ErrorCode.NOT_VALID_TOKEN);
@@ -212,9 +213,12 @@ public class JwtProvider {
         return expiration.getTime() - now.getTime();
     }
 
-    private String removeBearer(String token) {
-        if (token.startsWith("Bearer "))
-            return token.substring(7);
+    public String removeBearer(String token) {
+        if(token != null){
+            if (token.startsWith("Bearer "))
+                return token.substring(7);
+        }
+
         return token;
     }
 
