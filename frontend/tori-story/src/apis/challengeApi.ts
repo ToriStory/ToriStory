@@ -7,6 +7,17 @@ import {
 
 const apiUrl = '/challenge';
 
+interface MyCustomChallengeResponse {
+  compFlag: boolean;
+  content: string;
+  endDt: string;
+  id: number;
+  imgUrl: string;
+  startDt: string;
+}
+interface GetMyCustomChallengeResponse extends Response {
+  data: MyCustomChallengeResponse[];
+}
 // 자유 도전 과제 생성
 export const createCustomChallengeApi = async (props: customChallengeCreateProps) => {
   const res = await axios.post(`${apiUrl}/custom`, props);
@@ -35,4 +46,10 @@ export const certificationAIRandomApi = async (props: FormData) => {
     },
   });
   return res;
+};
+
+export const getMyCustomChallengeAPI = async () => {
+  const url = apiUrl + '/custom';
+  const res = await axios.get<GetMyCustomChallengeResponse>(url);
+  return res.data;
 };

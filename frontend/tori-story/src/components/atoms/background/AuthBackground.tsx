@@ -10,7 +10,7 @@ const AuthBackground = (props: PropsWithChildren<{ isLanding?: boolean }>) => {
         isLanding ? 'before:opacity-100' : ' before:opacity-60'
       )}
     >
-      <div className=' w-full h-full relative flex flex-col justify-center items-center '>
+      <div className=' w-full h-full relative flex flex-col justify-center items-center p-4'>
         {children}
       </div>
     </div>

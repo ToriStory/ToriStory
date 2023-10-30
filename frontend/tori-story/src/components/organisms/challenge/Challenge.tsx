@@ -5,7 +5,7 @@ interface ChallengeProps {
   headerLeft: React.ReactElement;
   headerRight?: React.ReactElement;
   bottomLeft?: React.ReactElement;
-  bottomRight: React.ReactElement;
+  bottomRight?: React.ReactElement;
   content: string;
 }
 
@@ -13,7 +13,7 @@ const Challenge = ({
   headerLeft,
   headerRight = <div></div>,
   bottomLeft = <div></div>,
-  bottomRight,
+  bottomRight = <div></div>,
   content,
 }: ChallengeProps) => {
   return (
