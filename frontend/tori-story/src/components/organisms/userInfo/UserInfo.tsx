@@ -7,7 +7,7 @@ import { getUserInfoAPI, signOutAPI } from 'apis/user';
 import { useNavigate } from 'react-router-dom';
 import { myToriPage } from 'constants/pathname';
 import { toast } from 'react-toastify';
-import useSWR, { preload } from 'swr';
+import useSWR from 'swr';
 import { orange400 } from 'constants/color';
 
 // interface ExpandMoreProps extends IconButtonProps {
@@ -25,7 +25,6 @@ import { orange400 } from 'constants/color';
 //   }),
 // }));
 
-preload('/api/member', getUserInfoAPI);
 const UserInfo = () => {
   const { data } = useSWR('/api/member', getUserInfoAPI);
   console.log(data);
@@ -42,7 +41,7 @@ const UserInfo = () => {
     }
   };
   return (
-    <Card>
+    <Card style={{ width: '100%', borderRadius: '0.6rem' }}>
       <CardHeader
         avatar={
           <Avatar
