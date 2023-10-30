@@ -4,8 +4,7 @@ pipeline {
     stages {
         // Docker 이미지 빌드 스테이지: Dockerfile을 기반으로 이미지를 빌드합니다.
 		stage('Docker Build') {
-			steps {}
-
+			steps {
                 dir('backend/certFlask/venv') {
                     sh 'docker build -t toristory-flask:latest .'
                 }
@@ -32,4 +31,3 @@ pipeline {
         }
     }
 }
-
