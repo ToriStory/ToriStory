@@ -47,4 +47,8 @@ public class CustomChallenge {
         this.displayFlag = displayFlag;
     }
 
+    public void scrap() {
+        this.scrapCnt += 1;
+    }
+
 }

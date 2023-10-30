@@ -139,11 +139,17 @@ public class CustomChallengeServiceImpl implements CustomChallengeService {
 
     @Override
     public void addScrapCustom(Long memberId, BigInteger customChallengeId, AddScrapCustomReq addScrapCustomReq) {
+        CustomChallenge customChallenge = customChallengeRepository.findById(customChallengeId)
+            .orElseThrow(() -> new ChallengeException(ErrorCode.CUSTOM_CHALLENGE_NOT_FOUND));
+
         customEntryRepository.save(CustomEntry.builder()
                 .memberId(memberId)
-                .customChallenge(customChallengeRepository.findById(customChallengeId).orElseThrow(() -> new ChallengeException(ErrorCode.CUSTOM_CHALLENGE_NOT_FOUND)))
+                .customChallenge(customChallenge)
                 .endDt(addScrapCustomReq.getEndDt())
                 .build());
+
+        customChallenge.scrap();
+
     }
 
 
