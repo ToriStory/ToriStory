@@ -22,6 +22,11 @@ export const createOtherCustomChallengeApi = async (
   return res;
 };
 
+// 오늘 도전 중인 자유 과제 조회
+export const readInProgressCustomChallengeApi = async () => {
+  const res = await axios.get(`${apiUrl}/custom/my`);
+  return res;
+};
 // 랜덤 도전과제 AI 인증
 export const certificationAIRandomApi = async (props: FormData) => {
   const res: CertificationResponse = await axios.post(`${apiUrl}/cert/random/ai`, props, {
