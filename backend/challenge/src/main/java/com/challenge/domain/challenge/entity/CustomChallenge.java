@@ -51,4 +51,12 @@ public class CustomChallenge {
         this.scrapCnt += 1;
     }
 
+    public void report() {
+        this.reportCnt += 1;
+    }
+
+    public void blur() {
+        this.displayFlag = false;
+    }
+
 }
