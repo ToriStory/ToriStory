@@ -31,7 +31,7 @@ public class AuthFilter extends AbstractGatewayFilterFactory<AuthFilter.Config> 
             if (token != null && !token.isEmpty()) {
                 Mono<EnvelopRes<FindIdRes>> memberIdMono = webClientBuilder.build()
                         .post()
-                        .uri("http://k9a402.p.ssafy.io:8201/member/id")
+                        .uri("http://tori-story.com:8201/member/id")
                         .header("Authorization", token)
                         .retrieve()
                         .bodyToMono(new ParameterizedTypeReference<EnvelopRes<FindIdRes>>() {

@@ -15,7 +15,7 @@ public class WebConfig {
     public CorsWebFilter corsWebFilter() {
 
         CorsConfiguration corsConfig = new CorsConfiguration();
-        corsConfig.setAllowedOrigins(List.of("https://k9a402.p.ssafy.io", "http://localhost:3126"));
+        corsConfig.setAllowedOrigins(List.of("https://tori-story.com", "https://k9a402.p.ssafy.io", "http://localhost:3126"));
         corsConfig.setMaxAge(3600L);
         corsConfig.setAllowedMethods(List.of("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
         corsConfig.setAllowedHeaders(List.of("*"));
