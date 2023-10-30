@@ -8,6 +8,7 @@ import { useState } from 'react';
 import { useAtom } from 'jotai';
 import { CertificationResponse } from 'types/challenge';
 import { certificationAIRandomApi } from 'apis/challengeApi';
+import { toast } from 'react-toastify';
 
 const CertificationAI = () => {
   const [response, setResponse] = useState<CertificationResponse | null>(null);
@@ -28,12 +29,12 @@ const CertificationAI = () => {
     const formData = new FormData();
     formData.append('image', file);
     formData.append('challengeId', id);
-    console.log(type);
 
-    const response: CertificationResponse = await certificationAIRandomApi(formData);
+    const response = await toast.promise(certificationAIRandomApi(formData), {
+      pending: '인증 처리 중입니다',
+    });
 
     if (response) {
-      console.log(response);
       setResponse(response);
       setShowModal(true);
     }
