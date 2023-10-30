@@ -17,7 +17,9 @@ const CertificationAI = () => {
   const [, setSelectedImage] = useAtom(selectedImageAtom);
 
   const {
-    state: { id, type },
+    // state: { id, type },
+    // 해당 부분 build 에러 나서 임시 주석 처리
+    state: { id },
   } = useLocation();
 
   const sendRequest = async () => {
