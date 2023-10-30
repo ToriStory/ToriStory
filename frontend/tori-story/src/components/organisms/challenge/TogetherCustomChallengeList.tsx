@@ -3,19 +3,19 @@ import useInfiniteFetcher from 'hooks/useInfiniteFetcher';
 import { ArrowDownUp, Siren, User } from 'lucide-react';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { cls } from 'utils/cls';
-import { customChallengeProps } from 'types/challenge';
+import { FetchParams, customChallengeProps } from 'types/challenge';
 import { IconButton, Skeleton } from '@mui/material';
 import HeaderLeft from 'components/molecules/challenge/HeaderLeft';
-import HeaderRight from 'components/molecules/challenge/HeaderRight';
 import BottomButton from 'components/atoms/challenge/BottomButton';
 import Challenge from './Challenge';
 import { TogetherModal } from 'components/molecules/challenge/TogetherModal';
 import ErrorMushRoom from 'assets/images/ErrorMushroom.png';
+import { SirenModal } from 'components/molecules/challenge/SirenModal';
 
 const TogetherCustomChallengeList = () => {
   const observeTarget = useRef(null);
   const [searchText, setSearchText] = useState<string>('');
-  const [param, setParam] = useState<string>('');
+  const [param, setParam] = useState<FetchParams>({ sort: 1 });
   const [sortValue, setSortValue] = useState<number>(0); // 0: 최신순, 1: 스크랩순
   const [openModal, setOpenModal] = useState<boolean>(false);
   const [clickButtonValue, setClickButtonValue] = useState<ClickButtonType>('도전');
@@ -51,9 +51,9 @@ const TogetherCustomChallengeList = () => {
 
   useEffect(() => {
     if (searchText === '') {
-      setParam(`sort=${sortValue}`);
+      setParam({ sort: sortValue });
     } else {
-      setParam(`keyword=${searchText}&sort=${sortValue}`);
+      setParam({ sort: sortValue, keyword: searchText });
     }
   }, [searchText, sortValue]);
 
@@ -75,14 +75,6 @@ const TogetherCustomChallengeList = () => {
     observer.observe(observeTarget.current);
     return () => observer && observer.disconnect();
   }, [observeTarget, onIntersect]);
-
-  const button = (
-    <>
-      <IconButton onClick={() => handleSirenButton}>
-        <Siren size={20} className={cls('text-gray-400')} />
-      </IconButton>
-    </>
-  );
 
   return (
     <>
@@ -126,7 +118,11 @@ const TogetherCustomChallengeList = () => {
                 <div key={result.id}>
                   <Challenge
                     headerLeft={<HeaderLeft challengeCategory='자유' />}
-                    headerRight={<HeaderRight button={button} />}
+                    headerRight={
+                      <IconButton onClick={() => handleSirenButton(result)}>
+                        <Siren size={20} className={cls('text-gray-400')} />
+                      </IconButton>
+                    }
                     bottomLeft={
                       <div className={cls('flex items-center text-orange-700')}>
                         <div className='mr-2'>
@@ -153,7 +149,7 @@ const TogetherCustomChallengeList = () => {
               customChallenge={clickResult}
             />
           ) : (
-            <TogetherModal
+            <SirenModal
               openModal={openModal}
               setOpenModal={setOpenModal}
               customChallenge={clickResult}

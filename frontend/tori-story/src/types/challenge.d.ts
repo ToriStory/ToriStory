@@ -27,3 +27,8 @@ export interface customChallengeScrapProps {
 export interface CertificationResponse {
   result: boolean;
 }
+
+export interface FetchParams {
+  sort: number | null;
+  keyword?: string | null;
+}

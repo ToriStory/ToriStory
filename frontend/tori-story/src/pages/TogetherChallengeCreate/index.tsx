@@ -70,10 +70,10 @@ export const TogetherChallengeCreate = () => {
         label='나도도전명'
         className='w-full mt-4'
         value={challengeName}
-        disabled={content !== null}
+        disabled={content !== ''}
         onChange={handleChallengeNameChange}
       />
-      {content === null && (
+      {content === '' && (
         <div className={cls('mt-4')}>
           <FormControlLabel
             control={<Switch name='gilad' onChange={handleSwitchChange} defaultChecked={true} />}
