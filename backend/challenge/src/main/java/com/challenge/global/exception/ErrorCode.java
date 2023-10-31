@@ -15,7 +15,8 @@ public enum ErrorCode {
 	CUSTOM_MEMBER_NOT_MATCH(404, "사용자의 자유 도전 과제가 아님"),
 	RANDOM_MEMBER_NOT_MATCH(404, "사용자의 랜덤 도전 과제가 아님"),
 
-	PHOTO_CHALLENGE_NOT_FOUND(401, "존재하지 않는 장소 도전 과제"),
+	PHOTO_CHALLENGE_NOT_FOUND(401, "존재하지 않는 사진 도전 과제"),
+	PLACE_CHALLENGE_NOT_FOUND(401, "존재하지 않는 장소 도전 과제"),
 
 	// 신고
 	ALREADY_REPORT_CHALLENGE(400, "이미 신고한 도전 과제"),
