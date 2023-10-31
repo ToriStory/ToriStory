@@ -17,4 +17,6 @@ public class FindRandomRes {
 
     private String category;
 
+    private String keyword;
+
 }
