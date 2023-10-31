@@ -50,7 +50,7 @@ const RandomChallenge = () => {
     if (response.category === CATEGORY.photo) {
       navigate(imageCertificationPage.path, { state: { id: response.id } });
     } else {
-      navigate(gpsCertificationPage.path, { state: { keyword: 'CU' } });
+      navigate(gpsCertificationPage.path, { state: { keyword: response.keyword } });
     }
   };
 

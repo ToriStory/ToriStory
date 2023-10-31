@@ -1,47 +1,48 @@
 import { cls } from 'utils/cls';
 import './gpsAnimation.css';
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { myChallengePage } from 'constants/pathname';
-// import { patchCompRandomChallengeApi } from 'apis/challengeApi';
+import CertificationResultModal from 'components/organisms/certification/CerfiticationResultModal';
+import { patchCompRandomChallengeApi } from 'apis/challengeApi';
+import kakaoMap from 'hooks/kakaoMap';
 
-type Location = {
-  latitude: number;
-  longitude: number;
-};
+const { kakao } = window;
+const delayedTime: number = 5000;
+const radius = 100;
 
 const CertificationGPS = () => {
-  const [curLocation, setCurLocation] = useState<Location>();
+  const [result, setResult] = useState<boolean>(false);
+  const [showModal, setShowModal] = useState<boolean>(false);
   const navigate = useNavigate();
+  const {
+    state: { keyword },
+  } = useLocation();
 
-  const sendCertificationResult = (result: boolean) => {
-    if (result === true) {
-      console.log('성공');
-      // patchCompRandomChallengeApi();
+  const cerficicate = async (latitude: number, longitude: number) => {
+    // 내 주변 반경 radius (m) 에 keyword가 포함된 장소 개수를 불러온다
+    const options = {
+      x: longitude,
+      y: latitude,
+      radius: radius,
+      sort: kakao.maps.services.SortBy.DISTANCE,
+    };
+    const placeCount: number = await kakaoMap.getPlaceCountByKeyword(keyword, options);
+    if (placeCount > 0) {
+      setResult(true);
+      patchCompRandomChallengeApi();
     } else {
-      console.log('실패');
+      setResult(false);
     }
-  };
 
-  const cerficicate = (): boolean => {
-    const latitude = curLocation?.latitude;
-    const longitude = curLocation?.longitude;
-    let result = false;
-    //로직
-    result = true;
-    console.log(result, latitude, longitude);
-    return result;
+    setShowModal(true);
   };
 
   const getLocation = () => {
     if ('geolocation' in navigator) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
-          const current: Location = {
-            latitude: position.coords.latitude,
-            longitude: position.coords.longitude,
-          };
-          setCurLocation(current);
+          cerficicate(position.coords.latitude, position.coords.longitude);
         },
         (error) => {
           console.error('위치 정보를 가져오는 동안 오류가 발생했습니다:', error.message);
@@ -52,16 +53,23 @@ const CertificationGPS = () => {
     }
   };
 
-  useEffect(() => {
-    getLocation();
-  }, []);
+  const handleNavigate = () => {
+    setShowModal(false);
+    navigate(myChallengePage.path, { replace: true });
+  };
+
+  const handleRetry = () => {
+    setShowModal(false);
+    setTimeout(() => {
+      getLocation();
+    }, delayedTime);
+  };
 
   useEffect(() => {
-    if (curLocation) {
-      const result = cerficicate();
-      sendCertificationResult(result);
-    }
-  }, [curLocation]);
+    setTimeout(() => {
+      getLocation();
+    }, delayedTime);
+  }, []);
 
   return (
     <div className={cls('w-full h-full relative')}>
@@ -81,25 +89,15 @@ const CertificationGPS = () => {
             'w-48 h-48 border-2 border-orange-300 rounded-full absolute z-30 animate-expand'
           )}
         ></div>
-        <div
-          className={cls('w-24 h-24 border-2 bg-orange-600 rounded-full z-40')}
-          onClick={() => navigate(myChallengePage.path, { replace: true })}
-        >
-          취소
-        </div>
-        <div
-          className={cls('w-24 h-24 border-2 bg-orange-600 rounded-full z-40')}
-          onClick={getLocation}
-        >
-          다시 시도
-        </div>
-        <div
-          className={cls('w-24 h-24 border-2 bg-orange-600 rounded-full z-40')}
-          onClick={() => navigate(myChallengePage.path, { replace: true })}
-        >
-          확인
-        </div>
+        <div className={cls('w-24 h-24 border-2 bg-orange-600 rounded-full z-40')}></div>
       </div>
+      {showModal && (
+        <CertificationResultModal
+          result={result}
+          handleNavigate={handleNavigate}
+          handleRetry={handleRetry}
+        />
+      )}
     </div>
   );
 };

@@ -13,8 +13,6 @@
     <script type="module" src="/src/main.tsx"></script>
     <script>
       if ('serviceWorker' in navigator) {
-        // Register a service worker hosted at the root of the
-        // site using the default scope.
         navigator.serviceWorker
           .register('/sw.js')
           .then((registration) => {
@@ -27,5 +25,9 @@
         console.log('Service workers are not supported.');
       }
     </script>
+    <script
+      type="text/javascript"
+      src="//dapi.kakao.com/v2/maps/sdk.js?appkey=%VITE_APP_KAKAO_MAP_API%&libraries=services"
+    ></script>
   </body>
 </html>
