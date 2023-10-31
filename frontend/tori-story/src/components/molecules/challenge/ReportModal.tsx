@@ -1,21 +1,23 @@
-import { customChallengeProps } from 'types/challenge';
+import { ReportCustomChallenge, CustomChallengeProps } from 'types/challenge';
 import ChoiceModal from '../modals/ChoiceModal';
 import { cls } from 'utils/cls';
 import { Chip, Stack } from '@mui/material';
-import { REPORTTYPE } from 'constants/sirenType';
+import { REPORTTYPE } from 'constants/reportType';
 import { useState } from 'react';
+import { reportCustomChallengeAPI } from 'apis/challengeApi';
+import { toast } from 'react-toastify';
 
 interface TogetherModalProps {
   openModal: boolean;
   setOpenModal: React.Dispatch<React.SetStateAction<boolean>>;
-  customChallenge: customChallengeProps | undefined;
+  customChallenge: CustomChallengeProps | undefined;
 }
 
 export const ReportModal = ({ openModal, setOpenModal, customChallenge }: TogetherModalProps) => {
-  const [selectedSiren, setSelectedSiren] = useState<number | null>(null);
+  const [selectedReport, setSelectedReport] = useState<number>(1);
 
-  const handleSirenClick = (sirenValue: number) => {
-    setSelectedSiren(sirenValue);
+  const handleReportClick = (ReportValue: number) => {
+    setSelectedReport(ReportValue);
   };
 
   // 모달 - 닫히는 부분
@@ -24,8 +26,25 @@ export const ReportModal = ({ openModal, setOpenModal, customChallenge }: Togeth
   };
 
   // 모달 - 신고하기 버튼 누르는 부분
-  const handleSirenButton = () => {
+  const handleReportButton = async () => {
     // TODO: 신고하기 api 연결
+    if (customChallenge && selectedReport) {
+      const requestData: ReportCustomChallenge = {
+        customChallengeId: customChallenge.id,
+        reason: selectedReport,
+      };
+      const result = await toast.promise(reportCustomChallengeAPI(requestData), {
+        pending: '도전을 신고 중입니다',
+      });
+      console.log(result.data);
+      if (result.data.code === 201) {
+        toast.success('도전이 신고되었습니다!');
+        console.log(result);
+      } else if (result.data.code === 400) {
+        toast.error(result.data.data + '입니다!');
+      }
+    }
+
     setOpenModal(false);
   };
 
@@ -36,7 +55,7 @@ export const ReportModal = ({ openModal, setOpenModal, customChallenge }: Togeth
           cancelButtonLabel={'취소하기'}
           cancelButtonAction={() => handleCancelButton()}
           okayButtonLabel={'신고하기'}
-          okayButtonAction={() => handleSirenButton()}
+          okayButtonAction={() => handleReportButton()}
           setIsModalOpen={setOpenModal}
         >
           <div className={cls('my-4 text-left')}>
@@ -59,15 +78,15 @@ export const ReportModal = ({ openModal, setOpenModal, customChallenge }: Togeth
                       marginBottom: '4px',
                       borderRadius: '8px',
                       border: `2px solid ${
-                        selectedSiren === reportItem.value ? '#FF762E' : 'transparent'
+                        selectedReport === reportItem.value ? '#FF762E' : 'transparent'
                       }`,
                       '&:focus': {
                         color: '#FF762E',
                         backgroundColor: '#FFF1EA',
                       },
-                      backgroundColor: selectedSiren === reportItem.value ? '#FFF1EA' : 'white',
+                      backgroundColor: selectedReport === reportItem.value ? '#FFF1EA' : 'white',
                     }}
-                    onClick={() => handleSirenClick(reportItem.value)}
+                    onClick={() => handleReportClick(reportItem.value)}
                   />
                 ))}
               </Stack>

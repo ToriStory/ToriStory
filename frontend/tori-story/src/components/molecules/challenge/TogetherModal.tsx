@@ -1,13 +1,13 @@
 import ChoiceModal from '../modals/ChoiceModal';
 import { cls } from 'utils/cls';
-import { customChallengeProps } from 'types/challenge';
+import { CustomChallengeProps } from 'types/challenge';
 import { useNavigate } from 'react-router-dom';
 import { createChallengePage } from 'constants/pathname';
 
 interface TogetherModalProps {
   openModal: boolean;
   setOpenModal: React.Dispatch<React.SetStateAction<boolean>>;
-  customChallenge: customChallengeProps | undefined;
+  customChallenge: CustomChallengeProps | undefined;
 }
 
 export const TogetherModal = ({ openModal, setOpenModal, customChallenge }: TogetherModalProps) => {

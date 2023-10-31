@@ -1,10 +1,10 @@
 import axios from 'apis';
 import useSWRInfinite from 'swr/infinite';
-import { FetchParams, customChallengeListProps } from 'types/challenge';
+import { FetchParams, CustomChallengeListProps } from 'types/challenge';
 
 export default function useInfiniteFetcher(params: FetchParams) {
   const urlApi = `/challenge/custom/all`;
-  const getKey = (pageIndex: number, previousPageData: customChallengeListProps) => {
+  const getKey = (pageIndex: number, previousPageData: CustomChallengeListProps) => {
     // 끝에 도달
     if (previousPageData && !previousPageData.totalCustomChallengeList) {
       return null;

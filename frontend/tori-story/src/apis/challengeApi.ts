@@ -1,5 +1,9 @@
 import axios from 'apis';
-import { customChallengeCreateProps, customChallengeScrapProps } from 'types/challenge';
+import {
+  CustomChallengeCreateProps,
+  CustomChallengeScrapProps,
+  ReportCustomChallenge,
+} from 'types/challenge';
 
 const apiUrl = '/challenge';
 
@@ -14,8 +18,9 @@ interface MyCustomChallengeResponse {
 interface GetMyCustomChallengeResponse extends Response {
   data: MyCustomChallengeResponse[];
 }
+
 // 자유 도전 과제 생성
-export const createCustomChallengeApi = async (props: customChallengeCreateProps) => {
+export const createCustomChallengeApi = async (props: CustomChallengeCreateProps) => {
   const res = await axios.post(`${apiUrl}/custom`, props);
   return res;
 };
@@ -23,7 +28,7 @@ export const createCustomChallengeApi = async (props: customChallengeCreateProps
 // 자유 도전 과제 가져오기.
 export const createOtherCustomChallengeApi = async (
   customChallengeId: number,
-  customChallenge: customChallengeScrapProps
+  customChallenge: CustomChallengeScrapProps
 ) => {
   const res = await axios.post(`${apiUrl}/scrap/${customChallengeId}`, customChallenge);
   return res;
@@ -81,4 +86,11 @@ export const getMyCustomChallengeAPI = async () => {
   const url = apiUrl + '/custom';
   const res = await axios.get<GetMyCustomChallengeResponse>(url);
   return res.data;
+};
+
+// 신고하기
+export const reportCustomChallengeAPI = async (data: ReportCustomChallenge) => {
+  const url = apiUrl + '/report';
+  const res = await axios.post(url, data);
+  return res;
 };

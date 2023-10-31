@@ -3,7 +3,7 @@ import useInfiniteFetcher from 'hooks/useInfiniteFetcher';
 import { ArrowDownUp, Siren, User } from 'lucide-react';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { cls } from 'utils/cls';
-import { FetchParams, customChallengeProps } from 'types/challenge';
+import { FetchParams, CustomChallengeProps } from 'types/challenge';
 import { IconButton, Skeleton } from '@mui/material';
 import HeaderLeft from 'components/molecules/challenge/HeaderLeft';
 import BottomButton from 'components/atoms/challenge/BottomButton';
@@ -19,11 +19,12 @@ const TogetherCustomChallengeList = () => {
   const [sortValue, setSortValue] = useState<number>(0); // 0: 최신순, 1: 스크랩순
   const [openModal, setOpenModal] = useState<boolean>(false);
   const [clickButtonValue, setClickButtonValue] = useState<ClickButtonType>('도전');
-  const [clickResult, setClickResultValue] = useState<customChallengeProps>();
+  const [clickResult, setClickResultValue] = useState<CustomChallengeProps>();
 
   type ClickButtonType = '신고' | '도전';
 
   const { data: searchResults, isLoading, error, setSize } = useInfiniteFetcher(param);
+  const scrollContainerRef = useRef<HTMLDivElement | null>(null);
 
   //도전 값 검색 set
   const handleSearchChallenge = (searchText: string) => {
@@ -32,18 +33,24 @@ const TogetherCustomChallengeList = () => {
 
   // 도전 정렬하기
   const toggleSortValue = () => {
+    const scrollContainer = scrollContainerRef.current;
+
+    if (scrollContainer) {
+      // 스크롤 위치를 상단으로 이동
+      scrollContainer.scrollTop = 0;
+    }
     setSortValue(sortValue === 0 ? 1 : 0);
   };
 
   // 나도! 버튼 클릭 시
-  const handleTogetherButton = (result: customChallengeProps) => {
+  const handleTogetherButton = (result: CustomChallengeProps) => {
     setClickButtonValue('도전');
     setOpenModal(true);
     setClickResultValue(result);
   };
 
   // 신고 버튼 클릭시
-  const handleReportButton = (result: customChallengeProps) => {
+  const handleReportButton = (result: CustomChallengeProps) => {
     setClickButtonValue('신고');
     setOpenModal(true);
     setClickResultValue(result);
@@ -90,7 +97,10 @@ const TogetherCustomChallengeList = () => {
             </span>
           </div>
         </div>
-        <div className={cls('max-h-[calc(100%-56px)] overflow-y-auto pb-12')}>
+        <div
+          className={cls('max-h-[calc(100%-56px)] overflow-y-auto pb-12')}
+          ref={scrollContainerRef}
+        >
           {isLoading && (
             <Skeleton
               variant='rounded'
@@ -114,7 +124,7 @@ const TogetherCustomChallengeList = () => {
           )}
           {searchResults &&
             searchResults?.map((searchResultItem) =>
-              searchResultItem?.totalCustomChallengeList.map((result: customChallengeProps) => (
+              searchResultItem?.totalCustomChallengeList.map((result: CustomChallengeProps) => (
                 <div key={result.id}>
                   <Challenge
                     headerLeft={<HeaderLeft challengeCategory='자유' />}
