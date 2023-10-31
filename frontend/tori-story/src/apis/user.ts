@@ -65,7 +65,7 @@ export const refreshAPI = async () => {
     {
       transformRequest: [
         (data: any, headers: any) => {
-          headers.Authorization = '';
+          delete headers.Authorization;
           return data;
         },
       ],

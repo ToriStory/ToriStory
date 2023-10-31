@@ -1,5 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import Axios from 'axios';
+import { refreshAPI } from './user';
+import { toast } from 'react-toastify';
+import { debounce } from 'lodash';
 // import { refreshTokenApi } from "./refreshApi";
 // import { useRouter } from "next/navigation";
 // import { toast } from "react-toastify";
@@ -28,12 +31,37 @@ axios.interceptors.request.use(
   }
 );
 
-// const notify = () => toast("사용자 정보가 만료되어 다시 갱신합니다.");
+const notify = () => toast('사용자 정보가 만료되어 다시 불러오고 있어요', { isLoading: true });
 axios.interceptors.response.use(
   (res) => {
     return res;
   },
   (err) => {
+    if (err.response.status === 403) {
+      // const refresh = async () => {
+      //   console.log(axios.defaults.headers.common.Authorization);
+      //   delete axios.defaults.headers.common['Authorization'];
+
+      //   const res = await refreshAPI();
+      //   if (res.status === 200) {
+      //     axios.defaults.headers.common['Authorization'] = res.data.data.accessToken;
+      //     if (typeof window !== 'undefined')
+      //       localStorage.setItem('accessToken', res.data.data.accessToken);
+      //     notify();
+      //   }
+      // };
+      const debouncedFunction = debounce(async () => {
+        const res = await refreshAPI();
+        if (res.status === 200) {
+          axios.defaults.headers.common['Authorization'] = res.data.data.accessToken;
+          if (typeof window !== 'undefined')
+            localStorage.setItem('accessToken', res.data.data.accessToken);
+          notify();
+        }
+      }, 1000);
+
+      debouncedFunction();
+    }
     console.log('response interceptor error', err);
     // if (err.response.status === 403) {
     //   const refresh = async (token: string) => {
