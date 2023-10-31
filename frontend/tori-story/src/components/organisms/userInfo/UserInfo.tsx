@@ -27,7 +27,6 @@ import { orange400 } from 'constants/color';
 
 const UserInfo = () => {
   const { data } = useSWR('/api/member', getUserInfoAPI);
-  console.log(data);
   const navigate = useNavigate();
   const signOut = async () => {
     const res = await toast.promise(signOutAPI(), {
@@ -40,7 +39,7 @@ const UserInfo = () => {
       navigate(myToriPage.path, { replace: true });
     }
   };
-  return (
+  return data ? (
     <Card style={{ width: '100%', borderRadius: '0.6rem' }}>
       <CardHeader
         avatar={
@@ -68,6 +67,13 @@ const UserInfo = () => {
         }
       />
     </Card>
+  ) : (
+    <>
+      회원정보가 존재하지 않아요.. 로그아웃 후 다시 로그인 해주세요
+      <Button variant='contained' size='large' fullWidth sx={{ padding: 0 }} onClick={signOut}>
+        로그아웃
+      </Button>
+    </>
   );
 };
 

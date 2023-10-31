@@ -84,7 +84,8 @@ const CustumChallengeList = ({ isMyChallenge = false }: CustomChallengeListProps
   return (
     <div className='h-full'>
       {isMyChallenge
-        ? myCustomChallengeData?.data.map((item) => {
+        ? myCustomChallengeData?.data &&
+          myCustomChallengeData?.data.map((item) => {
             return (
               <CustomChallenge
                 key={item.id}
