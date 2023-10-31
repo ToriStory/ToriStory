@@ -6,19 +6,17 @@ import ImageUpload, {
 import CertificationResultModal from 'components/organisms/certification/CerfiticationResultModal';
 import { useState } from 'react';
 import { useAtom } from 'jotai';
-import { CertificationResponse } from 'types/challenge';
-import { certificationAIRandomApi } from 'apis/challengeApi';
+import { certificationAIRandomApi, patchCompRandomChallengeApi } from 'apis/challengeApi';
 import { toast } from 'react-toastify';
 
 const CertificationAI = () => {
-  const [response, setResponse] = useState<CertificationResponse | null>(null);
+  const [response, setResponse] = useState(null);
+  const [result, setResult] = useState<boolean>(false);
   const [showModal, setShowModal] = useState<boolean>(false);
   const [file] = useAtom(fileAtom);
   const [, setSelectedImage] = useAtom(selectedImageAtom);
 
   const {
-    // state: { id, type },
-    // 해당 부분 build 에러 나서 임시 주석 처리
     state: { id },
   } = useLocation();
 
@@ -36,9 +34,15 @@ const CertificationAI = () => {
       pending: '인증 처리 중입니다',
     });
 
-    if (response) {
-      setResponse(response);
+    if (response.status === 200) {
+      setResponse(response.data.data);
+      setResult(response.data.data.result);
       setShowModal(true);
+      if (response.data.data.result === true) {
+        patchCompRandomChallengeApi();
+      }
+    } else {
+      console.log(`${response.status} 에러`);
     }
   };
 
@@ -59,7 +63,7 @@ const CertificationAI = () => {
       <ImageUpload buttonProps={{ title: '인증하기', onClick: sendRequest }} />
       {showModal && response && (
         <CertificationResultModal
-          result={response.result}
+          result={result}
           handleNavigate={handleNavigate}
           handleRetry={handleRetry}
         />

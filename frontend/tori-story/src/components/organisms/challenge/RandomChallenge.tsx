@@ -18,19 +18,13 @@ interface RandomChallengeResponse {
   content: string;
   compFlag: boolean;
   category: string;
+  keyword?: string;
 }
 
 const RandomChallenge = () => {
   const [openModal, setOpenModal] = useState<boolean>(false);
   const [response, setResponse] = useState<RandomChallengeResponse>();
   const navigate = useNavigate();
-
-  // const response: RandomChallengeResponse = {
-  //   id: 1,
-  //   content: '바나나 우유 1000개 맛있게 마시기',
-  //   compFlag: false,
-  //   category: 'PHOTO',
-  // };
 
   useEffect(() => {
     getRandomChallenge();
@@ -54,9 +48,9 @@ const RandomChallenge = () => {
     if (!response) return;
 
     if (response.category === CATEGORY.photo) {
-      navigate(imageCertificationPage.path, { state: { id: response.id, type: 'random' } });
+      navigate(imageCertificationPage.path, { state: { id: response.id } });
     } else {
-      navigate(gpsCertificationPage.path, { state: { id: response.id, type: 'random' } });
+      navigate(gpsCertificationPage.path, { state: { keyword: 'CU' } });
     }
   };
 

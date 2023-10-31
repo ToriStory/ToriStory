@@ -1,9 +1,5 @@
 import axios from 'apis';
-import {
-  customChallengeCreateProps,
-  customChallengeScrapProps,
-  CertificationResponse,
-} from 'types/challenge';
+import { customChallengeCreateProps, customChallengeScrapProps } from 'types/challenge';
 
 const apiUrl = '/challenge';
 
@@ -67,11 +63,17 @@ export const patchRandomChallengeApi = async () => {
 
 // 랜덤 도전과제 AI 인증
 export const certificationAIRandomApi = async (props: FormData) => {
-  const res: CertificationResponse = await axios.post(`${apiUrl}/cert/random/ai`, props, {
+  const res = await axios.post(`${apiUrl}/cert/random/ai`, props, {
     headers: {
       'Content-Type': 'multipart/form-data',
     },
   });
+  return res;
+};
+
+// 내 랜덤 도전과제 달성
+export const patchCompRandomChallengeApi = async () => {
+  const res = await axios.patch(`${apiUrl}/comp`);
   return res;
 };
 

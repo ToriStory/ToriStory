@@ -1,24 +1,47 @@
 import { cls } from 'utils/cls';
 import './gpsAnimation.css';
-import { useEffect } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { myChallengePage } from 'constants/pathname';
+// import { patchCompRandomChallengeApi } from 'apis/challengeApi';
 
-interface CertificationGPSResponse {
-  result: boolean;
-}
+type Location = {
+  latitude: number;
+  longitude: number;
+};
 
 const CertificationGPS = () => {
+  const [curLocation, setCurLocation] = useState<Location>();
   const navigate = useNavigate();
-  const {
-    state: { id, type },
-  } = useLocation();
+
+  const sendCertificationResult = (result: boolean) => {
+    if (result === true) {
+      console.log('성공');
+      // patchCompRandomChallengeApi();
+    } else {
+      console.log('실패');
+    }
+  };
+
+  const cerficicate = (): boolean => {
+    const latitude = curLocation?.latitude;
+    const longitude = curLocation?.longitude;
+    let result = false;
+    //로직
+    result = true;
+    console.log(result, latitude, longitude);
+    return result;
+  };
 
   const getLocation = () => {
     if ('geolocation' in navigator) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
-          sendRequest(position.coords.latitude, position.coords.longitude);
+          const current: Location = {
+            latitude: position.coords.latitude,
+            longitude: position.coords.longitude,
+          };
+          setCurLocation(current);
         },
         (error) => {
           console.error('위치 정보를 가져오는 동안 오류가 발생했습니다:', error.message);
@@ -29,28 +52,16 @@ const CertificationGPS = () => {
     }
   };
 
-  const sendRequest = (latitude: number, longitude: number) => {
-    const requestDto = {
-      latitude: latitude,
-      longitude: longitude,
-      challengeId: id,
-      challengeType: type,
-    };
-
-    console.log(requestDto); // api 요청
-    const response: CertificationGPSResponse = { result: false };
-    if (response.result === true) {
-      // 성공 모달
-      console.log('성공');
-    } else {
-      // 실패 모달
-      console.log('실패');
-    }
-  };
-
   useEffect(() => {
     getLocation();
   }, []);
+
+  useEffect(() => {
+    if (curLocation) {
+      const result = cerficicate();
+      sendCertificationResult(result);
+    }
+  }, [curLocation]);
 
   return (
     <div className={cls('w-full h-full relative')}>
