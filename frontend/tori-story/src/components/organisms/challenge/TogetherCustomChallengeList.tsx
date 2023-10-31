@@ -11,6 +11,7 @@ import Challenge from './Challenge';
 import { TogetherModal } from 'components/molecules/challenge/TogetherModal';
 import ErrorMushRoom from 'assets/images/ErrorMushroom.png';
 import { ReportModal } from 'components/molecules/challenge/ReportModal';
+import { LoginModal } from 'components/molecules/modals/LoginModal';
 
 const TogetherCustomChallengeList = () => {
   const observeTarget = useRef(null);
@@ -18,10 +19,11 @@ const TogetherCustomChallengeList = () => {
   const [param, setParam] = useState<FetchParams>({ sort: 1 });
   const [sortValue, setSortValue] = useState<number>(0); // 0: 최신순, 1: 스크랩순
   const [openModal, setOpenModal] = useState<boolean>(false);
-  const [clickButtonValue, setClickButtonValue] = useState<ClickButtonType>('도전');
+  const [clickButtonValue, setClickButtonValue] = useState<ClickButtonType>('로그인');
   const [clickResult, setClickResultValue] = useState<CustomChallengeProps>();
+  const accessToken = localStorage.getItem('accessToken');
 
-  type ClickButtonType = '신고' | '도전';
+  type ClickButtonType = '신고' | '도전' | '로그인';
 
   const { data: searchResults, isLoading, error, setSize } = useInfiniteFetcher(param);
   const scrollContainerRef = useRef<HTMLDivElement | null>(null);
@@ -44,14 +46,14 @@ const TogetherCustomChallengeList = () => {
 
   // 나도! 버튼 클릭 시
   const handleTogetherButton = (result: CustomChallengeProps) => {
-    setClickButtonValue('도전');
+    if (accessToken) setClickButtonValue('도전');
     setOpenModal(true);
     setClickResultValue(result);
   };
 
   // 신고 버튼 클릭시
   const handleReportButton = (result: CustomChallengeProps) => {
-    setClickButtonValue('신고');
+    if (accessToken) setClickButtonValue('신고');
     setOpenModal(true);
     setClickResultValue(result);
   };
@@ -123,6 +125,7 @@ const TogetherCustomChallengeList = () => {
             </div>
           )}
           {searchResults &&
+            searchResults.length > 0 &&
             searchResults?.map((searchResultItem) =>
               searchResultItem?.totalCustomChallengeList.map((result: CustomChallengeProps) => (
                 <div key={result.id}>
@@ -151,19 +154,22 @@ const TogetherCustomChallengeList = () => {
             )}
           <div ref={observeTarget}></div>
         </div>
-        {openModal &&
-          (clickButtonValue === '도전' ? (
-            <TogetherModal
-              openModal={openModal}
-              setOpenModal={setOpenModal}
-              customChallenge={clickResult}
-            />
-          ) : (
+        {(openModal && clickButtonValue === '도전' && (
+          <TogetherModal
+            openModal={openModal}
+            setOpenModal={setOpenModal}
+            customChallenge={clickResult}
+          />
+        )) ||
+          (clickButtonValue === '신고' && (
             <ReportModal
               openModal={openModal}
               setOpenModal={setOpenModal}
               customChallenge={clickResult}
             />
+          )) ||
+          (clickButtonValue === '로그인' && (
+            <LoginModal openModal={openModal} setOpenModal={setOpenModal} />
           ))}
       </div>
     </>

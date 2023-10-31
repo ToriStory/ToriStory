@@ -18,7 +18,7 @@ const ChoiceButtons = ({
       <Button
         variant='contained'
         fullWidth
-        className='text-white font-bold text-lg flex-1'
+        className='w-full text-white font-bold text-lg flex-1'
         onClick={cancelButtonAction}
       >
         {cancelButtonLabel}
@@ -26,7 +26,7 @@ const ChoiceButtons = ({
       <Button
         variant='contained'
         fullWidth
-        className='text-white font-bold text-lg flex-1'
+        className='w-full text-white font-bold text-lg flex-1'
         onClick={okayButtonAction}
       >
         {okayButtonLabel}

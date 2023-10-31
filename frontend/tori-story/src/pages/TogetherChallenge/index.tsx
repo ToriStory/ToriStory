@@ -1,19 +1,27 @@
 import { AddButton } from 'components/atoms/iconButtons/AddButton';
+import { LoginModal } from 'components/molecules/modals/LoginModal';
 import TogetherCustomChallengeList from 'components/organisms/challenge/TogetherCustomChallengeList';
 import { createChallengePage } from 'constants/pathname';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { cls } from 'utils/cls';
 
 const TogetherChallenge = () => {
   const navigate = useNavigate();
+  const accessToken = localStorage.getItem('accessToken');
+  const [openModal, setOpenModal] = useState<boolean>(false);
 
   const handleCreateChallengeButton = () => {
-    navigate(createChallengePage.path, {
-      state: {
-        content: '',
-        id: -1,
-      },
-    });
+    if (accessToken) {
+      navigate(createChallengePage.path, {
+        state: {
+          content: '',
+          id: -1,
+        },
+      });
+    } else {
+      setOpenModal(true);
+    }
   };
 
   return (
@@ -25,6 +33,7 @@ const TogetherChallenge = () => {
           <AddButton onClick={() => handleCreateChallengeButton()} size={36} />
         </div>
       </div>
+      {openModal && <LoginModal openModal={openModal} setOpenModal={setOpenModal} />}
     </>
   );
 };
