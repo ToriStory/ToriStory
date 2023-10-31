@@ -7,7 +7,7 @@ import {
   DialogTitle,
 } from '@mui/material';
 import { myChallengePage } from 'constants/pathname';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 interface CertificationResultModalProps {
@@ -40,10 +40,6 @@ const CertificationResultModal = ({
       handleRetry();
     }
   };
-
-  useEffect(() => {
-    console.log('모달 진입');
-  }, []);
 
   return (
     <Dialog fullWidth open={open} onClose={handleClose}>

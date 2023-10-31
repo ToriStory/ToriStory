@@ -125,9 +125,9 @@ export default function SignIn() {
               </Button>
               <Grid container>
                 <Grid item xs>
-                  <Link to='#' className='underline text-orange-400'>
+                  {/* <Link to='#' className='underline text-orange-400'>
                     비밀번호 찾기
-                  </Link>
+                  </Link> */}
                 </Grid>
                 <Grid item>
                   <Link to={signUpPage.path} replace className=' underline text-orange-400'>
