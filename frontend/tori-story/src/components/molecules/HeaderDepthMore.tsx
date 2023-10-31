@@ -14,7 +14,7 @@ import {
   createChallengeDisplayFlag,
   createChallengeTitle,
 } from 'stores/challengeStore';
-import { customChallengeCreateProps, customChallengeScrapProps } from 'types/challenge';
+import { CustomChallengeCreateProps, CustomChallengeScrapProps } from 'types/challenge';
 
 export default function HeaderDepthMore({ pathname }: { pathname: string }) {
   const navigate = useNavigate();
@@ -38,7 +38,7 @@ export default function HeaderDepthMore({ pathname }: { pathname: string }) {
     if (challengeTitle !== '') {
       let result;
       if (content === '') {
-        const createChallengeResponse: customChallengeCreateProps = {
+        const createChallengeResponse: CustomChallengeCreateProps = {
           content: challengeTitle,
           endDt: challengeDate,
           displayFlag: challengeisplayFlag,
@@ -51,7 +51,7 @@ export default function HeaderDepthMore({ pathname }: { pathname: string }) {
       } else {
         if (id !== -1) {
           const customChallengeId = parseInt(id);
-          const updateChallengeResponse: customChallengeScrapProps = {
+          const updateChallengeResponse: CustomChallengeScrapProps = {
             endDt: challengeDate,
           };
           result = await toast.promise(
