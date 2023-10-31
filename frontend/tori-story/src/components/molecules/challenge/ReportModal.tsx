@@ -36,10 +36,8 @@ export const ReportModal = ({ openModal, setOpenModal, customChallenge }: Togeth
       const result = await toast.promise(reportCustomChallengeAPI(requestData), {
         pending: '도전을 신고 중입니다',
       });
-      console.log(result.data);
       if (result.data.code === 201) {
         toast.success('도전이 신고되었습니다!');
-        console.log(result);
       } else if (result.data.code === 400) {
         toast.error(result.data.data + '입니다!');
       }
