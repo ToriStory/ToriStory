@@ -53,7 +53,7 @@ public class MemberController {
         log.debug("Member Controller: login() method called.........");
 
         return ResponseEntity.status(HttpStatus.OK)
-                .header("Set-Cookie", jwtCookieName + "=" + jwtProvider.generateRefreshToken(loginReq.getEmail()) + "; Path=/member/refresh; HttpOnly; Max-Age=" + 60 * 60 * 24 + "; SameSite=None; Secure")
+                .header("Set-Cookie", jwtCookieName + "=" + jwtProvider.generateRefreshToken(loginReq.getEmail()) + "; Path=/api/member/refresh; HttpOnly; Max-Age=" + 60 * 60 * 24 + "; SameSite=None; Secure")
                 .body(EnvelopRes.<LoginRes>builder()
                         .data(memberService.login(loginReq))
                         .build());
