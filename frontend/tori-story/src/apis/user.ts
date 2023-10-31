@@ -1,8 +1,9 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import axios from 'apis';
 import { Response } from 'types';
 import { User } from 'types/user';
 
-const memberUrl = '/member';
+const memberUrl = '/member/';
 
 interface SignUpProps {
   email: string;
@@ -39,20 +40,37 @@ interface GetUserIdResponse extends Response {
 }
 
 export const signUpAPI = async (data: SignUpProps) => {
-  const url = memberUrl + '/join';
+  const url = memberUrl + 'join';
   const res = await axios.post<SignUpResponse>(url, data);
   return res;
 };
 
 export const signInAPI = async (data: SignInProps) => {
-  const url = memberUrl + '/login';
+  const url = memberUrl + 'login';
   const res = await axios.post<SignInResponse>(url, data);
   return res;
 };
 
 export const signOutAPI = async () => {
-  const url = memberUrl + '/logout';
+  const url = memberUrl + 'logout';
   const res = await axios.post<NonNullishResponse>(url);
+  return res;
+};
+
+export const refreshAPI = async () => {
+  const url = memberUrl + 'refresh';
+  const res = await axios.post<SignInResponse>(
+    url,
+    {},
+    {
+      transformRequest: [
+        (data: any, headers: any) => {
+          headers.Authorization = '';
+          return data;
+        },
+      ],
+    }
+  );
   return res;
 };
 
@@ -63,13 +81,19 @@ export const getUserInfoAPI = async () => {
 };
 
 export const getUserIdAPI = async () => {
-  const url = memberUrl + '/id';
+  const url = memberUrl + 'id';
   const res = await axios.post<GetUserIdResponse>(url);
   return res;
 };
 
-export const verifyEmailAPI = async () => {
-  const url = memberUrl + '/checkEmail';
-  const res = await axios.post<GetUserIdResponse>(url);
+export const sendAuthCodeAPI = async () => {
+  const url = memberUrl + 'checkEmail';
+  const res = await axios.post<NonNullishResponse>(url);
+  return res;
+};
+
+export const CheckAuthCodeAPI = async () => {
+  const url = memberUrl + 'checkCode';
+  const res = await axios.post<NonNullishResponse>(url);
   return res;
 };
