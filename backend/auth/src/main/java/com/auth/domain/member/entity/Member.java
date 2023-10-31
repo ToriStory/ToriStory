@@ -38,4 +38,12 @@ public class Member {
         this.imgUrl = (imgUrl != null) ? imgUrl : "/img/default_profile.png";
     }
 
+    public void changePassword(String pw) {
+        this.pw = pw;
+    }
+
+    public void changeNickname(String nickname) {
+        this.nickname = nickname;
+    }
+
 }

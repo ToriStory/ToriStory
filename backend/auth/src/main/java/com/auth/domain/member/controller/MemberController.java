@@ -1,9 +1,6 @@
 package com.auth.domain.member.controller;
 
-import com.auth.domain.member.dto.request.CheckEmailReq;
-import com.auth.domain.member.dto.request.JoinReq;
-import com.auth.domain.member.dto.request.LoginReq;
-import com.auth.domain.member.dto.request.CheckCodeReq;
+import com.auth.domain.member.dto.request.*;
 import com.auth.domain.member.dto.response.FindIdRes;
 import com.auth.domain.member.dto.response.LoginRes;
 import com.auth.domain.member.dto.response.MyInfoRes;
@@ -113,7 +110,7 @@ public class MemberController {
     }
 
     @PostMapping("/checkEmail")
-    public ResponseEntity<EnvelopRes> checkEmail(@RequestBody CheckEmailReq checkEmailReq){
+    public ResponseEntity<EnvelopRes> checkEmail(@Valid @RequestBody CheckEmailReq checkEmailReq){
 
         log.debug("Member Controller: checkEmail() method called.........");
 
@@ -125,7 +122,7 @@ public class MemberController {
     }
 
     @PostMapping("/checkCode")
-    public ResponseEntity<EnvelopRes> checkCode(@RequestBody CheckCodeReq checkCodeReq){
+    public ResponseEntity<EnvelopRes> checkCode(@Valid @RequestBody CheckCodeReq checkCodeReq){
 
         log.debug("Member Controller: checkCode() method called.........");
 
@@ -144,6 +141,19 @@ public class MemberController {
         return ResponseEntity.status(HttpStatus.OK)
                 .body(EnvelopRes.<MyInfoRes>builder()
                         .data(memberService.findMyInfo(accessToken))
+                        .build());
+    }
+
+    @PatchMapping("")
+    public ResponseEntity<EnvelopRes> updateMyInfo(@ApiIgnore @RequestHeader("Authorization") String accessToken,
+                                                   @Valid @RequestBody UpdateMemberReq updateMemberReq){
+
+        log.debug("Member Controller: updateMyInfo() method called.........");
+
+        memberService.updateMember(accessToken, updateMemberReq);
+
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(EnvelopRes.builder()
                         .build());
     }
 
