@@ -18,7 +18,7 @@ const kakaoMap = {
         } else if (status === kakao.maps.services.Status.ZERO_RESULT) {
           resolve(0);
         } else {
-          reject(new Error('검색에 실패했습니다.'));
+          reject(new Error('서버 응답에 문제가 발생했습니다.'));
         }
       };
 

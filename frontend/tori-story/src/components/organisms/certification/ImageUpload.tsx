@@ -52,6 +52,10 @@ const ImageUpload = ({ buttonProps, optionProps = {} }: ImageUploadProps) => {
     handleCloseModal();
   };
 
+  const handleSelectPhoto = () => {
+    handleCloseModal();
+  };
+
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
     if (files && files.length > 0) {
@@ -110,7 +114,7 @@ const ImageUpload = ({ buttonProps, optionProps = {} }: ImageUploadProps) => {
       </Button>
       <input
         type='file'
-        accept='image/*'
+        accept='.jpg, .png'
         capture='environment'
         ref={fileInputRef}
         className={cls('hidden')}
@@ -122,7 +126,7 @@ const ImageUpload = ({ buttonProps, optionProps = {} }: ImageUploadProps) => {
         <DialogContent sx={{ display: 'flex', flexDirection: 'column' }}>
           <DialogContentText></DialogContentText>
           {takePhoto && <Button onClick={handleTakePhoto}>사진 촬영하기</Button>}
-          {selectPhoto && <Button onClick={handleCloseModal}>앨범에서 선택하기</Button>}
+          {selectPhoto && <Button onClick={handleSelectPhoto}>앨범에서 선택하기</Button>}
         </DialogContent>
         <DialogActions>
           <Button onClick={handleCloseModal} color='primary'>

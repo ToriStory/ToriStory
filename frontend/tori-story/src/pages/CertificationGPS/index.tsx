@@ -14,6 +14,7 @@ const radius = 100;
 const CertificationGPS = () => {
   const [result, setResult] = useState<boolean>(false);
   const [showModal, setShowModal] = useState<boolean>(false);
+  // const [error, setError] = useState<boolean>(false);
   const navigate = useNavigate();
   const {
     state: { keyword },
@@ -27,15 +28,20 @@ const CertificationGPS = () => {
       radius: radius,
       sort: kakao.maps.services.SortBy.DISTANCE,
     };
-    const placeCount: number = await kakaoMap.getPlaceCountByKeyword(keyword, options);
-    if (placeCount > 0) {
-      setResult(true);
-      patchCompRandomChallengeApi();
-    } else {
-      setResult(false);
-    }
 
-    setShowModal(true);
+    try {
+      const placeCount: number = await kakaoMap.getPlaceCountByKeyword(keyword, options);
+      if (placeCount > 0) {
+        setResult(true);
+        patchCompRandomChallengeApi();
+      } else {
+        setResult(false);
+      }
+      setShowModal(true);
+    } catch (error) {
+      alert(error);
+      navigate(myChallengePage.path, { replace: true });
+    }
   };
 
   const getLocation = () => {
