@@ -115,7 +115,7 @@ const ImageUpload = ({ buttonProps, optionProps = {} }: ImageUploadProps) => {
       <input
         type='file'
         accept='image/*'
-        // capture='environment'
+        capture='environment'
         ref={fileInputRef}
         className={cls('hidden')}
         onChange={handleFileChange}
