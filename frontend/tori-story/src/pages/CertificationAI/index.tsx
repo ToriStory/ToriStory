@@ -63,15 +63,13 @@ const CertificationAI = () => {
     setSelectedImage('');
   };
 
+  //optionProps={{ selectPhoto: true }}
   return (
     <div className='w-full h-full'>
       <Typography sx={{ display: 'flex', justifyContent: 'end', color: orange200 }}>
         *촬영한 사진은 따로 저장되지 않습니다.
       </Typography>
-      <ImageUpload
-        buttonProps={{ title: '인증하기', onClick: sendRequest }}
-        optionProps={{ selectPhoto: true }}
-      />
+      <ImageUpload buttonProps={{ title: '인증하기', onClick: sendRequest }} />
       {showModal && response && (
         <CertificationResultModal
           result={result}
