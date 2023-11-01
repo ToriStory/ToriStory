@@ -3,9 +3,23 @@ import RandomChallenge from 'components/organisms/challenge/RandomChallenge';
 import { cls } from 'utils/cls';
 import CustomChallengeList from 'components/organisms/challenge/CustomChallengeList';
 import SignIn from './../Auth/SignIn/index';
+import { AddButton } from 'components/atoms/iconButtons/AddButton';
+import { useNavigate } from 'react-router-dom';
+import { createChallengePage } from 'constants/pathname';
 
 const MyChallenge = () => {
   const accessToken = localStorage.getItem('accessToken');
+  const navigate = useNavigate();
+
+  const handleCreateChallengeButton = () => {
+    navigate(createChallengePage.path, {
+      state: {
+        content: '',
+        id: -1,
+      },
+    });
+  };
+
   return (
     <>
       {accessToken ? (
@@ -17,6 +31,9 @@ const MyChallenge = () => {
             <br />
             <Label title='나의 도전' />
             <CustomChallengeList />
+            <div className={cls('fixed bottom-16 right-4')}>
+              <AddButton onClick={() => handleCreateChallengeButton()} size={36} />
+            </div>
           </div>
         </>
       ) : (
