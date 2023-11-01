@@ -12,6 +12,7 @@ import { useForm } from 'react-hook-form';
 import { FormInputText } from 'components/atoms/input/FormInputText';
 import { signInAPI } from 'apis/user';
 import { toast } from 'react-toastify';
+import { updateToast } from 'utils/toast';
 
 // function Copyright(props: any) {
 //   return (
@@ -43,20 +44,17 @@ export default function SignIn() {
   });
 
   const onSubmit = async (data: SignInInput) => {
-    const res = await toast.promise(
-      signInAPI({
-        email: data.email,
-        password: data.password,
-      }),
-      {
-        pending: '로그인 중입니다',
-        success: '로그인에 성공했습니다!',
-        error: '로그인에 실패했습니다',
-      }
-    );
+    const signInToastId = toast.loading('로그인 중입니다');
+    const res = await signInAPI({
+      email: data.email,
+      password: data.password,
+    });
     if (res.status === 200) {
+      updateToast(signInToastId, '로그인에 성공했습니다!', 'success');
       localStorage.setItem('accessToken', res.data.data.accessToken);
       navigate(myToriPage.path, { replace: true });
+    } else {
+      updateToast(signInToastId, '로그인에 실패했습니다!', 'error');
     }
   };
 
@@ -125,9 +123,9 @@ export default function SignIn() {
               </Button>
               <Grid container>
                 <Grid item xs>
-                  {/* <Link to='#' className='underline text-orange-400'>
+                  <Link to='#' className='underline text-orange-400'>
                     비밀번호 찾기
-                  </Link> */}
+                  </Link>
                 </Grid>
                 <Grid item>
                   <Link to={signUpPage.path} replace className=' underline text-orange-400'>
