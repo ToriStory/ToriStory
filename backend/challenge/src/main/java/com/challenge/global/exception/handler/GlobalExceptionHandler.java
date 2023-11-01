@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.MissingRequestHeaderException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
@@ -37,10 +38,22 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler({MethodArgumentNotValidException.class, UnexpectedTypeException.class, BindException.class})
     protected ResponseEntity<EnvelopRes<String>> handleValidationException(Exception e) {
-        log.error("handleIllegalArgumentException", e.getMessage());
+        log.error("handleValidationException", e.getMessage());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
             EnvelopRes.<String>builder()
                 .code(HttpStatus.BAD_REQUEST.value())
+                .message(e.getMessage())
+                .data(e.getMessage())
+                .build()
+        );
+    }
+
+    @ExceptionHandler({MissingRequestHeaderException.class})
+    protected ResponseEntity<EnvelopRes<String>> handleHeaderMemberException(Exception e) {
+        log.error("handleHeaderMemberException", e.getMessage());
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(
+            EnvelopRes.<String>builder()
+                .code(HttpStatus.UNAUTHORIZED.value())
                 .message(e.getMessage())
                 .data(e.getMessage())
                 .build()

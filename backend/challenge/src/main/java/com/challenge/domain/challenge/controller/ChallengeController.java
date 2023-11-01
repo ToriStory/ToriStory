@@ -15,6 +15,7 @@ import com.challenge.domain.challenge.service.RandomChallengeService;
 import com.challenge.global.response.EnvelopRes;
 
 import lombok.RequiredArgsConstructor;
+import springfox.documentation.annotations.ApiIgnore;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -131,7 +132,7 @@ public class ChallengeController {
     }
 
     @GetMapping("/memory")
-    public ResponseEntity<EnvelopRes<List<FindMemoryRes>>> findMemoryCustom(@RequestHeader("memberId") Long memberId) {
+    public ResponseEntity<EnvelopRes<List<FindMemoryRes>>> findMemoryCustom(@ApiIgnore @RequestHeader("memberId") Long memberId) {
 
         return ResponseEntity.status(HttpStatus.OK).body(EnvelopRes.<List<FindMemoryRes>>builder()
                 .data(customChallengeService.findMemoryCustom(memberId))
