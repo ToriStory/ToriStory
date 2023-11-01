@@ -8,6 +8,8 @@ import { useState } from 'react';
 import { useAtom } from 'jotai';
 import { certificationAIRandomApi, patchCompRandomChallengeApi } from 'apis/challengeApi';
 import { toast } from 'react-toastify';
+import { Typography } from '@mui/material';
+import { orange200 } from 'constants/color';
 
 const CertificationAI = () => {
   const [response, setResponse] = useState(null);
@@ -42,6 +44,9 @@ const CertificationAI = () => {
         patchCompRandomChallengeApi();
       }
     } else {
+      alert(
+        `status: ${response.status} \nresponseCode:${response.data.code} \nmessage: ${response.data.message}`
+      );
       console.log(`${response.status} 에러`);
     }
   };
@@ -60,7 +65,13 @@ const CertificationAI = () => {
 
   return (
     <div className='w-full h-full'>
-      <ImageUpload buttonProps={{ title: '인증하기', onClick: sendRequest }} />
+      <Typography sx={{ display: 'flex', justifyContent: 'end', color: orange200 }}>
+        *촬영한 사진은 따로 저장되지 않습니다.
+      </Typography>
+      <ImageUpload
+        buttonProps={{ title: '인증하기', onClick: sendRequest }}
+        optionProps={{ selectPhoto: true }}
+      />
       {showModal && response && (
         <CertificationResultModal
           result={result}
