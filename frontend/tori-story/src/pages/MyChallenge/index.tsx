@@ -25,7 +25,7 @@ const MyChallenge = () => {
       {accessToken ? (
         <>
           <div className='h-full w-full fixed -z-30  left-0 top-0 flex justify-center items-center bg-white opacity-80 before:w-full before:h-full before:bg-[url("/background.jpg")] before:bg-cover before:bg-no-repeat before:bg-[center_left_30%] before:sm:bg-center before:opacity-60' />
-          <div className={cls(' h-full overflow-y-auto')}>
+          <div className={cls('max-h-full overflow-y-auto pb-12')}>
             <Label title='랜덤 도전' />
             <RandomChallenge />
             <br />

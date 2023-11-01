@@ -1,19 +1,20 @@
 import Challenge from './Challenge';
 import HeaderLeft from 'components/molecules/challenge/HeaderLeft';
 import BottomButton from 'components/atoms/challenge/BottomButton';
-// import useAppNavigation from 'hooks/useAppNavigation';
 import { Button, Dialog, DialogActions, DialogContent, IconButton } from '@mui/material';
 import HeaderRight from 'components/molecules/challenge/HeaderRight';
-import { BadgeCheck, BadgeX, X } from 'lucide-react';
+import { AlarmCheck, BadgeCheck, BadgeX, X } from 'lucide-react';
 import { cls } from 'utils/cls';
 import { gray400, orange300 } from 'constants/color';
 import { useState } from 'react';
+import BottomLeft from 'components/molecules/challenge/BottomLeft';
+import dayjs from 'dayjs';
 
 export interface CustomChallengeProps {
   id: number;
   content: string;
   startDt?: string;
-  endDt?: string;
+  endDt?: string | null;
   compFlag?: boolean;
   imgUrl?: string;
 }
@@ -30,10 +31,8 @@ const CustomChallenge = ({
   isMyChallenge?: boolean;
 }) => {
   const [openModal, setOpenModal] = useState<boolean>(false);
-  // const navigate = useAppNavigation();
 
   const handleCompleted = () => {
-    // navigate.navigateToMemory();
     if (completeChallenge) {
       completeChallenge(props.id);
     }
@@ -54,6 +53,24 @@ const CustomChallenge = ({
     if (deleteChallenge) {
       console.log('props:', props);
       deleteChallenge(props.id);
+    }
+  };
+
+  const getRemainingPeriod = (): string => {
+    if (!props.endDt) {
+      return '상시';
+    }
+
+    const today = dayjs().startOf('day');
+    const endDay = dayjs(props.endDt).startOf('day');
+    const diff = endDay.diff(today, 'day');
+
+    if (diff === 0) {
+      return '오늘';
+    } else if (diff === 1) {
+      return '내일';
+    } else {
+      return `${diff}일`;
     }
   };
 
@@ -90,6 +107,7 @@ const CustomChallenge = ({
         <Challenge
           headerLeft={<HeaderLeft challengeCategory='자유' />}
           headerRight={<HeaderRight button={button} />}
+          bottomLeft={<BottomLeft icon={<AlarmCheck size={16} />} content={getRemainingPeriod()} />}
           //   bottomRight={<BottomButton title='기록' onClick={handleMemory} />}
           bottomRight={<BottomButton title='완료' onClick={handleCompleted} />}
           content={props.content}
