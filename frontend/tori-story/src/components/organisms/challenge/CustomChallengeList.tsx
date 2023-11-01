@@ -9,6 +9,7 @@ import {
   patchCustomChallengeApi,
 } from 'apis/challengeApi';
 import { toast } from 'react-toastify';
+import { cls } from 'utils/cls';
 
 export interface CustomChallengeListResponse {
   data: CustomChallengeProps[];
@@ -82,7 +83,7 @@ const CustumChallengeList = ({ isMyChallenge = false }: CustomChallengeListProps
   };
 
   return (
-    <div className='h-full'>
+    <div className={cls('h-full')}>
       {isMyChallenge
         ? myCustomChallengeData?.data &&
           myCustomChallengeData?.data.map((item) => {
