@@ -164,11 +164,13 @@ public class JwtProvider {
 
             Jwts.parserBuilder().setSigningKey(getSigningKey()).build().parseClaimsJws(token);
             if (redisBlackListTemplate.hasKey(token)) {
+                log.debug("token is in blackList");
                 throw new AuthException(ErrorCode.NOT_VALID_TOKEN);
             }
             return true;
         } catch (io.jsonwebtoken.security.SecurityException | MalformedJwtException |
                  IllegalArgumentException e) {
+            log.debug("invalid token");
             throw new AuthException(ErrorCode.NOT_VALID_TOKEN);
         } catch (ExpiredJwtException e) {
             throw new AuthException(ErrorCode.EXPIRED_TOKEN);
@@ -184,7 +186,12 @@ public class JwtProvider {
     public Boolean validateRefreshToken(String refreshToken) {
         String email = extractEmail(refreshToken);
         String storedRefreshToken = redisTemplate.opsForValue().get(email);
-        if (!Objects.equals(refreshToken, storedRefreshToken)) {
+
+        log.debug("refresh token 유효성 검증................");
+        log.debug("받은 refresh token: {}", refreshToken);
+        log.debug("저장된 refresh token: {}", storedRefreshToken);
+
+        if (!refreshToken.equals(storedRefreshToken)) {
             throw new AuthException(ErrorCode.NOT_VALID_TOKEN);
         }
         return true;

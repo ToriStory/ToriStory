@@ -7,6 +7,7 @@ import com.auth.domain.member.dto.response.MyInfoRes;
 import com.auth.domain.member.dto.response.RefreshRes;
 import com.auth.domain.member.service.MemberService;
 import com.auth.global.exception.AuthException;
+import com.auth.global.jwt.JwtProperties;
 import com.auth.global.jwt.JwtProvider;
 import com.auth.global.response.EnvelopRes;
 import com.auth.global.exception.ErrorCode;
@@ -30,9 +31,13 @@ public class MemberController {
 
     private final MemberService memberService;
     private final JwtProvider jwtProvider;
+    private final JwtProperties jwtProperties;
 
     @Value("${jwt.cookieName}")
     private String jwtCookieName;
+
+    @Value("${refreshToken.path}")
+    private String refreshTokenPath;
 
     @PostMapping("/join")
     public ResponseEntity<EnvelopRes> join(@Valid @RequestBody JoinReq joinReq) {
@@ -53,7 +58,8 @@ public class MemberController {
         log.debug("Member Controller: login() method called.........");
 
         return ResponseEntity.status(HttpStatus.OK)
-                .header("Set-Cookie", jwtCookieName + "=" + jwtProvider.generateRefreshToken(loginReq.getEmail()) + "; Path=/api/member/refresh; HttpOnly; Max-Age=" + 60 * 60 * 24 * 14 + "; SameSite=None; Secure")
+                .header("Set-Cookie", jwtCookieName + "=" + jwtProvider.generateRefreshToken(loginReq.getEmail())
+                        + "; Path=" + refreshTokenPath + "; HttpOnly; Max-Age=" + jwtProperties.getRefreshTokenValidity()/1000 + "; SameSite=None; Secure")
                 .body(EnvelopRes.<LoginRes>builder()
                         .data(memberService.login(loginReq))
                         .build());
@@ -86,6 +92,25 @@ public class MemberController {
             }
         }else{
             throw new AuthException(ErrorCode.INVALID_REFRESH_TOKEN);
+        }
+
+        String email = jwtProvider.extractEmail(refreshToken);
+
+        // refreshToken 유효기간이 절반 이하로 남았을 경우 refreshToken 재발급
+        if(jwtProvider.getRemainMilliSeconds(refreshToken) < jwtProperties.getRefreshTokenValidity()/2){
+
+            log.debug("refreshToken 재발급.........");
+
+            String newRefreshToken = jwtProvider.generateRefreshToken(email);
+
+            return ResponseEntity.status(HttpStatus.OK)
+                    .header("Set-Cookie", jwtCookieName + "=" + jwtProvider.generateRefreshToken(email)
+                            + "; Path=" + refreshTokenPath +"; HttpOnly; Max-Age=" + jwtProperties.getRefreshTokenValidity()/1000 + "; SameSite=None; Secure")
+                    .body(EnvelopRes.<RefreshRes>builder()
+                            .data(RefreshRes.builder()
+                                    .accessToken(newRefreshToken)
+                                    .build())
+                            .build());
         }
 
         return ResponseEntity.status(HttpStatus.OK)
