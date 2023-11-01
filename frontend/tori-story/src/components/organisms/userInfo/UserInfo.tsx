@@ -9,6 +9,7 @@ import { myToriPage } from 'constants/pathname';
 import { toast } from 'react-toastify';
 import useSWR from 'swr';
 import { orange400 } from 'constants/color';
+import { updateToast } from 'utils/toast';
 
 // interface ExpandMoreProps extends IconButtonProps {
 //   expand: boolean;
@@ -29,14 +30,14 @@ const UserInfo = () => {
   const { data } = useSWR('/api/member', getUserInfoAPI);
   const navigate = useNavigate();
   const signOut = async () => {
-    const res = await toast.promise(signOutAPI(), {
-      pending: '로그아웃 중입니다',
-      success: '로그아웃에 성공했습니다!',
-      error: '로그아웃에 실패했습니다',
-    });
+    const signOutToastId = toast.loading('로그아웃 중입니다');
+    const res = await signOutAPI();
     if (res.status === 200) {
+      updateToast(signOutToastId, '로그아웃에 성공했습니다!', 'success');
       localStorage.removeItem('accessToken');
       navigate(myToriPage.path, { replace: true });
+    } else {
+      updateToast(signOutToastId, '로그아웃에 실패했습니다', 'error');
     }
   };
   return data ? (

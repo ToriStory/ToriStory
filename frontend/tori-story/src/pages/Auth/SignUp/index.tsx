@@ -12,6 +12,7 @@ import { useForm } from 'react-hook-form';
 import { FormInputText } from 'components/atoms/input/FormInputText';
 import { signUpAPI } from 'apis/user';
 import { toast } from 'react-toastify';
+import { updateToast } from 'utils/toast';
 // function Copyright(props: any) {
 //   return (
 //     <Typography variant='body2' color='text.secondary' align='center' {...props}>
@@ -43,20 +44,18 @@ export default function SignUp() {
     },
   });
   const onSubmit = async (data: SignUpInput) => {
-    const res = await toast.promise(
-      signUpAPI({
-        email: data.email,
-        nickname: data.nickname,
-        password: data.password,
-      }),
-      {
-        pending: '회원가입 중입니다',
-        success: '회원가입에 성공했습니다!',
-        error: '회원가입에 실패했습니다',
-      }
-    );
+    const signUpToastId = toast.loading('회원가입 중입니다');
+    const res = await signUpAPI({
+      email: data.email,
+      nickname: data.nickname,
+      password: data.password,
+    });
+
     if (res.status === 201) {
+      updateToast(signUpToastId, '회원가입에 성공했습니다!', 'success');
       navigate(signInPage.path, { replace: true });
+    } else {
+      updateToast(signUpToastId, '회원가입에 실패했습니다', 'error');
     }
   };
   return (
