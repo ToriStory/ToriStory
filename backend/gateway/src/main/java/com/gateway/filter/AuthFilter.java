@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.reactive.function.client.WebClientResponseException;
 import reactor.core.publisher.Mono;
 
 @Component
@@ -38,6 +39,10 @@ public class AuthFilter extends AbstractGatewayFilterFactory<AuthFilter.Config> 
                         .header("Authorization", token)
                         .retrieve()
                         .bodyToMono(new ParameterizedTypeReference<EnvelopRes<FindIdRes>>() {
+                        })
+                        .onErrorResume(WebClientResponseException.Forbidden.class, e -> {
+                            // 403 Forbidden 에러가 발생한 경우
+                            return Mono.error(new AuthException(ErrorCode.NOT_VALID_TOKEN));
                         });
 
                 return memberIdMono.flatMap(response -> {
