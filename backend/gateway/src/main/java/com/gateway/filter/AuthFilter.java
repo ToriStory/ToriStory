@@ -1,5 +1,7 @@
 package com.gateway.filter;
 
+import com.gateway.exception.AuthException;
+import com.gateway.exception.ErrorCode;
 import com.gateway.response.EnvelopRes;
 import com.gateway.response.FindIdRes;
 import lombok.extern.slf4j.Slf4j;
@@ -7,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
 import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.ResponseEntity;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -38,16 +41,15 @@ public class AuthFilter extends AbstractGatewayFilterFactory<AuthFilter.Config> 
                         });
 
                 return memberIdMono.flatMap(response -> {
+                    if (response.getCode() == 403) {
+                        return Mono.error(new AuthException(ErrorCode.NOT_VALID_TOKEN));
+                    }
                     Long memberId = response.getData().getId();
                     ServerHttpRequest mutatedRequest = exchange.getRequest().mutate()
                             .header("memberId", Long.toString(memberId))
                             .build();
                     return chain.filter(exchange.mutate().request(mutatedRequest).build());
-                }).onErrorResume(e -> {
-                    log.error("오류 발생: ", e);  // 오류 로깅
-                    return Mono.error(e);
                 });
-
             }
             return chain.filter(exchange);
         };
