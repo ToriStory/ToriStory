@@ -41,7 +41,7 @@ import {
 } from 'constants/pathname.ts';
 import CertificationGPS from 'pages/CertificationGPS/index.tsx';
 import CertificationAI from 'pages/CertificationAI/index.tsx';
-
+import * as Sentry from '@sentry/react';
 const router = createBrowserRouter([
   {
     path: splashPage.path,
@@ -127,7 +127,21 @@ const orangeTheme = createTheme({
     fontFamily: '"omyu","jua", sans-serif',
   },
 });
-
+Sentry.init({
+  dsn: 'https://2f3c9fd7cce52cec5c4af3789a132779@o4506148833722368.ingest.sentry.io/4506148840734720',
+  integrations: [
+    new Sentry.BrowserTracing({
+      // Set 'tracePropagationTargets' to control for which URLs distributed tracing should be enabled
+      tracePropagationTargets: ['localhost', /^https:\/\/yourserver\.io\/api/],
+    }),
+    new Sentry.Replay(),
+  ],
+  // Performance Monitoring
+  tracesSampleRate: 1.0, // Capture 100% of the transactions
+  // Session Replay
+  replaysSessionSampleRate: 0.1, // This sets the sample rate at 10%. You may want to change it to 100% while in development and then sample at a lower rate in production.
+  replaysOnErrorSampleRate: 1.0, // If you're not already sampling the entire session, change the sample rate to 100% when sampling sessions where errors occur.
+});
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <ThemeProvider theme={orangeTheme}>

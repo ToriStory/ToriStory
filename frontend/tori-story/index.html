@@ -16,6 +16,10 @@
         navigator.serviceWorker
           .register('/sw.js')
           .then((registration) => {
+            if (window.location.pathname === '/') {
+              localStorage.removeItem('isInitialRoute');
+              console.log(localStorage.getItem('isInitialRoute'));
+            }
             console.log('Service worker registration succeeded:', registration);
           })
           .catch((err) => {

@@ -1,9 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import Axios from 'axios';
 import { refreshAPI } from './user';
-import { toast } from 'react-toastify';
-import { debounce } from 'lodash';
-import { updateToast } from 'utils/toast';
+import { removeAccessToken } from 'utils';
 
 // Axios의 'create' 메서드를 사용하여 Axios 인스턴스 생성
 const axios = Axios.create({
@@ -26,32 +24,31 @@ axios.interceptors.request.use(
     return Promise.reject(err);
   }
 );
+let isRefreshing = 0; // flag to check if we are already refreshing the token
 
 axios.interceptors.response.use(
   (res) => {
     return res;
   },
   (err) => {
-    if (err.response.status === 403) {
-      const refreshToastId = toast.loading('사용자 정보가 만료되어 다시 불러오는 중입니다');
-      const debouncedFunction = debounce(async () => {
-        const res = await refreshAPI();
-        if (res.status === 200) {
-          updateToast(refreshToastId, '사용자 정보를 다시 불러왔습니다!', 'success', true);
-          axios.defaults.headers.common['Authorization'] = res.data.data.accessToken;
-          if (typeof window !== 'undefined') {
-            localStorage.setItem('accessToken', res.data.data.accessToken);
-          }
-        } else {
-          updateToast(refreshToastId, '사용자 정보를 다시 불러오는 데 실패했습니다', 'error');
-        }
-      }, 1000);
+    console.log('refresh Test', isRefreshing);
+    if (isRefreshing > 0) {
+      removeAccessToken();
+      return err;
+    }
 
-      debouncedFunction();
+    if (err.response.status === 401 || err.response.status === 403) {
+      isRefreshing += 1;
+      console.log('refresh');
+      const refresh = async () => {
+        refreshAPI();
+      };
+
+      refresh();
     }
     console.log('response interceptor error', err);
 
-    return err.response;
+    return err;
   }
 );
 

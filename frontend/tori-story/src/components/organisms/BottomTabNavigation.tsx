@@ -29,6 +29,8 @@ function BottomTabNavigation({ pathname }: { pathname: string }) {
       setValue(3);
     } else if (pathname === myPagePage.label) {
       setValue(4);
+    } else {
+      setValue(-1);
     }
   }, [pathname]);
   useEffect(() => {
