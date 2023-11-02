@@ -1,5 +1,7 @@
 package com.gateway.filter;
 
+import com.gateway.exception.AuthException;
+import com.gateway.exception.ErrorCode;
 import com.gateway.response.EnvelopRes;
 import com.gateway.response.FindIdRes;
 import lombok.extern.slf4j.Slf4j;
@@ -38,6 +40,10 @@ public class AuthFilter extends AbstractGatewayFilterFactory<AuthFilter.Config> 
                         });
 
                 return memberIdMono.flatMap(response -> {
+                    if (response.getCode() == 403) {
+                        return Mono.error(new AuthException(ErrorCode.NOT_VALID_TOKEN));
+                    }
+
                     Long memberId = response.getData().getId();
                     ServerHttpRequest mutatedRequest = exchange.getRequest().mutate()
                             .header("memberId", Long.toString(memberId))
@@ -45,7 +51,7 @@ public class AuthFilter extends AbstractGatewayFilterFactory<AuthFilter.Config> 
                     return chain.filter(exchange.mutate().request(mutatedRequest).build());
                 }).onErrorResume(e -> {
                     log.info("Error occurred: {}", e.getMessage());
-                    return chain.filter(exchange);
+                    return Mono.error(new RuntimeException("Error..."));
                 });
             }
             return chain.filter(exchange);
