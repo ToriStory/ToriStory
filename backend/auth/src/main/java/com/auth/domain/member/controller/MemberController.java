@@ -101,14 +101,15 @@ public class MemberController {
 
             log.debug("refreshToken 재발급.........");
 
+            String newAccessToken = jwtProvider.reIssue(refreshToken);
             String newRefreshToken = jwtProvider.generateRefreshToken(email);
 
             return ResponseEntity.status(HttpStatus.OK)
-                    .header("Set-Cookie", jwtCookieName + "=" + jwtProvider.generateRefreshToken(email)
+                    .header("Set-Cookie", jwtCookieName + "=" + newRefreshToken
                             + "; Path=" + refreshTokenPath +"; HttpOnly; Max-Age=" + jwtProperties.getRefreshTokenValidity()/1000 + "; SameSite=None; Secure")
                     .body(EnvelopRes.<RefreshRes>builder()
                             .data(RefreshRes.builder()
-                                    .accessToken(newRefreshToken)
+                                    .accessToken(newAccessToken)
                                     .build())
                             .build());
         }
