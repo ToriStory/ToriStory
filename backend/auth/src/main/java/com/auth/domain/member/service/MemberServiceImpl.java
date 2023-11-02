@@ -186,4 +186,14 @@ public class MemberServiceImpl implements MemberService {
             memberRepository.save(member);
     }
 
+    @Override
+    public void deleteMember(String accessToken) {
+
+            log.debug("Member Service: deleteMember() method called.........");
+
+            Member member = findByEmail(jwtProvider.extractEmail(accessToken));
+
+            memberRepository.delete(member);
+    }
+
 }
