@@ -49,9 +49,6 @@ public class AuthFilter extends AbstractGatewayFilterFactory<AuthFilter.Config> 
                             .header("memberId", Long.toString(memberId))
                             .build();
                     return chain.filter(exchange.mutate().request(mutatedRequest).build());
-                }).onErrorResume(e -> {
-                    log.info("Error occurred: {}", e.getMessage());
-                    return Mono.error(new RuntimeException("Error..."));
                 });
             }
             return chain.filter(exchange);
