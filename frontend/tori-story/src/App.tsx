@@ -4,22 +4,17 @@ import Header from 'components/organisms/Header';
 import BottomTabNavigation from 'components/organisms/BottomTabNavigation';
 import { myToriPage, pathname } from './constants/pathname';
 import { useEffect } from 'react';
-import { useAtom } from 'jotai';
-import { isInitialRouteAtom } from 'stores';
 
 function App() {
   const location = useLocation();
   const label = (pathname.find((item) => item.path === location.pathname) || {}).label;
 
-  const [isInitialRoute, setIsInitialRoute] = useAtom(isInitialRouteAtom);
   const navigate = useNavigate();
-  console.log(isInitialRoute);
   useEffect(() => {
-    // const isInitialRoute = localStorage.getItem('isInitialRoute');
+    const isInitialRoute = localStorage.getItem('isInitialRoute');
     console.log(isInitialRoute);
-    if (isInitialRoute !== false) {
-      setIsInitialRoute(false);
-      // localStorage.setItem('isInitialRoute', 'false');
+    if (isInitialRoute !== 'F') {
+      localStorage.setItem('isInitialRoute', 'F');
       navigate(myToriPage.path, { replace: true });
     }
   }, [navigate]);

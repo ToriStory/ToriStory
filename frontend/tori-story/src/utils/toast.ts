@@ -4,7 +4,8 @@ export const updateToast = (
   id: Id,
   msg: string,
   type: TypeOptions | null | undefined,
-  reload?: boolean
+  reload?: boolean,
+  onClose?: () => void
 ) => {
   toast.update(id, {
     render: msg,
@@ -20,10 +21,14 @@ export const updateToast = (
     theme: 'colored',
     transition: Slide,
     style: { marginBottom: 16, fontFamily: 'jua' },
-    onClose: () => {
-      if (reload) {
-        window.location.reload();
-      }
-    },
+    onClose: onClose
+      ? onClose
+      : reload
+      ? () => {
+          if (reload) {
+            window.location.reload();
+          }
+        }
+      : () => {},
   });
 };

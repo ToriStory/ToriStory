@@ -16,7 +16,7 @@ interface MyCustomChallengeResponse {
   startDt: string;
 }
 interface GetMyCustomChallengeResponse extends Response {
-  data: MyCustomChallengeResponse[];
+  data: MyCustomChallengeResponse[] | string;
 }
 
 // 자유 도전 과제 생성

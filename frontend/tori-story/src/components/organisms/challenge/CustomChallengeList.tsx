@@ -18,7 +18,10 @@ interface CustomChallengeListProps {
   isMyChallenge?: boolean;
 }
 const CustumChallengeList = ({ isMyChallenge = false }: CustomChallengeListProps) => {
-  const { data: myCustomChallengeData } = useSWR('/api/challenge/custom', getMyCustomChallengeAPI);
+  const { data: myCustomChallengeData } = useSWR(
+    isMyChallenge ? '/api/challenge/custom' : null,
+    getMyCustomChallengeAPI
+  );
   const [data, setData] = useState<CustomChallengeProps[]>([]);
   const [isEmpty, setIsEmpty] = useState<boolean>(true);
 
@@ -33,8 +36,8 @@ const CustumChallengeList = ({ isMyChallenge = false }: CustomChallengeListProps
   }, [isMyChallenge, myCustomChallengeData]);
 
   useEffect(() => {
-    getInProgressCustomChallengeApi();
-  }, []);
+    !isMyChallenge && getInProgressCustomChallengeApi();
+  }, [isMyChallenge]);
 
   const getInProgressCustomChallengeApi = async () => {
     const result = await readInProgressCustomChallengeApi();
@@ -85,8 +88,10 @@ const CustumChallengeList = ({ isMyChallenge = false }: CustomChallengeListProps
   return (
     <div className={cls('h-full')}>
       {isMyChallenge
-        ? myCustomChallengeData?.data &&
-          myCustomChallengeData?.data.map((item) => {
+        ? myCustomChallengeData &&
+          myCustomChallengeData?.data &&
+          typeof myCustomChallengeData.data !== 'string' &&
+          myCustomChallengeData?.data?.map((item) => {
             return (
               <CustomChallenge
                 key={item.id}
