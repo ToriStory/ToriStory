@@ -8,7 +8,7 @@ public enum ErrorCode {
     //JWT 에러
     NOT_VALID_TOKEN(403, "유효하지 않은 토큰입니다."),
     EXPIRED_TOKEN(403, "만료된 토큰입니다."),
-    INVALID_REFRESH_TOKEN(401, "유효하지 않은 리프레시 토큰입니다."),
+    INVALID_REFRESH_TOKEN(403, "유효하지 않은 리프레시 토큰입니다."),
 
     // Member 에러,
     NO_SUCH_MEMBER(404, "존재하지 않는 회원입니다."),
