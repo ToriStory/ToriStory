@@ -31,4 +31,6 @@ public interface MemberService {
 
     void updateMember(String accessToken, UpdateMemberReq updateMemberReq);
 
+    void deleteMember(String accessToken);
+
 }

@@ -182,4 +182,16 @@ public class MemberController {
                         .build());
     }
 
+    @DeleteMapping("")
+    public ResponseEntity<EnvelopRes> deleteMember(@ApiIgnore @RequestHeader("Authorization") String accessToken){
+
+        log.debug("Member Controller: deleteMember() method called.........");
+
+        memberService.deleteMember(accessToken);
+
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(EnvelopRes.builder()
+                        .build());
+    }
+
 }
