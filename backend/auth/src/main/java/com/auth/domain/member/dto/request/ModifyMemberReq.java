@@ -8,7 +8,7 @@ import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 @Getter
-public class UpdateMemberReq {
+public class ModifyMemberReq {
 
     @NotBlank
     @Size(max = 8, message = "닉네임은 8자를 넘을 수 없습니다.")

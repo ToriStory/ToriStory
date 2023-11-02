@@ -3,7 +3,7 @@ package com.auth.domain.member.service;
 import com.auth.domain.member.dto.request.CheckCodeReq;
 import com.auth.domain.member.dto.request.JoinReq;
 import com.auth.domain.member.dto.request.LoginReq;
-import com.auth.domain.member.dto.request.UpdateMemberReq;
+import com.auth.domain.member.dto.request.ModifyMemberReq;
 import com.auth.domain.member.dto.response.FindIdRes;
 import com.auth.domain.member.dto.response.LoginRes;
 import com.auth.domain.member.dto.response.MyInfoRes;
@@ -29,7 +29,7 @@ public interface MemberService {
 
     void checkCode(CheckCodeReq checkCodeReq);
 
-    void updateMember(String accessToken, UpdateMemberReq updateMemberReq);
+    void modifyMember(String accessToken, ModifyMemberReq modifyMemberReq);
 
     void deleteMember(String accessToken);
 

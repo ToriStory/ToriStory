@@ -4,7 +4,7 @@ import com.auth.domain.mail.service.MailService;
 import com.auth.domain.member.dto.request.CheckCodeReq;
 import com.auth.domain.member.dto.request.JoinReq;
 import com.auth.domain.member.dto.request.LoginReq;
-import com.auth.domain.member.dto.request.UpdateMemberReq;
+import com.auth.domain.member.dto.request.ModifyMemberReq;
 import com.auth.domain.member.dto.response.FindIdRes;
 import com.auth.domain.member.dto.response.LoginRes;
 import com.auth.domain.member.dto.response.MyInfoRes;
@@ -174,14 +174,14 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public void updateMember(String accessToken, UpdateMemberReq updateMemberReq) {
+    public void modifyMember(String accessToken, ModifyMemberReq modifyMemberReq) {
 
             log.debug("Member Service: updateMember() method called.........");
 
             Member member = findByEmail(jwtProvider.extractEmail(accessToken));
 
-            member.changeNickname(updateMemberReq.getNickname());
-            member.changePassword(passwordEncoder.encode(updateMemberReq.getPassword()));
+            member.changeNickname(modifyMemberReq.getNickname());
+            member.changePassword(passwordEncoder.encode(modifyMemberReq.getPassword()));
 
             memberRepository.save(member);
     }
