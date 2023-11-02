@@ -179,7 +179,7 @@ public class CustomChallengeServiceImpl implements CustomChallengeService {
             throw new ChallengeException(ErrorCode.CUSTOM_MEMBER_NOT_MATCH);
         }
 
-        customEntryRepository.deleteById(customEntryId);
+        customEntry.remove();
     }
 
     @Override

@@ -59,4 +59,8 @@ public class CustomEntry {
         this.imgUrl = imgUrl;
     }
 
+    public void remove() {
+        this.delFlag = true;
+    }
+
 }
