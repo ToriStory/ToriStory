@@ -62,17 +62,19 @@ public class AuthFilter extends AbstractGatewayFilterFactory<AuthFilter.Config> 
 
     // AuthException 발생 시 클라이언트에 반환할 응답 생성
     private Mono<Void> handleAuthException(ServerWebExchange exchange, AuthException e) {
+        log.info("AuthException 발생...");
+
         EnvelopRes<String> errorResponse = EnvelopRes.<String>builder()
                 .code(e.getErrorCode().getCode())
                 .message(e.getMessage())
                 .data(e.getErrorCode().getMessage())
                 .build();
 
+        exchange.getResponse().setStatusCode(HttpStatus.valueOf(e.getErrorCode().getCode()));
+
         return exchange.getResponse().writeWith(
                 Mono.just(exchange.getResponse().bufferFactory().wrap(errorResponse.toString().getBytes()))
-        ).then(Mono.fromRunnable(() -> {
-            exchange.getResponse().setStatusCode(HttpStatus.valueOf(e.getErrorCode().getCode()));
-        }));
+        );
     }
 
     public static class Config {
