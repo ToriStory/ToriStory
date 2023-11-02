@@ -170,13 +170,13 @@ public class MemberController {
                         .build());
     }
 
-    @PatchMapping("")
-    public ResponseEntity<EnvelopRes> updateMyInfo(@ApiIgnore @RequestHeader("Authorization") String accessToken,
-                                                   @Valid @RequestBody UpdateMemberReq updateMemberReq){
+    @PutMapping("")
+    public ResponseEntity<EnvelopRes> modifyMyInfo(@ApiIgnore @RequestHeader("Authorization") String accessToken,
+                                                   @Valid @RequestBody ModifyMemberReq modifyMemberReq){
 
-        log.debug("Member Controller: updateMyInfo() method called.........");
+        log.debug("Member Controller: modifyMyInfo() method called.........");
 
-        memberService.updateMember(accessToken, updateMemberReq);
+        memberService.modifyMember(accessToken, modifyMemberReq);
 
         return ResponseEntity.status(HttpStatus.OK)
                 .body(EnvelopRes.builder()
