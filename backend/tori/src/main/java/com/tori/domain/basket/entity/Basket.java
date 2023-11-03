@@ -35,16 +35,16 @@ public class Basket {
 	private byte giftCnt;
 
 	@Column(nullable = false)
-	private LocalDate sendDt;
+	private LocalDate sendDtm;
 
 	@Column(nullable = false, columnDefinition = "TINYINT(1)")
 	private boolean openFlag;
 
 	@Builder
-	public Basket(Long memberId, byte giftCnt, LocalDate sendDt) {
+	public Basket(Long memberId, byte giftCnt, LocalDate sendDtm) {
 		this.memberId = memberId;
 		this.giftCnt = giftCnt;
-		this.sendDt = sendDt;
+		this.sendDtm = sendDtm;
 	}
 
 }
