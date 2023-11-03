@@ -2,18 +2,18 @@ import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import { Bell, Settings } from 'lucide-react';
+import { Settings } from 'lucide-react';
 import useAppNavigation from 'hooks/useAppNavigation';
 
 export default function HeaderDepthOne({ pathname }: { pathname: string }) {
   const navigation = useAppNavigation();
 
   const navItems = [
-    {
-      name: '알림',
-      to: navigation.navigateToNotification,
-      icon: <Bell />,
-    },
+    // {
+    //   name: '알림',
+    //   to: navigation.navigateToNotification,
+    //   icon: <Bell />,
+    // },
     {
       name: '설정',
       to: navigation.navigateToSetting,

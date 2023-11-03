@@ -42,7 +42,16 @@ const CertificationResultModal = ({
   };
 
   return (
-    <Dialog fullWidth open={open} onClose={handleClose}>
+    <Dialog
+      fullWidth
+      open={open}
+      onClose={(_, reason) => {
+        // 모달 바깥 클릭 막음
+        if (reason !== 'backdropClick') {
+          handleClose();
+        }
+      }}
+    >
       <DialogTitle>{result === true ? '인증 성공' : '인증 실패'}</DialogTitle>
       <DialogContent>
         <DialogContentText>

@@ -28,6 +28,11 @@ export const myChallengePage = {
   label: '나의 도전',
 };
 
+export const commonChallengeDetailPage = {
+  path: '/challenge/my/common',
+  label: '공동 도전 상세',
+};
+
 export const togetherChallengePage = {
   path: '/challenge/together',
   label: '함께 도전',
@@ -94,6 +99,7 @@ export const pathname = [
   signInPage,
   signUpPage,
   myChallengePage,
+  commonChallengeDetailPage,
   togetherChallengePage,
   totoriPage,
   createChallengePage,

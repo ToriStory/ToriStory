@@ -5,6 +5,7 @@ import {
   imageMemoryPage,
   landingPage,
   myChallengePage,
+  commonChallengeDetailPage,
   myPagePage,
   myToriPage,
   notificationPage,
@@ -70,6 +71,10 @@ export const useAppNavigation = () => {
     navigate(imageMemoryPage.path);
   };
 
+  const navigateToCommonChallengeDetail = () => {
+    navigate(commonChallengeDetailPage.path);
+  };
+
   // MyTory
   const navigateToMyTori = () => {
     navigate(myToriPage.path);
@@ -98,6 +103,7 @@ export const useAppNavigation = () => {
     navigateToTogetherChallengeCreate,
     navigateToLanding,
     navigateToMyChallenge,
+    navigateToCommonChallengeDetail,
     navigateToCertificationGPS,
     navigateToCertificationPhoto,
     navigateToMemory,

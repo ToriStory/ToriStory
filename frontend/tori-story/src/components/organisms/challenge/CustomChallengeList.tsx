@@ -39,16 +39,21 @@ const CustumChallengeList = ({ isMyChallenge = false }: CustomChallengeListProps
     !isMyChallenge && getInProgressCustomChallengeApi();
   }, [isMyChallenge]);
 
+  useEffect(() => {
+    if (!isMyChallenge) {
+      if (data && data.length > 0) {
+        setIsEmpty(false);
+      } else {
+        setIsEmpty(true);
+      }
+    }
+  }, [data]);
+
   const getInProgressCustomChallengeApi = async () => {
     const result = await readInProgressCustomChallengeApi();
     if (result.status === 200) {
       const data: CustomChallengeProps[] = result.data.data;
       setData(data);
-      data.map((item) => {
-        if (item.compFlag === false) {
-          setIsEmpty(false); // 달성되지 않은 도전과제만 표시함
-        }
-      });
     }
   };
 

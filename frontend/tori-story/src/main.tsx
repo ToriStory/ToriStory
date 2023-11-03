@@ -28,6 +28,7 @@ import {
   imageMemoryPage,
   landingPage,
   myChallengePage,
+  commonChallengeDetailPage,
   myPagePage,
   myToriPage,
   notificationPage,
@@ -44,6 +45,7 @@ import CertificationGPS from 'pages/CertificationGPS/index.tsx';
 import CertificationAI from 'pages/CertificationAI/index.tsx';
 import * as Sentry from '@sentry/react';
 import PrivatePolicy from 'pages/Policy/Private/index.tsx';
+import CommonChallengeDetail from 'pages/CommonChallengeDetail/index.tsx';
 const router = createBrowserRouter([
   {
     path: splashPage.path,
@@ -68,6 +70,10 @@ const router = createBrowserRouter([
       {
         path: myChallengePage.path,
         element: <MyChallenge />,
+      },
+      {
+        path: commonChallengeDetailPage.path,
+        element: <CommonChallengeDetail />,
       },
       {
         path: testPage.path,
