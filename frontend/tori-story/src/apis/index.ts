@@ -37,7 +37,7 @@ axios.interceptors.response.use(
       return err;
     }
 
-    if (err.response.status === 401 || err.response.status === 403) {
+    if (err.response.status === 403) {
       isRefreshing += 1;
       console.log('refresh');
       const refresh = async () => {
