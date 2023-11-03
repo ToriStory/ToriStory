@@ -33,6 +33,9 @@ public class CommonEntry {
     @CreatedDate
     private LocalDate challengeDt;
 
+    @Column(length = 2048)
+    private String imgUrl;
+
     @PrePersist
     public void prePersist() {
         this.challengeDt = LocalDate.now();
@@ -43,6 +46,11 @@ public class CommonEntry {
         this.commonChallenge = commonChallenge;
         this.memberId = memberId;
         this.compFlag = compFlag;
+    }
+
+    public void complete(String imgUrl) {
+        this.compFlag = true;
+        this.imgUrl = imgUrl;
     }
 
 }
