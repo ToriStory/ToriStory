@@ -4,8 +4,8 @@ import ImageUpload, {
   selectedImageAtom,
 } from 'components/organisms/certification/ImageUpload';
 import CertificationResultModal from 'components/organisms/certification/CerfiticationResultModal';
-import { useState } from 'react';
-import { useAtom } from 'jotai';
+import { useEffect, useState } from 'react';
+import { useAtom, useSetAtom } from 'jotai';
 import { certificationAIRandomApi, patchCompRandomChallengeApi } from 'apis/challengeApi';
 import { toast } from 'react-toastify';
 import { Typography } from '@mui/material';
@@ -15,8 +15,8 @@ const CertificationAI = () => {
   const [response, setResponse] = useState(null);
   const [result, setResult] = useState<boolean>(false);
   const [showModal, setShowModal] = useState<boolean>(false);
-  const [file] = useAtom(fileAtom);
-  const [, setSelectedImage] = useAtom(selectedImageAtom);
+  const [file, setFile] = useAtom(fileAtom);
+  const setSelectedImage = useSetAtom(selectedImageAtom);
 
   const {
     state: { id },
@@ -54,14 +54,21 @@ const CertificationAI = () => {
   const handleNavigate = () => {
     setResponse(null);
     setShowModal(false);
+    setFile(null);
     setSelectedImage('');
   };
 
   const handleRetry = () => {
     setResponse(null);
     setShowModal(true);
+    setFile(null);
     setSelectedImage('');
   };
+
+  useEffect(() => {
+    setSelectedImage('');
+    setFile(null);
+  }, []);
 
   //optionProps={{ selectPhoto: true }}
   return (
