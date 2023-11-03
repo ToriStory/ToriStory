@@ -13,7 +13,7 @@ import com.challenge.domain.challenge.entity.CommonEntry;
 public interface CommonEntryRepository extends JpaRepository<CommonEntry, BigInteger> {
 
 	@Query("select ce from CommonEntry ce join fetch ce.commonChallenge where ce.memberId = :memberId and ce.challengeDt = current_date")
-	Optional<CommonEntry> findByMemberId(Long memberId);
+	Optional<CommonEntry> findByMemberIdAndChallengeDt(Long memberId);
 
 	@Query("select count(ce) from CommonEntry ce where ce.compFlag = true and ce.challengeDt = current_date")
 	int countAllByChallengeDtAndCompFlagIsTrue();

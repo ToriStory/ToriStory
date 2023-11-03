@@ -33,6 +33,11 @@ public class CommonEntry {
     @CreatedDate
     private LocalDate challengeDt;
 
+    @PrePersist
+    public void prePersist() {
+        this.challengeDt = LocalDate.now();
+    }
+
     @Builder
     public CommonEntry(CommonChallenge commonChallenge, Long memberId, boolean compFlag) {
         this.commonChallenge = commonChallenge;
