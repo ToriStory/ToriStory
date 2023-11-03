@@ -6,6 +6,7 @@ const SuccessChallenge = ({ title }: { title: string }) => {
 
 /* style */
 const cardStyle = {
+  backgroundColor: 'rgba(255, 255, 255, 0.8)',
   borderColor: orange400,
   border: `2px solid ${orange400}`,
   borderRadius: '0.6rem',

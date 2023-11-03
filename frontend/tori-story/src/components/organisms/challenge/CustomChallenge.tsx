@@ -3,9 +3,8 @@ import HeaderLeft from 'components/molecules/challenge/HeaderLeft';
 import BottomButton from 'components/atoms/challenge/BottomButton';
 import { Button, Dialog, DialogActions, DialogContent, IconButton } from '@mui/material';
 import HeaderRight from 'components/molecules/challenge/HeaderRight';
-import { AlarmCheck, BadgeCheck, BadgeX, X } from 'lucide-react';
-import { cls } from 'utils/cls';
-import { gray400, orange300 } from 'constants/color';
+import { BadgeCheck, BadgeX, X } from 'lucide-react';
+import { gray400, gray500, orange300 } from 'constants/color';
 import { useState } from 'react';
 import BottomLeft from 'components/molecules/challenge/BottomLeft';
 import dayjs from 'dayjs';
@@ -66,18 +65,15 @@ const CustomChallenge = ({
     const diff = endDay.diff(today, 'day');
 
     if (diff === 0) {
-      return '오늘';
-    } else if (diff === 1) {
-      return '내일';
-    } else {
-      return `${diff}일`;
+      return 'D-day';
     }
+    return `D-${diff}`;
   };
 
   const button = (
     <>
       <IconButton onClick={handleDelete}>
-        <X size={20} className={cls('text-gray-400')} />
+        <X size={20} color={gray500} />
       </IconButton>
     </>
   );
@@ -101,15 +97,19 @@ const CustomChallenge = ({
           }
           content={props.content}
         />
-      ) : props.compFlag === true ? (
-        <></>
       ) : (
         <Challenge
           headerLeft={<HeaderLeft challengeCategory='자유' />}
           headerRight={<HeaderRight button={button} />}
-          bottomLeft={<BottomLeft icon={<AlarmCheck size={16} />} content={getRemainingPeriod()} />}
+          bottomLeft={<BottomLeft content={getRemainingPeriod()} />}
           //   bottomRight={<BottomButton title='기록' onClick={handleMemory} />}
-          bottomRight={<BottomButton title='완료' onClick={handleCompleted} />}
+          bottomRight={
+            props.compFlag ? (
+              <BadgeCheck color={orange300} />
+            ) : (
+              <BottomButton title='완료' onClick={handleCompleted} />
+            )
+          }
           content={props.content}
         />
       )}

@@ -81,7 +81,8 @@ function BottomTabNavigation({ pathname }: { pathname: string }) {
         pathname === '도전 생성' ||
         pathname === '사진 인증' ||
         pathname === 'GPS 인증' ||
-        pathname === '추억 남기기' ? (
+        pathname === '추억 남기기' ||
+        pathname === '공동 도전 상세' ? (
           <div></div>
         ) : (
           <>
