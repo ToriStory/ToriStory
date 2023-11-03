@@ -31,6 +31,7 @@ import {
   myPagePage,
   myToriPage,
   notificationPage,
+  privatePolicyPage,
   settingPage,
   signInPage,
   signUpPage,
@@ -42,6 +43,7 @@ import {
 import CertificationGPS from 'pages/CertificationGPS/index.tsx';
 import CertificationAI from 'pages/CertificationAI/index.tsx';
 import * as Sentry from '@sentry/react';
+import PrivatePolicy from 'pages/Policy/Private/index.tsx';
 const router = createBrowserRouter([
   {
     path: splashPage.path,
@@ -111,6 +113,10 @@ const router = createBrowserRouter([
       {
         path: settingPage.path,
         element: <Setting />,
+      },
+      {
+        path: privatePolicyPage.path,
+        element: <PrivatePolicy />,
       },
     ],
   },

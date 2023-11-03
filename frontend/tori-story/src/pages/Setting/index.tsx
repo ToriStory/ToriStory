@@ -1,10 +1,13 @@
 import { Divider } from '@mui/material';
 import { WithdrawalModal } from 'components/molecules/modals/withdrawalModal';
+import { privatePolicyPage } from 'constants/pathname';
 import { ChevronRight } from 'lucide-react';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { cls } from 'utils/cls';
 
 const Setting = () => {
+  const navigate = useNavigate();
   // const [notificationFlag, setNotificationFlag] = useState(true);
   const suggestUrl =
     'https://docs.google.com/forms/d/e/1FAIpQLSeu_872x2rpOkXN7GKfCeZPniPXlQ229SUzhKS1Wj7DTvTXog/viewform';
@@ -21,6 +24,12 @@ const Setting = () => {
       label: '토리스토리 건의함',
       onClick: () => {
         window.open(suggestUrl);
+      },
+    },
+    {
+      label: '개인정보처리방침',
+      onClick: () => {
+        navigate(privatePolicyPage.path);
       },
     },
     {

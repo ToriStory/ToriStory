@@ -77,6 +77,11 @@ export const settingPage = {
   label: '설정',
 };
 
+export const privatePolicyPage = {
+  path: '/policy/private',
+  label: '개인정보처리방침',
+};
+
 export const testPage = {
   path: '/test',
   label: '설정',
@@ -99,4 +104,5 @@ export const pathname = [
   myPagePage,
   notificationPage,
   settingPage,
+  privatePolicyPage,
 ];

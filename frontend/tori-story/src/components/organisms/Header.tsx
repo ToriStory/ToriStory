@@ -11,7 +11,8 @@ function Header({ pathname }: { pathname: string }) {
         pathname === '설정' ||
         pathname === '사진 인증' ||
         pathname === 'GPS 인증' ||
-        pathname === '추억 남기기' ? (
+        pathname === '추억 남기기' ||
+        pathname === '개인정보처리방침' ? (
         <HeaderDepthMore pathname={pathname} />
       ) : (
         <HeaderDepthOne pathname={pathname} />
