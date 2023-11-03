@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import axios from 'apis';
-import { signInPage } from 'constants/pathname';
+import useAppNavigation from 'hooks/useAppNavigation';
 import { debounce } from 'lodash';
 import { toast } from 'react-toastify';
 import { Response } from 'types';
@@ -44,6 +44,10 @@ interface GetUserIdResponse extends Response {
   };
 }
 
+interface EmailProps {
+  email: string;
+}
+
 export const signUpAPI = async (data: SignUpProps) => {
   const url = memberUrl + 'join';
   const res = await axios.post<SignUpResponse>(url, data);
@@ -63,23 +67,11 @@ export const signOutAPI = async () => {
 };
 
 export const refreshAPI = debounce(async () => {
-  console.log('refresh');
-
+  const navigate = useAppNavigation();
   const url = memberUrl + 'refresh';
   delete axios.defaults.headers.Authorization;
 
-  const res = await axios.post<SignInResponse>(
-    url
-    // {}
-    // {
-    //   transformRequest: [
-    //     (data: any, headers: any) => {
-    //       delete headers.Authorization;
-    //       return data;
-    //     },
-    //   ],
-    // }
-  );
+  const res = await axios.post<SignInResponse>(url);
   if (res.status === 200) {
     const refreshToastId = toast.loading('사용자 정보가 만료되어 다시 불러오는 중입니다');
     updateToast(refreshToastId, '사용자 정보를 다시 불러왔습니다!', 'success', true);
@@ -88,25 +80,18 @@ export const refreshAPI = debounce(async () => {
     if (typeof window !== 'undefined') {
       localStorage.setItem('accessToken', res.data.data.accessToken);
     }
-    // location.reload();
   } else {
     const refreshToastId = toast.loading('사용자 정보가 만료되어 다시 불러오는 중입니다');
-
-    console.log(location.host + signInPage.path);
     updateToast(
       refreshToastId,
       `사용자 정보를 다시 불러오는 데 실패하여 로그아웃합니다.
       로그인 페이지로 이동 후 다시 로그인 해주세요`,
       'error',
       false,
-      () => window.location.replace(signInPage.path)
+      () => navigate.navigateToSignin()
     );
     removeAccessToken();
-
-    // removeAccessToken();
-    // location.replace(location.host + signInPage.path);
   }
-  // return res;
 }, 1000);
 
 export const getUserInfoAPI = async () => {
@@ -121,14 +106,20 @@ export const getUserIdAPI = async () => {
   return res;
 };
 
-export const sendAuthCodeAPI = async () => {
+export const sendAuthCodeAPI = async (data: EmailProps) => {
   const url = memberUrl + 'checkEmail';
-  const res = await axios.post<NonNullishResponse>(url);
+  const res = await axios.post<NonNullishResponse>(url, data);
   return res;
 };
 
 export const CheckAuthCodeAPI = async () => {
   const url = memberUrl + 'checkCode';
   const res = await axios.post<NonNullishResponse>(url);
+  return res;
+};
+
+export const withdrawalAPI = async () => {
+  const url = memberUrl;
+  const res = await axios.delete<NonNullishResponse>(url);
   return res;
 };
