@@ -6,17 +6,16 @@ function Header({ pathname }: { pathname: string }) {
     <>
       {pathname === '랜딩' ? (
         <></>
-      ) : pathname === '도전 생성' ||
-        pathname === '알림' ||
-        pathname === '설정' ||
-        pathname === '사진 인증' ||
-        pathname === 'GPS 인증' ||
-        pathname === '추억 남기기' ||
-        pathname === '개인정보처리방침' ||
-        pathname === '공동 도전 상세' ? (
-        <HeaderDepthMore pathname={pathname} />
-      ) : (
+      ) : pathname === '마이 토리' ||
+        pathname === '마이페이지' ||
+        pathname === '토토리' ||
+        pathname === '함께 도전' ||
+        pathname === '나의 도전' ||
+        pathname === '회원가입' ||
+        pathname === '로그인' ? (
         <HeaderDepthOne pathname={pathname} />
+      ) : (
+        <HeaderDepthMore pathname={pathname} />
       )}
     </>
   );

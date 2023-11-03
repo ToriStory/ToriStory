@@ -75,16 +75,13 @@ function BottomTabNavigation({ pathname }: { pathname: string }) {
   return (
     <div>
       <Box sx={{ pb: 7 }} ref={ref}>
-        {pathname === '랜딩' ||
-        pathname === '설정' ||
-        pathname === '알림' ||
-        pathname === '도전 생성' ||
-        pathname === '사진 인증' ||
-        pathname === 'GPS 인증' ||
-        pathname === '추억 남기기' ||
-        pathname === '공동 도전 상세' ? (
-          <div></div>
-        ) : (
+        {pathname === '마이 토리' ||
+        pathname === '마이페이지' ||
+        pathname === '토토리' ||
+        pathname === '함께 도전' ||
+        pathname === '나의 도전' ||
+        pathname === '회원가입' ||
+        pathname === '로그인' ? (
           <>
             <CssBaseline />
             <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }} elevation={3}>
@@ -109,6 +106,8 @@ function BottomTabNavigation({ pathname }: { pathname: string }) {
               </BottomNavigation>
             </Paper>
           </>
+        ) : (
+          <div></div>
         )}
       </Box>
     </div>
