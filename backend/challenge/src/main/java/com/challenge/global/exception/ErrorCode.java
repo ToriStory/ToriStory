@@ -19,6 +19,7 @@ public enum ErrorCode {
 	PLACE_CHALLENGE_NOT_FOUND(400, "존재하지 않는 장소 도전 과제"),
 
 	TODAY_COMMON_CHALLENGE_NOT_FOUND(400, "존재하지 않는 오늘의 공동 도전 과제"),
+	DUPLICATE_COMMON_CHALLENGE(400, "이미 참여하고 있는 공동 도전 과제"),
 
 	// JSON
 	JSON_PARSE_ERROR(500, "JSON 파싱 에러"),

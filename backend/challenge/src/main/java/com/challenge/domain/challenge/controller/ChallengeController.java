@@ -2,6 +2,7 @@ package com.challenge.domain.challenge.controller;
 
 import com.challenge.domain.challenge.dto.request.AddCustomReq;
 import com.challenge.domain.challenge.dto.request.AddReportReq;
+import com.challenge.domain.challenge.dto.response.AddAttendRes;
 import com.challenge.domain.challenge.dto.response.FindCertRes;
 import com.challenge.domain.challenge.dto.response.FindCommonRes;
 import com.challenge.domain.challenge.dto.response.FindCustomRes;
@@ -181,6 +182,17 @@ public class ChallengeController {
         return ResponseEntity.status(HttpStatus.OK).body(
             EnvelopRes.<FindCommonRes>builder()
                 .data(commonChallengeService.findCommonChallenge(memberId))
+                .build()
+        );
+    }
+
+    @PostMapping("/common/attend")
+    public ResponseEntity<EnvelopRes<AddAttendRes>> addCommonAttend(@RequestHeader("memberId") Long memberId) {
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(
+            EnvelopRes.<AddAttendRes>builder()
+                .code(201)
+                .data(commonChallengeService.addCommonAttend(memberId))
                 .build()
         );
     }
