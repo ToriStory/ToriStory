@@ -40,11 +40,13 @@ import {
   testPage,
   togetherChallengePage,
   totoriPage,
+  updateUserInfoPage,
 } from 'constants/pathname.ts';
 import CertificationGPS from 'pages/CertificationGPS/index.tsx';
 import CertificationAI from 'pages/CertificationAI/index.tsx';
 import * as Sentry from '@sentry/react';
 import PrivatePolicy from 'pages/Policy/Private/index.tsx';
+import UpdateUser from 'pages/Auth/UpdateUser/index.tsx';
 import CommonChallengeDetail from 'pages/CommonChallengeDetail/index.tsx';
 const router = createBrowserRouter([
   {
@@ -111,6 +113,10 @@ const router = createBrowserRouter([
       {
         path: myPagePage.path,
         element: <MyPage />,
+      },
+      {
+        path: updateUserInfoPage.path,
+        element: <UpdateUser />,
       },
       {
         path: notificationPage.path,
