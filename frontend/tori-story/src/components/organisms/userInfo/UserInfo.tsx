@@ -2,18 +2,15 @@ import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
 import Avatar from '@mui/material/Avatar';
 import { red } from '@mui/material/colors';
-import {
-  Button,
-  // IconButton
-} from '@mui/material';
+import { Button, IconButton } from '@mui/material';
 import { getUserInfoAPI, signOutAPI } from 'apis/user';
 import { useNavigate } from 'react-router-dom';
-import { myToriPage } from 'constants/pathname';
+import { myToriPage, updateUserInfoPage } from 'constants/pathname';
 import { toast } from 'react-toastify';
 import useSWR from 'swr';
 import { orange400 } from 'constants/color';
 import { updateToast } from 'utils/toast';
-// import { PenSquare } from 'lucide-react';
+import { PenSquare } from 'lucide-react';
 
 // interface ExpandMoreProps extends IconButtonProps {
 //   expand: boolean;
@@ -63,11 +60,15 @@ const UserInfo = () => {
               src='https://i.pinimg.com/736x/4b/af/8d/4baf8ddeb7937f55a6ca9584b58b03e6.jpg'
             />
           }
-          // action={
-          //   <IconButton onClick={() => {}}>
-          //     <PenSquare />
-          //   </IconButton>
-          // }
+          action={
+            <IconButton
+              onClick={() => {
+                navigate(updateUserInfoPage.path);
+              }}
+            >
+              <PenSquare />
+            </IconButton>
+          }
           title={data?.data.nickname}
           subheader={
             <div className='w-full h-full flex flex-col justify-between items-baseline text-justify'>

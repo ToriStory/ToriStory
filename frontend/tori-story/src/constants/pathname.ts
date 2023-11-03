@@ -72,6 +72,11 @@ export const myPagePage = {
   label: '마이페이지',
 };
 
+export const updateUserInfoPage = {
+  path: '/mypage/update',
+  label: '회원정보 수정',
+};
+
 export const notificationPage = {
   path: '/notification',
   label: '알림',
@@ -108,6 +113,7 @@ export const pathname = [
   imageMemoryPage,
   myToriPage,
   myPagePage,
+  updateUserInfoPage,
   notificationPage,
   settingPage,
   privatePolicyPage,

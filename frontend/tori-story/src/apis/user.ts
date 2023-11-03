@@ -48,6 +48,11 @@ interface EmailProps {
   email: string;
 }
 
+interface UpdateUserProps {
+  nickname: string;
+  password: string;
+}
+
 export const signUpAPI = async (data: SignUpProps) => {
   const url = memberUrl + 'join';
   const res = await axios.post<SignUpResponse>(url, data);
@@ -124,5 +129,11 @@ export const CheckAuthCodeAPI = async () => {
 export const withdrawalAPI = async () => {
   const url = memberUrl;
   const res = await axios.delete<NonNullishResponse>(url);
+  return res;
+};
+
+export const updateUserAPI = async (data: UpdateUserProps) => {
+  const url = memberUrl;
+  const res = await axios.put<NonNullishResponse>(url, data);
   return res;
 };
