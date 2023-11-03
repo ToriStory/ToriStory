@@ -22,10 +22,10 @@ export const WithdrawalModal = ({ openModal, setOpenModal }: WithdrawalModalProp
     const res = await withdrawalAPI();
     const withdrawalToastId = toast.loading('탈퇴 처리 중입니다');
     if (res.status === 200) {
-      localStorage.removeItem('accessToken');
       updateToast(withdrawalToastId, '탈퇴가 완료되었습니다!', 'success', false, () =>
         navigate.navigateToSignup()
       );
+      localStorage.removeItem('accessToken');
     } else {
       updateToast(withdrawalToastId, `탈퇴에 실패했습니다`, 'error', false);
     }

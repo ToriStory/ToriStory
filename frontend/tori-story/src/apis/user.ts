@@ -68,8 +68,8 @@ export const signOutAPI = async () => {
 
 export const refreshAPI = debounce(async () => {
   const url = memberUrl + 'refresh';
-  delete axios.defaults.headers.Authorization;
 
+  removeAccessToken();
   const res = await axios.post<SignInResponse>(url);
   if (res.status === 200) {
     const refreshToastId = toast.loading('사용자 정보가 만료되어 다시 불러오는 중입니다');
@@ -79,7 +79,6 @@ export const refreshAPI = debounce(async () => {
       'success',
       true
     );
-    console.log(res.data);
     axios.defaults.headers.common['Authorization'] = res.data.data.accessToken;
     if (typeof window !== 'undefined') {
       localStorage.setItem('accessToken', res.data.data.accessToken);

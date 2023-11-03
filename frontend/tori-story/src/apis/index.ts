@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import Axios from 'axios';
 import { refreshAPI } from './user';
-import { removeAccessToken } from 'utils';
 
 // Axios의 'create' 메서드를 사용하여 Axios 인스턴스 생성
 const axios = Axios.create({
@@ -33,7 +32,6 @@ axios.interceptors.response.use(
   (err) => {
     console.log('refresh Test', isRefreshing);
     if (isRefreshing > 0) {
-      removeAccessToken();
       return err;
     }
 
