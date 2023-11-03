@@ -129,11 +129,18 @@ public class RandomChallengeServiceImpl implements RandomChallengeService {
 
         challenge.renewal(category, newChallengeId);
 
+        Optional<PlaceChallenge> placeChallenge = Optional.empty();
+        if (challenge.getCategory().toString().equals("PLACE")) {
+            placeChallenge = Optional.of(placeChallengeRepository.findById(challenge.getChallengeId())
+                .orElseThrow(() -> new ChallengeException(ErrorCode.PLACE_CHALLENGE_NOT_FOUND)));
+        }
+
         return FindRandomRes.builder()
                 .id(challenge.getRandomChallengeId())
                 .content(getChallengeContent(challenge.getCategory().toString(), challenge.getChallengeId()))
                 .compFlag(challenge.isCompFlag())
                 .category(challenge.getCategory().toString())
+                .keyword(placeChallenge.isPresent() ? placeChallenge.get().getKeyword() : "")
                 .build();
     }
 
