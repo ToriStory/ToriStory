@@ -3,6 +3,7 @@ package com.challenge.domain.challenge.controller;
 import com.challenge.domain.challenge.dto.request.AddCustomReq;
 import com.challenge.domain.challenge.dto.request.AddReportReq;
 import com.challenge.domain.challenge.dto.response.FindCertRes;
+import com.challenge.domain.challenge.dto.response.FindCommonRes;
 import com.challenge.domain.challenge.dto.response.FindCustomRes;
 import com.challenge.domain.challenge.dto.request.AddScrapCustomReq;
 import com.challenge.domain.challenge.dto.response.FindMemoryRes;
@@ -10,6 +11,7 @@ import com.challenge.domain.challenge.dto.request.FindCustomSearchReq;
 import com.challenge.domain.challenge.dto.response.FindRandomRes;
 import com.challenge.domain.challenge.dto.response.FindTotalChallengeRes;
 import com.challenge.domain.challenge.dto.response.FindTotalCustomRes;
+import com.challenge.domain.challenge.service.CommonChallengeService;
 import com.challenge.domain.challenge.service.CustomChallengeService;
 import com.challenge.domain.challenge.service.RandomChallengeService;
 import com.challenge.global.response.EnvelopRes;
@@ -34,6 +36,7 @@ public class ChallengeController {
 
     private final RandomChallengeService randomChallengeService;
     private final CustomChallengeService customChallengeService;
+    private final CommonChallengeService commonChallengeService;
 
     @GetMapping
     public ResponseEntity<EnvelopRes<FindTotalChallengeRes>> findTotalChallenge(@RequestHeader("memberId") Long memberId) {
@@ -168,6 +171,16 @@ public class ChallengeController {
         return ResponseEntity.status(HttpStatus.CREATED).body(
             EnvelopRes.builder()
                 .code(201)
+                .build()
+        );
+    }
+
+    @GetMapping("/common")
+    public ResponseEntity<EnvelopRes<FindCommonRes>> findCommonChallenge(@RequestHeader("memberId") Long memberId) {
+
+        return ResponseEntity.status(HttpStatus.OK).body(
+            EnvelopRes.<FindCommonRes>builder()
+                .data(commonChallengeService.findCommonChallenge(memberId))
                 .build()
         );
     }
