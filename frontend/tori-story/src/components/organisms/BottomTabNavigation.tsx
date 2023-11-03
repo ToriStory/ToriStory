@@ -1,5 +1,11 @@
 import { BottomNavigation, BottomNavigationAction } from '@mui/material';
-import { Trophy, Gift, Squirrel, HeartHandshake, User2 } from 'lucide-react';
+import {
+  Trophy,
+  //  Gift,
+  Squirrel,
+  HeartHandshake,
+  User2,
+} from 'lucide-react';
 import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
 import Paper from '@mui/material/Paper';
@@ -10,25 +16,26 @@ import {
   myPagePage,
   myToriPage,
   togetherChallengePage,
-  totoriPage,
+  // totoriPage,
 } from 'constants/pathname';
 
 function BottomTabNavigation({ pathname }: { pathname: string }) {
-  const [value, setValue] = useState(0);
+  const [value, setValue] = useState(-1);
   const ref = useRef<HTMLDivElement>(null);
   const navigation = useAppNavigation();
 
   useEffect(() => {
-    if (pathname === totoriPage.label) {
+    // if (pathname === totoriPage.label) {
+    //   setValue(0);
+    // } else
+    if (pathname === togetherChallengePage.label) {
       setValue(0);
-    } else if (pathname === togetherChallengePage.label) {
-      setValue(1);
     } else if (pathname === myToriPage.label) {
-      setValue(2);
+      setValue(1);
     } else if (pathname === myChallengePage.label) {
-      setValue(3);
+      setValue(2);
     } else if (pathname === myPagePage.label) {
-      setValue(4);
+      setValue(3);
     } else {
       setValue(-1);
     }
@@ -38,11 +45,11 @@ function BottomTabNavigation({ pathname }: { pathname: string }) {
   }, [value]);
 
   const bottomTabMenu = [
-    {
-      label: totoriPage.label,
-      icon: <Gift />,
-      to: navigation.navigateToTotori,
-    },
+    // {
+    //   label: totoriPage.label,
+    //   icon: <Gift />,
+    //   to: navigation.navigateToTotori,
+    // },
     {
       label: togetherChallengePage.label,
       icon: <HeartHandshake />,
