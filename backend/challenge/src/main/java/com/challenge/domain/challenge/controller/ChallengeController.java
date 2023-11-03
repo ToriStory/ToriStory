@@ -4,6 +4,7 @@ import com.challenge.domain.challenge.dto.request.AddCustomReq;
 import com.challenge.domain.challenge.dto.request.AddReportReq;
 import com.challenge.domain.challenge.dto.response.AddAttendRes;
 import com.challenge.domain.challenge.dto.response.FindCertRes;
+import com.challenge.domain.challenge.dto.response.FindCommonCompRes;
 import com.challenge.domain.challenge.dto.response.FindCommonRes;
 import com.challenge.domain.challenge.dto.response.FindCustomRes;
 import com.challenge.domain.challenge.dto.request.AddScrapCustomReq;
@@ -193,6 +194,16 @@ public class ChallengeController {
             EnvelopRes.<AddAttendRes>builder()
                 .code(201)
                 .data(commonChallengeService.addCommonAttend(memberId))
+                .build()
+        );
+    }
+
+    @PatchMapping("/common/{commonChallengeId}")
+    public ResponseEntity<EnvelopRes<FindCommonCompRes>> modifyCommonComp(@RequestHeader("memberId") Long memberId, @PathVariable BigInteger commonChallengeId, @RequestPart(required = false) MultipartFile image) {
+
+        return ResponseEntity.status(HttpStatus.OK).body(
+            EnvelopRes.<FindCommonCompRes>builder()
+                .data(commonChallengeService.modifyCustomCompFlag(memberId, commonChallengeId, image))
                 .build()
         );
     }

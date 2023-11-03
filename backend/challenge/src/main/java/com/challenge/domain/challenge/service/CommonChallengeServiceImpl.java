@@ -1,12 +1,15 @@
 package com.challenge.domain.challenge.service;
 
+import java.math.BigInteger;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.challenge.domain.challenge.dto.response.AddAttendRes;
+import com.challenge.domain.challenge.dto.response.FindCommonCompRes;
 import com.challenge.domain.challenge.dto.response.FindCommonRes;
 import com.challenge.domain.challenge.entity.CommonChallenge;
 import com.challenge.domain.challenge.entity.CommonEntry;
@@ -28,6 +31,7 @@ public class CommonChallengeServiceImpl implements CommonChallengeService {
 
 	private final CommonChallengeRepository commonChallengeRepository;
 	private final CommonEntryRepository commonEntryRepository;
+	private final AwsS3Service awsS3Service;
 
 	@Override
 	public FindCommonRes findCommonChallenge(Long memberId) {
@@ -56,6 +60,28 @@ public class CommonChallengeServiceImpl implements CommonChallengeService {
 			.compFlag(commonEntry.get().isCompFlag())
 			.compCnt(compCnt)
 			.unit(parseUnit(commonEntry.get().getCommonChallenge().getUnit()))
+			.build();
+	}
+
+	@Override
+	public FindCommonCompRes modifyCustomCompFlag(Long memberId, BigInteger commonChallengeId, MultipartFile image) {
+
+		CommonEntry commonEntry = commonEntryRepository.findByMemberIdAndChallengeDt(memberId)
+			.orElseThrow(() -> new ChallengeException(ErrorCode.ATTEND_COMMON_CHALLENGE_NOT_FOUND));
+
+		if (commonEntry.isCompFlag()) {
+			throw new ChallengeException(ErrorCode.COMMON_CHALLENGE_ALREADY_COMPLETE);
+		}
+
+		String savedImgUrl = null;
+		if (image != null) {
+			savedImgUrl = awsS3Service.uploadFile(image);
+		}
+		commonEntry.complete(savedImgUrl);
+
+		return FindCommonCompRes.builder()
+			.compCnt(commonEntryRepository.countAllByChallengeDtAndCompFlagIsTrue())
+			.compFlag(true)
 			.build();
 	}
 
