@@ -12,7 +12,7 @@ export const updateToast = (
     type: type,
     isLoading: false,
     position: 'bottom-center',
-    autoClose: 3000,
+    autoClose: 1000,
     hideProgressBar: false,
     closeOnClick: true,
     pauseOnHover: true,
