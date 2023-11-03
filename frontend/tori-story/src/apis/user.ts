@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import axios from 'apis';
-import useAppNavigation from 'hooks/useAppNavigation';
+import { signInPage } from 'constants/pathname';
 import { debounce } from 'lodash';
 import { toast } from 'react-toastify';
 import { Response } from 'types';
@@ -67,14 +67,18 @@ export const signOutAPI = async () => {
 };
 
 export const refreshAPI = debounce(async () => {
-  const navigate = useAppNavigation();
   const url = memberUrl + 'refresh';
   delete axios.defaults.headers.Authorization;
 
   const res = await axios.post<SignInResponse>(url);
   if (res.status === 200) {
     const refreshToastId = toast.loading('사용자 정보가 만료되어 다시 불러오는 중입니다');
-    updateToast(refreshToastId, '사용자 정보를 다시 불러왔습니다!', 'success', true);
+    updateToast(
+      refreshToastId,
+      '사용자 정보를 다시 불러왔습니다! 페이지를 다시 불러옵니다',
+      'success',
+      true
+    );
     console.log(res.data);
     axios.defaults.headers.common['Authorization'] = res.data.data.accessToken;
     if (typeof window !== 'undefined') {
@@ -85,10 +89,10 @@ export const refreshAPI = debounce(async () => {
     updateToast(
       refreshToastId,
       `사용자 정보를 다시 불러오는 데 실패하여 로그아웃합니다.
-      로그인 페이지로 이동 후 다시 로그인 해주세요`,
+      다시 로그인 해주세요`,
       'error',
       false,
-      () => navigate.navigateToSignin()
+      () => location.replace(signInPage.path)
     );
     removeAccessToken();
   }
