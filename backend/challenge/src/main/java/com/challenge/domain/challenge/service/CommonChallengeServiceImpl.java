@@ -3,11 +3,13 @@ package com.challenge.domain.challenge.service;
 import java.math.BigInteger;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.challenge.domain.challenge.dto.response.FindCommonEntryRes;
 import com.challenge.domain.challenge.dto.response.AddAttendRes;
 import com.challenge.domain.challenge.dto.response.FindCommonCompRes;
 import com.challenge.domain.challenge.dto.response.FindCommonRes;
@@ -60,6 +62,21 @@ public class CommonChallengeServiceImpl implements CommonChallengeService {
 			.compFlag(commonEntry.get().isCompFlag())
 			.compCnt(compCnt)
 			.unit(parseUnit(commonEntry.get().getCommonChallenge().getUnit()))
+			.build();
+	}
+
+	@Override
+	public FindCommonEntryRes findCommonEntryChallenge(Long memberId, BigInteger commonChallengeId) {
+
+		CommonChallenge commonChallenge = commonChallengeRepository.findByTodayFlagIsTrue()
+			.orElseThrow(() -> new ChallengeException(ErrorCode.TODAY_COMMON_CHALLENGE_NOT_FOUND));
+
+		List<String> imgUrlList = commonEntryRepository.findAllByImgUrlIsNotEmptyAndCompFlagIsTrue();
+
+		return FindCommonEntryRes.builder()
+			.commonChallengeId(commonChallengeId)
+			.content(commonChallenge.getContent())
+			.imgUrlList(imgUrlList)
 			.build();
 	}
 
