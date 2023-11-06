@@ -1,7 +1,9 @@
 package com.challenge.domain.challenge.service;
 
-import com.challenge.domain.challenge.dto.response.AddAttendRes;
 import java.math.BigInteger;
+
+import com.challenge.domain.challenge.dto.response.FindCommonEntryRes;
+import com.challenge.domain.challenge.dto.response.AddAttendRes;
 
 import org.springframework.web.multipart.MultipartFile;
 
@@ -15,5 +17,7 @@ public interface CommonChallengeService {
 	AddAttendRes addCommonAttend(Long memberId);
 
 	FindCommonCompRes modifyCustomCompFlag(Long memberId, BigInteger commonChallengeId, MultipartFile image);
+
+	FindCommonEntryRes findCommonEntryChallenge(Long memberId, BigInteger commonChallengeId);
 
 }
