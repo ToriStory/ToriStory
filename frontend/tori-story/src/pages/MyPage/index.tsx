@@ -1,6 +1,6 @@
 import AuthBackground from 'components/atoms/background/AuthBackground';
 import Label from 'components/atoms/challenge/Label';
-import CustumChallengeList from 'components/organisms/challenge/CustomChallengeList';
+import { MyChallengeCalendar } from 'components/molecules/calendar/MyChallengeCalendar';
 import UserInfo from 'components/organisms/userInfo/UserInfo';
 import SignIn from 'pages/Auth/SignIn';
 
@@ -16,7 +16,7 @@ const MyPage = () => {
               <Label title='참여했던 도전들' />
             </div>
             <div className='w-full h-full overflow-y-auto'>
-              <CustumChallengeList isMyChallenge />
+              <MyChallengeCalendar />
             </div>
           </div>
         ) : (

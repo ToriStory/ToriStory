@@ -3,8 +3,9 @@ import SuccessChallenge from './SuccessChallenge';
 import { useEffect, useState } from 'react';
 import {
   deleteCustomChallengeApi,
-  readInProgressCustomChallengeApi,
   patchCustomChallengeApi,
+  // getMyChallengeDailyAPI,
+  ChallengeDailyResponse,
 } from 'apis/challengeApi';
 import { toast } from 'react-toastify';
 import { cls } from 'utils/cls';
@@ -12,14 +13,24 @@ import { cls } from 'utils/cls';
 export interface CustomChallengeListResponse {
   data: CustomChallengeProps[];
 }
-
-const CustumChallengeList = () => {
-  const [data, setData] = useState<CustomChallengeProps[]>([]);
+interface MyCalendarChallengeListProps {
+  activeDate: string;
+}
+const MyCalendarChallengeList = (props: MyCalendarChallengeListProps) => {
+  const { activeDate } = props;
+  const [data, setData] = useState<ChallengeDailyResponse[]>([]);
   const [isEmpty, setIsEmpty] = useState<boolean>(true);
 
   useEffect(() => {
-    getInProgressCustomChallengeApi();
-  }, []);
+    // const getDailyChallenge = async () => {
+    //   const res = await getMyChallengeDailyAPI({ date: activeDate });
+    //   if (res.status === 200) {
+    //     console.log(res);
+    //     setData(res.data.data);
+    //   }
+    // };
+    // getDailyChallenge();
+  }, [activeDate]);
 
   useEffect(() => {
     if (data && data.length > 0) {
@@ -28,14 +39,6 @@ const CustumChallengeList = () => {
       setIsEmpty(true);
     }
   }, [data]);
-
-  const getInProgressCustomChallengeApi = async () => {
-    const result = await readInProgressCustomChallengeApi();
-    if (result.status === 200) {
-      const data: CustomChallengeProps[] = result.data.data;
-      setData(data);
-    }
-  };
 
   const handleDelete = async (id: number) => {
     const result = await toast.promise(deleteCustomChallengeApi(id), {
@@ -71,7 +74,7 @@ const CustumChallengeList = () => {
   };
 
   return (
-    <div className={cls('h-full')}>
+    <div className={cls('h-full mt-4')}>
       {data &&
         data?.map((item) => {
           return (
@@ -80,6 +83,7 @@ const CustumChallengeList = () => {
               props={item}
               deleteChallenge={handleDelete}
               completeChallenge={handleCompleted}
+              isMyChallenge
             />
           );
         })}
@@ -88,4 +92,4 @@ const CustumChallengeList = () => {
   );
 };
 
-export default CustumChallengeList;
+export default MyCalendarChallengeList;

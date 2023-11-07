@@ -1,0 +1,110 @@
+/* 달력 보이는 부분 */
+.react-calendar__viewContainer {
+  background-color: white;
+  text-align: center;
+  border-radius: 0 0 20px 20px;
+}
+/* 상단 내비게이션 (년,월) */
+
+.react-calendar__navigation__prev2-button,
+.react-calendar__navigation__next2-button {
+  display: none;
+}
+
+.react-calendar__navigation {
+  text-align: center;
+  width: 100%;
+  background-color: #ff762e;
+  /* border-bottom: 4px solid #772900; */
+  /* height:90px; */
+  border-radius: 20px 20px 0 0;
+}
+
+.react-calendar__navigation > button {
+  padding: 8px;
+}
+
+.react-calendar__navigation__arrow,
+.react-calendar__navigation__label {
+  font-size: 24px;
+  font-weight: 600;
+  color: #772900;
+}
+
+.react-calendar__navigation button:disabled {
+  background-color: #ff762e;
+  border-radius: 20px 20px 0 0;
+}
+
+.react-calendar__navigation button:enabled:hover,
+.react-calendar__navigation button:enabled:focus {
+  background-color: #ff762e;
+  border-radius: 20px 20px 0 0;
+}
+
+/* 월 달력 (내비게이션 제외) */
+.react-calendar__month-view {
+  padding: 8px 16px;
+  /* color: #772900; */
+  font-size: 16px;
+  font-weight: 500;
+}
+
+/* 요일 */
+.react-calendar__month-view__weekdays {
+  font-size: 18px;
+  font-weight: 900;
+}
+
+.react-calendar__month-view__weekdays {
+  padding: 8px 0 8px 0;
+}
+ .react-calendar__month-view__weekdays__weekday--weekend:nth-of-type(7) {
+  color: #5ca0ff;
+}
+.react-calendar__month-view__weekdays__weekday--weekend:nth-of-type(1) {
+  color: #ff6d6d;
+}
+
+/* 일 (각 타일) */
+
+.Sat
+{
+  color: #5ca0ff;
+}
+
+.Sun 
+{
+  color: #FF4343;
+}
+
+.react-calendar__tile {
+  text-align: center;
+  height: 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+/*hover, focus, 선택됐을 시 */
+.react-calendar__tile:enabled:hover,
+.react-calendar__tile:enabled:focus,
+.react-calendar__tile--active {
+  background: #66bb6a;
+  border-radius: 14px;
+  color: white;
+}
+
+/* 현재 날짜 */
+.react-calendar__tile--now {
+  background: #ff8a65;
+  border-radius: 14px;
+  color: white;
+}
+/*hover, focus 시 */
+.react-calendar__tile--now:enabled:hover,
+.react-calendar__tile--now:enabled:focus {
+  background: #66bb6a;
+  border-radius: 14px;
+  color: white;
+}
