@@ -5,57 +5,35 @@ import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import { findPasswordPage, myToriPage, signUpPage } from 'constants/pathname';
-import { Link, useNavigate } from 'react-router-dom';
+import { signInPage, signUpPage } from 'constants/pathname';
+import { Link } from 'react-router-dom';
 import AuthBackground from 'components/atoms/background/AuthBackground';
 import { useForm } from 'react-hook-form';
 import { FormInputText } from 'components/atoms/input/FormInputText';
-import { signInAPI } from 'apis/user';
-import { toast } from 'react-toastify';
-import { updateToast } from 'utils/toast';
+import {
+  EmailProps,
+  // findPasswordAPI
+} from 'apis/user';
+// import { toast } from 'react-toastify';
 
-// function Copyright(props: any) {
-//   return (
-//     <Typography variant='body2' color='text.secondary' align='center' {...props}>
-//       {'Copyright © '}
-//       <Link color='inherit' href='https://mui.com/'>
-//         Your Website
-//       </Link>{' '}
-//       {new Date().getFullYear()}
-//       {'.'}
-//     </Typography>
-//   );
-// }
-
-// TODO remove, this demo shouldn't need to reset the theme.
-
-interface SignInInput {
-  email: string;
-  password: string;
-}
-
-export default function SignIn() {
-  const navigate = useNavigate();
+export default function FindPassword() {
   const { handleSubmit, control } = useForm({
     defaultValues: {
       email: '',
-      password: '',
     },
   });
 
-  const onSubmit = async (data: SignInInput) => {
-    const signInToastId = toast.loading('로그인 중입니다');
-    const res = await signInAPI({
-      email: data.email,
-      password: data.password,
-    });
-    if (res.status === 200) {
-      updateToast(signInToastId, '로그인에 성공했습니다!', 'success');
-      localStorage.setItem('accessToken', res.data.data.accessToken);
-      navigate(myToriPage.path, { replace: true });
-    } else {
-      updateToast(signInToastId, '로그인에 실패했습니다!', 'error');
-    }
+  const onSubmit = async (data: EmailProps) => {
+    console.log(data.email);
+    return;
+    // const res = await findPasswordAPI({
+    //   email: data.email,
+    // });
+    // if (res.status === 200) {
+    //   toast.success('이메일로 비밀번호 재설정 링크를 보냈습니다!');
+    // } else {
+    //   toast.error('이메일이 유효하지 않습니다');
+    // }
   };
 
   return (
@@ -71,7 +49,7 @@ export default function SignIn() {
             }}
           >
             <Typography component='h1' variant='h4'>
-              로그인
+              비밀번호 찾기
             </Typography>
             <Box component='form' onSubmit={handleSubmit(onSubmit)} sx={{ mt: 1, width: '100%' }}>
               <FormInputText
@@ -93,38 +71,18 @@ export default function SignIn() {
                 }}
                 autoFocus
               />
-              <FormInputText
-                name='password'
-                control={control}
-                label='비밀번호'
-                margin='normal'
-                fullWidth
-                type='password'
-                id='password'
-                rules={{
-                  required: { value: true, message: '비밀번호를 입력해주세요!' },
-                  pattern: {
-                    value: /^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*\W)(?=\S+$).{8,20}$/,
-                    message: '영어와 숫자, 특수문자를 모두 사용하여 8~20자로 작성해주세요!',
-                  },
-                }}
-              />
-              {/* <FormControlLabel
-              control={<Checkbox value='remember' color='primary' />}
-              label='로그인 유지하기'
-            /> */}
               <Button
                 type='submit'
                 fullWidth
                 variant='contained'
                 sx={{ mt: 3, mb: 2, fontWeight: 'bold', color: 'white', fontSize: 20 }}
               >
-                로그인
+                비밀번호 재설정 링크 받기
               </Button>
               <Grid container>
                 <Grid item xs>
-                  <Link to={findPasswordPage.path} className='underline text-orange-400'>
-                    비밀번호 찾기
+                  <Link to={signInPage.path} replace className=' underline text-orange-400'>
+                    로그인 하러 가기
                   </Link>
                 </Grid>
                 <Grid item>

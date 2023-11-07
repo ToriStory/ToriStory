@@ -23,6 +23,16 @@ export const signUpPage = {
   label: '회원가입',
 };
 
+export const findPasswordPage = {
+  path: '/auth/findpw',
+  label: '비밀번호 찾기',
+};
+
+// export const resetPasswordPage = {
+//   path: '/auth/resetpw',
+//   label: '비밀번호 재설정',
+// };
+
 export const myChallengePage = {
   path: '/challenge/my',
   label: '나의 도전',
@@ -103,6 +113,8 @@ export const pathname = [
   landingPage,
   signInPage,
   signUpPage,
+  findPasswordPage,
+  // resetPasswordPage,
   myChallengePage,
   commonChallengeDetailPage,
   togetherChallengePage,
