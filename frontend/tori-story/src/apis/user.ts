@@ -59,9 +59,13 @@ interface UpdateUserProps {
   password: string;
 }
 
-// export interface ResetPasswordProps {
-//   password: string;
-// }
+export interface CheckResetPasswordLinkCodeProps {
+  linkCode: string;
+}
+
+export interface CheckResetPassword extends CheckResetPasswordLinkCodeProps {
+  newPassword: string;
+}
 
 export const signUpAPI = async (data: SignUpProps) => {
   const url = memberUrl + 'join';
@@ -148,14 +152,20 @@ export const updateUserAPI = async (data: UpdateUserProps) => {
   return res;
 };
 
-// export const findPasswordAPI = async (data: EmailProps) => {
-//   const url = memberUrl + '';
+export const sendPasswordEmailAPI = async (data: EmailProps) => {
+  const url = memberUrl + 'sendPwEmail';
+  const res = await axios.post<NonNullishResponse>(url, data);
+  return res;
+};
+
+// export const checkPasswordLinkAPI = async (data: CheckResetPasswordLinkCodeProps) => {
+//   const url = memberUrl + 'checkPwLink';
 //   const res = await axios.post<NonNullishResponse>(url, data);
 //   return res;
 // };
 
-// export const resetPasswordAPI = async (data: ResetPasswordProps) => {
-//   const url = memberUrl + '';
+// export const updatePasswordAPI = async (data: CheckResetPassword) => {
+//   const url = memberUrl + 'modifyPw';
 //   const res = await axios.post<NonNullishResponse>(url, data);
 //   return res;
 // };
