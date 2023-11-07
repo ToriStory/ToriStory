@@ -21,8 +21,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
@@ -35,6 +33,8 @@ public class MemberServiceImpl implements MemberService {
     private final JwtProvider jwtProvider;
     private final MailService mailService;
     private final RedisTemplate<String, String> redisTemplate;
+    @Value("${imgUrl.defaultProfile}")
+    private String defaultProfile;
 
     private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
@@ -58,6 +58,7 @@ public class MemberServiceImpl implements MemberService {
                 .email(joinReq.getEmail())
                 .nickname(joinReq.getNickname())
                 .pw(passwordEncoder.encode(joinReq.getPassword()))
+                .imgUrl(defaultProfile)
                 .build());
     }
 
@@ -103,13 +104,13 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public void checkDuplicateEmail(String email) {
 
-            log.debug("Member Service: checkEmail() method called.........");
-            log.debug("email: {}", email);
+        log.debug("Member Service: checkEmail() method called.........");
+        log.debug("email: {}", email);
 
-            if (memberRepository.existsByEmail(email)) {
-                log.debug("--------------Duplicate Email--------------");
-                throw new AuthException(ErrorCode.DUPLICATED_EMAIL);
-            }
+        if (memberRepository.existsByEmail(email)) {
+            log.debug("--------------Duplicate Email--------------");
+            throw new AuthException(ErrorCode.DUPLICATED_EMAIL);
+        }
     }
 
     @Override
@@ -128,32 +129,35 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public void sendCodeToEmail(String toEmail) {
+
+        // 이메일 중복 검사
         checkDuplicateEmail(toEmail);
+
+        // 이메일 폼 생성
         String title = "Tori Story 이메일 인증 번호";
-        String authCode = this.createCode();
-        mailService.sendEmail(toEmail, title, authCode);
+        String authCode = this.createVerifyCode();
+        String content = "\n\n안녕하세요, Tori Story 입니다.\n\n" +
+                "요청하신 인증번호는 [" + authCode + "] 입니다.\n\n" +
+                "감사합니다.\n\n";
+
+        log.debug("authCode: {}", authCode);
+
+        mailService.sendEmail(toEmail, title, content);
         // 이메일 인증 요청 시 인증 번호 Redis에 저장 ( key = "AuthCode " + Email / value = AuthCode )
         redisTemplate.opsForValue().set(
-                toEmail,
+                "Verify Email: " + toEmail,
                 authCode,
                 authCodeExpirationMillis,
                 TimeUnit.MILLISECONDS);
 
     }
 
-    private String createCode() {
-        int lenth = 6;
-        try {
-            Random random = SecureRandom.getInstanceStrong();
-            StringBuilder builder = new StringBuilder();
-            for (int i = 0; i < lenth; i++) {
-                builder.append(random.nextInt(10));
-            }
-            return builder.toString();
-        } catch (NoSuchAlgorithmException e) {
-            log.debug("MemberService.createCode() exception occur");
-            throw new AuthException(ErrorCode.NO_SUCH_ALGORITHM);
-        }
+    private String createVerifyCode() {
+
+        Random random = new Random();
+        String authKey = String.valueOf(random.nextInt(888888) + 111111);
+
+        return authKey;
     }
 
     public void checkCode(CheckCodeReq checkCodeReq) {
@@ -165,35 +169,42 @@ public class MemberServiceImpl implements MemberService {
         checkDuplicateEmail(email);
 
         // Redis에 키가 있는지 확인
-        if(!redisTemplate.hasKey(email))
+        if (!redisTemplate.hasKey("Verify Email: " + email))
             throw new AuthException(ErrorCode.EXPIRED_AUTH_CODE);
 
         // Redis에 저장된 인증 번호와 입력한 인증 번호가 일치하는지 확인
-        if(!authCode.equals(redisTemplate.opsForValue().get(email)))
+        if (!authCode.equals(redisTemplate.opsForValue().get("Verify Email: " + email)))
             throw new AuthException(ErrorCode.NOT_MATCH_AUTH_CODE);
+
+        // Redis에 저장된 인증 번호 유효 시간 갱신 ( 5분 )
+        redisTemplate.opsForValue().set(
+                "Verify Email: " + email,
+                authCode,
+                authCodeExpirationMillis,
+                TimeUnit.MILLISECONDS);
     }
 
     @Override
     public void modifyMember(String accessToken, ModifyMemberReq modifyMemberReq) {
 
-            log.debug("Member Service: updateMember() method called.........");
+        log.debug("Member Service: updateMember() method called.........");
 
-            Member member = findByEmail(jwtProvider.extractEmail(accessToken));
+        Member member = findByEmail(jwtProvider.extractEmail(accessToken));
 
-            member.changeNickname(modifyMemberReq.getNickname());
-            member.changePassword(passwordEncoder.encode(modifyMemberReq.getPassword()));
+        member.changeNickname(modifyMemberReq.getNickname());
+        member.changePassword(passwordEncoder.encode(modifyMemberReq.getPassword()));
 
-            memberRepository.save(member);
+        memberRepository.save(member);
     }
 
     @Override
     public void deleteMember(String accessToken) {
 
-            log.debug("Member Service: deleteMember() method called.........");
+        log.debug("Member Service: deleteMember() method called.........");
 
-            Member member = findByEmail(jwtProvider.extractEmail(accessToken));
+        Member member = findByEmail(jwtProvider.extractEmail(accessToken));
 
-            memberRepository.delete(member);
+        memberRepository.delete(member);
     }
 
 }

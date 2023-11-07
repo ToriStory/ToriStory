@@ -34,8 +34,7 @@ public class Member {
         this.email = email;
         this.pw = pw;
         this.nickname = nickname;
-        // TODO: 추후 기본 이미지 경로 수정
-        this.imgUrl = (imgUrl != null) ? imgUrl : "/img/default_profile.png";
+        this.imgUrl = imgUrl;
     }
 
     public void changePassword(String pw) {

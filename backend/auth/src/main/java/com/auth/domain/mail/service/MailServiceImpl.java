@@ -22,6 +22,7 @@ public class MailServiceImpl implements MailService {
         try {
             emailSender.send(emailForm);
         } catch (RuntimeException e) {
+            e.printStackTrace();
             log.debug("MailService.sendEmail exception occur toEmail: {}, " +
                     "title: {}, text: {}", toEmail, title, text);
             throw new AuthException(ErrorCode.SEND_EMAIL_FAIL);

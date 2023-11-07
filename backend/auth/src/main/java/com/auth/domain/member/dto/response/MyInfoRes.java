@@ -7,7 +7,9 @@ import lombok.Getter;
 public class MyInfoRes {
 
     private String nickname;
+
     private String email;
+
     private String imgUrl;
 
     @Builder
