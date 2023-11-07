@@ -11,6 +11,7 @@ import { updateToast } from 'utils/toast';
 const memberUrl = '/member/';
 
 interface SignUpProps {
+  code: string;
   email: string;
   nickname: string;
   password: string;
@@ -44,7 +45,7 @@ interface GetUserIdResponse extends Response {
   };
 }
 
-interface EmailProps {
+export interface EmailProps {
   email: string;
 }
 
@@ -57,6 +58,10 @@ interface UpdateUserProps {
   nickname: string;
   password: string;
 }
+
+// export interface ResetPasswordProps {
+//   password: string;
+// }
 
 export const signUpAPI = async (data: SignUpProps) => {
   const url = memberUrl + 'join';
@@ -142,3 +147,15 @@ export const updateUserAPI = async (data: UpdateUserProps) => {
   const res = await axios.put<NonNullishResponse>(url, data);
   return res;
 };
+
+// export const findPasswordAPI = async (data: EmailProps) => {
+//   const url = memberUrl + '';
+//   const res = await axios.post<NonNullishResponse>(url, data);
+//   return res;
+// };
+
+// export const resetPasswordAPI = async (data: ResetPasswordProps) => {
+//   const url = memberUrl + '';
+//   const res = await axios.post<NonNullishResponse>(url, data);
+//   return res;
+// };

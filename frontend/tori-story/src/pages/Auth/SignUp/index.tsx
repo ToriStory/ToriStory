@@ -33,6 +33,7 @@ import { useTimer } from 'hooks/useTimer';
 interface SignUpInput {
   nickname: string;
   email: string;
+  authCode: string;
   password: string;
   confirmPassword: string;
   emailAuthorized: boolean;
@@ -130,6 +131,7 @@ export default function SignUp() {
     }
     const signUpToastId = toast.loading('회원가입 중입니다');
     const res = await signUpAPI({
+      code: data.authCode,
       email: data.email,
       nickname: data.nickname,
       password: data.password,
@@ -272,7 +274,6 @@ export default function SignUp() {
                     </Grid>
                   </Grid>
                 )}
-                <Grid item xs={12}></Grid>
                 <Grid item xs={12}>
                   <FormInputText
                     name='password'
