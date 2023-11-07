@@ -30,6 +30,8 @@ public class CustomEntry {
 
     private LocalDate endDt;
 
+    private LocalDate compDt;
+
     @Column(nullable = false, columnDefinition = "TINYINT(1)")
     private boolean compFlag;
 
@@ -53,6 +55,7 @@ public class CustomEntry {
 
     public void complete() {
         this.compFlag = true;
+        this.compDt = LocalDate.now();
     }
 
     public void modifyImage(String imgUrl) {

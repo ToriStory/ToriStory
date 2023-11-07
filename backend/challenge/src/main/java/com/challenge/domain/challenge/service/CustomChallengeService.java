@@ -4,6 +4,7 @@ import com.challenge.domain.challenge.dto.request.AddCustomReq;
 import com.challenge.domain.challenge.dto.request.AddReportReq;
 import com.challenge.domain.challenge.dto.response.FindCustomRes;
 
+import java.time.LocalDate;
 import java.util.List;
 import com.challenge.domain.challenge.dto.request.FindCustomSearchReq;
 import com.challenge.domain.challenge.dto.response.FindTotalCustomRes;
@@ -19,6 +20,10 @@ public interface CustomChallengeService {
     void addCustom(Long memberId, AddCustomReq addCustomReq);
 
     List<FindCustomRes> findMyCustomChallenge(Long memberId);
+
+    List<LocalDate> findMyMonthCustomChallenge(Long memberId, LocalDate date);
+
+    List<FindCustomRes> findMyCompCustomChallenge(Long memberId, LocalDate date);
 
     FindTotalCustomRes findAllCustomChallenge(FindCustomSearchReq findCustomSearchReq);
 

@@ -22,6 +22,7 @@ import com.challenge.global.response.EnvelopRes;
 import lombok.RequiredArgsConstructor;
 import springfox.documentation.annotations.ApiIgnore;
 
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -30,6 +31,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import java.math.BigInteger;
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -98,10 +100,20 @@ public class ChallengeController {
     }
 
     @GetMapping("/custom")
-    public ResponseEntity<EnvelopRes<List<FindCustomRes>>> findMyCustomChallenge(@RequestHeader("memberId") Long memberId) {
+    public ResponseEntity<EnvelopRes<List<LocalDate>>> findMyCustomChallenge(@RequestHeader("memberId") Long memberId, @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd")
+    LocalDate date) {
+
+        return ResponseEntity.status(HttpStatus.OK).body(EnvelopRes.<List<LocalDate>>builder()
+            .data(customChallengeService.findMyMonthCustomChallenge(memberId, date))
+            .build());
+    }
+
+    @GetMapping("/custom/detail")
+    public ResponseEntity<EnvelopRes<List<FindCustomRes>>> findMyCompCustomChallenge(@RequestHeader("memberId") Long memberId, @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd")
+        LocalDate date) {
 
         return ResponseEntity.status(HttpStatus.OK).body(EnvelopRes.<List<FindCustomRes>>builder()
-                .data(customChallengeService.findMyCustomChallenge(memberId))
+                .data(customChallengeService.findMyCompCustomChallenge(memberId, date))
                 .build());
     }
 
