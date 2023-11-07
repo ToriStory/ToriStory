@@ -10,20 +10,30 @@ import BottomLeft from 'components/molecules/challenge/BottomLeft';
 import { useEffect, useState } from 'react';
 import { orange300 } from 'constants/color';
 
+interface CommonChallengeResoponse {
+  commonChallengeId: number;
+  content: string;
+  attendFlag: boolean;
+  compFlag: boolean;
+  compCnt: number;
+  maxCnt: number;
+  unit: number[];
+}
+
 const CommonChallenge = () => {
   const navigate = useNavigate();
   const [attendCnt, setAttendCnt] = useState<number>();
   const [attendFlag, setAttendFlag] = useState<boolean>();
   const [compFlag, setCompFlag] = useState<boolean>();
 
-  const response = {
+  const response: CommonChallengeResoponse = {
     commonChallengeId: 1,
     content: '산책하기',
     attendFlag: false,
     compFlag: false,
-    compCnt: 35,
+    compCnt: 100,
     maxCnt: 100,
-    unit: [1, 50, 100, 212],
+    unit: [30, 60, 100, 212],
   };
 
   useEffect(() => {
@@ -38,7 +48,16 @@ const CommonChallenge = () => {
   const handleAttend = () => {};
 
   const handleNavigate = () => {
-    navigate(commonChallengeDetailPage.path);
+    navigate(commonChallengeDetailPage.path, {
+      state: {
+        attendFlag: attendFlag,
+        compFlag: compFlag,
+        attendCnt: attendCnt,
+        compCnt: response.compCnt,
+        maxCnt: response.maxCnt,
+        unit: response.unit,
+      },
+    });
   };
 
   const headerRightButton = (
