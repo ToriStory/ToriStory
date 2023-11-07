@@ -111,8 +111,8 @@ export default function UpdateUser() {
                     rules={{
                       required: { value: true, message: '비밀번호를 입력해주세요!' },
                       pattern: {
-                        value: /^(?=.*[a-zA-Z])(?=.*[0-9]).{8,20}$/,
-                        message: '영어와 숫자를 모두 사용하여 8~20자로 작성해주세요!',
+                        value: /^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*\W)(?=\S+$).{8,20}$/,
+                        message: '영어와 숫자, 특수문자를 모두 사용하여 8~20자로 작성해주세요!',
                       },
                     }}
                   />
