@@ -48,6 +48,11 @@ interface EmailProps {
   email: string;
 }
 
+interface CheckAuthCodeProps {
+  code: string;
+  email: string;
+}
+
 interface UpdateUserProps {
   nickname: string;
   password: string;
@@ -120,9 +125,9 @@ export const sendAuthCodeAPI = async (data: EmailProps) => {
   return res;
 };
 
-export const CheckAuthCodeAPI = async () => {
+export const checkAuthCodeAPI = async (data: CheckAuthCodeProps) => {
   const url = memberUrl + 'checkCode';
-  const res = await axios.post<NonNullishResponse>(url);
+  const res = await axios.post<NonNullishResponse>(url, data);
   return res;
 };
 
