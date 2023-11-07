@@ -7,10 +7,11 @@ import com.auth.domain.member.dto.response.MyInfoRes;
 import com.auth.domain.member.dto.response.RefreshRes;
 import com.auth.domain.member.service.MemberService;
 import com.auth.global.exception.AuthException;
+import com.auth.global.exception.ErrorCode;
 import com.auth.global.jwt.JwtProperties;
 import com.auth.global.jwt.JwtProvider;
 import com.auth.global.response.EnvelopRes;
-import com.auth.global.exception.ErrorCode;
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -40,6 +41,7 @@ public class MemberController {
     private String refreshTokenPath;
 
     @PostMapping("/join")
+    @ApiOperation(value = "회원가입")
     public ResponseEntity<EnvelopRes> join(@Valid @RequestBody JoinReq joinReq) {
 
         log.debug("Member Controller: join() method called.........");
@@ -59,6 +61,7 @@ public class MemberController {
     }
 
     @PostMapping("/login")
+    @ApiOperation(value = "로그인")
     public ResponseEntity<EnvelopRes<LoginRes>> login(@Valid @RequestBody LoginReq loginReq) {
 
         log.debug("Member Controller: login() method called.........");
@@ -72,6 +75,7 @@ public class MemberController {
     }
 
     @PostMapping("/logout")
+    @ApiOperation(value = "로그아웃")
     public ResponseEntity<EnvelopRes> logout(@ApiIgnore @RequestHeader("Authorization") String accessToken) {
 
         log.debug("Member Controller: logout() method called.........");
@@ -84,6 +88,7 @@ public class MemberController {
     }
 
     @PostMapping("/refresh")
+    @ApiOperation(value = "토큰 재발급", notes = "refreshToken 유효 기간이 절반 이하로 남았을 경우 refreshToken도 재발급")
     public ResponseEntity<EnvelopRes<RefreshRes>> refresh(HttpServletRequest request){
         Cookie[] cookies = request.getCookies();
 
@@ -129,6 +134,7 @@ public class MemberController {
     }
 
     @PostMapping("/id")
+    @ApiOperation(value = "아이디 찾기", notes = "이메일로 회원 아이디 조회.")
     public ResponseEntity<EnvelopRes<FindIdRes>> findId(@ApiIgnore @RequestHeader("Authorization") String accessToken){
 
         log.debug("Member Controller: test() method called.........");
@@ -142,6 +148,7 @@ public class MemberController {
     }
 
     @PostMapping("/checkEmail")
+    @ApiOperation(value = "이메일 중복 확인 및 인증 코드 이메일 발송")
     public ResponseEntity<EnvelopRes> checkEmail(@Valid @RequestBody CheckEmailReq checkEmailReq){
 
         log.debug("Member Controller: checkEmail() method called.........");
@@ -154,6 +161,7 @@ public class MemberController {
     }
 
     @PostMapping("/checkCode")
+    @ApiOperation(value = "이메일 인증 코드 확인")
     public ResponseEntity<EnvelopRes> checkCode(@Valid @RequestBody CheckCodeReq checkCodeReq){
 
         log.debug("Member Controller: checkCode() method called.........");
@@ -166,6 +174,7 @@ public class MemberController {
     }
 
     @GetMapping("")
+    @ApiOperation(value = "내 정보 조회")
     public ResponseEntity<EnvelopRes<MyInfoRes>> myInfo(@ApiIgnore @RequestHeader("Authorization") String accessToken){
 
         log.debug("Member Controller: myInfo() method called.........");
@@ -177,6 +186,7 @@ public class MemberController {
     }
 
     @PutMapping("")
+    @ApiOperation(value = "내 정보 수정")
     public ResponseEntity<EnvelopRes> modifyMyInfo(@ApiIgnore @RequestHeader("Authorization") String accessToken,
                                                    @Valid @RequestBody ModifyMemberReq modifyMemberReq){
 
@@ -190,11 +200,51 @@ public class MemberController {
     }
 
     @DeleteMapping("")
+    @ApiOperation(value = "회원 탈퇴")
     public ResponseEntity<EnvelopRes> deleteMember(@ApiIgnore @RequestHeader("Authorization") String accessToken){
 
         log.debug("Member Controller: deleteMember() method called.........");
 
         memberService.deleteMember(accessToken);
+
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(EnvelopRes.builder()
+                        .build());
+    }
+
+    @PostMapping("/sendPwEmail")
+    @ApiOperation(value = "비밀번호 재설정 이메일 발송")
+    public ResponseEntity<EnvelopRes> sendPwEmail(@Valid @RequestBody SendPwEmailReq sendPwEmailReq){
+
+        log.debug("Member Controller: sendPwEmail() method called.........");
+
+        memberService.sendPwEmail(sendPwEmailReq);
+
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(EnvelopRes.builder()
+                        .build());
+    }
+
+    @PostMapping("/checkPwLink")
+    @ApiOperation(value = "비밀번호 재설정 링크 유효성 검증")
+    public ResponseEntity<EnvelopRes> checkPwLink(@RequestBody CheckPwLinkReq checkPwLinkReq){
+
+        log.debug("Member Controller: checkPwLink() method called.........");
+
+        memberService.checkPwLink(checkPwLinkReq);
+
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(EnvelopRes.builder()
+                        .build());
+    }
+
+    @PostMapping("/modifyPw")
+    @ApiOperation(value = "비밀번호 재설정")
+    public ResponseEntity<EnvelopRes> modifyPw(@Valid @RequestBody ModifyPwReq modifyPwReq){
+
+        log.debug("Member Controller: modifyPw() method called.........");
+
+        memberService.modifyPw(modifyPwReq);
 
         return ResponseEntity.status(HttpStatus.OK)
                 .body(EnvelopRes.builder()
