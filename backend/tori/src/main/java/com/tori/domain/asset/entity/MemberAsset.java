@@ -34,4 +34,8 @@ public class MemberAsset {
 		this.assetCnt = assetCnt;
 	}
 
+	public void pay(int price) {
+		this.assetCnt -= price;
+	}
+
 }

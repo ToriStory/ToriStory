@@ -6,10 +6,7 @@ import com.tori.global.response.EnvelopRes;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -27,7 +24,14 @@ public class CollectionController {
         return ResponseEntity.status(HttpStatus.OK).body(EnvelopRes.<List<FindCollectionRes>>builder()
                 .data(collectionResList)
                 .build());
+    }
 
+    @PostMapping("/{toriId}")
+    public ResponseEntity<EnvelopRes<Void>> adoptTori(@RequestHeader("memberId") Long memberId, @PathVariable Byte toriId) {
+
+        collectionService.addTori(memberId, toriId);
+
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
 }
