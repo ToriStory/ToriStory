@@ -13,5 +13,5 @@ const Label = ({ title }: { title: string }) => {
     </div>
   );
 };
-// underline decoration-orange-400/60
+
 export default Label;
