@@ -44,6 +44,12 @@ public class MemberController {
 
         log.debug("Member Controller: join() method called.........");
 
+
+        memberService.checkCode(CheckCodeReq.builder()
+                .email(joinReq.getEmail())
+                .code(joinReq.getCode())
+                .build());
+
         memberService.join(joinReq);
 
         return ResponseEntity.status(HttpStatus.CREATED)
