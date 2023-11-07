@@ -1,6 +1,7 @@
 package com.challenge.domain.challenge.service;
 
 import java.math.BigInteger;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -81,6 +82,30 @@ public class CustomChallengeServiceImpl implements CustomChallengeService {
                         .build();
                 })
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<LocalDate> findMyMonthCustomChallenge(Long memberId, LocalDate date) {
+        // 년 월 가져오기
+        return customEntryRepository.findByCompDt(memberId, date.getYear(), date.getMonthValue());
+    }
+
+    @Override
+    public List<FindCustomRes> findMyCompCustomChallenge(Long memberId, LocalDate date) {
+        List<CustomEntry> customEntryList = customEntryRepository.findAllByMemberIdAndDate(memberId, date);
+
+        return customEntryList.stream()
+            .map(customEntry -> {
+                return FindCustomRes.builder()
+                    .id(customEntry.getCustomEntryId())
+                    .content(customEntry.getCustomChallenge().getContent())
+                    .startDt(customEntry.getStartDt())
+                    .endDt(customEntry.getEndDt())
+                    .imgUrl(customEntry.getImgUrl())
+                    .compFlag(customEntry.isCompFlag())
+                    .build();
+            })
+            .collect(Collectors.toList());
     }
 
     @Override
