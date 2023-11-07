@@ -28,10 +28,10 @@ export const findPasswordPage = {
   label: '비밀번호 찾기',
 };
 
-// export const resetPasswordPage = {
-//   path: '/auth/resetpw',
-//   label: '비밀번호 재설정',
-// };
+export const resetPasswordPage = {
+  path: '/auth/resetpw',
+  label: '비밀번호 재설정',
+};
 
 export const myChallengePage = {
   path: '/challenge/my',
@@ -114,7 +114,7 @@ export const pathname = [
   signInPage,
   signUpPage,
   findPasswordPage,
-  // resetPasswordPage,
+  resetPasswordPage,
   myChallengePage,
   commonChallengeDetailPage,
   togetherChallengePage,

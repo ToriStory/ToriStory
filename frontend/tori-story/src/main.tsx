@@ -42,7 +42,7 @@ import {
   totoriPage,
   updateUserInfoPage,
   findPasswordPage,
-  // resetPasswordPage,
+  resetPasswordPage,
 } from 'constants/pathname.ts';
 import CertificationGPS from 'pages/CertificationGPS/index.tsx';
 import CertificationAI from 'pages/CertificationAI/index.tsx';
@@ -51,7 +51,7 @@ import PrivatePolicy from 'pages/Policy/Private/index.tsx';
 import UpdateUser from 'pages/Auth/UpdateUser/index.tsx';
 import CommonChallengeDetail from 'pages/CommonChallengeDetail/index.tsx';
 import FindPassword from 'pages/Auth/FindPassword/index.tsx';
-// import ResetPassword from 'pages/Auth/ResetPassword/index.tsx';
+import ResetPassword from 'pages/Auth/ResetPassword/index.tsx';
 const router = createBrowserRouter([
   {
     path: splashPage.path,
@@ -77,10 +77,10 @@ const router = createBrowserRouter([
         path: findPasswordPage.path,
         element: <FindPassword />,
       },
-      // {
-      //   path: resetPasswordPage.path,
-      //   element: <ResetPassword />,
-      // },
+      {
+        path: resetPasswordPage.path,
+        element: <ResetPassword />,
+      },
       {
         path: myChallengePage.path,
         element: <MyChallenge />,

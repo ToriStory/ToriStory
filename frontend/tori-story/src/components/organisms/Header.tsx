@@ -12,7 +12,8 @@ function Header({ pathname }: { pathname: string }) {
         pathname === '함께 도전' ||
         pathname === '나의 도전' ||
         pathname === '회원가입' ||
-        pathname === '로그인' ? (
+        pathname === '로그인' ||
+        pathname === '비밀번호 재설정' ? (
         <HeaderDepthOne pathname={pathname} />
       ) : (
         <HeaderDepthMore pathname={pathname} />
