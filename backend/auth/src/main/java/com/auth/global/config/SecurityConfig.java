@@ -12,8 +12,6 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
-import javax.servlet.http.HttpServletResponse;
-
 @Slf4j
 @Configuration
 @EnableWebSecurity
@@ -45,6 +43,9 @@ public class SecurityConfig {
                                 .antMatchers(HttpMethod.POST, "/checkEmail").permitAll()
                                 .antMatchers(HttpMethod.POST, "/checkCode").permitAll()
                                 .antMatchers(HttpMethod.POST, "/refresh").permitAll()
+                                .antMatchers(HttpMethod.POST, "/sendPwEmail").permitAll()
+                                .antMatchers(HttpMethod.POST, "/checkPwLink").permitAll()
+                                .antMatchers(HttpMethod.POST, "/modifyPw").permitAll()
 
                                 // 그 외 요청은 모두 인증 필요
                                 .anyRequest().authenticated()
