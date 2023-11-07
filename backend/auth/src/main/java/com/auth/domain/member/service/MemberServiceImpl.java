@@ -61,6 +61,7 @@ public class MemberServiceImpl implements MemberService {
                 .email(joinReq.getEmail())
                 .nickname(joinReq.getNickname())
                 .pw(passwordEncoder.encode(joinReq.getPassword()))
+                .imgUrl(defaultProfile)
                 .build());
     }
 
