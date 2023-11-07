@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import {
   deleteCustomChallengeApi,
   patchCustomChallengeApi,
-  // getMyChallengeDailyAPI,
+  getMyChallengeDailyAPI,
   ChallengeDailyResponse,
 } from 'apis/challengeApi';
 import { toast } from 'react-toastify';
@@ -22,14 +22,14 @@ const MyCalendarChallengeList = (props: MyCalendarChallengeListProps) => {
   const [isEmpty, setIsEmpty] = useState<boolean>(true);
 
   useEffect(() => {
-    // const getDailyChallenge = async () => {
-    //   const res = await getMyChallengeDailyAPI({ date: activeDate });
-    //   if (res.status === 200) {
-    //     console.log(res);
-    //     setData(res.data.data);
-    //   }
-    // };
-    // getDailyChallenge();
+    const getDailyChallenge = async () => {
+      const res = await getMyChallengeDailyAPI({ date: activeDate });
+      if (res.status === 200) {
+        console.log(res);
+        setData(res.data.data);
+      }
+    };
+    getDailyChallenge();
   }, [activeDate]);
 
   useEffect(() => {

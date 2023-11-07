@@ -7,16 +7,25 @@ import {
 
 const apiUrl = '/challenge';
 
-interface MyCustomChallengeResponse {
-  compFlag: boolean;
-  content: string;
-  endDt: string;
-  id: number;
-  imgUrl: string;
-  startDt: string;
+interface ChallengeCalendarProps {
+  date: string;
 }
-interface GetMyCustomChallengeResponse extends Response {
-  data: MyCustomChallengeResponse[] | string;
+
+interface MyChallengeMonthResponse extends Response {
+  data: string[];
+}
+
+export interface ChallengeDailyResponse {
+  id: number;
+  content: string;
+  startDt: string;
+  endDt: string;
+  compFlag: boolean;
+  imgUrl: string;
+}
+
+export interface MyChallengeDailyResponse extends Response {
+  data: ChallengeDailyResponse[];
 }
 
 // 자유 도전 과제 생성
@@ -82,10 +91,16 @@ export const patchCompRandomChallengeApi = async () => {
   return res;
 };
 
-export const getMyCustomChallengeAPI = async () => {
+export const getMyChallengeMonthAPI = async (data: ChallengeCalendarProps) => {
   const url = apiUrl + '/custom';
-  const res = await axios.get<GetMyCustomChallengeResponse>(url);
-  return res.data;
+  const res = await axios.get<MyChallengeMonthResponse>(url, { params: data });
+  return res;
+};
+
+export const getMyChallengeDailyAPI = async (data: ChallengeCalendarProps) => {
+  const url = apiUrl + '/custom/detail';
+  const res = await axios.get<MyChallengeDailyResponse>(url, { params: data });
+  return res;
 };
 
 // 신고하기

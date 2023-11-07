@@ -2,11 +2,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useState } from 'react';
 import Calendar from 'react-calendar';
-// import 'react-calendar/dist/Calendar.css';
 import './MyChallengeCustom.css';
-// import moment from 'moment';
 import moment from 'moment-timezone';
-// import { getMyChallengeMonthAPI } from 'apis/challengeApi';
+import { getMyChallengeMonthAPI } from 'apis/challengeApi';
 import MyCalendarChallengeList from 'components/organisms/challenge/MyCalendarChallenge';
 
 moment.tz.setDefault('Asia/Seoul');
@@ -21,14 +19,14 @@ export function MyChallengeCalendar() {
   const [dayList, setDayList] = useState<string[]>([]);
 
   useEffect(() => {
-    // const getMonthChallenge = async () => {
-    //   const res = await getMyChallengeMonthAPI({ date: activeDate });
-    //   if (res.status === 200) {
-    //     console.log(res);
-    //     setDayList(res.data.data);
-    //   }
-    // };
-    // getMonthChallenge();
+    const getMonthChallenge = async () => {
+      const res = await getMyChallengeMonthAPI({ date: activeDate });
+      if (res.status === 200) {
+        console.log(res);
+        setDayList(res.data.data);
+      }
+    };
+    getMonthChallenge();
   }, [activeDate]);
 
   const getActiveDate = (activeStartDate: moment.MomentInput) => {
