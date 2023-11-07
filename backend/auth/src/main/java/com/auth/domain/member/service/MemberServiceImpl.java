@@ -228,7 +228,7 @@ public class MemberServiceImpl implements MemberService {
             String title = "Tori Story 비밀번호 재설정 링크";
             String content = "\n\n안녕하세요, Tori Story 입니다.\n\n" +
                     "비밀번호 재설정 링크는 \n\n" +
-                    "https://tori-story/auth/resetpw/" + setPwCode +
+                    "https://tori-story.com/auth/resetpw?code=" + setPwCode +
                     "\n\n감사합니다.\n\n";
 
             // 비밀번호 재설정 이메일 발송
