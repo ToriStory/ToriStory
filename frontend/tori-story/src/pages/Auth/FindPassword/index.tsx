@@ -10,11 +10,8 @@ import { Link } from 'react-router-dom';
 import AuthBackground from 'components/atoms/background/AuthBackground';
 import { useForm } from 'react-hook-form';
 import { FormInputText } from 'components/atoms/input/FormInputText';
-import {
-  EmailProps,
-  // findPasswordAPI
-} from 'apis/user';
-// import { toast } from 'react-toastify';
+import { EmailProps, sendPasswordEmailAPI } from 'apis/user';
+import { toast } from 'react-toastify';
 
 export default function FindPassword() {
   const { handleSubmit, control } = useForm({
@@ -24,16 +21,14 @@ export default function FindPassword() {
   });
 
   const onSubmit = async (data: EmailProps) => {
-    console.log(data.email);
-    return;
-    // const res = await findPasswordAPI({
-    //   email: data.email,
-    // });
-    // if (res.status === 200) {
-    //   toast.success('이메일로 비밀번호 재설정 링크를 보냈습니다!');
-    // } else {
-    //   toast.error('이메일이 유효하지 않습니다');
-    // }
+    const res = await sendPasswordEmailAPI({
+      email: data.email,
+    });
+    if (res.status === 200) {
+      toast.success('이메일로 비밀번호 재설정 링크를 보냈습니다!');
+    } else {
+      toast.error('이메일이 유효하지 않습니다');
+    }
   };
 
   return (
