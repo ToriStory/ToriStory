@@ -158,14 +158,14 @@ export const sendPasswordEmailAPI = async (data: EmailProps) => {
   return res;
 };
 
-// export const checkPasswordLinkAPI = async (data: CheckResetPasswordLinkCodeProps) => {
-//   const url = memberUrl + 'checkPwLink';
-//   const res = await axios.post<NonNullishResponse>(url, data);
-//   return res;
-// };
+export const checkPasswordLinkAPI = async (data: CheckResetPasswordLinkCodeProps) => {
+  const url = memberUrl + 'checkPwLink';
+  const res = await axios.post<NonNullishResponse>(url, data);
+  return res;
+};
 
-// export const updatePasswordAPI = async (data: CheckResetPassword) => {
-//   const url = memberUrl + 'modifyPw';
-//   const res = await axios.post<NonNullishResponse>(url, data);
-//   return res;
-// };
+export const updatePasswordAPI = async (data: CheckResetPassword) => {
+  const url = memberUrl + 'modifyPw';
+  const res = await axios.post<NonNullishResponse>(url, data);
+  return res;
+};
