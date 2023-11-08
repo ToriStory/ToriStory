@@ -86,16 +86,14 @@ const RandomChallenge = () => {
       {response && response.compFlag === true ? (
         <SuccessChallenge title='오늘의 랜덤 도전을 성공했어요!' />
       ) : (
-        response && (
-          <Challenge
-            headerLeft={
-              <HeaderLeft challengeCategory='랜덤' certificationCategory={certificationIcon} />
-            }
-            headerRight={<HeaderRight button={button} />}
-            bottomRight={<BottomButton title='인증' onClick={handleCertification} />}
-            content={response.content}
-          />
-        )
+        <Challenge
+          headerLeft={
+            <HeaderLeft challengeCategory='랜덤' certificationCategory={certificationIcon} />
+          }
+          headerRight={<HeaderRight button={button} />}
+          bottomRight={<BottomButton title='인증' onClick={handleCertification} />}
+          content={response ? response.content : 'Loading...'}
+        />
       )}
       {openModal && (
         <Dialog fullWidth open={openModal} onClose={handleCancelButton}>

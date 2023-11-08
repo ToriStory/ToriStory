@@ -5,12 +5,12 @@ import { useEffect, useRef, useState } from 'react';
 import { compCntAtom } from 'stores/challengeStore';
 import { cls } from 'utils/cls';
 
-interface GuageDetailProps {
+interface GaugeDetailProps {
   maxCnt: number;
   unit: number[];
 }
 
-const GaugeDetail = ({ unit, maxCnt }: GuageDetailProps) => {
+const GaugeDetail = ({ unit, maxCnt }: GaugeDetailProps) => {
   const [compUserWidth, setCompUserWidth] = useState(0);
   const [nutWidth, setNutWidth] = useState(0);
   const compUserRef = useRef<HTMLDivElement | null>(null);
@@ -30,7 +30,7 @@ const GaugeDetail = ({ unit, maxCnt }: GuageDetailProps) => {
   }, []);
 
   return (
-    <div className={cls('my-8 w-full h-[120px]')}>
+    <div className={cls('my-8 w-full h-auto')}>
       <div
         style={{
           paddingLeft: `calc(${compRate}% - ${compUserWidth}px)`,
@@ -54,11 +54,6 @@ const GaugeDetail = ({ unit, maxCnt }: GuageDetailProps) => {
         />
         <div>
           {unit?.map((item: number, index: number) => {
-            // 마지막 요소인 참여자수 제외
-            if (index >= unit.length - 1) {
-              return null;
-            }
-
             const itemRate: number = maxCnt > 0 ? (item / maxCnt) * 100 : 0;
             return (
               <div key={index} style={{ paddingLeft: `calc(${itemRate}% - ${nutWidth}px)` }}>
@@ -69,7 +64,7 @@ const GaugeDetail = ({ unit, maxCnt }: GuageDetailProps) => {
                   )}
                 >
                   {item}
-                  <div className={cls('animate-bounce')}>
+                  <div>
                     <Nut
                       size={18}
                       viewBox='0 0 24 24'
