@@ -16,14 +16,26 @@ import java.io.IOException;
 @Slf4j
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler({IllegalArgumentException.class, ToriException.class})
-    protected ResponseEntity<EnvelopRes<String>> handleIllegalArgumentException(ToriException e) {
-        log.error("handleIllegalArgumentException", e.getErrorCode().getMessage());
+    @ExceptionHandler(ToriException.class)
+    protected ResponseEntity<EnvelopRes<String>> handleToriException(ToriException e) {
+        log.error("handleToriException {}", e.getErrorCode().getMessage());
         return ResponseEntity.status(e.getErrorCode().getCode()).body(
                 EnvelopRes.<String>builder()
                         .code(e.getErrorCode().getCode())
                         .message(e.getMessage())
                         .data(e.getErrorCode().getMessage())
+                        .build()
+        );
+    }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    protected ResponseEntity<EnvelopRes<String>> handleIllegalArgumentException(IllegalArgumentException e) {
+        log.error("handleIllegalArgumentException {}", e.getMessage());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
+                EnvelopRes.<String>builder()
+                        .code(HttpStatus.BAD_REQUEST.value())
+                        .message(e.getMessage())
+                        .data(e.getMessage())
                         .build()
         );
     }
@@ -35,13 +47,13 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler({MethodArgumentNotValidException.class, UnexpectedTypeException.class, BindException.class})
     protected ResponseEntity<EnvelopRes<String>> handleValidationException(Exception e) {
-        log.error("handleIllegalArgumentException", e.getMessage());
+        log.error("handleIllegalArgumentException {}", e.getMessage());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
-            EnvelopRes.<String>builder()
-                .code(HttpStatus.BAD_REQUEST.value())
-                .message(e.getMessage())
-                .data(e.getMessage())
-                .build()
+                EnvelopRes.<String>builder()
+                        .code(HttpStatus.BAD_REQUEST.value())
+                        .message(e.getMessage())
+                        .data(e.getMessage())
+                        .build()
         );
     }
 

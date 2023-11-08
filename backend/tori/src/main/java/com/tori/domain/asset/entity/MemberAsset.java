@@ -38,4 +38,8 @@ public class MemberAsset {
 		this.assetCnt -= price;
 	}
 
+	public void plus(int cnt) {
+		this.assetCnt += cnt;
+	}
+
 }

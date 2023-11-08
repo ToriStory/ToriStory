@@ -13,7 +13,8 @@ public enum ErrorCode {
 	DOTORI_NOT_ENOUGH(400, "도토리 부족"),
 	
 	// 바구니 에러
-	FEED_ALREADY_EXIST(400, "이미 먹이 존재")
+	FEED_ALREADY_EXIST(400, "이미 먹이 존재"),
+	LETTER_NOT_FOUND(400, "존재하지 않는 쪽지"),
 
 	;
 
