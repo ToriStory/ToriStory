@@ -16,7 +16,9 @@ public interface CommonChallengeService {
 
 	AddAttendRes addCommonAttend(Long memberId);
 
-	FindCommonCompRes modifyCustomCompFlag(Long memberId, BigInteger commonChallengeId, MultipartFile image);
+	void modifyCommonImage(Long memberId, BigInteger commonChallengeId, MultipartFile image);
+
+	FindCommonCompRes modifyCommonCompFlag(Long memberId, BigInteger commonChallengeId);
 
 	FindCommonEntryRes findCommonEntryChallenge(Long memberId, BigInteger commonChallengeId);
 

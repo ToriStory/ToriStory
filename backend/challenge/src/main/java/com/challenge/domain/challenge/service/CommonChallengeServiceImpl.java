@@ -81,20 +81,16 @@ public class CommonChallengeServiceImpl implements CommonChallengeService {
 	}
 
 	@Override
-	public FindCommonCompRes modifyCustomCompFlag(Long memberId, BigInteger commonChallengeId, MultipartFile image) {
+	public FindCommonCompRes modifyCommonCompFlag(Long memberId, BigInteger commonChallengeId) {
 
-		CommonEntry commonEntry = commonEntryRepository.findByMemberIdAndChallengeDt(memberId)
+		CommonEntry commonEntry = commonEntryRepository.findByMemberIdAndChallengeDtAndCommonChallenge(memberId, commonChallengeId)
 			.orElseThrow(() -> new ChallengeException(ErrorCode.ATTEND_COMMON_CHALLENGE_NOT_FOUND));
 
 		if (commonEntry.isCompFlag()) {
 			throw new ChallengeException(ErrorCode.COMMON_CHALLENGE_ALREADY_COMPLETE);
 		}
 
-		String savedImgUrl = null;
-		if (image != null) {
-			savedImgUrl = awsS3Service.uploadFile(image);
-		}
-		commonEntry.complete(savedImgUrl);
+		commonEntry.complete();
 
 		return FindCommonCompRes.builder()
 			.compCnt(commonEntryRepository.countAllByChallengeDtAndCompFlagIsTrue())
@@ -127,6 +123,18 @@ public class CommonChallengeServiceImpl implements CommonChallengeService {
 		}
 
 		return AddAttendRes.builder().attendFlag(true).build();
+	}
+
+	@Override
+	public void modifyCommonImage(Long memberId, BigInteger commonChallengeId, MultipartFile image) {
+		CommonEntry commonEntry = commonEntryRepository.findByMemberIdAndChallengeDtAndCommonChallenge(memberId, commonChallengeId)
+			.orElseThrow(() -> new ChallengeException(ErrorCode.ATTEND_COMMON_CHALLENGE_NOT_FOUND));
+
+		if (!commonEntry.isCompFlag()) {
+			throw new ChallengeException(ErrorCode.COMMON_CHALLENGE_NOT_COMPLETE);
+		}
+
+		commonEntry.review(awsS3Service.uploadFile(image));
 	}
 
 	private List<Integer> parseUnit(String unit) {

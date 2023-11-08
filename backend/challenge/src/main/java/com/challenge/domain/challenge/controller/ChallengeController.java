@@ -211,14 +211,22 @@ public class ChallengeController {
         );
     }
 
-    @PatchMapping("/common/{commonChallengeId}")
-    public ResponseEntity<EnvelopRes<FindCommonCompRes>> modifyCommonComp(@RequestHeader("memberId") Long memberId, @PathVariable BigInteger commonChallengeId, @RequestPart(required = false) MultipartFile image) {
+    @PatchMapping("/common/comp/{commonChallengeId}")
+    public ResponseEntity<EnvelopRes<FindCommonCompRes>> modifyCommonComp(@RequestHeader("memberId") Long memberId, @PathVariable BigInteger commonChallengeId) {
 
         return ResponseEntity.status(HttpStatus.OK).body(
             EnvelopRes.<FindCommonCompRes>builder()
-                .data(commonChallengeService.modifyCustomCompFlag(memberId, commonChallengeId, image))
+                .data(commonChallengeService.modifyCommonCompFlag(memberId, commonChallengeId))
                 .build()
         );
+    }
+
+    @PatchMapping("/common/review/{commonChallengeId}")
+    public ResponseEntity<EnvelopRes> modifyCommonImage(@RequestHeader("memberId") Long memberId, @PathVariable BigInteger commonChallengeId, @RequestPart MultipartFile image) {
+
+        commonChallengeService.modifyCommonImage(memberId, commonChallengeId, image);
+
+        return ResponseEntity.status(HttpStatus.OK).body(EnvelopRes.builder().build());
     }
 
     @GetMapping("/common/{commonChallengeId}")
