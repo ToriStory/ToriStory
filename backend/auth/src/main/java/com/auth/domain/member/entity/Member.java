@@ -45,4 +45,8 @@ public class Member {
         this.nickname = nickname;
     }
 
+    public void changeImgUrl(String imgUrl) {
+        this.imgUrl = imgUrl;
+    }
+
 }

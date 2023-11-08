@@ -173,7 +173,7 @@ public class MemberController {
                         .build());
     }
 
-    @GetMapping("")
+    @GetMapping
     @ApiOperation(value = "내 정보 조회")
     public ResponseEntity<EnvelopRes<MyInfoRes>> myInfo(@ApiIgnore @RequestHeader("Authorization") String accessToken){
 
@@ -185,7 +185,7 @@ public class MemberController {
                         .build());
     }
 
-    @PutMapping("")
+    @PatchMapping
     @ApiOperation(value = "내 정보 수정")
     public ResponseEntity<EnvelopRes> modifyMyInfo(@ApiIgnore @RequestHeader("Authorization") String accessToken,
                                                    @Valid @RequestBody ModifyMemberReq modifyMemberReq){
@@ -199,7 +199,7 @@ public class MemberController {
                         .build());
     }
 
-    @DeleteMapping("")
+    @DeleteMapping
     @ApiOperation(value = "회원 탈퇴")
     public ResponseEntity<EnvelopRes> deleteMember(@ApiIgnore @RequestHeader("Authorization") String accessToken){
 
@@ -249,6 +249,20 @@ public class MemberController {
         return ResponseEntity.status(HttpStatus.OK)
                 .body(EnvelopRes.builder()
                         .build());
+    }
+
+    @PatchMapping("/modifyProfile")
+    @ApiOperation(value = "프로필 사진 수정")
+    public ResponseEntity<EnvelopRes> modifyProfile(@ApiIgnore @RequestHeader("Authorization") String accessToken,
+                                                    @Valid @RequestBody ModifyProfileReq modifyProfileReq){
+
+            log.debug("Member Controller: modifyProfile() method called.........");
+
+            memberService.modifyProfile(accessToken, modifyProfileReq);
+
+            return ResponseEntity.status(HttpStatus.OK)
+                    .body(EnvelopRes.builder()
+                            .build());
     }
 
 }
