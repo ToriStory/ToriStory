@@ -27,11 +27,12 @@ public class CollectionController {
     }
 
     @PostMapping("/{toriId}")
-    public ResponseEntity<EnvelopRes<Void>> adoptTori(@RequestHeader("memberId") Long memberId, @PathVariable Byte toriId) {
+    public ResponseEntity<EnvelopRes> adoptTori(@RequestHeader("memberId") Long memberId, @PathVariable Byte toriId) {
 
         collectionService.addTori(memberId, toriId);
 
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(EnvelopRes.builder().build());
     }
 
 }

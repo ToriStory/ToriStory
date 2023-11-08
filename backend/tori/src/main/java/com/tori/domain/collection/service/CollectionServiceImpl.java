@@ -1,7 +1,7 @@
 package com.tori.domain.collection.service;
 
 import com.tori.domain.asset.entity.MemberAsset;
-import com.tori.domain.asset.repository.AssetRepository;
+import com.tori.domain.asset.repository.MemberAssetRepository;
 import com.tori.domain.collection.dto.response.FindCollectionRes;
 import com.tori.domain.collection.entity.MemberCollection;
 import com.tori.domain.collection.entity.ToriCollection;
@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -23,7 +22,7 @@ public class CollectionServiceImpl implements CollectionService {
 
     private final ToriCollectionRepository toriCollectionRepository;
     private final MemberCollectionRepository memberCollectionRepository;
-    private final AssetRepository assetRepository;
+    private final MemberAssetRepository memberAssetRepository;
 
     @Override
     public List<FindCollectionRes> findCollection(Long memberId) {
@@ -40,7 +39,7 @@ public class CollectionServiceImpl implements CollectionService {
         }
 
         // 도토리 확인
-        MemberAsset memberAsset = assetRepository.findMemberAssetByAsset(memberId);
+        MemberAsset memberAsset = memberAssetRepository.findMemberAssetByAsset(memberId);
         if (memberAsset.getAssetCnt() < toriCollection.getPrice()) {
             throw new ToriException(ErrorCode.DOTORI_NOT_ENOUGH);
         }
