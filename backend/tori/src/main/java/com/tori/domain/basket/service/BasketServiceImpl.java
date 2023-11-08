@@ -13,6 +13,7 @@ import com.tori.domain.basket.repository.LetterRepository;
 import com.tori.global.exception.ErrorCode;
 import com.tori.global.exception.handler.ToriException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,6 +25,7 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 @Transactional
+@Slf4j
 public class BasketServiceImpl implements BasketService {
 
     private final BasketRepository basketRepository;
@@ -33,6 +35,24 @@ public class BasketServiceImpl implements BasketService {
 
     final int feedPrice = 2;    // 먹이 가격
     final int[] hours = {2, 3, 5};  // 여우 다녀가는 시간
+
+    @Override
+    public byte findBasket(Long memberId) {
+        Optional<Basket> basket = basketRepository.findByMemberIdAndOpenFlagIsFalse(memberId);
+
+        // 먹이 X
+        if (basket.isEmpty()) {
+            return 0;
+        }
+
+        // 먹이 O
+        if (basket.get().getSendDtm().isAfter((LocalDateTime.now()))) {
+            return 1;
+        }
+
+        // 편지/선물
+        return 2;
+    }
 
     @Override
     public void feed(Long memberId) {

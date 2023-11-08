@@ -5,10 +5,7 @@ import com.tori.global.response.EnvelopRes;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -16,6 +13,16 @@ import org.springframework.web.bind.annotation.RestController;
 public class BasketController {
 
     private final BasketService basketService;
+
+    @GetMapping
+    public ResponseEntity<EnvelopRes<Byte>> checkBasket(@RequestHeader("memberId") Long memberId) {
+        byte response = basketService.findBasket(memberId);
+
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(EnvelopRes.<Byte>builder()
+                        .data(response)
+                        .build());
+    }
 
     @PostMapping("/feed")
     public ResponseEntity<EnvelopRes> feed(@RequestHeader("memberId") Long memberId) {
