@@ -48,10 +48,21 @@ export const togetherChallengePage = {
   label: '함께 도전',
 };
 
+export const thankNotePage = {
+  path: '/thank',
+  label: '감사일기',
+};
+
+// export const createThankNotePage = {
+//   path: '/thank/create',
+//   label: '감사일기 쓰기',
+// };
+
 export const totoriPage = {
   path: '/totori',
   label: '토토리',
 };
+
 export const createChallengePage = {
   path: '/challenge/together/create',
   label: '도전 생성',
@@ -109,6 +120,8 @@ export const testPage = {
 
 export const pathname = [
   testPage,
+  thankNotePage,
+  // createThankNotePage,
   splashPage,
   landingPage,
   signInPage,

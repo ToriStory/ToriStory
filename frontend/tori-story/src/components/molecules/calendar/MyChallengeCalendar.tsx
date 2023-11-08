@@ -6,6 +6,7 @@ import './MyChallengeCustom.css';
 import moment from 'moment-timezone';
 import { getMyChallengeMonthAPI } from 'apis/challengeApi';
 import MyCalendarChallengeList from 'components/organisms/challenge/MyCalendarChallenge';
+import Label from 'components/atoms/challenge/Label';
 
 moment.tz.setDefault('Asia/Seoul');
 export function MyChallengeCalendar() {
@@ -81,6 +82,12 @@ export function MyChallengeCalendar() {
         showNeighboringMonth={false}
         onActiveStartDateChange={({ activeStartDate }) => getActiveDate(activeStartDate)}
       />
+      <div className='w-full'>
+        <Label title='감사일기' />
+      </div>
+      <div className='w-full'>
+        <Label title='참여했던 도전들' />
+      </div>
       <MyCalendarChallengeList activeDate={selectedDate} />
     </div>
   );

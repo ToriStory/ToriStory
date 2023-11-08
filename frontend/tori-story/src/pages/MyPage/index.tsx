@@ -13,7 +13,7 @@ const MyPage = () => {
           <div className='w-full h-[calc(100%-12rem)]'>
             <UserInfo />
             <div className='w-full'>
-              <Label title='참여했던 도전들' />
+              <Label title='나의 기록들' />
             </div>
             <div className='w-full h-full overflow-y-auto'>
               <MyChallengeCalendar />
