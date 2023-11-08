@@ -13,7 +13,7 @@ export interface CustomChallengeListResponse {
   data: CustomChallengeProps[];
 }
 
-const CustumChallengeList = () => {
+const CustomChallengeList = () => {
   const [data, setData] = useState<CustomChallengeProps[]>([]);
   const [isEmpty, setIsEmpty] = useState<boolean>(true);
 
@@ -88,4 +88,4 @@ const CustumChallengeList = () => {
   );
 };
 
-export default CustumChallengeList;
+export default CustomChallengeList;

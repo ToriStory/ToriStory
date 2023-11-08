@@ -1,14 +1,15 @@
 import HeaderLeft from 'components/molecules/challenge/HeaderLeft';
 import Challenge from './Challenge';
-import BottomButton from 'components/atoms/challenge/BottomButton';
 import HeaderRight from 'components/molecules/challenge/HeaderRight';
 import { IconButton } from '@mui/material';
-import { ArrowRight, BadgeCheck, User2 } from 'lucide-react';
+import { ArrowRight, User2 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { commonChallengeDetailPage } from 'constants/pathname';
 import BottomLeft from 'components/molecules/challenge/BottomLeft';
-import { useEffect, useState } from 'react';
-import { orange300 } from 'constants/color';
+import { useEffect } from 'react';
+import CommonButton from 'components/molecules/commonChallenge/CommonButton';
+import { useAtom, useSetAtom } from 'jotai';
+import { attendFlagAtom, compFlagAtom, attendCntAtom, compCntAtom } from 'stores/challengeStore';
 
 interface CommonChallengeResoponse {
   commonChallengeId: number;
@@ -22,38 +23,31 @@ interface CommonChallengeResoponse {
 
 const CommonChallenge = () => {
   const navigate = useNavigate();
-  const [attendCnt, setAttendCnt] = useState<number>();
-  const [attendFlag, setAttendFlag] = useState<boolean>();
-  const [compFlag, setCompFlag] = useState<boolean>();
+  const setAttendFlag = useSetAtom(attendFlagAtom);
+  const setCompFlag = useSetAtom(compFlagAtom);
+  const [attendCnt, setAttendCnt] = useAtom(attendCntAtom);
+  const [compCnt, setCompCnt] = useAtom(compCntAtom);
 
   const response: CommonChallengeResoponse = {
     commonChallengeId: 1,
     content: '산책하기',
     attendFlag: false,
     compFlag: false,
-    compCnt: 100,
+    compCnt: 200,
     maxCnt: 100,
     unit: [30, 60, 100, 212],
   };
 
   useEffect(() => {
     setAttendCnt(response.unit[response.unit.length - 1]); //마지막 요소는 참여자수
+    setCompCnt(response.compCnt);
     setAttendFlag(response.attendFlag);
     setCompFlag(response.compFlag);
-    console.log(attendCnt);
   }, []);
-
-  const handleCertification = () => {};
-
-  const handleAttend = () => {};
 
   const handleNavigate = () => {
     navigate(commonChallengeDetailPage.path, {
       state: {
-        attendFlag: attendFlag,
-        compFlag: compFlag,
-        attendCnt: attendCnt,
-        compCnt: response.compCnt,
         maxCnt: response.maxCnt,
         unit: response.unit,
       },
@@ -71,21 +65,8 @@ const CommonChallenge = () => {
       <Challenge
         headerLeft={<HeaderLeft challengeCategory='공동' />}
         headerRight={<HeaderRight button={headerRightButton} />}
-        bottomLeft={
-          <BottomLeft
-            icon={<User2 size={16} />}
-            content={`${response.compCnt}/${response.maxCnt}`}
-          />
-        }
-        bottomRight={
-          compFlag ? (
-            <BadgeCheck color={orange300} />
-          ) : attendFlag ? (
-            <BottomButton title={'인증'} onClick={handleCertification} />
-          ) : (
-            <BottomButton title={'참여'} onClick={handleAttend} />
-          )
-        }
+        bottomLeft={<BottomLeft icon={<User2 size={16} />} content={`${compCnt}/${attendCnt}`} />}
+        bottomRight={<CommonButton />}
         content={response.content}
       />
     </>
