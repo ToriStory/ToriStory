@@ -16,6 +16,8 @@ public class FindCommonRes {
 
 	private boolean attendFlag;
 
+	private int attendCnt;
+
 	private boolean compFlag;
 
 	private int compCnt;

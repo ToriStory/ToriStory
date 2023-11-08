@@ -24,6 +24,9 @@ public interface CommonEntryRepository extends JpaRepository<CommonEntry, BigInt
 	@Query("select count(ce) from CommonEntry ce where ce.compFlag = true and ce.challengeDt = current_date")
 	int countAllByChallengeDtAndCompFlagIsTrue();
 
+	@Query("select count(ce) from CommonEntry ce where ce.challengeDt = current_date")
+	int countAllByChallengeDt();
+
 	@Query("select ce.imgUrl from CommonEntry ce where ce.challengeDt = current_date and ce.imgUrl is not null and ce.compFlag = true")
 	List<String> findAllByImgUrlIsNotEmptyAndCompFlagIsTrue();
 
