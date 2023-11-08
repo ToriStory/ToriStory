@@ -48,8 +48,11 @@ public class CommonEntry {
         this.compFlag = compFlag;
     }
 
-    public void complete(String imgUrl) {
+    public void complete() {
         this.compFlag = true;
+    }
+
+    public void review(String imgUrl) {
         this.imgUrl = imgUrl;
     }
 

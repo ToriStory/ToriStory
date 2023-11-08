@@ -11,6 +11,7 @@ import org.springframework.web.bind.MissingRequestHeaderException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
+import org.springframework.web.multipart.MultipartException;
 
 import java.io.IOException;
 
@@ -37,7 +38,7 @@ public class GlobalExceptionHandler {
      *  HttpMessageConverter 에서 등록한 HttpMessageConverter binding 못할경우 발생
      *  주로 @RequestBody, @RequestPart 어노테이션에서 발생
      */
-    @ExceptionHandler({MethodArgumentNotValidException.class, UnexpectedTypeException.class, BindException.class, MethodArgumentTypeMismatchException.class})
+    @ExceptionHandler({MethodArgumentNotValidException.class, UnexpectedTypeException.class, BindException.class, MethodArgumentTypeMismatchException.class, MultipartException.class})
     protected ResponseEntity<EnvelopRes<String>> handleValidationException(Exception e) {
         log.error("handleValidationException", e.getMessage());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
