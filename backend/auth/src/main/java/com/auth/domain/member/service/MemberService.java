@@ -36,4 +36,6 @@ public interface MemberService {
 
     void modifyPw(ModifyPwReq modifyPwReq);
 
+    void modifyProfile(String accessToken, ModifyProfileReq modifyProfileReq);
+
 }

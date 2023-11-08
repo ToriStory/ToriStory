@@ -17,11 +17,10 @@ public enum ErrorCode {
 
     // Mail 에러
     SEND_EMAIL_FAIL(404, "이메일 전송에 실패했습니다."),
-    NO_SUCH_ALGORITHM(404, "알 수 없는 알고리즘입니다."),
 
+    // 인증 코드 관련 에러
     EXPIRED_AUTH_CODE(404, "만료된 인증 코드입니다."),
     NOT_MATCH_AUTH_CODE(404, "유효하지 않은 인증 코드입니다."),
-
     INVALID_PW_LINK_CODE(404, "유효하지 않은 비밀번호 재생성 링크입니다."),
 
     ;

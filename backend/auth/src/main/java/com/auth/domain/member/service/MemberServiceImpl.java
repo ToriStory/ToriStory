@@ -263,6 +263,15 @@ public class MemberServiceImpl implements MemberService {
             member.changePassword(passwordEncoder.encode(modifyPwReq.getNewPassword()));
     }
 
+    @Override
+    public void modifyProfile(String accessToken, ModifyProfileReq modifyProfileReq) {
+
+        log.debug("Member Service: modifyProfile() method called.........");
+
+        Member member = findByEmail(jwtProvider.extractEmail(accessToken));
+        member.changeImgUrl(modifyProfileReq.getImgUrl());
+    }
+
     private String createPwCode(){
         return UUID.randomUUID().toString();
     }
