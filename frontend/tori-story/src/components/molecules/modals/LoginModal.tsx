@@ -29,7 +29,7 @@ export const LoginModal = ({ openModal, setOpenModal }: LoginModalProps) => {
           okayButtonAction={() => handleMoveToLoginButton()}
           setIsModalOpen={setOpenModal}
         >
-          <div className={cls('p-4 text-center')}>
+          <div className={cls('p-4 text-center z-50')}>
             <div>로그인해야 사용하실 수 있는 서비스입니다.</div>
             <div>
               <b>로그인 하시겠습니까?</b>

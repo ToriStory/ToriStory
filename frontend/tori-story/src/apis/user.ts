@@ -169,3 +169,9 @@ export const updatePasswordAPI = async (data: CheckResetPassword) => {
   const res = await axios.post<NonNullishResponse>(url, data);
   return res;
 };
+
+export const updateToriProfile = async (imgUrl: string) => {
+  const url = memberUrl + 'modifyProfile';
+  const res = await axios.patch(url, { imgUrl });
+  return res;
+};
