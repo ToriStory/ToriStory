@@ -1,20 +1,22 @@
 import { orange400 } from 'constants/color';
+import { useAtomValue } from 'jotai';
 import { FlagTriangleRight, Nut, User2 } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
+import { compCntAtom } from 'stores/challengeStore';
 import { cls } from 'utils/cls';
 
 interface GuageDetailProps {
-  compCnt: number;
   maxCnt: number;
   unit: number[];
 }
 
-const GuageDetail = ({ compCnt, unit, maxCnt }: GuageDetailProps) => {
+const GaugeDetail = ({ unit, maxCnt }: GuageDetailProps) => {
   const [compUserWidth, setCompUserWidth] = useState(0);
   const [nutWidth, setNutWidth] = useState(0);
   const compUserRef = useRef<HTMLDivElement | null>(null);
+  const compCnt = useAtomValue(compCntAtom);
   const nutRef = useRef<HTMLDivElement | null>(null);
-  const compRate: number = maxCnt > 0 ? (compCnt / maxCnt) * 100 : 0;
+  const compRate: number = maxCnt > 0 ? Math.min((compCnt / maxCnt) * 100, 100) : 0;
 
   useEffect(() => {
     if (compUserRef.current) {
@@ -59,7 +61,7 @@ const GuageDetail = ({ compCnt, unit, maxCnt }: GuageDetailProps) => {
 
             const itemRate: number = maxCnt > 0 ? (item / maxCnt) * 100 : 0;
             return (
-              <div style={{ paddingLeft: `calc(${itemRate}% - ${nutWidth}px)` }}>
+              <div key={index} style={{ paddingLeft: `calc(${itemRate}% - ${nutWidth}px)` }}>
                 <div
                   ref={nutRef}
                   className={cls(
@@ -85,4 +87,4 @@ const GuageDetail = ({ compCnt, unit, maxCnt }: GuageDetailProps) => {
   );
 };
 
-export default GuageDetail;
+export default GaugeDetail;
