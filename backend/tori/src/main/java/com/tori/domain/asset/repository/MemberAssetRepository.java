@@ -11,7 +11,7 @@ public interface MemberAssetRepository extends JpaRepository<MemberAsset, Long> 
     @Query("select ma.assetCnt from MemberAsset ma join ma.asset a where ma.memberId = :memberId and a.assetNm = 'DOTORI'")
     int findDotoriCntByMemberId(Long memberId);
 
-    @Query("select ma from MemberAsset  ma join fetch ma.asset a where a.assetNm = 'DOTORI'")
-    MemberAsset findMemberAssetByAsset(Long memberId);
+    @Query("select ma from MemberAsset  ma join fetch ma.asset a where ma.memberId = :memberId and a.assetNm = :assetNm")
+    MemberAsset findMemberAssetByMemberIdAndAsset(Long memberId, String assetNm);
 
 }

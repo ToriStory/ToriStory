@@ -39,7 +39,7 @@ public class CollectionServiceImpl implements CollectionService {
         }
 
         // 도토리 확인
-        MemberAsset memberAsset = memberAssetRepository.findMemberAssetByAsset(memberId);
+        MemberAsset memberAsset = memberAssetRepository.findMemberAssetByMemberIdAndAsset(memberId, "DOTORI");
         if (memberAsset.getAssetCnt() < toriCollection.getPrice()) {
             throw new ToriException(ErrorCode.DOTORI_NOT_ENOUGH);
         }

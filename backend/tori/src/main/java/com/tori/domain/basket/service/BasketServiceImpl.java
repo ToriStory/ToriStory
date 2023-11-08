@@ -4,6 +4,7 @@ import com.tori.domain.asset.entity.Asset;
 import com.tori.domain.asset.entity.MemberAsset;
 import com.tori.domain.asset.repository.AssetRepository;
 import com.tori.domain.asset.repository.MemberAssetRepository;
+import com.tori.domain.basket.dto.response.FindLetterRes;
 import com.tori.domain.basket.entity.Basket;
 import com.tori.domain.basket.entity.Gift;
 import com.tori.domain.basket.entity.Letter;
@@ -64,7 +65,7 @@ public class BasketServiceImpl implements BasketService {
         }
 
         // 도토리 확인
-        MemberAsset memberAsset = memberAssetRepository.findMemberAssetByAsset(memberId);
+        MemberAsset memberAsset = memberAssetRepository.findMemberAssetByMemberIdAndAsset(memberId, "DOTORI");
         if (memberAsset.getAssetCnt() < feedPrice) {
             throw new ToriException(ErrorCode.DOTORI_NOT_ENOUGH);
         }
@@ -110,6 +111,32 @@ public class BasketServiceImpl implements BasketService {
                         .giftCnt(cnt)
                         .sendDtm(sendDtm)
                         .build());
+    }
+
+    @Override
+    public FindLetterRes findLetter(Long memberId) {
+        Basket basket = basketRepository.findByMemberIdAndOpenFlagIsFalse(memberId).orElseThrow(() -> new ToriException(ErrorCode.LETTER_NOT_FOUND));
+
+        if (basket.getSendDtm().isAfter(LocalDateTime.now())) {
+            throw new ToriException(ErrorCode.LETTER_NOT_FOUND);
+        }
+
+        basket.read();
+
+        Gift gift = basket.getGift();
+
+        if (gift != null) {
+            MemberAsset memberAsset = memberAssetRepository.findMemberAssetByMemberIdAndAsset(memberId, gift.getContent());
+            memberAsset.plus(basket.getGiftCnt());
+
+            return FindLetterRes.builder()
+                    .letter(basket.getLetter().getContent())
+                    .gift(gift.getContent())
+                    .giftCnt(basket.getGiftCnt()).build();
+        }
+
+        return FindLetterRes.builder()
+                .letter(basket.getLetter().getContent()).build();
     }
 
 }

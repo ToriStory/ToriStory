@@ -1,5 +1,6 @@
 package com.tori.domain.basket.controller;
 
+import com.tori.domain.basket.dto.response.FindLetterRes;
 import com.tori.domain.basket.service.BasketService;
 import com.tori.global.response.EnvelopRes;
 import lombok.RequiredArgsConstructor;
@@ -30,6 +31,15 @@ public class BasketController {
 
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(EnvelopRes.builder().build());
+    }
+
+    @GetMapping("/letter")
+    public ResponseEntity<EnvelopRes<FindLetterRes>> findLetter(@RequestHeader("memberId") Long memberId) {
+        FindLetterRes findLetterRes = basketService.findLetter(memberId);
+
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(EnvelopRes.<FindLetterRes>builder()
+                        .data(findLetterRes).build());
     }
 
 }

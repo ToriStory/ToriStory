@@ -50,4 +50,8 @@ public class Basket {
 		this.sendDtm = sendDtm;
 	}
 
+	public void read() {
+		this.openFlag = true;
+	}
+
 }
