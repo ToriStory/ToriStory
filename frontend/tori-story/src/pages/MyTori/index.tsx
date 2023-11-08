@@ -1,4 +1,4 @@
-import { DotoriBox } from 'components/atoms/box/DotoriBox';
+import { DotoriBox } from 'components/atoms/Box/DotoriBox';
 import { ToriFox } from 'components/atoms/tori/ToriFox';
 import { ToriSquirrel } from 'components/atoms/tori/ToriSquirrel';
 import { MyToriButtons } from 'components/molecules/buttons/MyToriButtons';

@@ -25,6 +25,7 @@ const ThankNoteList = () => {
 
   useEffect(() => {
     const getDailyChallenge = async () => {
+      setIsEmpty(false); // 빌드 에러 해결 위한 임시 코드
       // const res = await getMyChallengeDailyAPI({ date: activeDate });
       // if (res.status === 200) {
       //   console.log(res);

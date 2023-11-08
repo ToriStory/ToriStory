@@ -99,6 +99,15 @@ export default function HeaderDepthMore({ pathname }: { pathname: string }) {
               저장
             </div>
           )}
+          {pathname === '감사일기 쓰기' && (
+            <button
+              className='flex gap-4 justify-center items-center font-jua text-orange-400'
+              type='submit'
+              form='thankNoteForm'
+            >
+              저장
+            </button>
+          )}
         </Toolbar>
       </AppBar>
     </Box>
