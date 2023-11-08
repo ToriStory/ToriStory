@@ -64,8 +64,6 @@ export const patchCustomChallengeApi = async (customEntryId: number) => {
 // 랜덤 도전과제 가져오기
 export const readRandomChallengeApi = async () => {
   const res = await axios.get(`${apiUrl}/random`);
-  console.log('random', res);
-
   return res;
 };
 
@@ -107,5 +105,32 @@ export const getMyChallengeDailyAPI = async (data: ChallengeCalendarProps) => {
 export const reportCustomChallengeAPI = async (data: ReportCustomChallenge) => {
   const url = apiUrl + '/report';
   const res = await axios.post(url, data);
+  return res;
+};
+
+// 공동 도전 과제 조회
+export const getCommonChallengeAPI = async () => {
+  const res = await axios.get(`${apiUrl}/common`);
+  return res;
+};
+
+// 공동 도전 과제 상세 조회
+export const getCommonChallengeDetailAPI = async (commonChallengeId: number) => {
+  const url = apiUrl + `/common/${commonChallengeId}`;
+  const res = await axios.get(url);
+  return res;
+};
+
+// 공동 도전 과제 참여
+export const postCommonChallengeAttendAPI = async () => {
+  const url = apiUrl + `/common/attend`;
+  const res = await axios.post(url);
+  return res;
+};
+
+// 공동 도전 과제 달성
+export const patchCommonChallengeCompleteAPI = async (commonChallengeId: number) => {
+  const url = apiUrl + `/common/comp/${commonChallengeId}`;
+  const res = await axios.patch(url);
   return res;
 };
