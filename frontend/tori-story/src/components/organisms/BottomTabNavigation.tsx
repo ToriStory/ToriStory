@@ -1,11 +1,5 @@
 import { BottomNavigation, BottomNavigationAction } from '@mui/material';
-import {
-  Trophy,
-  //  Gift,
-  Squirrel,
-  HeartHandshake,
-  User2,
-} from 'lucide-react';
+import { Trophy, Squirrel, HeartHandshake, User2, PenSquare } from 'lucide-react';
 import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
 import Paper from '@mui/material/Paper';
@@ -15,27 +9,28 @@ import {
   myChallengePage,
   myPagePage,
   myToriPage,
+  thankNotePage,
   togetherChallengePage,
-  // totoriPage,
 } from 'constants/pathname';
+import { useNavigate } from 'react-router-dom';
 
 function BottomTabNavigation({ pathname }: { pathname: string }) {
   const [value, setValue] = useState(-1);
   const ref = useRef<HTMLDivElement>(null);
+  const navigate = useNavigate();
   const navigation = useAppNavigation();
 
   useEffect(() => {
-    // if (pathname === totoriPage.label) {
-    //   setValue(0);
-    // } else
-    if (pathname === togetherChallengePage.label) {
+    if (pathname === thankNotePage.label) {
       setValue(0);
-    } else if (pathname === myToriPage.label) {
+    } else if (pathname === togetherChallengePage.label) {
       setValue(1);
-    } else if (pathname === myChallengePage.label) {
+    } else if (pathname === myToriPage.label) {
       setValue(2);
-    } else if (pathname === myPagePage.label) {
+    } else if (pathname === myChallengePage.label) {
       setValue(3);
+    } else if (pathname === myPagePage.label) {
+      setValue(4);
     } else {
       setValue(-1);
     }
@@ -45,11 +40,11 @@ function BottomTabNavigation({ pathname }: { pathname: string }) {
   }, [value]);
 
   const bottomTabMenu = [
-    // {
-    //   label: totoriPage.label,
-    //   icon: <Gift />,
-    //   to: navigation.navigateToTotori,
-    // },
+    {
+      label: thankNotePage.label,
+      icon: <PenSquare />,
+      to: () => navigate(thankNotePage.path),
+    },
     {
       label: togetherChallengePage.label,
       icon: <HeartHandshake />,
@@ -77,7 +72,7 @@ function BottomTabNavigation({ pathname }: { pathname: string }) {
       <Box sx={{ pb: 7 }} ref={ref}>
         {pathname === '마이 토리' ||
         pathname === '마이페이지' ||
-        pathname === '토토리' ||
+        pathname === '감사일기' ||
         pathname === '함께 도전' ||
         pathname === '나의 도전' ||
         pathname === '회원가입' ||

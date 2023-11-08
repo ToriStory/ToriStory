@@ -43,6 +43,8 @@ import {
   updateUserInfoPage,
   findPasswordPage,
   resetPasswordPage,
+  thankNotePage,
+  // createThankNotePage,
 } from 'constants/pathname.ts';
 import CertificationGPS from 'pages/CertificationGPS/index.tsx';
 import CertificationAI from 'pages/CertificationAI/index.tsx';
@@ -52,6 +54,8 @@ import UpdateUser from 'pages/Auth/UpdateUser/index.tsx';
 import CommonChallengeDetail from 'pages/CommonChallengeDetail/index.tsx';
 import FindPassword from 'pages/Auth/FindPassword/index.tsx';
 import ResetPassword from 'pages/Auth/ResetPassword/index.tsx';
+import ThankNote from 'pages/ThankNote/index.tsx';
+import { CreateThankNote } from 'pages/ThankNote/Create/index.tsx';
 const router = createBrowserRouter([
   {
     path: splashPage.path,
@@ -89,6 +93,14 @@ const router = createBrowserRouter([
         path: commonChallengeDetailPage.path,
         element: <CommonChallengeDetail />,
       },
+      {
+        path: thankNotePage.path,
+        element: <ThankNote />,
+      },
+      // {
+      //   path: createThankNotePage.path,
+      //   element: <CreateThankNote />,
+      // },
       {
         path: testPage.path,
         element: <Test />,
