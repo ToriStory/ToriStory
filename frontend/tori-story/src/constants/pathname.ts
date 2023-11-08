@@ -53,10 +53,10 @@ export const thankNotePage = {
   label: '감사일기',
 };
 
-// export const createThankNotePage = {
-//   path: '/thank/create',
-//   label: '감사일기 쓰기',
-// };
+export const createThankNotePage = {
+  path: '/thank/create',
+  label: '감사일기 쓰기',
+};
 
 export const totoriPage = {
   path: '/totori',
@@ -121,7 +121,7 @@ export const testPage = {
 export const pathname = [
   testPage,
   thankNotePage,
-  // createThankNotePage,
+  createThankNotePage,
   splashPage,
   landingPage,
   signInPage,
