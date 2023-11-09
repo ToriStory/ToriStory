@@ -2,21 +2,21 @@ import Label from 'components/atoms/challenge/Label';
 import { cls } from 'utils/cls';
 import SignIn from './../Auth/SignIn/index';
 import { AddButton } from 'components/atoms/iconButtons/AddButton';
-// import { useNavigate } from 'react-router-dom';
-// import { createThankNotePage } from 'constants/pathname';
+import { useNavigate } from 'react-router-dom';
+import { createThankNotePage } from 'constants/pathname';
 import ThankNoteList from 'components/organisms/thankNote/ThankNoteList';
 
 const ThankNote = () => {
   const accessToken = localStorage.getItem('accessToken');
-  //   const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const handleCreateThankNoteButton = () => {
-    // navigate(createThankNotePage.path, {
-    //   state: {
-    //     content: '',
-    //     id: -1,
-    //   },
-    // });
+    navigate(createThankNotePage.path, {
+      state: {
+        content: '',
+        id: -1,
+      },
+    });
   };
 
   return (
