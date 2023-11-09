@@ -7,13 +7,17 @@ import { cls } from 'utils/cls';
 const MyTori = () => {
   const accessToken = localStorage.getItem('accessToken');
   return (
-    <div className='relative h-full w-full'>
-      <div className='fixed -z-10 bg-[#fff3ed] inset-0 flex justify-center items-center bg-[url("/removeTree.png")] bg-center bg-no-repeat bg-cover inset-y-16 -bottom-16' />
-      {accessToken && <DotoriBox />}
-      <MyToriButtons />
-      <div className={cls('absolute bottom-0 flex items-end justify-center')}>
-        <ToriFox />
-        <ToriSquirrel />
+    <div className='h-full w-full relative'>
+      <div className='fixed -z-10 bg-[#fff3ed] inset-0 flex justify-end items-center bg-[url("/removeTree.png")] bg-center bg-no-repeat bg-cover bottom-12' />
+      <div className='w-full z-10'>
+        {accessToken && <DotoriBox />}
+        <MyToriButtons />
+      </div>
+      <div className={cls('h-full -z-1 w-full')}>
+        <div className={cls('w-full absolute -bottom-1 flex items-end justify-center')}>
+          <ToriFox />
+          <ToriSquirrel />
+        </div>
       </div>
     </div>
   );

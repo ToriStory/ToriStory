@@ -1,11 +1,14 @@
 import { getUserInfoAPI } from 'apis/user';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { cls } from 'utils/cls';
 import DefaultSquirrel from 'assets/images/DefaultSquirrel.png';
+import { useAtom } from 'jotai';
+import { profileToriImgUrlAtom } from 'stores/dotoriStore';
 
 export const ToriSquirrel = () => {
   const accessToken = localStorage.getItem('accessToken');
-  const [imgUrl, setImgUrl] = useState('');
+  const [imgUrl, setImgUrl] = useAtom(profileToriImgUrlAtom);
+
   const handleGetUserInfo = async () => {
     if (accessToken) {
       const result = await getUserInfoAPI();
@@ -18,12 +21,8 @@ export const ToriSquirrel = () => {
   }, []);
 
   return (
-    <div className={cls('flex items-end w-1/3')}>
-      <img
-        src={accessToken ? imgUrl : DefaultSquirrel}
-        alt='다람쥐'
-        className={cls('w-auto h-2/5 pb-3')}
-      />
+    <div className={cls('pb-2')}>
+      <img src={accessToken ? imgUrl : DefaultSquirrel} alt='다람쥐' className={cls('h-24')} />
     </div>
   );
 };

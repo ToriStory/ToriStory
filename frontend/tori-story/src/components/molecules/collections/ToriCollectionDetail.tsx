@@ -8,8 +8,8 @@ import { LoginModal } from '../modals/LoginModal';
 import { useState } from 'react';
 import { adoptSquirrel } from 'apis/toriApi';
 import { updateToriProfile } from 'apis/user';
-import { useAtom } from 'jotai';
-import { dotoriCntAtom } from 'stores/dotoriStore';
+import { useAtom, useSetAtom } from 'jotai';
+import { dotoriCntAtom, profileToriImgUrlAtom } from 'stores/dotoriStore';
 
 export const ToriCollectionDetail = ({
   toriCollection,
@@ -20,6 +20,7 @@ export const ToriCollectionDetail = ({
 }) => {
   const accessToken = localStorage.getItem('accessToken');
   const [dotoriCnt, setDotoriCnt] = useAtom(dotoriCntAtom);
+  const setToriUrlImg = useSetAtom(profileToriImgUrlAtom);
   const [openModal, setOpenModal] = useState<boolean>(false);
   const [errorMsg, setErrorMsg] = useState('');
 
@@ -44,6 +45,7 @@ export const ToriCollectionDetail = ({
   const handleChangeTori = async (toriCollectionImgUrl: string) => {
     if (accessToken) {
       const result = updateToriProfile(toriCollectionImgUrl);
+      setToriUrlImg(toriCollectionImgUrl);
       console.log(result);
     } else {
       setOpenModal(true);
@@ -97,7 +99,13 @@ export const ToriCollectionDetail = ({
         </div>
       </div>
 
-      {openModal && <LoginModal openModal={openModal} setOpenModal={setOpenModal} />}
+      {openModal && (
+        <div className={cls('relative w-full h-full')}>
+          <div className={cls('absolute inset-0')}>
+            <LoginModal openModal={openModal} setOpenModal={setOpenModal} />
+          </div>
+        </div>
+      )}
     </>
   );
 };
