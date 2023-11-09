@@ -23,6 +23,17 @@ public class SwaggerConfig {
                 .apiInfo(apiInfo());
     }
 
+    @Bean
+    public Docket quest(){
+        return new Docket(DocumentationType.OAS_30)
+                .groupName("quest")
+                .select()
+                .apis(RequestHandlerSelectors.basePackage("com.challenge.domain.quest.controller")) // 패키지 경로 설정
+                .paths(PathSelectors.any())
+                .build()
+                .apiInfo(apiInfo());
+    }
+
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
                 .title("Tori-Story Swagger")
