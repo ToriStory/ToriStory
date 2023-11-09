@@ -36,6 +36,9 @@ public enum ErrorCode {
 	// AI
 	AI_CERT_FAIL(500, "AI 인증 중 오류"),
 
+	// Quest
+	QUEST_NOT_FOUND(404, "존재하지 않는 퀘스트"),
+
 	;
 
 	private final int code;
