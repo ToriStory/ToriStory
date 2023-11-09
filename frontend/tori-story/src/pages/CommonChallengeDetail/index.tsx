@@ -8,6 +8,8 @@ import { useEffect, useState } from 'react';
 import { getCommonChallengeDetailAPI } from 'apis/challengeApi';
 import { Typography } from '@mui/material';
 import { gray600 } from 'constants/color';
+import { useAtomValue } from 'jotai';
+import { maxCntAtom, unitAtom } from 'stores/challengeStore';
 
 interface CommonChallengeResponse {
   commonChallengeId: number;
@@ -21,8 +23,12 @@ interface ImgUrl {
 
 const CommonChallengeDetail = () => {
   const [response, setResponse] = useState<CommonChallengeResponse>();
+  const maxCnt = useAtomValue(maxCntAtom);
+  const unit = useAtomValue(unitAtom);
+
+  //maxCnt, unit
   const {
-    state: { commonChallengeId, maxCnt, unit },
+    state: { commonChallengeId },
   } = useLocation();
 
   useEffect(() => {
@@ -47,13 +53,13 @@ const CommonChallengeDetail = () => {
       {response && response?.imgUrlList.length > 0 ? (
         <div className={cls('pb-12 grid grid-cols-3 md:grid-cols-6 gap-2')}>
           {response.imgUrlList.map((item: ImgUrl, index: number) => (
-            <div key={index} className={cls('aspect-square')}>
+            <div key={index} className={cls('aspect-square ')}>
               <img
-                srcSet={`${item.imgUrl}?w=164&h=164&fit=crop&auto=format`}
-                src={`${item.imgUrl}?w=164&h=164&fit=crop&auto=format`}
+                srcSet={`${item}`}
+                src={`${item}`}
                 alt={item.imgUrl}
                 loading='lazy'
-                className={cls('h-full object-cover rounded-xl')}
+                className={cls('h-full w-full object-cover rounded-xl')}
               />
             </div>
           ))}

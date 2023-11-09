@@ -2,14 +2,17 @@ import BottomButton from 'components/atoms/challenge/BottomButton';
 import { orange300 } from 'constants/color';
 import { BadgeCheck } from 'lucide-react';
 import { useState } from 'react';
-import AttendModal from '../modals/AttendModal';
+import OnceModal from '../modals/OnceModal';
 import CompleteModal from '../modals/CompleteModal';
 import { useAtom } from 'jotai';
 import { attendCntAtom, attendFlagAtom, compCntAtom, compFlagAtom } from 'stores/challengeStore';
+import { useNavigate } from 'react-router-dom';
+import { commonChallengeReviewPage } from 'constants/pathname';
 import { patchCommonChallengeCompleteAPI, postCommonChallengeAttendAPI } from 'apis/challengeApi';
 import { toast } from 'react-toastify';
 
 const CommonButton = ({ commonChallengeId }: { commonChallengeId: number }) => {
+  const navigate = useNavigate();
   const [attendFlag, setAttendFlag] = useAtom(attendFlagAtom);
   const [compFlag, setCompFlag] = useAtom(compFlagAtom);
   const [openAttendModal, setOpenAttendModal] = useState(false);
@@ -39,6 +42,12 @@ const CommonButton = ({ commonChallengeId }: { commonChallengeId: number }) => {
     }
   };
 
+  const handleNavigateReview = () => {
+    navigate(commonChallengeReviewPage.path, {
+      state: { commonChallengeId: commonChallengeId },
+    });
+  };
+
   return (
     <div>
       {compFlag ? (
@@ -48,8 +57,18 @@ const CommonButton = ({ commonChallengeId }: { commonChallengeId: number }) => {
       ) : (
         <BottomButton title={'참여'} onClick={handleAttend} />
       )}
-      <AttendModal openModal={openAttendModal} setIsModalOpen={setOpenAttendModal} />
-      <CompleteModal openModal={openCompModal} setIsModalOpen={setOpenCompModal} />
+      <OnceModal
+        content='참여가
+        완료되었습니다'
+        buttonTitle='확인'
+        openModal={openAttendModal}
+        setIsModalOpen={setOpenAttendModal}
+      />
+      <CompleteModal
+        openModal={openCompModal}
+        setIsModalOpen={setOpenCompModal}
+        takePhoto={handleNavigateReview}
+      />
     </div>
   );
 };

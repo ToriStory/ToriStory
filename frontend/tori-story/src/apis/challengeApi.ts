@@ -5,7 +5,7 @@ import {
   ReportCustomChallenge,
 } from 'types/challenge';
 
-const apiUrl = '/challenge';
+const apiUrl = '/challenge/';
 
 interface ChallengeCalendarProps {
   date: string;
@@ -30,7 +30,8 @@ export interface MyChallengeDailyResponse extends Response {
 
 // 자유 도전 과제 생성
 export const createCustomChallengeApi = async (props: CustomChallengeCreateProps) => {
-  const res = await axios.post(`${apiUrl}/custom`, props);
+  const url = apiUrl + `custom`;
+  const res = await axios.post(url, props);
   return res;
 };
 
@@ -39,43 +40,50 @@ export const createOtherCustomChallengeApi = async (
   customChallengeId: number,
   customChallenge: CustomChallengeScrapProps
 ) => {
-  const res = await axios.post(`${apiUrl}/scrap/${customChallengeId}`, customChallenge);
+  const url = apiUrl + `scrap/${customChallengeId}`;
+  const res = await axios.post(url, customChallenge);
   return res;
 };
 
 // 오늘 도전 중인 자유 과제 조회
 export const readInProgressCustomChallengeApi = async () => {
-  const res = await axios.get(`${apiUrl}/custom/my`);
+  const url = apiUrl + `custom/my`;
+  const res = await axios.get(url);
   return res;
 };
 
 // 자유 도전 과제 삭제
 export const deleteCustomChallengeApi = async (customEntryId: number) => {
-  const res = await axios.delete(`${apiUrl}/custom/${customEntryId}`);
+  const url = apiUrl + `custom/${customEntryId}`;
+  const res = await axios.delete(url);
   return res;
 };
 
 // 자유 도전 과제 달성
 export const patchCustomChallengeApi = async (customEntryId: number) => {
-  const res = await axios.patch(`${apiUrl}/comp/${customEntryId}`);
+  const url = apiUrl + `comp/${customEntryId}`;
+  const res = await axios.patch(url);
   return res;
 };
 
 // 랜덤 도전과제 가져오기
 export const readRandomChallengeApi = async () => {
-  const res = await axios.get(`${apiUrl}/random`);
+  const url = apiUrl + `random`;
+  const res = await axios.get(url);
   return res;
 };
 
 // 랜덤 도전과제 갱신
 export const patchRandomChallengeApi = async () => {
-  const res = await axios.patch(`${apiUrl}/renewal`);
+  const url = apiUrl + `renewal`;
+  const res = await axios.patch(url);
   return res;
 };
 
 // 랜덤 도전과제 AI 인증
 export const certificationAIRandomApi = async (props: FormData) => {
-  const res = await axios.post(`${apiUrl}/cert/random/ai`, props, {
+  const url = apiUrl + `cert/random/ai`;
+  const res = await axios.post(url, props, {
     headers: {
       'Content-Type': 'multipart/form-data',
     },
@@ -85,52 +93,65 @@ export const certificationAIRandomApi = async (props: FormData) => {
 
 // 내 랜덤 도전과제 달성
 export const patchCompRandomChallengeApi = async () => {
-  const res = await axios.patch(`${apiUrl}/comp`);
+  const url = apiUrl + `comp`;
+  const res = await axios.patch(url);
   return res;
 };
 
 export const getMyChallengeMonthAPI = async (data: ChallengeCalendarProps) => {
-  const url = apiUrl + '/custom';
+  const url = apiUrl + `custom`;
   const res = await axios.get<MyChallengeMonthResponse>(url, { params: data });
   return res;
 };
 
 export const getMyChallengeDailyAPI = async (data: ChallengeCalendarProps) => {
-  const url = apiUrl + '/custom/detail';
+  const url = apiUrl + `custom/detail`;
   const res = await axios.get<MyChallengeDailyResponse>(url, { params: data });
   return res;
 };
 
 // 신고하기
 export const reportCustomChallengeAPI = async (data: ReportCustomChallenge) => {
-  const url = apiUrl + '/report';
+  const url = apiUrl + `report`;
   const res = await axios.post(url, data);
   return res;
 };
 
 // 공동 도전 과제 조회
 export const getCommonChallengeAPI = async () => {
-  const res = await axios.get(`${apiUrl}/common`);
+  const url = apiUrl + `common`;
+  const res = await axios.get(url);
   return res;
 };
 
 // 공동 도전 과제 상세 조회
 export const getCommonChallengeDetailAPI = async (commonChallengeId: number) => {
-  const url = apiUrl + `/common/${commonChallengeId}`;
+  const url = apiUrl + `common/${commonChallengeId}`;
   const res = await axios.get(url);
   return res;
 };
 
 // 공동 도전 과제 참여
 export const postCommonChallengeAttendAPI = async () => {
-  const url = apiUrl + `/common/attend`;
+  const url = apiUrl + `common/attend`;
   const res = await axios.post(url);
   return res;
 };
 
 // 공동 도전 과제 달성
 export const patchCommonChallengeCompleteAPI = async (commonChallengeId: number) => {
-  const url = apiUrl + `/common/comp/${commonChallengeId}`;
+  const url = apiUrl + `common/comp/${commonChallengeId}`;
   const res = await axios.patch(url);
+  return res;
+};
+
+// 공동 도전 과제 이미지 등록
+export const patchCommonChallengeReviewAPI = async (commonChallengeId: number, props: FormData) => {
+  const url = apiUrl + `common/review/${commonChallengeId}`;
+  const res = await axios.patch(url, props, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  });
   return res;
 };

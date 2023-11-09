@@ -43,6 +43,11 @@ export const commonChallengeDetailPage = {
   label: '공동 도전 상세',
 };
 
+export const commonChallengeReviewPage = {
+  path: '/challenge/my/review',
+  label: '사진 공유',
+};
+
 export const togetherChallengePage = {
   path: '/challenge/together',
   label: '함께 도전',
@@ -130,6 +135,7 @@ export const pathname = [
   resetPasswordPage,
   myChallengePage,
   commonChallengeDetailPage,
+  commonChallengeReviewPage,
   togetherChallengePage,
   totoriPage,
   createChallengePage,
