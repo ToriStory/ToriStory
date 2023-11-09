@@ -64,7 +64,7 @@ const GaugeDetail = ({ unit, maxCnt }: GaugeDetailProps) => {
                   )}
                 >
                   {item}
-                  <div>
+                  <div className={cls(' animate__infinite animate__animated animate__swing')}>
                     <Nut
                       size={18}
                       viewBox='0 0 24 24'

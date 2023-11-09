@@ -3,16 +3,17 @@ import { Button, Dialog, DialogActions, DialogContent, DialogContentText } from 
 interface CompleteModalProps {
   openModal: boolean;
   setIsModalOpen: (isOpen: boolean) => void;
+  takePhoto: () => void;
 }
 
-const CompleteModal = ({ openModal, setIsModalOpen }: CompleteModalProps) => {
+const CompleteModal = ({ openModal, setIsModalOpen, takePhoto }: CompleteModalProps) => {
   const handleClose = () => {
     setIsModalOpen(false);
   };
 
-  const handleNavigatePhoto = () => {
+  const handleTakePhoto = () => {
     handleClose();
-    alert('사진찍기 페이지 이동');
+    takePhoto();
   };
 
   return (
@@ -25,7 +26,7 @@ const CompleteModal = ({ openModal, setIsModalOpen }: CompleteModalProps) => {
         <Button variant='contained' onClick={handleClose} color='primary'>
           닫기
         </Button>
-        <Button variant='contained' onClick={handleNavigatePhoto} color='primary'>
+        <Button variant='contained' onClick={handleTakePhoto} color='primary'>
           사진찍기
         </Button>
       </DialogActions>

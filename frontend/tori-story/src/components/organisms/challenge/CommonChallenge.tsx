@@ -9,7 +9,14 @@ import BottomLeft from 'components/molecules/challenge/BottomLeft';
 import { useEffect, useState } from 'react';
 import CommonButton from 'components/molecules/commonChallenge/CommonButton';
 import { useAtom, useSetAtom } from 'jotai';
-import { attendFlagAtom, compFlagAtom, attendCntAtom, compCntAtom } from 'stores/challengeStore';
+import {
+  attendFlagAtom,
+  compFlagAtom,
+  attendCntAtom,
+  compCntAtom,
+  unitAtom,
+  maxCntAtom,
+} from 'stores/challengeStore';
 import { getCommonChallengeAPI } from './../../../apis/challengeApi';
 
 interface CommonChallengeResoponse {
@@ -26,6 +33,8 @@ const CommonChallenge = () => {
   const navigate = useNavigate();
   const setAttendFlag = useSetAtom(attendFlagAtom);
   const setCompFlag = useSetAtom(compFlagAtom);
+  const setUnit = useSetAtom(unitAtom);
+  const setMaxCnt = useSetAtom(maxCntAtom);
   const [attendCnt, setAttendCnt] = useAtom(attendCntAtom);
   const [compCnt, setCompCnt] = useAtom(compCntAtom);
   const [response, setResponse] = useState<CommonChallengeResoponse>();
@@ -43,21 +52,23 @@ const CommonChallenge = () => {
 
   useEffect(() => {
     if (response) {
-      setAttendCnt(response.attendCnt); //마지막 요소는 참여자수
+      setAttendCnt(response.attendCnt);
       setCompCnt(response.compCnt);
       setAttendFlag(response.attendFlag);
       setCompFlag(response.compFlag);
+      setUnit(response.unit);
+      setMaxCnt(response.unit[response.unit.length - 1]);
     }
   }, [response]);
 
   const handleNavigate = () => {
-    navigate(commonChallengeDetailPage.path, {
-      state: {
-        commonChallengeId: response?.commonChallengeId,
-        maxCnt: response?.unit[response?.unit.length - 1],
-        unit: response?.unit,
-      },
-    });
+    if (response) {
+      navigate(commonChallengeDetailPage.path, {
+        state: {
+          commonChallengeId: response.commonChallengeId,
+        },
+      });
+    }
   };
 
   const headerRightButton = (

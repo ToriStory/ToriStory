@@ -44,10 +44,7 @@ const CertificationAI = () => {
         patchCompRandomChallengeApi();
       }
     } else {
-      alert(
-        `status: ${response.status} \nresponseCode:${response.data.code} \nmessage: ${response.data.message}`
-      );
-      console.log(`${response.status} 에러`);
+      toast.error('인증 처리가 되지 않았습니다.');
     }
   };
 
