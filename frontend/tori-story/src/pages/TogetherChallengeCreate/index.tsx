@@ -67,7 +67,7 @@ export const TogetherChallengeCreate = () => {
     <div>
       <TextField
         id='demo-helper-text-misaligned'
-        label='나도도전명'
+        label='도전명'
         className='w-full mt-4'
         value={challengeName}
         disabled={content !== ''}

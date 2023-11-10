@@ -15,6 +15,7 @@ import {
   createChallengeTitle,
 } from 'stores/challengeStore';
 import { CustomChallengeCreateProps, CustomChallengeScrapProps } from 'types/challenge';
+import { updateToast } from 'utils/toast';
 
 export default function HeaderDepthMore({ pathname }: { pathname: string }) {
   const navigate = useNavigate();
@@ -43,29 +44,33 @@ export default function HeaderDepthMore({ pathname }: { pathname: string }) {
           endDt: challengeDate,
           displayFlag: challengeisplayFlag,
         };
-        result = await toast.promise(createCustomChallengeApi(createChallengeResponse), {
-          pending: '나도 도전 생성 중입니다',
-          success: '나도 도전을 생성했습니다!',
-          error: '나도 도전 생성에 실패했습니다',
-        });
+        result = await createCustomChallengeApi(createChallengeResponse);
+        if (result.data.code === 201) {
+          navigation.navigateToMyChallenge();
+        } else {
+          const createChallengeToastId = toast.loading('나도 도전 생성 중입니다');
+          updateToast(createChallengeToastId, '나도 도전 생성에 실패했습니다', 'error', false, () =>
+            navigation.navigateToMyChallenge()
+          );
+        }
       } else {
         if (id !== -1) {
           const customChallengeId = parseInt(id);
           const updateChallengeResponse: CustomChallengeScrapProps = {
             endDt: challengeDate,
           };
-          result = await toast.promise(
-            createOtherCustomChallengeApi(customChallengeId, updateChallengeResponse),
-            {
-              pending: '도전을 스크랩 중입니다',
-              success: '도전을 스크랩 했습니다!',
-              error: '도전 스크랩에 실패했습니다',
-            }
-          );
+          result = await createOtherCustomChallengeApi(customChallengeId, updateChallengeResponse);
+          if (result.data.code === 201) {
+            navigation.navigateToMyChallenge();
+          } else {
+            const scrapChallengeToastId = toast.loading('도전을 스크랩 중입니다');
+            updateToast(scrapChallengeToastId, '도전 스크랩에 실패했습니다', 'error', false, () =>
+              navigation.navigateToMyChallenge()
+            );
+          }
         }
       }
       if (result?.data.code === 201) {
-        navigation.navigateToMyChallenge();
         setChallengeTitle('');
         setChallengeisplayFlag(true);
       }
@@ -89,7 +94,7 @@ export default function HeaderDepthMore({ pathname }: { pathname: string }) {
             component='div'
             sx={{ flexGrow: 1, display: 'block', textAlign: 'justify' }}
           >
-            {pathname}
+            {id !== -1 ? '나도 도전' : pathname}
           </Typography>
           {pathname === '도전 생성' && (
             <div
