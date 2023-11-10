@@ -13,6 +13,8 @@ public class FindQuestRes {
 
     private boolean compFlag;
 
+    private int compCnt;
+
     private boolean rewardFlag;
 
 }

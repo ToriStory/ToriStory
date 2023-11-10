@@ -24,4 +24,6 @@ public interface CustomEntryRepository extends JpaRepository<CustomEntry, BigInt
     @Query("select distinct ce.compDt from CustomEntry ce where ce.memberId = :memberId and ce.delFlag = false and ce.compFlag = true and extract(year from ce.compDt) = :year and extract(month from ce.compDt) = :month order by ce.compDt")
     List<LocalDate> findByCompDt(Long memberId, int year, int month);
 
+    int countByMemberIdAndCompDt(Long memberId, LocalDate now);
+
 }
