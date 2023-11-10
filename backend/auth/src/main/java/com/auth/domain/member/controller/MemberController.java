@@ -265,4 +265,18 @@ public class MemberController {
                             .build());
     }
 
+    @GetMapping("/profile/{memberId}")
+    @ApiOperation(value = "프로필 조회")
+    public ResponseEntity<EnvelopRes<Byte>> findProfile(@PathVariable("memberId") Long memberId) {
+
+        log.debug("Member Controller: findProfile() method called.........");
+
+        Byte profile = memberService.findProfile(memberId);
+
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(EnvelopRes.<Byte>builder()
+                        .data(profile)
+                        .build());
+    }
+
 }
