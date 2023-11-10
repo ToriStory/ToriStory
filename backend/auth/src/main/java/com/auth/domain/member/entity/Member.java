@@ -29,12 +29,16 @@ public class Member {
     @Column(nullable = false, length = 2048)
     private String imgUrl;
 
+    @Column(nullable = false, columnDefinition = "TINYINT UNSIGNED DEFAULT 1")
+    private Byte profile;
+
     @Builder
-    public Member(String email, String pw, String nickname, String imgUrl) {
+    public Member(String email, String pw, String nickname, String imgUrl, Byte profile) {
         this.email = email;
         this.pw = pw;
         this.nickname = nickname;
         this.imgUrl = imgUrl;
+        this.profile = profile;
     }
 
     public void changePassword(String pw) {
@@ -45,8 +49,9 @@ public class Member {
         this.nickname = nickname;
     }
 
-    public void changeImgUrl(String imgUrl) {
+    public void changeProfile(String imgUrl, Byte profile) {
         this.imgUrl = imgUrl;
+        this.profile = profile;
     }
 
 }

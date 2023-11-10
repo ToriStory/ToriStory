@@ -38,4 +38,6 @@ public interface MemberService {
 
     void modifyProfile(String accessToken, ModifyProfileReq modifyProfileReq);
 
+    Byte findProfile(Long memberId);
+
 }

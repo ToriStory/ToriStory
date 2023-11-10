@@ -269,7 +269,18 @@ public class MemberServiceImpl implements MemberService {
         log.debug("Member Service: modifyProfile() method called.........");
 
         Member member = findByEmail(jwtProvider.extractEmail(accessToken));
-        member.changeImgUrl(modifyProfileReq.getImgUrl());
+        member.changeProfile(modifyProfileReq.getImgUrl(), modifyProfileReq.getProfile());
+    }
+
+    @Override
+    public Byte findProfile(Long memberId) {
+
+        log.debug("Member Service: findProfile() method called.........");
+
+        Member member = memberRepository.findMemberByMemberId(memberId).orElseThrow(() -> new AuthException(ErrorCode.NO_SUCH_MEMBER));
+
+        return member.getProfile();
+
     }
 
     private String createPwCode(){
