@@ -1,11 +1,11 @@
 package com.tori.domain.collection.repository;
 
-import com.tori.domain.collection.dto.response.FindCollectionRes;
+import com.tori.domain.collection.dto.response.CollectionRes;
 
 import java.util.List;
 
 public interface ToriCollectionRepositoryCustom {
 
-    List<FindCollectionRes> findAllByMemberId(Long memberId);
+    List<CollectionRes> findAllByMemberId(Long memberId);
 
 }

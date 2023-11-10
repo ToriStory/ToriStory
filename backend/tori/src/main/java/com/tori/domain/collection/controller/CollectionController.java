@@ -1,5 +1,6 @@
 package com.tori.domain.collection.controller;
 
+import com.tori.domain.collection.dto.response.CollectionRes;
 import com.tori.domain.collection.dto.response.FindCollectionRes;
 import com.tori.domain.collection.service.CollectionService;
 import com.tori.global.response.EnvelopRes;
@@ -18,11 +19,11 @@ public class CollectionController {
     private final CollectionService collectionService;
 
     @GetMapping
-    public ResponseEntity<EnvelopRes<List<FindCollectionRes>>> findCollection(@RequestHeader(value = "memberId", required = false) Long memberId) {
-        List<FindCollectionRes> collectionResList = collectionService.findCollection(memberId);
+    public ResponseEntity<EnvelopRes<FindCollectionRes>> findCollection(@RequestHeader(value = "memberId", required = false) Long memberId) {
+        FindCollectionRes findCollectionRes = collectionService.findCollection(memberId);
 
-        return ResponseEntity.status(HttpStatus.OK).body(EnvelopRes.<List<FindCollectionRes>>builder()
-                .data(collectionResList)
+        return ResponseEntity.status(HttpStatus.OK).body(EnvelopRes.<FindCollectionRes>builder()
+                .data(findCollectionRes)
                 .build());
     }
 

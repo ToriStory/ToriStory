@@ -1,24 +1,16 @@
 package com.tori.domain.collection.dto.response;
 
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 
+import java.util.List;
+
 @Getter
 @Builder
-@AllArgsConstructor
 public class FindCollectionRes {
 
-    private Byte id;
+    private List<CollectionRes> collectionResList;
 
-    private String toriName;
-
-    private int price;
-
-    private String imgUrl;
-
-    private boolean limitedFlag;
-
-    private boolean collectionFlag;
+    private Byte profile;
 
 }

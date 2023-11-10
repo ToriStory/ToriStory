@@ -1,7 +1,10 @@
 package com.tori.domain.collection.service;
 
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
 import com.tori.domain.asset.entity.MemberAsset;
 import com.tori.domain.asset.repository.MemberAssetRepository;
+import com.tori.domain.collection.dto.response.CollectionRes;
 import com.tori.domain.collection.dto.response.FindCollectionRes;
 import com.tori.domain.collection.entity.MemberCollection;
 import com.tori.domain.collection.entity.ToriCollection;
@@ -12,6 +15,7 @@ import com.tori.global.exception.handler.ToriException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.reactive.function.client.WebClient;
 
 import java.util.List;
 
@@ -25,8 +29,27 @@ public class CollectionServiceImpl implements CollectionService {
     private final MemberAssetRepository memberAssetRepository;
 
     @Override
-    public List<FindCollectionRes> findCollection(Long memberId) {
-        return toriCollectionRepository.findAllByMemberId(memberId);
+    public FindCollectionRes findCollection(Long memberId) {
+        Byte profile = null;
+
+        if (memberId != null) {
+            String url = "https://tori-story.com/api/member/profile/" + memberId;
+            WebClient webClient = WebClient.create(url);
+            String res = webClient.get()
+                    .uri(url)
+                    .retrieve()
+                    .bodyToMono(String.class)
+                    .block();
+
+            JsonParser parser = new JsonParser();
+            JsonElement element = parser.parse(res);
+            profile = element.getAsJsonObject().get("data").getAsByte();
+        }
+
+        return FindCollectionRes.builder()
+                .collectionResList(toriCollectionRepository.findAllByMemberId(memberId))
+                .profile(profile)
+                .build();
     }
 
     @Override

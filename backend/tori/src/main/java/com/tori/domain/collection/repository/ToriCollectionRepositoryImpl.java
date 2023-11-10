@@ -1,13 +1,9 @@
 package com.tori.domain.collection.repository;
 
 import com.querydsl.core.types.Projections;
-import com.querydsl.core.types.dsl.BooleanExpression;
-import com.querydsl.core.types.dsl.CaseBuilder;
-import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.tori.domain.collection.dto.response.CollectionDTO;
-import com.tori.domain.collection.dto.response.FindCollectionRes;
-import com.tori.domain.collection.entity.MemberCollection;
+import com.tori.domain.collection.dto.response.CollectionRes;
 import com.tori.domain.collection.entity.QMemberCollection;
 import com.tori.domain.collection.entity.QToriCollection;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +19,7 @@ public class ToriCollectionRepositoryImpl  implements ToriCollectionRepositoryCu
     private final JPAQueryFactory queryFactory;
 
     @Override
-    public List<FindCollectionRes> findAllByMemberId(Long memberId) {
+    public List<CollectionRes> findAllByMemberId(Long memberId) {
         QToriCollection toriCollection = QToriCollection.toriCollection;
         QMemberCollection memberCollection = QMemberCollection.memberCollection;
 
@@ -44,7 +40,7 @@ public class ToriCollectionRepositoryImpl  implements ToriCollectionRepositoryCu
         log.info(results.toString());
 
         return results.stream()
-                .map(mc -> new FindCollectionRes(
+                .map(mc -> new CollectionRes(
                         mc.getId(),
                         mc.getToriName(),
                         mc.getPrice(),
