@@ -30,7 +30,9 @@ public class BasketController {
         basketService.feed(memberId);
 
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(EnvelopRes.builder().build());
+                .body(EnvelopRes.builder()
+                        .code(201)
+                        .build());
     }
 
     @GetMapping("/letter")
