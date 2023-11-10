@@ -2,13 +2,13 @@ import { Dialog, DialogContent } from '@mui/material';
 import { X } from 'lucide-react';
 import { cls } from 'utils/cls';
 
-interface NoButtonModalProps {
+interface NoBottomXModalProps {
   child: React.ReactNode;
   openModal: boolean;
   setIsModalOpen: (isOpen: boolean) => void;
 }
 
-const NoButtonModal = ({ child, openModal, setIsModalOpen }: NoButtonModalProps) => {
+const NoBottomXModal = ({ child, openModal, setIsModalOpen }: NoBottomXModalProps) => {
   const handleClose = () => {
     setIsModalOpen(false);
   };
@@ -23,4 +23,4 @@ const NoButtonModal = ({ child, openModal, setIsModalOpen }: NoButtonModalProps)
   );
 };
 
-export default NoButtonModal;
+export default NoBottomXModal;
