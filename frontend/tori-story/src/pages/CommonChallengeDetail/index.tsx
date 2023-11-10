@@ -10,6 +10,7 @@ import { Typography } from '@mui/material';
 import { gray600 } from 'constants/color';
 import { useAtomValue } from 'jotai';
 import { maxCntAtom, unitAtom } from 'stores/challengeStore';
+import NoBottomXModal from 'components/molecules/modals/NoBottomXModal';
 
 interface CommonChallengeResponse {
   commonChallengeId: number;
@@ -23,10 +24,11 @@ interface ImgUrl {
 
 const CommonChallengeDetail = () => {
   const [response, setResponse] = useState<CommonChallengeResponse>();
+  const [showImgModal, setShowImgModal] = useState<boolean>(false);
+  const [selectImg, setSelectImg] = useState<string>('');
   const maxCnt = useAtomValue(maxCntAtom);
   const unit = useAtomValue(unitAtom);
 
-  //maxCnt, unit
   const {
     state: { commonChallengeId },
   } = useLocation();
@@ -39,6 +41,14 @@ const CommonChallengeDetail = () => {
     const res = await getCommonChallengeDetailAPI(commonChallengeId);
     if (res.status === 200) {
       setResponse(res.data.data);
+    }
+  };
+
+  const handleSelectImg = (e: React.MouseEvent<HTMLImageElement>) => {
+    const target = e.target as HTMLImageElement;
+    if (target && target.src) {
+      setSelectImg(target.src);
+      setShowImgModal(true);
     }
   };
 
@@ -57,9 +67,10 @@ const CommonChallengeDetail = () => {
               <img
                 srcSet={`${item}`}
                 src={`${item}`}
-                alt={item.imgUrl}
+                alt={`${item}`}
                 loading='lazy'
                 className={cls('h-full w-full object-cover rounded-xl')}
+                onClick={handleSelectImg}
               />
             </div>
           ))}
@@ -67,6 +78,11 @@ const CommonChallengeDetail = () => {
       ) : (
         <Typography color={gray600}>아직 공유된 사진이 없습니다.</Typography>
       )}
+      <NoBottomXModal
+        openModal={showImgModal}
+        setIsModalOpen={setShowImgModal}
+        child={<img srcSet={selectImg} src={selectImg} alt={selectImg} loading='lazy' />}
+      />
     </div>
   );
 };

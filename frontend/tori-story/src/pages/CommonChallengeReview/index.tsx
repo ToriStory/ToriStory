@@ -18,7 +18,7 @@ const CommonChallengeReview = () => {
   const [file, setFile] = useAtom(fileAtom);
   const setSelectedImage = useSetAtom(selectedImageAtom);
   const {
-    state: { commonChallengeId },
+    state: { commonChallengeId, beforePage },
   } = useLocation();
 
   const handleUpload = async () => {
@@ -44,11 +44,15 @@ const CommonChallengeReview = () => {
   };
 
   const handleNavigateDetail = () => {
-    navigate(commonChallengeDetailPage.path, {
-      state: { commonChallengeId: commonChallengeId },
-      replace: true,
-    });
-    // navigate(-1);
+    if (beforePage === commonChallengeDetailPage.path) {
+      navigate(-1);
+    } else {
+      navigate(commonChallengeDetailPage.path, {
+        state: { commonChallengeId: commonChallengeId },
+        replace: true,
+      });
+    }
+
     initFile();
   };
 
