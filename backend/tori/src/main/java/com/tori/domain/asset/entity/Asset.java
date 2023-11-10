@@ -22,7 +22,7 @@ public class Asset {
 	@Column(columnDefinition = "TINYINT UNSIGNED")
 	private Byte assetId;
 
-	@Column(length = 10, unique = true, nullable = false)
+	@Column(length = 20, unique = true, nullable = false)
 	private String assetNm;
 
 }
