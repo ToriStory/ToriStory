@@ -8,10 +8,7 @@ import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -37,6 +34,16 @@ public class QuestController {
         return ResponseEntity.status(HttpStatus.OK)
                 .body(EnvelopRes.<FindRewardRes>builder()
                         .data(questService.checkReward(memberId))
+                        .build());
+    }
+
+    @PostMapping("/rewards/{questNo}")
+    @ApiOperation(value = "보상 수령", notes = "보상 수령")
+    public ResponseEntity<EnvelopRes> receiveReward(@RequestHeader("memberId") Long memberId,
+                                                            @PathVariable("questNo") byte questNo) {
+        questService.receiveReward(memberId, questNo);
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(EnvelopRes.builder()
                         .build());
     }
 

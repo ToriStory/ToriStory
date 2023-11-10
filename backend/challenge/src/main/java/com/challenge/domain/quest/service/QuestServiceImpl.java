@@ -1,11 +1,15 @@
 package com.challenge.domain.quest.service;
 
+import com.challenge.domain.asset.entity.MemberAsset;
+import com.challenge.domain.asset.repository.MemberAssetRepository;
 import com.challenge.domain.challenge.repository.CustomEntryRepository;
 import com.challenge.domain.quest.dto.response.FindQuestRes;
 import com.challenge.domain.quest.dto.response.FindRewardRes;
 import com.challenge.domain.quest.entity.Quest;
 import com.challenge.domain.quest.model.QuestEnum;
 import com.challenge.domain.quest.repository.QuestRepository;
+import com.challenge.global.exception.ChallengeException;
+import com.challenge.global.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -23,6 +27,9 @@ public class QuestServiceImpl implements QuestService {
 
     private final QuestRepository questRepository;
     private final CustomEntryRepository customEntryRepository;
+    private final MemberAssetRepository memberAssetRepository;
+
+    private final static int REWARD_ACORN = 2;
 
     @Override
     public List<FindQuestRes> findTotalQuest(Long memberId) {
@@ -59,6 +66,30 @@ public class QuestServiceImpl implements QuestService {
                 .build();
     }
 
+    @Override
+    public void receiveReward(Long memberId, byte questNo) {
+
+        Quest quest = questRepository.findByMemberIdAndQuestNo(memberId, questNo)
+                .orElseThrow(() -> new ChallengeException(ErrorCode.QUEST_NOT_FOUND));
+
+        // 퀘스트 미달성
+        if (!quest.isCompFlag()) {
+            throw new ChallengeException(ErrorCode.QUEST_NOT_COMPLETE);
+        }
+
+        // 이미 수령한 보상
+        if (quest.isRewardFlag()) {
+            throw new ChallengeException(ErrorCode.REWARD_ALREADY_RECEIVED);
+        }
+
+        quest.setRewardFlag(true);
+
+        // 보상 지급
+        MemberAsset memberAsset = memberAssetRepository.findByMemberId(memberId)
+                .orElseThrow(() -> new ChallengeException(ErrorCode.MEMBER_ASSET_NOT_FOUND));
+        memberAsset.plus(REWARD_ACORN);
+    }
+
     private void createQuest(Long memberId) {
 
         for (int i = 1; i <= 5; i++) {
@@ -71,4 +102,5 @@ public class QuestServiceImpl implements QuestService {
         }
 
     }
+
 }

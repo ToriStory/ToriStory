@@ -38,6 +38,11 @@ public enum ErrorCode {
 
 	// Quest
 	QUEST_NOT_FOUND(404, "존재하지 않는 퀘스트"),
+	QUEST_NOT_COMPLETE(400, "퀘스트 미달성"),
+	REWARD_ALREADY_RECEIVED(400, "이미 수령한 보상"),
+
+	// Asset
+    MEMBER_ASSET_NOT_FOUND(404, "사용자 자산 정보 없음")
 
 	;
 

@@ -20,7 +20,7 @@ public class CustomChallenge {
     @Column(columnDefinition = "BIGINT UNSIGNED")
     private BigInteger customChallengeId;
 
-    @Column(length = 20, nullable = false, columnDefinition = "INT UNSIGNED")
+    @Column(nullable = false, columnDefinition = "INT UNSIGNED")
     private Long memberId;
 
     @Column(length = 20, nullable = false)
