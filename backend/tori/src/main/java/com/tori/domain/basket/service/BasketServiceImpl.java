@@ -75,7 +75,8 @@ public class BasketServiceImpl implements BasketService {
         Letter letter = letterRepository.findLetterByRandom();
 
         LocalDateTime now = LocalDateTime.now();
-        LocalDateTime sendDtm = now.plusHours((int) (Math.random()*hours.length))
+
+        LocalDateTime sendDtm = now.plusHours(hours[(int) (Math.random() * hours.length)])
                 .withMinute(0)
                 .withSecond(0)
                 .withNano(0);
