@@ -2,6 +2,7 @@ package com.challenge.domain.quest.service;
 
 import com.challenge.domain.challenge.repository.CustomEntryRepository;
 import com.challenge.domain.quest.dto.response.FindQuestRes;
+import com.challenge.domain.quest.dto.response.FindRewardRes;
 import com.challenge.domain.quest.entity.Quest;
 import com.challenge.domain.quest.model.QuestEnum;
 import com.challenge.domain.quest.repository.QuestRepository;
@@ -49,6 +50,13 @@ public class QuestServiceImpl implements QuestService {
         }
 
         return findQuestResList;
+    }
+
+    @Override
+    public FindRewardRes checkReward(Long memberId) {
+        return FindRewardRes.builder()
+                .unclaimedRewards(questRepository.existsByMemberIdAndCompFlagAndRewardFlag(memberId, true, false))
+                .build();
     }
 
     private void createQuest(Long memberId) {

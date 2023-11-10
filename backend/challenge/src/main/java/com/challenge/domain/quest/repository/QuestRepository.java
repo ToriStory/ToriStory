@@ -12,4 +12,6 @@ public interface QuestRepository extends JpaRepository<Quest, BigInteger> {
 
     List<Quest> findAllByMemberId(Long memberId);
 
+    boolean existsByMemberIdAndCompFlagAndRewardFlag(Long memberId, boolean compFlag, boolean rewardFlag);
+
 }
