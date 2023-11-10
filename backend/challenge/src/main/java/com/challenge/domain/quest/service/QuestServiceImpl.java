@@ -1,5 +1,6 @@
 package com.challenge.domain.quest.service;
 
+import com.challenge.domain.challenge.repository.CustomEntryRepository;
 import com.challenge.domain.quest.dto.response.FindQuestRes;
 import com.challenge.domain.quest.entity.Quest;
 import com.challenge.domain.quest.model.QuestEnum;
@@ -9,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,6 +21,7 @@ import java.util.List;
 public class QuestServiceImpl implements QuestService {
 
     private final QuestRepository questRepository;
+    private final CustomEntryRepository customEntryRepository;
 
     @Override
     public List<FindQuestRes> findTotalQuest(Long memberId) {
@@ -39,6 +42,7 @@ public class QuestServiceImpl implements QuestService {
                     .questNo(quest.getQuestNo())
                     .questTitle(QuestEnum.findByQuestId(quest.getQuestNo()).getQuestTitle())
                     .compFlag(quest.isCompFlag())
+                    .compCnt(quest.getQuestNo() == 3 ? customEntryRepository.countByMemberIdAndCompDt(memberId, LocalDate.now()) : -1)
                     .rewardFlag(quest.isRewardFlag())
                     .build()
             );
