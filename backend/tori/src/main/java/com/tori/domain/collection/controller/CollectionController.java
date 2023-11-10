@@ -33,7 +33,9 @@ public class CollectionController {
         collectionService.addTori(memberId, toriId);
 
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(EnvelopRes.builder().build());
+                .body(EnvelopRes.builder()
+                        .data(201)
+                        .build());
     }
 
 }
