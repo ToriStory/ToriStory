@@ -14,10 +14,7 @@ const radius = 100;
 
 const CertificationGPS = () => {
   const [result, setResult] = useState<boolean>(false);
-  // const [pos, setPos] = useState<string>('주소');
-  // const [pla, setPla] = useState([{ place_name: '' }]);
   const [showModal, setShowModal] = useState<boolean>(false);
-  // const [error, setError] = useState<boolean>(false);
   const navigate = useNavigate();
   const {
     state: { keyword },
@@ -33,7 +30,6 @@ const CertificationGPS = () => {
     const ps = new kakao.maps.services.Places();
     const callback = function (_data: any, status: any) {
       if (status === kakao.maps.services.Status.OK) {
-        // setPla(data);
         setResult(true);
         patchCompRandomChallengeApi();
         setShowModal(true);
@@ -44,14 +40,6 @@ const CertificationGPS = () => {
         alert('서버 응답에 문제가 발생했습니다.');
       }
     };
-    // const geocoder = new kakao.maps.services.Geocoder();
-    // geocoder.coord2Address(longitude, latitude, function (result: any, status: any) {
-    //   if (status === kakao.maps.services.Status.OK) {
-    //     result[0].road_address ? setPos(result[0].road_address.address_name) : '없음';
-    //   } else {
-    //     alert('geolocation 응답 실패');
-    //   }
-    // });
     if (keyword && keyword.trim().length !== 0) {
       ps.keywordSearch(keyword, callback, options);
     }
@@ -92,7 +80,6 @@ const CertificationGPS = () => {
 
   return (
     <div className={cls('w-full h-full relative')}>
-      {/* <div id='map' className='width:500px;height:400px;'></div> */}
       <div className='py-24 flex items-center justify-center bg-green-500 w-full h-full'>
         <div
           className={cls(

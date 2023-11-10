@@ -1,20 +1,15 @@
-import { orange400 } from 'constants/color';
+import { cls } from 'utils/cls';
 
 const SuccessChallenge = ({ title }: { title: string }) => {
-  return <div style={cardStyle}>{title}</div>;
-};
-
-/* style */
-const cardStyle = {
-  backgroundColor: 'rgba(255, 255, 255, 0.8)',
-  borderColor: orange400,
-  border: `2px solid ${orange400}`,
-  borderRadius: '0.6rem',
-  padding: '16px',
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-  marginTop: '1rem',
+  return (
+    <div
+      className={cls(
+        'flex justify-center items-center p-4 bg-white opacity-80 border-2 border-orange-400 rounded-xl text-xl'
+      )}
+    >
+      {title}
+    </div>
+  );
 };
 
 export default SuccessChallenge;

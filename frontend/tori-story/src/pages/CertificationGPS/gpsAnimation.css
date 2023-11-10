@@ -1,5 +1,3 @@
-/* 파일 이름: animations.css */
-
 @keyframes expand {
   0% {
     transform: scale(0);
@@ -10,22 +8,21 @@
     opacity: 1;
   }
   100% {
-    /* transform: scale(1); */
     opacity: 0;
   }
 }
 
 /* 첫 번째 원: 애니메이션 시작 시각 없음, 제일 작은 원 */
 .animate-expand:first-child {
-  animation: expand 3.2s ease infinite; /* 애니메이션 지속 시간을 3.2초로 설정 */
+  animation: expand 3.2s ease infinite;
 }
 
 /* 두 번째 원: 0.2초 후에 애니메이션 시작, 중간 크기의 원 */
 .animate-expand:nth-child(2) {
-  animation: expand 3.2s ease infinite 0.2s; /* 0.2초 지연 및 3.2초 애니메이션 */
+  animation: expand 3.2s ease infinite 0.2s;
 }
 
 /* 세 번째 원: 0.4초 후에 애니메이션 시작, 가장 큰 원 */
 .animate-expand:nth-child(3) {
-  animation: expand 3.2s ease infinite 0.4s; /* 0.4초 지연 및 3.2초 애니메이션 */
+  animation: expand 3.2s ease infinite 0.4s;
 }
