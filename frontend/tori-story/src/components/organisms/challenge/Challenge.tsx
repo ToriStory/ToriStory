@@ -1,5 +1,5 @@
-import { orange400 } from 'constants/color';
 import React from 'react';
+import { cls } from 'utils/cls';
 
 interface ChallengeProps {
   headerLeft: React.ReactElement;
@@ -17,43 +17,22 @@ const Challenge = ({
   content,
 }: ChallengeProps) => {
   return (
-    <div style={cardStyle}>
-      <div style={cardHeaderBottomStyle}>
+    <div
+      className={cls(
+        'relative mb-4 px-4 py-2 bg-white opacity-95 border-2 border-orange-400 rounded-xl'
+      )}
+    >
+      <div className={cls('flex justify-between')}>
         {headerLeft}
         {headerRight}
       </div>
-      <div style={cardContentStyle}>{content}</div>
-      <div style={cardHeaderBottomStyle}>
+      <div className={cls('flex justify-center items-center my-2 text-2xl')}>{content}</div>
+      <div className={cls('flex justify-between')}>
         {bottomLeft}
         {bottomRight}
       </div>
     </div>
   );
-};
-
-/* style */
-const cardStyle = {
-  backgroundColor: 'white',
-  display: 'relative',
-  opacity: 0.95,
-  borderColor: orange400,
-  border: `2px solid ${orange400}`,
-  borderRadius: '0.6rem',
-  padding: '8px 16px ',
-  marginBottom: '1rem',
-};
-
-const cardHeaderBottomStyle = {
-  display: 'flex',
-  justifyContent: 'space-between',
-};
-
-const cardContentStyle = {
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  fontSize: '1.4rem',
-  margin: '8px 0px',
 };
 
 export default Challenge;
