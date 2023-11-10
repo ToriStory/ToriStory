@@ -1,5 +1,4 @@
 import { useAtomValue } from 'jotai';
-import { HelpCircle } from 'lucide-react';
 import { attendCntAtom, compCntAtom } from 'stores/challengeStore';
 import { cls } from 'utils/cls';
 import HelpButton from '../buttons/HelpButton';
@@ -25,12 +24,10 @@ const CommonChallengeInfo = ({ maxCnt, content }: CommonChallengeInfoProps) => {
         {remain > 0 ? <>마지막 도토리까지 앞으로 {remain}명!</> : <>모든 도토리를 얻었습니다!</>}
         <HelpButton
           content={
-            <>
-              <DialogContentText>
-                완료한 사람은 완료 인원수에 따라 도토리를 누적해서 받을 수 있습니다. 목표 인원수를
-                달성한 이후에 추가로 완료한 사람도 도토리를 받을 수 있습니다.
-              </DialogContentText>
-            </>
+            <DialogContentText>
+              완료한 사람은 완료 인원수에 따라 도토리를 누적해서 받을 수 있습니다. 목표 인원수를
+              달성한 이후에 추가로 완료한 사람도 도토리를 받을 수 있습니다.
+            </DialogContentText>
           }
         />
       </div>
