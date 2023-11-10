@@ -124,8 +124,7 @@ const TogetherCustomChallengeList = () => {
               <div className={cls('mt-4')}>데이터를 불러오는 중 오류가 생겼어요..</div>
             </div>
           )}
-          {searchResults &&
-            searchResults.length > 0 &&
+          {searchResults && searchResults[0].totalCustomChallengeList.length > 0 ? (
             searchResults?.map((searchResultItem) =>
               searchResultItem?.totalCustomChallengeList.map((result: CustomChallengeProps) => (
                 <div key={result.id}>
@@ -151,7 +150,19 @@ const TogetherCustomChallengeList = () => {
                   />
                 </div>
               ))
-            )}
+            )
+          ) : (
+            <div
+              className={cls(
+                'bg-white w-full h- py-10 rounded-lg bg-opacity-90 flex flex-col items-center justify-center text-lg'
+              )}
+            >
+              <img src={ErrorMushRoom} alt='에러 이미지' />
+              <div className={cls('mt-8')}>생성된 도전이 없어요</div>
+              <div>도전을 만들어 봐요!</div>
+            </div>
+          )}
+
           <div ref={observeTarget}></div>
         </div>
         {(openModal && clickButtonValue === '도전' && (
