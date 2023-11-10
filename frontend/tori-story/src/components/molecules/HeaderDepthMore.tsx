@@ -94,7 +94,7 @@ export default function HeaderDepthMore({ pathname }: { pathname: string }) {
             component='div'
             sx={{ flexGrow: 1, display: 'block', textAlign: 'justify' }}
           >
-            {id !== -1 ? '나도 도전' : pathname}
+            {id !== -1 && pathname === '도전 생성' ? '나도 도전' : pathname}
           </Typography>
           {pathname === '도전 생성' && (
             <div

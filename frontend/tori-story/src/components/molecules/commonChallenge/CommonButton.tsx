@@ -43,8 +43,9 @@ const CommonButton = ({ commonChallengeId }: { commonChallengeId: number }) => {
   };
 
   const handleNavigateReview = () => {
+    console.log('location.pathname', location.pathname);
     navigate(commonChallengeReviewPage.path, {
-      state: { commonChallengeId: commonChallengeId },
+      state: { commonChallengeId: commonChallengeId, beforePage: location.pathname },
     });
   };
 
