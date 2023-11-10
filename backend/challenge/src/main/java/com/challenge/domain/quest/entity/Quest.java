@@ -37,4 +37,8 @@ public class Quest {
         this.rewardFlag = rewardFlag;
     }
 
+    public void setRewardFlag(boolean rewardFlag) {
+        this.rewardFlag = rewardFlag;
+    }
+
 }
