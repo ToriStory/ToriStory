@@ -7,10 +7,10 @@ import lombok.Getter;
 @Builder
 public class FindLetterRes {
 
-    String letter;
+    private String letter;
 
-    String gift;
+    private String gift;
 
-    byte giftCnt;
+    private byte giftCnt;
 
 }
