@@ -39,3 +39,6 @@ out/
 ### yml ###
 application-develop.yml
 application-local.yml
+
+### firebase ###
+firebase/**
