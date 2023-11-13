@@ -38,7 +38,7 @@ const thankQuoteDataList = [
 ];
 
 const ThankQuote = () => {
-  const [isEmpty, setIsEmpty] = useState<boolean>(false);
+  const [isEmpty] = useState<boolean>(false);
   const getRandomInt = (max: number) => {
     return Math.floor(Math.random() * max);
   };
