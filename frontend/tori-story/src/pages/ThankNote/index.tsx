@@ -1,10 +1,10 @@
 import Label from 'components/atoms/challenge/Label';
 import { cls } from 'utils/cls';
-import SignIn from './../Auth/SignIn/index';
 import { AddButton } from 'components/atoms/iconButtons/AddButton';
 import { useNavigate } from 'react-router-dom';
 import { createThankNotePage } from 'constants/pathname';
 import ThankNoteList from 'components/organisms/thankNote/ThankNoteList';
+import ThankQuote from 'components/organisms/thankNote/ThankQuote';
 
 const ThankNote = () => {
   const accessToken = localStorage.getItem('accessToken');
@@ -39,7 +39,17 @@ const ThankNote = () => {
           </div>
         </>
       ) : (
-        <SignIn />
+        <>
+          <div className='h-full w-full fixed -z-30  left-0 top-0 flex justify-center items-center bg-white opacity-80 before:w-full before:h-full before:bg-[url("/background.jpg")] before:bg-cover before:bg-no-repeat before:bg-[center_left_30%] before:sm:bg-center before:opacity-60' />
+          <div className={cls('max-h-full overflow-y-auto pb-12')}>
+            <Label title='2022/11/07' />
+            <div className='flex flex-col items-center justify-center'>
+              <div>로그인 후 감사일기를 써보세요!</div>
+            </div>
+            <Label title='감사 문구' />
+            <ThankQuote />
+          </div>
+        </>
       )}
     </>
   );
