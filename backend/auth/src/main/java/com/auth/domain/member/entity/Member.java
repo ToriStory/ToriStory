@@ -29,7 +29,7 @@ public class Member {
     @Column(nullable = false, length = 2048)
     private String imgUrl;
 
-    @Column(nullable = false, columnDefinition = "TINYINT UNSIGNED DEFAULT 1")
+    @Column(nullable = false, columnDefinition = "TINYINT UNSIGNED")
     private Byte profile;
 
     @Builder

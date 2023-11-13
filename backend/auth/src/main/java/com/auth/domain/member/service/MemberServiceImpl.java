@@ -33,8 +33,10 @@ public class MemberServiceImpl implements MemberService {
     private final JwtProvider jwtProvider;
     private final MailService mailService;
     private final RedisTemplate<String, String> redisTemplate;
-    @Value("${imgUrl.defaultProfile}")
+    @Value("${profile.defaultImgUrl}")
     private String defaultProfile;
+    @Value("${profile.defaultId}")
+    private Byte defaultProfileId;
 
     private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
@@ -62,6 +64,7 @@ public class MemberServiceImpl implements MemberService {
                 .nickname(joinReq.getNickname())
                 .pw(passwordEncoder.encode(joinReq.getPassword()))
                 .imgUrl(defaultProfile)
+                .profile(defaultProfileId)
                 .build());
     }
 
