@@ -35,9 +35,8 @@ public class ToriCollectionRepositoryImpl  implements ToriCollectionRepositoryCu
                 .from(memberCollection)
                 .rightJoin(memberCollection.toriCollection, toriCollection)
                 .fetchJoin()
+                .where(memberCollection.memberId.eq(memberId))
                 .fetch();
-
-        log.info(results.toString());
 
         return results.stream()
                 .map(mc -> new CollectionRes(
