@@ -37,3 +37,11 @@ export interface ReportCustomChallenge {
   customChallengeId: number;
   reason: number;
 }
+
+export interface RewardProps {
+  questNo: number;
+  questTitle: string;
+  compFlag: boolean;
+  compCnt: number;
+  rewardFlag: boolean;
+}

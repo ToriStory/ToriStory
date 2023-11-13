@@ -19,8 +19,8 @@ export const ToriCollectionList = () => {
 
   return (
     <div className='grid grid-cols-2 gap-4 '>
-      {toriCollectionList.map((item) => (
-        <div key={item.id}>
+      {toriCollectionList.map((item, index) => (
+        <div key={index}>
           <ToriCollectionItem toriCollection={item} myToriCollection={myToriCollection} />
         </div>
       ))}
