@@ -42,7 +42,8 @@ public enum ErrorCode {
 	REWARD_ALREADY_RECEIVED(400, "이미 수령한 보상"),
 
 	// Asset
-    MEMBER_ASSET_NOT_FOUND(404, "사용자 자산 정보 없음")
+    MEMBER_ASSET_NOT_FOUND(404, "사용자 자산 정보 없음"),
+	ASSET_NOT_FOUND(404, "해당 자산 정보 없음")
 
 	;
 

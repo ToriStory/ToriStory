@@ -1,6 +1,7 @@
 package com.challenge.domain.quest.service;
 
 import com.challenge.domain.asset.entity.MemberAsset;
+import com.challenge.domain.asset.repository.AssetRepository;
 import com.challenge.domain.asset.repository.MemberAssetRepository;
 import com.challenge.domain.challenge.repository.CustomEntryRepository;
 import com.challenge.domain.quest.dto.response.FindQuestRes;
@@ -29,6 +30,7 @@ public class QuestServiceImpl implements QuestService {
     private final QuestRepository questRepository;
     private final CustomEntryRepository customEntryRepository;
     private final MemberAssetRepository memberAssetRepository;
+    private final AssetRepository assetRepository;
 
     private final static int REWARD_ACORN = 2;
 
@@ -86,7 +88,8 @@ public class QuestServiceImpl implements QuestService {
         quest.setRewardFlag(true);
 
         // 보상 지급
-        MemberAsset memberAsset = memberAssetRepository.findByMemberId(memberId)
+        MemberAsset memberAsset = memberAssetRepository.findByMemberIdAndAsset(memberId, assetRepository.findByAssetNm("DOTORI")
+                        .orElseThrow(() -> new ChallengeException(ErrorCode.ASSET_NOT_FOUND)))
                 .orElseThrow(() -> new ChallengeException(ErrorCode.MEMBER_ASSET_NOT_FOUND));
         memberAsset.plus(REWARD_ACORN);
     }
