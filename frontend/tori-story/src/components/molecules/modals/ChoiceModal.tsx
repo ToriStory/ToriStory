@@ -7,6 +7,7 @@ interface ModalProps {
   cancelButtonAction: () => void;
   okayButtonLabel: string;
   okayButtonAction: () => void;
+  isOverlap?: boolean;
   children: React.ReactNode;
 }
 
@@ -17,9 +18,10 @@ const ChoiceModal = ({
   okayButtonLabel,
   okayButtonAction,
   children,
+  isOverlap,
 }: ModalProps) => {
   return (
-    <Modal setIsModalOpen={setIsModalOpen}>
+    <Modal setIsModalOpen={setIsModalOpen} isOverlap={isOverlap}>
       <div>{children}</div>
       <ChoiceButtons
         cancelButtonLabel={cancelButtonLabel}

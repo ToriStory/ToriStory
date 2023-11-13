@@ -170,8 +170,8 @@ export const updatePasswordAPI = async (data: CheckResetPassword) => {
   return res;
 };
 
-export const updateToriProfile = async (imgUrl: string) => {
+export const updateToriProfile = async (imgUrl: string, profile: number) => {
   const url = memberUrl + 'modifyProfile';
-  const res = await axios.patch(url, { imgUrl });
+  const res = await axios.patch(url, { imgUrl, profile });
   return res;
 };

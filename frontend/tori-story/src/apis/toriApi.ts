@@ -18,7 +18,7 @@ export const adoptSquirrel = async (toriId: number) => {
 
 // 여우 밥주기
 export const feedFox = async () => {
-  const url = apiUrl + 'feed';
+  const url = apiUrl + 'basket/feed';
   const res = await axios.post(url);
   return res;
 };
@@ -27,12 +27,12 @@ export const feedFox = async () => {
 export const getBasket = async () => {
   const url = apiUrl + 'basket';
   const res = await axios.get(url);
-  return res.data;
+  return res;
 };
 
 // 쪽지 조회
 export const getLetter = async () => {
-  const url = apiUrl + 'letter';
+  const url = apiUrl + 'basket/letter';
   const res = await axios.get(url);
   return res.data;
 };
