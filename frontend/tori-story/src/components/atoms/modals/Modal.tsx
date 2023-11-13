@@ -2,12 +2,13 @@ import React from 'react';
 import { useLocation } from 'react-router-dom';
 
 interface ModalProps {
+  isOverlap?: boolean;
   hasModalImg?: boolean;
   setIsModalOpen: (isOpen: boolean) => void;
   children: React.ReactNode;
 }
 
-export default function Modal({ hasModalImg, setIsModalOpen, children }: ModalProps) {
+export default function Modal({ isOverlap, hasModalImg, setIsModalOpen, children }: ModalProps) {
   const location = useLocation();
 
   const handleClose = () => {
@@ -28,7 +29,11 @@ export default function Modal({ hasModalImg, setIsModalOpen, children }: ModalPr
       <div
         onClick={stopPropagation}
         className={`w-full rounded-[8px] z-50 transform scale-100 transition-transform ${
-          hasModalImg ? '' : location.pathname === '/mytori' ? 'bg-white p-4' : 'bg-white mx-4 p-4'
+          hasModalImg
+            ? ''
+            : location.pathname === '/mytori' && isOverlap
+            ? 'bg-white p-4'
+            : 'bg-white mx-4 p-4'
         }`}
       >
         {children}

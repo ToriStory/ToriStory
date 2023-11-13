@@ -5,9 +5,10 @@ import useAppNavigation from 'hooks/useAppNavigation';
 interface LoginModalProps {
   openModal: boolean;
   setOpenModal: React.Dispatch<React.SetStateAction<boolean>>;
+  isOverlap?: boolean;
 }
 
-export const LoginModal = ({ openModal, setOpenModal }: LoginModalProps) => {
+export const LoginModal = ({ openModal, setOpenModal, isOverlap }: LoginModalProps) => {
   const navigate = useAppNavigation();
   // 모달 - 닫히는 부분
   const handleCancelButton = () => {
@@ -28,6 +29,7 @@ export const LoginModal = ({ openModal, setOpenModal }: LoginModalProps) => {
           okayButtonLabel={'로그인하기'}
           okayButtonAction={() => handleMoveToLoginButton()}
           setIsModalOpen={setOpenModal}
+          isOverlap={isOverlap}
         >
           <div className={cls('p-4 text-center z-50')}>
             <div>로그인해야 사용하실 수 있는 서비스입니다.</div>

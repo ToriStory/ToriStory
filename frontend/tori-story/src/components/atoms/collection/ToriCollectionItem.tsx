@@ -6,12 +6,15 @@ import { cls } from 'utils/cls';
 
 export const ToriCollectionItem = ({
   toriCollection,
+  myToriCollection,
 }: {
   toriCollection: ToriCollectionItemProps;
+  myToriCollection: number | undefined;
 }) => {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  console.log(myToriCollection);
 
   return (
     <>

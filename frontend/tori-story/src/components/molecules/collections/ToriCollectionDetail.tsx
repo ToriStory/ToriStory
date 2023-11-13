@@ -42,9 +42,9 @@ export const ToriCollectionDetail = ({
     }
   };
 
-  const handleChangeTori = async (toriCollectionImgUrl: string) => {
+  const handleChangeTori = async (toriCollectionImgUrl: string, toriCollectionId: number) => {
     if (accessToken) {
-      const result = updateToriProfile(toriCollectionImgUrl);
+      const result = updateToriProfile(toriCollectionImgUrl, toriCollectionId);
       setToriUrlImg(toriCollectionImgUrl);
       console.log(result);
     } else {
@@ -83,7 +83,7 @@ export const ToriCollectionDetail = ({
             <Button
               variant='contained'
               sx={{ marginTop: '16px', marginBottom: '16px' }}
-              onClick={() => handleChangeTori(toriCollection.imgUrl)}
+              onClick={() => handleChangeTori(toriCollection.imgUrl, toriCollection.id)}
             >
               프로필 변경하기
             </Button>
@@ -102,7 +102,7 @@ export const ToriCollectionDetail = ({
       {openModal && (
         <div className={cls('relative w-full h-full')}>
           <div className={cls('absolute inset-0')}>
-            <LoginModal openModal={openModal} setOpenModal={setOpenModal} />
+            <LoginModal openModal={openModal} setOpenModal={setOpenModal} isOverlap={true} />
           </div>
         </div>
       )}
