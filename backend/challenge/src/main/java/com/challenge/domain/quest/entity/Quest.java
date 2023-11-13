@@ -23,18 +23,16 @@ public class Quest {
     @Column(nullable = false, columnDefinition = "INT UNSIGNED")
     private Long memberId;
 
-    @Column(nullable = false, columnDefinition = "tinyint(1)")
+    @Column(columnDefinition = "tinyint(1) DEFAULT 0")
     private boolean compFlag;
 
-    @Column(nullable = false, columnDefinition = "tinyint(1)")
+    @Column(columnDefinition = "tinyint(1) DEFAULT 0")
     private boolean rewardFlag;
 
     @Builder
-    public Quest(byte questNo, boolean compFlag, Long memberId, boolean rewardFlag) {
+    public Quest(byte questNo, Long memberId) {
         this.questNo = questNo;
         this.memberId = memberId;
-        this.compFlag = compFlag;
-        this.rewardFlag = rewardFlag;
     }
 
     public void setRewardFlag(boolean rewardFlag) {
