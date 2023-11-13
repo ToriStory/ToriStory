@@ -87,7 +87,7 @@ public class CustomChallengeServiceImpl implements CustomChallengeService {
     @Override
     public List<LocalDate> findMyMonthCustomChallenge(Long memberId, LocalDate date) {
         // 년 월 가져오기
-        return customEntryRepository.findByCompDt(memberId, date.getYear(), date.getMonthValue());
+        return customEntryRepository.findByCompDt(memberId, date);
     }
 
     @Override

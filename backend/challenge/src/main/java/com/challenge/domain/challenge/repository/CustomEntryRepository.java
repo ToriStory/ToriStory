@@ -18,11 +18,11 @@ public interface CustomEntryRepository extends JpaRepository<CustomEntry, BigInt
     @Query("select ce from CustomEntry ce join fetch ce.customChallenge where ce.memberId = :memberId and ce.delFlag = false and ce.compFlag = true and ce.compDt = :date order by ce.endDt desc")
     List<CustomEntry> findAllByMemberIdAndDate(Long memberId, LocalDate date);
 
-    @Query("select ce from CustomEntry ce join fetch ce.customChallenge where ce.memberId = :memberId and ce.delFlag = false and ((ce.startDt <= current_date and ce.endDt >= current_date) or ce.endDt is null) order by ce.endDt nulls first, ce.endDt desc")
+    @Query("select ce from CustomEntry ce join fetch ce.customChallenge where ce.memberId = :memberId and ce.delFlag = false and ((ce.startDt <= current_date and ce.endDt >= current_date) or (ce.endDt is null and ce.compFlag = false)) order by ce.endDt nulls first, ce.endDt desc")
     List<CustomEntry> findAllByMemberIdAndEndDt(Long memberId);
 
-    @Query("select distinct ce.compDt from CustomEntry ce where ce.memberId = :memberId and ce.delFlag = false and ce.compFlag = true and extract(year from ce.compDt) = :year and extract(month from ce.compDt) = :month order by ce.compDt")
-    List<LocalDate> findByCompDt(Long memberId, int year, int month);
+    @Query("select distinct ce.compDt from CustomEntry ce where ce.memberId = :memberId and ce.delFlag = false and ce.compFlag = true and year(ce.compDt) = year(:date) and month(ce.compDt) = month(:date) order by ce.compDt")
+    List<LocalDate> findByCompDt(Long memberId, LocalDate date);
 
     int countByMemberIdAndCompDt(Long memberId, LocalDate now);
 
