@@ -81,10 +81,16 @@ public class MemberServiceImpl implements MemberService {
             throw new AuthException(ErrorCode.NOT_MATCH_PASSWORD);
         }
 
+        // fcm 토큰 Redis에 저장
+        if(loginReq.getFcmToken() != null){
+            redisTemplate.opsForValue().set(
+                    "FCM Token: " + member.getMemberId(),
+                    loginReq.getFcmToken());
+        }
+
         return LoginRes.builder()
                 .accessToken(jwtProvider.generateAccessToken(member.getEmail()))
                 .build();
-
     }
 
     @Override

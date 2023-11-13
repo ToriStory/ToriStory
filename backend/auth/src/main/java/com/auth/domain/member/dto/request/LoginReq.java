@@ -17,4 +17,6 @@ public class LoginReq {
             message = "비밀번호는 8~20자 영문, 숫자, 특수문자를 사용하세요.")
     private String password;
 
+    private String fcmToken;
+
 }
