@@ -3,7 +3,9 @@ import ChoiceModal from './ChoiceModal';
 import { feedFox } from 'apis/toriApi';
 import NotEmptyBasket from 'assets/images/NotEmptyBasket.png';
 import { dotoriCntAtom } from 'stores/dotoriStore';
-import { useAtom } from 'jotai';
+import { useAtom, useSetAtom } from 'jotai';
+import { isQuestExistenceAtom } from 'stores/questStore';
+import { useState } from 'react';
 
 interface FeedModalProps {
   openModal: boolean;
@@ -19,6 +21,9 @@ export const FeedModal = ({
   setImgUrl,
 }: FeedModalProps) => {
   const [dotoriCnt, setDotoriCnt] = useAtom(dotoriCntAtom);
+  const setIsQuestExistence = useSetAtom(isQuestExistenceAtom);
+
+  const [errorMessage, setErrorMessage] = useState('');
 
   const handleCancelButton = () => {
     setOpenModal(false);
@@ -31,8 +36,11 @@ export const FeedModal = ({
 
       setImgUrl(NotEmptyBasket);
       setDotoriCnt(dotoriCnt - 2);
+      setIsQuestExistence(true);
+      setOpenModal(false);
+    } else {
+      setErrorMessage('도토리 개수가 부족해요!');
     }
-    setOpenModal(false);
   };
 
   return (
@@ -50,6 +58,7 @@ export const FeedModal = ({
             <div className={cls('pt-1 text-xs text-orange-200')}>
               여우는 편지를 들고 오고 가끔 선물을 주기도합니다
             </div>
+            <div className={cls('pt-1 text-sm text-red-300 h-2')}>{errorMessage}</div>
           </div>
         </ChoiceModal>
       )}

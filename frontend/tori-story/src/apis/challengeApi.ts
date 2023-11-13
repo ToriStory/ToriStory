@@ -155,3 +155,24 @@ export const patchCommonChallengeReviewAPI = async (commonChallengeId: number, p
   });
   return res;
 };
+
+// 사용자의 퀘스트 조회
+export const getQuestApi = async () => {
+  const url = apiUrl + 'quest';
+  const res = await axios.get(url);
+  return res;
+};
+
+// 수령할 보상이 있는지 확인
+export const isReceivedReward = async () => {
+  const url = apiUrl + 'quest/rewards';
+  const res = await axios.get(url);
+  return res;
+};
+
+// 달성 퀘스트 보상 받기
+export const getReward = async (questNo: number) => {
+  const url = apiUrl + `quest/rewards/${questNo}`;
+  const res = await axios.post(url);
+  return res;
+};
