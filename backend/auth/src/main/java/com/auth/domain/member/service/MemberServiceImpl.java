@@ -109,8 +109,14 @@ public class MemberServiceImpl implements MemberService {
 
         log.debug("email: {}", email);
 
+        // 만료된 accessToken으로 접근할 수 없도록 Redis blacklist에 저장
         jwtProvider.setBlackList(accessToken, email);
+
+        // 만료된 refreshToken 삭제
         jwtProvider.deleteRefreshToken(email);
+
+        // fcm 토큰 Redis에서 삭제
+        redisTemplate.delete("FCM Token: " + findByEmail(email).getMemberId());
     }
 
     @Override
