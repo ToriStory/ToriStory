@@ -97,8 +97,6 @@ public class QuestServiceImpl implements QuestService {
             questRepository.save(Quest.builder()
                     .memberId(memberId)
                     .questNo((byte) i)
-                    .compFlag(false)
-                    .rewardFlag(false)
                     .build());
         }
 
