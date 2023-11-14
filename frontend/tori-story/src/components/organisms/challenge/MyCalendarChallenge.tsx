@@ -41,16 +41,12 @@ const MyCalendarChallengeList = (props: MyCalendarChallengeListProps) => {
   }, [data]);
 
   const handleDelete = async (id: number) => {
-    const result = await toast.promise(deleteCustomChallengeApi(id), {
-      pending: '도전 삭제 처리 중입니다',
-      success: '도전이 삭제되었습니다!',
-      error: '도전 삭제에 실패했습니다',
-    });
+    const result = await deleteCustomChallengeApi(id);
     if (result?.data.code === 200) {
       const updatedData = data.filter((item) => item.id !== id);
       setData(updatedData);
     } else {
-      console.log(`${result?.data.code} 에러`);
+      toast.error('도전 삭제에 실패했습니다');
     }
   };
 

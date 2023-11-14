@@ -2,13 +2,13 @@ import { cls } from 'utils/cls';
 
 interface BottomProps {
   icon?: React.ReactElement;
-  content: string;
+  content?: string | number;
 }
 
 const BottomLeft = ({ icon, content }: BottomProps) => {
   return (
-    <div className={cls('flex items-center text-orange-700')}>
-      {icon && <div className='mr-2'>{icon}</div>}
+    <div className={cls('flex items-center text-orange-700 text-lg gap-2')}>
+      {icon && <div>{icon}</div>}
       <div>{content}</div>
     </div>
   );

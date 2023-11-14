@@ -86,7 +86,7 @@ export function MyChallengeCalendar() {
         <Label title='감사일기' />
       </div>
       <div className='w-full'>
-        <Label title='참여했던 도전들' />
+        <Label title='참여 도전 목록' />
       </div>
       <MyCalendarChallengeList activeDate={selectedDate} />
     </div>

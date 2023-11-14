@@ -10,7 +10,7 @@ import { Typography } from '@mui/material';
 import { gray600 } from 'constants/color';
 import { useAtomValue } from 'jotai';
 import { maxCntAtom, unitAtom } from 'stores/challengeStore';
-import NoBottomXModal from 'components/molecules/modals/NoBottomXModal';
+import ImgDialog from 'components/molecules/modals/ImgDialog';
 
 interface CommonChallengeResponse {
   commonChallengeId: number;
@@ -78,7 +78,7 @@ const CommonChallengeDetail = () => {
       ) : (
         <Typography color={gray600}>아직 공유된 사진이 없습니다.</Typography>
       )}
-      <NoBottomXModal
+      <ImgDialog
         openModal={showImgModal}
         setIsModalOpen={setShowImgModal}
         child={<img srcSet={selectImg} src={selectImg} alt={selectImg} loading='lazy' />}

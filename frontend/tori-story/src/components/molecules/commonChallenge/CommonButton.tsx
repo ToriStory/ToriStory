@@ -2,14 +2,15 @@ import BottomButton from 'components/atoms/challenge/BottomButton';
 import { orange300 } from 'constants/color';
 import { BadgeCheck } from 'lucide-react';
 import { useState } from 'react';
-import OnceModal from '../modals/OnceModal';
-import CompleteModal from '../modals/CompleteModal';
+import OnceDialog from '../modals/OnceDialog';
+import ChoiceDialog from '../modals/ChoiceDialog';
 import { useAtom } from 'jotai';
 import { attendCntAtom, attendFlagAtom, compCntAtom, compFlagAtom } from 'stores/challengeStore';
 import { useNavigate } from 'react-router-dom';
 import { commonChallengeReviewPage } from 'constants/pathname';
 import { patchCommonChallengeCompleteAPI, postCommonChallengeAttendAPI } from 'apis/challengeApi';
 import { toast } from 'react-toastify';
+import { DialogContentText } from '@mui/material';
 
 const CommonButton = ({ commonChallengeId }: { commonChallengeId: number }) => {
   const navigate = useNavigate();
@@ -43,7 +44,6 @@ const CommonButton = ({ commonChallengeId }: { commonChallengeId: number }) => {
   };
 
   const handleNavigateReview = () => {
-    console.log('location.pathname', location.pathname);
     navigate(commonChallengeReviewPage.path, {
       state: { commonChallengeId: commonChallengeId, beforePage: location.pathname },
     });
@@ -58,17 +58,24 @@ const CommonButton = ({ commonChallengeId }: { commonChallengeId: number }) => {
       ) : (
         <BottomButton title={'참여'} onClick={handleAttend} />
       )}
-      <OnceModal
+      <OnceDialog
         content='참여가
         완료되었습니다'
         buttonTitle='확인'
         openModal={openAttendModal}
         setIsModalOpen={setOpenAttendModal}
       />
-      <CompleteModal
+      <ChoiceDialog
         openModal={openCompModal}
         setIsModalOpen={setOpenCompModal}
-        takePhoto={handleNavigateReview}
+        content={
+          <>
+            <DialogContentText>완료되었습니다.</DialogContentText>
+            <DialogContentText>사진을 공유하시겠습니까?</DialogContentText>
+          </>
+        }
+        rigthButtonTitle='사진 찍기'
+        rightButtonOnClick={handleNavigateReview}
       />
     </div>
   );

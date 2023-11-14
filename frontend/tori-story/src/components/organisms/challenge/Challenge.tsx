@@ -19,15 +19,15 @@ const Challenge = ({
   return (
     <div
       className={cls(
-        'relative mb-4 px-4 py-2 bg-white opacity-95 border-2 border-orange-400 rounded-xl'
+        'relative mb-4 px-2 py-2 bg-white opacity-95 border-2 border-orange-400 rounded-xl '
       )}
     >
-      <div className={cls('flex justify-between')}>
+      <div className={cls('flex justify-between items-center min-h-[32px]')}>
         {headerLeft}
         {headerRight}
       </div>
-      <div className={cls('flex justify-center items-center my-2 text-2xl')}>{content}</div>
-      <div className={cls('flex justify-between')}>
+      <div className={cls('flex justify-center items-center p-2 text-2xl')}>{content}</div>
+      <div className={cls('flex justify-between items-center min-h-[32px]')}>
         {bottomLeft}
         {bottomRight}
       </div>

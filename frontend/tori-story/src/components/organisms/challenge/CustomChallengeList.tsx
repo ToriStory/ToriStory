@@ -8,14 +8,23 @@ import {
 } from 'apis/challengeApi';
 import { toast } from 'react-toastify';
 import { cls } from 'utils/cls';
+import ChoiceDialog from 'components/molecules/modals/ChoiceDialog';
+import { DialogContentText } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
+import { customChallengeMemoryPage } from 'constants/pathname';
+import OnceDialog from 'components/molecules/modals/OnceDialog';
 
 export interface CustomChallengeListResponse {
   data: CustomChallengeProps[];
 }
 
 const CustomChallengeList = () => {
+  const navigate = useNavigate();
   const [data, setData] = useState<CustomChallengeProps[]>([]);
   const [isEmpty, setIsEmpty] = useState<boolean>(true);
+  const [openCompModal, setOpenCompModal] = useState<boolean>(false);
+  const [openCompImgModal, setOpenCompImgModal] = useState<boolean>(false);
+  const [customEntryId, setCustomEntryId] = useState<number>();
 
   useEffect(() => {
     getInProgressCustomChallengeApi();
@@ -38,36 +47,38 @@ const CustomChallengeList = () => {
   };
 
   const handleDelete = async (id: number) => {
-    const result = await toast.promise(deleteCustomChallengeApi(id), {
-      pending: '도전 삭제 처리 중입니다',
-      success: '도전이 삭제되었습니다!',
-      error: '도전 삭제에 실패했습니다',
-    });
+    const result = await deleteCustomChallengeApi(id);
     if (result?.data.code === 200) {
       const updatedData = data.filter((item) => item.id !== id);
       setData(updatedData);
     } else {
-      console.log(`${result?.data.code} 에러`);
+      toast.error('도전 삭제에 실패했습니다');
     }
   };
 
   const handleCompleted = async (id: number) => {
-    const result = await toast.promise(patchCustomChallengeApi(id), {
-      pending: '도전 완료 처리 중입니다',
-      success: '도전이 완료되었습니다!',
-      error: '도전 완료에 실패했습니다',
-    });
-    if (result?.data.code === 200) {
+    const result = await patchCustomChallengeApi(id);
+    if (result.data.code === 200) {
+      let imgUrl: null | string = null;
       const updatedData = data.map((item) => {
         if (item.id === id) {
+          imgUrl = item.imgUrl;
           return { ...item, compFlag: true };
         }
         return item;
       });
       setData(updatedData);
+      setCustomEntryId(id);
+      imgUrl === null ? setOpenCompImgModal(true) : setOpenCompModal(true);
     } else {
-      console.log(`${result?.data.code} 에러`);
+      toast.error('도전 완료에 실패했습니다');
     }
+  };
+
+  const handleNavigateMemory = () => {
+    navigate(customChallengeMemoryPage.path, {
+      state: { customEntryId: customEntryId },
+    });
   };
 
   return (
@@ -84,6 +95,24 @@ const CustomChallengeList = () => {
           );
         })}
       {isEmpty && <SuccessChallenge title='새로운 도전과제를 만들어보세요!'></SuccessChallenge>}
+      <OnceDialog
+        content='완료되었습니다'
+        buttonTitle='확인'
+        openModal={openCompModal}
+        setIsModalOpen={setOpenCompModal}
+      />
+      <ChoiceDialog
+        openModal={openCompImgModal}
+        setIsModalOpen={setOpenCompImgModal}
+        content={
+          <>
+            <DialogContentText>완료되었습니다.</DialogContentText>
+            <DialogContentText>추억으로 사진을 남기시겠습니까?</DialogContentText>
+          </>
+        }
+        rigthButtonTitle='추억 남기기'
+        rightButtonOnClick={handleNavigateMemory}
+      />
     </div>
   );
 };

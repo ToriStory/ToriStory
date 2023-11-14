@@ -66,6 +66,17 @@ export const patchCustomChallengeApi = async (customEntryId: number) => {
   return res;
 };
 
+// 달성 과제 이미지 등록
+export const patchCustomChallengeMemoryAPI = async (customEntryId: number, props: FormData) => {
+  const url = apiUrl + `memory/${customEntryId}`;
+  const res = await axios.patch(url, props, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  });
+  return res;
+};
+
 // 랜덤 도전과제 가져오기
 export const readRandomChallengeApi = async () => {
   const url = apiUrl + `random`;
