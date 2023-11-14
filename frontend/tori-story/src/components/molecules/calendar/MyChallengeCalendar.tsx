@@ -7,6 +7,7 @@ import moment from 'moment-timezone';
 import { getMyChallengeMonthAPI } from 'apis/challengeApi';
 import MyCalendarChallengeList from 'components/organisms/challenge/MyCalendarChallenge';
 import Label from 'components/atoms/challenge/Label';
+import { cls } from 'utils/cls';
 
 moment.tz.setDefault('Asia/Seoul');
 export function MyChallengeCalendar() {
@@ -86,9 +87,11 @@ export function MyChallengeCalendar() {
         <Label title='감사일기' />
       </div>
       <div className='w-full'>
-        <Label title='참여 도전 목록' />
+        <Label title='참여했던 도전들' />
       </div>
-      <MyCalendarChallengeList activeDate={selectedDate} />
+      <div className={cls('pb-10')}>
+        <MyCalendarChallengeList activeDate={selectedDate} />
+      </div>
     </div>
   );
 }
