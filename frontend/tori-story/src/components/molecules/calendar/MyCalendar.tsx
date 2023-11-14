@@ -46,45 +46,48 @@ export function MyCalendar() {
 
   // 각 날짜 타일에 컨텐츠 추가
   const addContent = ({ date }: any) => {
+    const title = (
+      <div className='h-auto my-2 sticky top-0 w-full flex justify-center items-center'>
+        <div className=' font-bold text-center text-2xl text-orange-800 bg-orange-50 rounded-lg w-fit px-2'>
+          {dayjs(date).format('YYYY년 MM월 DD일')}
+        </div>
+      </div>
+    );
+    const component = (
+      <>
+        <div className='h-full w-full fixed -z-30 flex justify-center items-center bg-white opacity-80 before:w-full before:h-full before:bg-[url("/background.jpg")] before:bg-no-repeat before:sm:bg-center' />
+        <div className='w-full h-full px-2'>
+          <div className='w-full'>
+            <Label title='감사일기' />
+          </div>
+
+          <ThankNoteList activeDate={dayjs(date).format('YYYY-MM-DD')} />
+          <div className='w-full'>
+            <Label title='참여했던 도전들' />
+          </div>
+          <MyCalendarChallengeList activeDate={dayjs(date).format('YYYY-MM-DD')} />
+        </div>
+      </>
+    );
+    const content = (
+      <div
+        className='w-full h-full flex justify-center items-center'
+        onClick={() => openPopup(component, title)}
+      >
+        <div key={date} className=' w-2 h-2 rounded-full bg-[#772900]'></div>
+      </div>
+    );
     // 해당 날짜(하루)에 추가할 컨텐츠의 배열
     const contents = [];
     // date(각 날짜)가  리스트의 날짜와 일치하면 해당 컨텐츠(이모티콘) 추가
     if (challengeDayList?.find((day) => day === dayjs(date).format('YYYY-MM-DD'))) {
-      contents.push(<div key={date} className=' w-2 h-2 rounded-full bg-[#772900]'></div>);
+      contents.push(content);
     }
     if (thankNoteDayList?.find((day) => day === dayjs(date).format('YYYY-MM-DD'))) {
-      contents.push(<div key={date} className=' w-2 h-2 rounded-full bg-[#772900]'></div>);
+      contents.push(content);
     }
     return (
-      <div
-        key={date}
-        className='w-full h-full flex justify-center p-2'
-        onClick={() =>
-          openPopup(
-            <>
-              <div className='h-full w-full fixed -z-30 flex justify-center items-center bg-white opacity-80 before:w-full before:h-full before:bg-[url("/background.jpg")] before:bg-cover before:bg-no-repeat before:bg-[center_left_30%] before:sm:bg-center' />
-              <div className='w-full h-full px-2'>
-                <div className='h-auto my-2 sticky top-0 w-full flex justify-center items-center'>
-                  <div className=' font-bold text-center text-2xl text-orange-800 bg-orange-50 rounded-lg w-fit px-2'>
-                    {dayjs(date).format('YYYY년 MM월 DD일')}
-                  </div>
-                </div>
-                <div className='h-full overflow-y-auto'>
-                  <div className='w-full'>
-                    <Label title='감사일기' />
-                  </div>
-
-                  <ThankNoteList activeDate={dayjs(date).format('YYYY-MM-DD')} />
-                  <div className='w-full'>
-                    <Label title='참여했던 도전들' />
-                  </div>
-                  <MyCalendarChallengeList activeDate={dayjs(date).format('YYYY-MM-DD')} />
-                </div>
-              </div>
-            </>
-          )
-        }
-      >
+      <div key={date} className='w-full h-full flex justify-center p-2'>
         {contents}
       </div>
     ); // 각 날짜마다 해당 요소가 들어감
