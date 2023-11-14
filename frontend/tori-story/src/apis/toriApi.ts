@@ -37,9 +37,9 @@ export const getLetter = async () => {
   return res.data;
 };
 
-// 도토리 조회
-export const getDotori = async () => {
-  const url = apiUrl + 'asset/dotori';
+// 도토리, 랜덤 티켓, 토토리 티켓 개수 조회
+export const getToriAsset = async () => {
+  const url = apiUrl + 'asset';
   const res = await axios.get(url);
   return res.data;
 };

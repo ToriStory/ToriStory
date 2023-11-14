@@ -1,7 +1,7 @@
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText } from '@mui/material';
 
 interface OnceDialogProps {
-  content: string;
+  content: string | React.ReactNode;
   buttonTitle: string;
   openModal: boolean;
   setIsModalOpen: (isOpen: boolean) => void;
@@ -25,7 +25,7 @@ const OnceDialog = ({
   return (
     <Dialog fullWidth open={openModal} onClose={handleClose}>
       <DialogContent sx={{ display: 'flex', flexDirection: 'column' }}>
-        <DialogContentText>{content}</DialogContentText>
+        {typeof content === 'string' ? <DialogContentText>{content}</DialogContentText> : content}
       </DialogContent>
       <DialogActions>
         <Button variant='contained' onClick={handleClose} color='primary'>
