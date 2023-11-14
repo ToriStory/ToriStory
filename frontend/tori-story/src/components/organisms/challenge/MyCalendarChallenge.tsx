@@ -70,7 +70,7 @@ const MyCalendarChallengeList = (props: MyCalendarChallengeListProps) => {
   };
 
   return (
-    <div className={cls('h-fit pb-8')}>
+    <div className={cls('h-fit pb-2')}>
       {data &&
         data?.map((item) => {
           return (
