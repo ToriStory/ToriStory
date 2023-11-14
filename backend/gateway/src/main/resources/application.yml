@@ -25,3 +25,9 @@ spring:
             - AuthFilter
           predicates:
             - Path=/tori/**
+        - id: thank-service
+          uri: http://tori-story.com:8205
+          filters:
+            - AuthFilter
+          predicates:
+            - Path=/thank/**
