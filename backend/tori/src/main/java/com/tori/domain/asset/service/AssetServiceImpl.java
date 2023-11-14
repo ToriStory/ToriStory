@@ -1,9 +1,14 @@
 package com.tori.domain.asset.service;
 
+import com.tori.domain.asset.dto.response.FindAssetRes;
+import com.tori.domain.asset.entity.MemberAsset;
 import com.tori.domain.asset.repository.MemberAssetRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -13,8 +18,15 @@ public class AssetServiceImpl implements AssetService {
     private final MemberAssetRepository memberAssetRepository;
 
     @Override
-    public int findDotoriCnt(Long memberId) {
-        return memberAssetRepository.findDotoriCntByMemberId(memberId);
+    public List<FindAssetRes> findAssetCnt(Long memberId) {
+        List<MemberAsset> memberAssetList = memberAssetRepository.findAllByMemberId(memberId);
+
+        return memberAssetList.stream().map(
+                memberAsset -> FindAssetRes.builder()
+                            .AssetNm(memberAsset.getAsset().getAssetNm())
+                            .AssetCnt(memberAsset.getAssetCnt())
+                            .build()
+        ).collect(Collectors.toList());
     }
 
 }
