@@ -1,6 +1,5 @@
 package com.challenge.domain.quest.controller;
 
-import com.challenge.domain.quest.dto.response.FindQuestRes;
 import com.challenge.domain.quest.dto.response.FindRewardRes;
 import com.challenge.domain.quest.service.QuestService;
 import com.challenge.global.response.EnvelopRes;
@@ -10,7 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
@@ -21,10 +21,14 @@ public class QuestController {
 
     @GetMapping
     @ApiOperation(value = "내 퀘스트 전체 조회", notes = "내 퀘스트 전체 조회")
-    public ResponseEntity<EnvelopRes<List<FindQuestRes>>> findTotalQuest(@RequestHeader("memberId") Long memberId) {
+    public ResponseEntity<EnvelopRes<Map<String, Object>>> findTotalQuest(@RequestHeader("memberId") Long memberId) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("questCompCnt", questService.findCompCnt(memberId));
+        map.put("questList", questService.findTotalQuest(memberId));
+
         return ResponseEntity.status(HttpStatus.OK)
-                .body(EnvelopRes.<List<FindQuestRes>>builder()
-                        .data(questService.findTotalQuest(memberId))
+                .body(EnvelopRes.<Map<String, Object>>builder()
+                        .data(map)
                         .build());
     }
 
@@ -42,6 +46,15 @@ public class QuestController {
     public ResponseEntity<EnvelopRes> receiveReward(@RequestHeader("memberId") Long memberId,
                                                             @PathVariable("questNo") byte questNo) {
         questService.receiveReward(memberId, questNo);
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(EnvelopRes.builder()
+                        .build());
+    }
+
+    @PostMapping("/rewards/total")
+    @ApiOperation(value = "퀘스트 전체 달성 보상 수령", notes = "퀘스트 전체 달성 보상 수령")
+    public ResponseEntity<EnvelopRes> receiveTotalReward(@RequestHeader("memberId") Long memberId) {
+        questService.receiveTotalReward(memberId);
         return ResponseEntity.status(HttpStatus.OK)
                 .body(EnvelopRes.builder()
                         .build());

@@ -15,4 +15,8 @@ public interface QuestService {
 
     void receiveReward(Long memberId, byte questNo);
 
+    int findCompCnt(Long memberId);
+
+    void receiveTotalReward(Long memberId);
+
 }

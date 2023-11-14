@@ -23,4 +23,8 @@ public interface QuestRepository extends JpaRepository<Quest, BigInteger> {
     @Query("UPDATE Quest q SET q.compFlag = false, q.rewardFlag = false")
     void setCompFlagAndRewardFlagFalse();
 
+    int countByMemberIdAndCompFlagIsTrue(Long memberId);
+
+    int countByMemberId(Long memberId);
+
 }
