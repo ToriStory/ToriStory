@@ -15,6 +15,10 @@ public enum ErrorCode {
 	// 바구니 에러
 	FEED_ALREADY_EXIST(400, "이미 먹이 존재"),
 	LETTER_NOT_FOUND(400, "존재하지 않는 쪽지"),
+	
+	// 토토리 에러
+	TOTORI_ERROR(500, "토토리 뽑기 오류"),
+	TOTORI_TICKET_NOT_ENOUGH(400, "토토리 티켓 부족"),
 
 	;
 

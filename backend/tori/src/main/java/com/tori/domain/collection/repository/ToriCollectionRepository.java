@@ -15,5 +15,8 @@ public interface ToriCollectionRepository extends JpaRepository<ToriCollection, 
     @Query(name = "ToriCollection.findAllByMemberId", nativeQuery = true)
     List<CollectionRes> findAllByMemberId(Long memberId);
 
+    @Query(value = "select * from tori_collection where limited_flag = false order by rand() limit 1", nativeQuery = true)
+    ToriCollection findToriCollectionByLimitedFlagIsFalse();
+
 
 }
