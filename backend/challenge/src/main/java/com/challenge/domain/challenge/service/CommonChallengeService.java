@@ -24,4 +24,6 @@ public interface CommonChallengeService {
 
 	void receiveCommonReward();
 
+	void renewalCommonChallenge();
+
 }

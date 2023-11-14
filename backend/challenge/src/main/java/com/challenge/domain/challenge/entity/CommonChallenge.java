@@ -25,4 +25,8 @@ public class CommonChallenge {
     @Column(nullable = false, length = 20)
     private String unit;
 
+    public void renewal() {
+        this.todayFlag = !this.todayFlag;
+    }
+
 }
