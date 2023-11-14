@@ -1,10 +1,14 @@
 package com.challenge.domain.challenge.service;
 
 import java.math.BigInteger;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
+import com.challenge.domain.asset.entity.MemberAsset;
+import com.challenge.domain.asset.repository.AssetRepository;
+import com.challenge.domain.asset.repository.MemberAssetRepository;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -34,6 +38,11 @@ public class CommonChallengeServiceImpl implements CommonChallengeService {
 	private final CommonChallengeRepository commonChallengeRepository;
 	private final CommonEntryRepository commonEntryRepository;
 	private final AwsS3Service awsS3Service;
+
+	private final AssetRepository assetRepository;
+	private final MemberAssetRepository memberAssetRepository;
+
+	private final int COMMON_COMP_ACORN = 1;
 
 	@Override
 	public FindCommonRes findCommonChallenge(Long memberId) {
@@ -82,6 +91,29 @@ public class CommonChallengeServiceImpl implements CommonChallengeService {
 			.build();
 	}
 
+
+	@Override
+	@Scheduled(cron = "0 0 0 * * *")
+	public void receiveCommonReward() {
+		// 오늘 공동 도전 과제 unit 값 가져오기
+		CommonChallenge todayChallenge = commonChallengeRepository.findByTodayFlagIsTrue().
+				orElseThrow(() -> new ChallengeException(ErrorCode.TODAY_COMMON_CHALLENGE_NOT_FOUND));
+
+		List<Integer> unitList = parseUnit(todayChallenge.getUnit());
+
+		// 공동 도전 과제 달성 참여자 수 카운트 <-> unit 값으로 도토리 개수 정하기
+		int totalCompCnt = commonEntryRepository.countAllByChallengeDtAndCompFlagIsTrue();
+		int commonAcorn = calCommonAcorn(unitList, totalCompCnt);
+
+		// 오늘 공동 도전 과제 참여자 memberId 리스트
+		if (commonAcorn != 0) {
+			List<Long> memberIdList = commonEntryRepository.findMemberIdByChallengeDt(LocalDate.now());
+			for (Long memberId : memberIdList) {
+				rewardAcorn(memberId, commonAcorn);
+			}
+		}
+	}
+
 	@Override
 	public FindCommonCompRes modifyCommonCompFlag(Long memberId, BigInteger commonChallengeId) {
 
@@ -93,6 +125,9 @@ public class CommonChallengeServiceImpl implements CommonChallengeService {
 		}
 
 		commonEntry.complete();
+
+		// 보상
+		rewardAcorn(memberId, COMMON_COMP_ACORN);
 
 		return FindCommonCompRes.builder()
 			.compCnt(commonEntryRepository.countAllByChallengeDtAndCompFlagIsTrue())
@@ -146,6 +181,24 @@ public class CommonChallengeServiceImpl implements CommonChallengeService {
 		} catch (Exception e) {
 			throw new ChallengeException(ErrorCode.JSON_PARSE_ERROR);
 		}
+	}
+
+	private int calCommonAcorn(List<Integer> unitList, int totalCompCnt) {
+		int commonAcorn = 0;
+		for (int unit : unitList) {
+			if (totalCompCnt < unit) {
+				break;
+			}
+			commonAcorn++;
+		}
+		return commonAcorn;
+	}
+
+	private void rewardAcorn(Long memberId, int acornCnt) {
+		MemberAsset memberAsset = memberAssetRepository.findByMemberIdAndAsset(memberId, assetRepository.findByAssetNm("DOTORI")
+						.orElseThrow(() -> new ChallengeException(ErrorCode.ASSET_NOT_FOUND)))
+				.orElseThrow(() -> new ChallengeException(ErrorCode.MEMBER_ASSET_NOT_FOUND));
+		memberAsset.plus(acornCnt);
 	}
 
 }

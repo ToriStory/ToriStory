@@ -1,6 +1,7 @@
 package com.challenge.domain.challenge.repository;
 
 import java.math.BigInteger;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,5 +30,8 @@ public interface CommonEntryRepository extends JpaRepository<CommonEntry, BigInt
 
 	@Query("select ce.imgUrl from CommonEntry ce where ce.challengeDt = current_date and ce.imgUrl is not null and ce.compFlag = true")
 	List<String> findAllByImgUrlIsNotEmptyAndCompFlagIsTrue();
+
+	@Query("select ce.memberId from CommonEntry ce where ce.challengeDt = :date")
+	List<Long> findMemberIdByChallengeDt(LocalDate date);
 
 }

@@ -56,10 +56,6 @@ public class CustomChallengeServiceImpl implements CustomChallengeService {
                         .displayFlag(addCustomReq.isDisplayFlag())
                 .build());
 
-        if (savedCustomChallenge == null) {
-            throw new ChallengeException(ErrorCode.CUSTOM_CHALLENGE_NOT_SAVED);
-        }
-
         customEntryRepository.save(CustomEntry.builder()
                         .memberId(memberId)
                         .customChallenge(savedCustomChallenge)
