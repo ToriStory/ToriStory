@@ -4,7 +4,7 @@ import { cls } from 'utils/cls';
 
 export interface AddButtonProps {
   onClick: (e: React.MouseEvent<HTMLButtonElement>) => void;
-  title: string;
+  title?: string;
   color?: string;
   size?: number;
   className?: string;

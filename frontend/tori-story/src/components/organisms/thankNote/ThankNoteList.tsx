@@ -3,54 +3,45 @@ import { useEffect, useState } from 'react';
 import { cls } from 'utils/cls';
 import ThankNoteCard from './ThankNote';
 import SuccessChallenge from '../challenge/SuccessChallenge';
+import { getDailyThankNoteAPI } from 'apis/thankNote';
+import { useSetAtom } from 'jotai';
+import { canAddThankNoteAtom } from 'stores/thankNote';
 
-const data = [
-  {
-    content: `오늘은 건강하고 안전한 하루를 보낼 수 있어서 감사하다. 가족과 함께한 시간과 배운 것들에도 감사하며, 미래를 기대하며 하루를 마무리한다.
-    `,
-  },
-  {
-    content: `오늘은 친구의 지지와 조언을 받았고, 그로 인해 자신감을 얻었다. 진정한 친구에 대한 감사를 느낀다.
-   `,
-  },
-  {
-    content: `이른 아침 새소리를 듣며 자연과 조화로운 순간을 즐겼다. 자연의 아름다움에 대한 감사를 표현하고 싶다.
-   `,
-  },
-];
-const ThankNoteList = () => {
-  // const [data, setData] = useState<ThankNoteResponse[]>([]);
+interface ThankNoteListProps {
+  activeDate: string;
+}
+const ThankNoteList = ({ activeDate }: ThankNoteListProps) => {
+  const [data, setData] = useState<string[]>([]);
   const [isEmpty, setIsEmpty] = useState<boolean>(false);
-  // const activeDate = new Date();
-
+  const setCanAddThankNote = useSetAtom(canAddThankNoteAtom);
   useEffect(() => {
-    const getDailyChallenge = async () => {
-      setIsEmpty(false); // 빌드 에러 해결 위한 임시 코드
-      // const res = await getMyChallengeDailyAPI({ date: activeDate });
-      // if (res.status === 200) {
-      //   console.log(res);
-      //   // setData(res.data.data);
-      // }
+    const getDailyThankNote = async () => {
+      const res = await getDailyThankNoteAPI({ date: activeDate });
+      if (res.status === 200) {
+        console.log(res);
+        res.data.data.content ? setData(JSON.parse(res.data.data.content)) : setData([]);
+      }
     };
-    getDailyChallenge();
-  }, []);
-
-  // useEffect(() => {
-  //   if (data && data.length > 0) {
-  //     setIsEmpty(false);
-  //   } else {
-  //     setIsEmpty(true);
-  //   }
-  // }, [data]);
+    getDailyThankNote();
+  }, [activeDate]);
+  useEffect(() => {
+    if (data && data?.length > 0) {
+      setIsEmpty(false);
+      setCanAddThankNote(false);
+    } else {
+      setIsEmpty(true);
+      setCanAddThankNote(true);
+    }
+  }, [data, setCanAddThankNote]);
 
   return (
-    <div className={cls('h-full')}>
+    <div className={cls('h-fit')}>
       {isEmpty ? (
         <SuccessChallenge title='오늘의 감사일기를 써보세요!'></SuccessChallenge>
       ) : (
         data &&
-        data?.map((item, i) => {
-          return <ThankNoteCard key={i} content={item.content} />;
+        data.map((item: string, i: number) => {
+          return <ThankNoteCard key={i} content={item} />;
         })
       )}
     </div>
