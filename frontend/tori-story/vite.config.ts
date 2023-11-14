@@ -1,4 +1,4 @@
-import { sentryVitePlugin } from "@sentry/vite-plugin";
+import { sentryVitePlugin } from '@sentry/vite-plugin';
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import jotaiDebugLabel from 'jotai/babel/plugin-debug-label';
@@ -8,9 +8,9 @@ export default defineConfig({
   plugins: [
     react({ babel: { plugins: [jotaiDebugLabel, jotaiReactRefresh] } }),
     sentryVitePlugin({
-      org: "3f56768989e9",
-      project: "javascript-react"
-    })
+      org: '3f56768989e9',
+      project: 'javascript-react',
+    }),
   ],
   resolve: {
     alias: {
@@ -38,7 +38,7 @@ export default defineConfig({
       },
     },
 
-    sourcemap: true
+    sourcemap: true,
   },
   server: {
     proxy: {
