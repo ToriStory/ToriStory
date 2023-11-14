@@ -10,6 +10,7 @@ import { getMonthlyThankNoteAPI } from 'apis/thankNote';
 import ThankNoteList from 'components/organisms/thankNote/ThankNoteList';
 import useBottomSheet from 'hooks/useBottomSheet';
 import dayjs from 'dayjs';
+import { HeartHandshake, PenSquare } from 'lucide-react';
 
 export function MyCalendar() {
   const curDate = new Date();
@@ -69,22 +70,24 @@ export function MyCalendar() {
         </div>
       </>
     );
-    const content = (
+    const content = (type: 'THANKNOTE' | 'CHALLENGE') => (
       <div
         className='w-full h-full flex justify-center items-center'
         onClick={() => openPopup(component, title)}
       >
-        <div key={date} className=' w-2 h-2 rounded-full bg-[#772900]'></div>
+        {/* <div key={date} className=''> */}
+        {type === 'THANKNOTE' ? <PenSquare size={10} /> : <HeartHandshake size={10} />}
+        {/* </div> */}
       </div>
     );
     // 해당 날짜(하루)에 추가할 컨텐츠의 배열
     const contents = [];
     // date(각 날짜)가  리스트의 날짜와 일치하면 해당 컨텐츠(이모티콘) 추가
     if (challengeDayList?.find((day) => day === dayjs(date).format('YYYY-MM-DD'))) {
-      contents.push(content);
+      contents.push(content('CHALLENGE'));
     }
     if (thankNoteDayList?.find((day) => day === dayjs(date).format('YYYY-MM-DD'))) {
-      contents.push(content);
+      contents.push(content('THANKNOTE'));
     }
     return (
       <div key={date} className='w-full h-full flex justify-center p-2'>
