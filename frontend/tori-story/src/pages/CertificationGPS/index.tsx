@@ -6,13 +6,15 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { myChallengePage } from 'constants/pathname';
 import CertificationResultModal from 'components/organisms/certification/CerfiticationResultModal';
 import { patchCompRandomChallengeApi } from 'apis/challengeApi';
-import { Avatar } from '@mui/material';
-import { orange400 } from 'constants/color';
+import { useAtomValue } from 'jotai';
+import { profileToriImgUrlAtom } from 'stores/dotoriStore';
+import Bush from 'assets/images/Bush.png';
 
 const delayedTime: number = 4000;
 const radius = 100;
 
 const CertificationGPS = () => {
+  const profileImg = useAtomValue<string>(profileToriImgUrlAtom);
   const [result, setResult] = useState<boolean>(false);
   const [showModal, setShowModal] = useState<boolean>(false);
   const navigate = useNavigate();
@@ -96,18 +98,11 @@ const CertificationGPS = () => {
             'w-48 h-48 border-2 border-orange-300 rounded-full absolute z-30 animate-expand'
           )}
         ></div>
-        <div className={cls('w-24 h-24 rounded-full z-40')}>
-          <Avatar
-            sx={{
-              width: 100,
-              height: 100,
-              objectFit: 'cover',
-              borderRadius: '100%',
-              borderColor: orange400,
-              borderWidth: 2,
-            }}
-            src='https://i.pinimg.com/736x/4b/af/8d/4baf8ddeb7937f55a6ca9584b58b03e6.jpg'
-          />
+        <div className={cls('w-24 h-24 mt-32 z-30 absolute')}>
+          <img src={Bush} alt='bush'></img>
+        </div>
+        <div className={cls('w-24 h-24 ml-4 z-40')}>
+          <img src={profileImg} alt='profile'></img>
         </div>
       </div>
       {showModal && (
