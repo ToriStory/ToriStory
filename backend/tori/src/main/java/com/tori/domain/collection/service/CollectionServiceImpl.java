@@ -4,7 +4,6 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import com.tori.domain.asset.entity.MemberAsset;
 import com.tori.domain.asset.repository.MemberAssetRepository;
-import com.tori.domain.collection.dto.response.CollectionRes;
 import com.tori.domain.collection.dto.response.FindCollectionRes;
 import com.tori.domain.collection.entity.MemberCollection;
 import com.tori.domain.collection.entity.ToriCollection;
@@ -16,8 +15,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.reactive.function.client.WebClient;
-
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
