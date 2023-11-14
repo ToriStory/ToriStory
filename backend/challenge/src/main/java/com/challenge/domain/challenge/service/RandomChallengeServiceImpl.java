@@ -1,5 +1,8 @@
 package com.challenge.domain.challenge.service;
 
+import com.challenge.domain.asset.entity.MemberAsset;
+import com.challenge.domain.asset.repository.AssetRepository;
+import com.challenge.domain.asset.repository.MemberAssetRepository;
 import com.challenge.domain.challenge.dto.response.FindRandomRes;
 import com.challenge.domain.challenge.entity.Category;
 import com.challenge.domain.challenge.entity.PhotoChallenge;
@@ -27,6 +30,11 @@ import java.util.*;
 @Slf4j
 public class RandomChallengeServiceImpl implements RandomChallengeService {
 
+    //랜덤 도전과제 달성시 받는 도토리 수
+    private final int RANDOM_CHALLENGE_COMPLETE_COUNT = 10;
+
+    private final AssetRepository assetRepository;
+    private final MemberAssetRepository memberAssetRepository;
     private final RandomChallengeRepository randomChallengeRepository;
     private final PhotoChallengeRepository photoChallengeRepository;
     private final PlaceChallengeRepository placeChallengeRepository;
@@ -110,6 +118,18 @@ public class RandomChallengeServiceImpl implements RandomChallengeService {
 
     @Override
     public FindRandomRes modifyRandomId(Long memberId) {
+
+        MemberAsset memberAsset = memberAssetRepository.findByMemberIdAndAsset(memberId, assetRepository.findByAssetNm("RANDOM_TICKET")
+                        .orElseThrow(() -> new ChallengeException(ErrorCode.ASSET_NOT_FOUND)))
+                .orElseThrow(() -> new ChallengeException(ErrorCode.MEMBER_ASSET_NOT_FOUND));
+
+        if(memberAsset.getAssetCnt() < 1) {
+            throw new ChallengeException(ErrorCode.ASSET_NOT_ENOUGH);
+        }
+
+        // 티켓 1개 차감
+        memberAsset.pay(1);
+
         Optional<RandomChallenge> randomChallenge = randomChallengeRepository.findByMemberIdAndChallengeDt(memberId, LocalDate.now());
         if (randomChallenge.isEmpty()) {
             throw new ChallengeException(ErrorCode.RANDOM_CHALLENGE_NOT_FOUND);
@@ -153,6 +173,11 @@ public class RandomChallengeServiceImpl implements RandomChallengeService {
 
         RandomChallenge challenge = randomChallenge.get();
         challenge.complete();
+
+        memberAssetRepository.findByMemberIdAndAsset(memberId, assetRepository.findByAssetNm("DOTORI")
+                        .orElseThrow(() -> new ChallengeException(ErrorCode.ASSET_NOT_FOUND)))
+                .orElseThrow(() -> new ChallengeException(ErrorCode.MEMBER_ASSET_NOT_FOUND))
+                .plus(RANDOM_CHALLENGE_COMPLETE_COUNT);
     }
 
     @Override
