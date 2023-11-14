@@ -1,4 +1,3 @@
-import Label from 'components/atoms/challenge/Label';
 import { ToriCollectionItemProps } from 'types/tori';
 import { cls } from 'utils/cls';
 import Dotori from 'assets/images/Dotori.png';
@@ -10,6 +9,7 @@ import { adoptSquirrel } from 'apis/toriApi';
 import { updateToriProfile } from 'apis/user';
 import { useAtom, useSetAtom } from 'jotai';
 import { dotoriCntAtom, profileToriImgUrlAtom } from 'stores/dotoriStore';
+import LabelSimple from 'components/atoms/challenge/LabelSimple';
 
 export const ToriCollectionDetail = ({
   toriCollection,
@@ -58,7 +58,7 @@ export const ToriCollectionDetail = ({
         <div className={cls('absolute top-8 right-8 text-orange-800 font-black z-40')}>
           <X fontSize={30} strokeWidth={6} onClick={handleClose} />
         </div>
-        <Label title={toriCollection.toriName} />
+        <LabelSimple title={toriCollection.toriName} />
 
         <div className='relative w-1f' style={{ paddingTop: '100%' }}>
           <div className='absolute inset-0 flex items-center justify-center'>
