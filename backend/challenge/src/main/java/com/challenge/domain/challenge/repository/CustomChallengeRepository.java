@@ -12,10 +12,10 @@ import java.util.List;
 @Repository
 public interface CustomChallengeRepository extends JpaRepository<CustomChallenge, BigInteger> {
 
-    @Query("select c from CustomChallenge c where c.content like %:keyword% and c.displayFlag = true order by c.scrapCnt desc")
+    @Query("select c from CustomChallenge c where c.content like %:keyword% and c.displayFlag = true order by c.scrapCnt desc, c.customChallengeId asc")
     List<CustomChallenge> findAllByScrapCntWithCursor(String keyword, Pageable pageable);
 
-    @Query("select c from CustomChallenge c where c.content like %:keyword% and c.displayFlag = true order by c.regDtm desc")
+    @Query("select c from CustomChallenge c where c.content like %:keyword% and c.displayFlag = true order by c.regDtm desc, c.customChallengeId asc")
     List<CustomChallenge> findAllByRegDtmWithCursor(String keyword, Pageable pageable);
 
 }
