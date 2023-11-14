@@ -48,6 +48,11 @@ export const commonChallengeReviewPage = {
   label: '사진 공유',
 };
 
+export const customChallengeMemoryPage = {
+  path: '/challenge/my/memory',
+  label: '추억 남기기',
+};
+
 export const togetherChallengePage = {
   path: '/challenge/together',
   label: '함께 도전',
@@ -81,11 +86,6 @@ export const gpsCertificationPage = {
 export const imageCertificationPage = {
   path: '/challenge/my/certification/picture',
   label: '사진 인증',
-};
-
-export const imageMemoryPage = {
-  path: '/challenge/my/memory/picture',
-  label: '추억 남기기',
 };
 
 export const myToriPage = {
@@ -136,12 +136,12 @@ export const pathname = [
   myChallengePage,
   commonChallengeDetailPage,
   commonChallengeReviewPage,
+  customChallengeMemoryPage,
   togetherChallengePage,
   totoriPage,
   createChallengePage,
   gpsCertificationPage,
   imageCertificationPage,
-  imageMemoryPage,
   myToriPage,
   myPagePage,
   updateUserInfoPage,

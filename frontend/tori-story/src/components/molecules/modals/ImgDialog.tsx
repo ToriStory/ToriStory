@@ -2,13 +2,13 @@ import { Dialog, DialogContent } from '@mui/material';
 import { X } from 'lucide-react';
 import { cls } from 'utils/cls';
 
-interface NoBottomXModalProps {
-  child: React.ReactNode;
+interface ImgDialogProps {
   openModal: boolean;
   setIsModalOpen: (isOpen: boolean) => void;
+  child: React.ReactNode;
 }
 
-const NoBottomXModal = ({ child, openModal, setIsModalOpen }: NoBottomXModalProps) => {
+const ImgDialog = ({ child, openModal, setIsModalOpen }: ImgDialogProps) => {
   const handleClose = () => {
     setIsModalOpen(false);
   };
@@ -23,4 +23,4 @@ const NoBottomXModal = ({ child, openModal, setIsModalOpen }: NoBottomXModalProp
   );
 };
 
-export default NoBottomXModal;
+export default ImgDialog;

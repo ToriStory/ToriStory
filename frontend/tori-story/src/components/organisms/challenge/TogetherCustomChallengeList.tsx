@@ -1,10 +1,10 @@
 import { SearchInput } from 'components/molecules/search/SearchInput';
 import useInfiniteFetcher from 'hooks/useInfiniteFetcher';
-import { ArrowDownUp, Siren, User } from 'lucide-react';
+import { ArrowDownUp, Siren, User2 } from 'lucide-react';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { cls } from 'utils/cls';
 import { FetchParams, CustomChallengeProps } from 'types/challenge';
-import { IconButton, Skeleton } from '@mui/material';
+import { Skeleton } from '@mui/material';
 import HeaderLeft from 'components/molecules/challenge/HeaderLeft';
 import BottomButton from 'components/atoms/challenge/BottomButton';
 import Challenge from './Challenge';
@@ -12,6 +12,8 @@ import { TogetherModal } from 'components/molecules/challenge/TogetherModal';
 import ErrorMushRoom from 'assets/images/ErrorMushroom.png';
 import { ReportModal } from 'components/molecules/challenge/ReportModal';
 import { LoginModal } from 'components/molecules/modals/LoginModal';
+import BottomLeft from 'components/molecules/challenge/BottomLeft';
+import HeaderRight from 'components/molecules/challenge/HeaderRight';
 
 const TogetherCustomChallengeList = () => {
   const observeTarget = useRef(null);
@@ -125,32 +127,35 @@ const TogetherCustomChallengeList = () => {
             </div>
           )}
           {searchResults && searchResults[0].totalCustomChallengeList.length > 0 ? (
-            searchResults?.map((searchResultItem) =>
-              searchResultItem?.totalCustomChallengeList.map((result: CustomChallengeProps) => (
-                <div key={result.id}>
-                  <Challenge
-                    headerLeft={<HeaderLeft challengeCategory='자유' />}
-                    headerRight={
-                      <IconButton onClick={() => handleReportButton(result)}>
-                        <Siren size={20} className={cls('text-gray-400')} />
-                      </IconButton>
-                    }
-                    bottomLeft={
-                      <div className={cls('flex items-center text-orange-700')}>
-                        <div className='mr-2'>
-                          <User size={16} />
-                        </div>
-                        <div>{result.scrapCnt}</div>
-                      </div>
-                    }
-                    bottomRight={
-                      <BottomButton title='나도!' onClick={() => handleTogetherButton(result)} />
-                    }
-                    content={result.content}
-                  />
-                </div>
-              ))
-            )
+            <div className={cls('pb-10')}>
+              {searchResults?.map((searchResultItem) =>
+                searchResultItem?.totalCustomChallengeList.map((result: CustomChallengeProps) => (
+                  <div key={result.id}>
+                    <Challenge
+                      headerLeft={<HeaderLeft challengeCategory='자유' />}
+                      headerRight={
+                        <HeaderRight
+                          button={
+                            <Siren
+                              size={20}
+                              className={cls('text-gray-500')}
+                              onClick={() => handleReportButton(result)}
+                            />
+                          }
+                        />
+                      }
+                      bottomLeft={
+                        <BottomLeft icon={<User2 size={20} />} content={result.scrapCnt} />
+                      }
+                      bottomRight={
+                        <BottomButton title='나도!' onClick={() => handleTogetherButton(result)} />
+                      }
+                      content={result.content}
+                    />
+                  </div>
+                ))
+              )}
+            </div>
           ) : (
             <div
               className={cls(

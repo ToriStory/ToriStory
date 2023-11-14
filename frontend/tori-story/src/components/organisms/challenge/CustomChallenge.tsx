@@ -1,13 +1,18 @@
 import Challenge from './Challenge';
 import HeaderLeft from 'components/molecules/challenge/HeaderLeft';
-import BottomButton from 'components/atoms/challenge/BottomButton';
-import { Button, Dialog, DialogActions, DialogContent, IconButton } from '@mui/material';
 import HeaderRight from 'components/molecules/challenge/HeaderRight';
-import { BadgeCheck, BadgeX, X } from 'lucide-react';
-import { gray400, gray500, orange300 } from 'constants/color';
+import { BadgeCheck, BadgeX, Image, X } from 'lucide-react';
+import { gray500, orange300, orange500 } from 'constants/color';
 import { useState } from 'react';
 import BottomLeft from 'components/molecules/challenge/BottomLeft';
 import dayjs from 'dayjs';
+import BottomButton from 'components/atoms/challenge/BottomButton';
+import ChoiceDialog from 'components/molecules/modals/ChoiceDialog';
+import { DialogContentText } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
+import { customChallengeMemoryPage } from 'constants/pathname';
+import ImgDialog from 'components/molecules/modals/ImgDialog';
+import { cls } from 'utils/cls';
 
 export interface CustomChallengeProps {
   id: number;
@@ -15,7 +20,7 @@ export interface CustomChallengeProps {
   startDt?: string;
   endDt?: string | null;
   compFlag?: boolean;
-  imgUrl?: string;
+  imgUrl: string | null;
 }
 
 const CustomChallenge = ({
@@ -29,7 +34,10 @@ const CustomChallenge = ({
   completeChallenge?: (id: number) => void;
   isMyChallenge?: boolean;
 }) => {
-  const [openModal, setOpenModal] = useState<boolean>(false);
+  const navigate = useNavigate();
+  const [openDeleteModal, setOpenDeleteModal] = useState<boolean>(false);
+  const [openMemoryModal, setOpenMemoryModal] = useState<boolean>(false);
+  const [showImgModal, setShowImgModal] = useState<boolean>(false);
 
   const handleCompleted = () => {
     if (completeChallenge) {
@@ -38,21 +46,28 @@ const CustomChallenge = ({
   };
 
   const handleDelete = () => {
-    setOpenModal(true);
+    setOpenDeleteModal(true);
   };
 
-  // 모달 - 닫히는 부분
-  const handleCancelButton = () => {
-    setOpenModal(false);
+  const handleShowImage = () => {
+    if (props.imgUrl) {
+      setShowImgModal(true);
+    } else {
+      setOpenMemoryModal(true);
+    }
   };
 
-  //모달 열린 후 페이지 이동하는 부분
   const handleDeleteButton = () => {
-    setOpenModal(false);
+    setOpenDeleteModal(false);
     if (deleteChallenge) {
-      console.log('props:', props);
       deleteChallenge(props.id);
     }
+  };
+
+  const handleNavigateMemory = () => {
+    navigate(customChallengeMemoryPage.path, {
+      state: { customEntryId: props.id },
+    });
   };
 
   const getRemainingPeriod = (): string => {
@@ -70,42 +85,33 @@ const CustomChallenge = ({
     return `D-${diff}`;
   };
 
-  const button = (
-    <>
-      <IconButton onClick={handleDelete}>
-        <X size={20} color={gray500} />
-      </IconButton>
-    </>
-  );
+  const deleteIconButton = <X size={20} color={gray500} onClick={handleDelete} />;
+
+  const imgIconButton = <Image size={20} color={orange500} onClick={handleShowImage} />;
 
   return (
     <>
       {isMyChallenge ? (
         <Challenge
-          headerLeft={<HeaderLeft challengeCategory='자유' />}
-          headerRight={<HeaderRight button={button} />}
+          headerLeft={<HeaderLeft challengeCategory='자유' otherElement={imgIconButton} />}
+          headerRight={<HeaderRight button={deleteIconButton} />}
           bottomRight={
             props.compFlag ? (
-              <div className='p-1'>
-                <BadgeCheck color={orange300} />
-              </div>
+              <BadgeCheck size={24} color={orange300} />
             ) : (
-              <div className='p-1'>
-                <BadgeX color={gray400} />
-              </div>
+              <BadgeX size={16} color={gray500} />
             )
           }
           content={props.content}
         />
       ) : (
         <Challenge
-          headerLeft={<HeaderLeft challengeCategory='자유' />}
-          headerRight={<HeaderRight button={button} />}
+          headerLeft={<HeaderLeft challengeCategory='자유' otherElement={imgIconButton} />}
+          headerRight={<HeaderRight button={deleteIconButton} />}
           bottomLeft={<BottomLeft content={getRemainingPeriod()} />}
-          //   bottomRight={<BottomButton title='기록' onClick={handleMemory} />}
           bottomRight={
             props.compFlag ? (
-              <BadgeCheck color={orange300} />
+              <BadgeCheck size={24} color={orange300} />
             ) : (
               <BottomButton title='완료' onClick={handleCompleted} />
             )
@@ -113,22 +119,43 @@ const CustomChallenge = ({
           content={props.content}
         />
       )}
-      {openModal && (
-        <Dialog fullWidth open={openModal} onClose={handleCancelButton}>
-          <DialogContent sx={{ display: 'flex', justifyContent: 'center' }}>
-            삭제하시겠습니까?
-          </DialogContent>
-          <DialogActions sx={{ display: 'flex', justifyContent: 'space-between' }}>
+      <ChoiceDialog
+        openModal={openDeleteModal}
+        setIsModalOpen={setOpenDeleteModal}
+        content={
+          <>
+            <DialogContentText>삭제하시겠습니까?</DialogContentText>
+          </>
+        }
+        leftButtonTitle='취소'
+        rigthButtonTitle='삭제'
+        rightButtonOnClick={handleDeleteButton}
+      />
+      <ChoiceDialog
+        openModal={openMemoryModal}
+        setIsModalOpen={setOpenMemoryModal}
+        content={
+          <>
+            <DialogContentText>등록된 사진이 없습니다.</DialogContentText>
+            <DialogContentText>추억으로 사진을 남기시겠습니까?</DialogContentText>
+          </>
+        }
+        rigthButtonTitle='추억 남기기'
+        rightButtonOnClick={handleNavigateMemory}
+      />
+      {props.imgUrl && (
+        <ImgDialog
+          openModal={showImgModal}
+          setIsModalOpen={setShowImgModal}
+          child={
             <>
-              <Button variant='contained' onClick={handleCancelButton} color='primary'>
-                취소
-              </Button>
-              <Button variant='contained' onClick={handleDeleteButton} color='primary'>
-                삭제
-              </Button>
+              <img srcSet={props.imgUrl} src={props.imgUrl} alt={props.imgUrl} loading='lazy' />
+              <div className={cls('flex justify-center items-center mt-5')}>
+                <BottomButton title='수정하기' onClick={handleNavigateMemory} />
+              </div>
             </>
-          </DialogActions>
-        </Dialog>
+          }
+        />
       )}
     </>
   );

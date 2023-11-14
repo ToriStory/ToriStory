@@ -3,14 +3,14 @@ import { cls } from 'utils/cls';
 
 interface HeaderProps {
   challengeCategory: string;
-  certificationCategory?: React.ReactElement;
+  otherElement?: React.ReactElement;
 }
 
-const HeaderLeft = ({ challengeCategory, certificationCategory }: HeaderProps) => {
+const HeaderLeft = ({ challengeCategory, otherElement }: HeaderProps) => {
   return (
-    <div className={cls('flex justify-start items-center')}>
+    <div className={cls('flex justify-start items-center gap-2')}>
       <ChallengeCategory title={challengeCategory} />
-      {certificationCategory && <>{certificationCategory}</>}
+      {otherElement && <>{otherElement}</>}
     </div>
   );
 };

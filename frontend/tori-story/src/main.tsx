@@ -25,7 +25,6 @@ import {
   createChallengePage,
   gpsCertificationPage,
   imageCertificationPage,
-  imageMemoryPage,
   landingPage,
   myChallengePage,
   commonChallengeDetailPage,
@@ -44,6 +43,7 @@ import {
   findPasswordPage,
   resetPasswordPage,
   commonChallengeReviewPage,
+  customChallengeMemoryPage,
   thankNotePage,
   createThankNotePage,
 } from 'constants/pathname.ts';
@@ -58,6 +58,7 @@ import ResetPassword from 'pages/Auth/ResetPassword/index.tsx';
 import ThankNote from 'pages/ThankNote/index.tsx';
 import { CreateThankNote } from 'pages/ThankNote/Create/index.tsx';
 import CommonChallengeReview from 'pages/CommonChallengeReview/index.tsx';
+import CustomChallengeMemory from 'pages/MyChallenge/CustomChallengeMemory/index.tsx';
 const router = createBrowserRouter([
   {
     path: splashPage.path,
@@ -100,6 +101,10 @@ const router = createBrowserRouter([
         element: <CommonChallengeReview />,
       },
       {
+        path: customChallengeMemoryPage.path,
+        element: <CustomChallengeMemory />,
+      },
+      {
         path: thankNotePage.path,
         element: <ThankNote />,
       },
@@ -131,10 +136,6 @@ const router = createBrowserRouter([
       {
         path: imageCertificationPage.path,
         element: <CertificationAI />,
-      },
-      {
-        path: imageMemoryPage.path,
-        element: <Test />,
       },
       {
         path: myToriPage.path,

@@ -1,17 +1,17 @@
 import { CATEGORY } from 'constants/certificationCategory';
-import { Camera, MapPin, RotateCw } from 'lucide-react';
+import { BadgeCheck, Camera, MapPin, RotateCw } from 'lucide-react';
 import Challenge from './Challenge';
 import HeaderLeft from 'components/molecules/challenge/HeaderLeft';
 import BottomButton from 'components/atoms/challenge/BottomButton';
-import SuccessChallenge from './SuccessChallenge';
-import { orange300 } from 'constants/color';
-import { Button, Dialog, DialogActions, DialogContent, IconButton } from '@mui/material';
+import { gray500, orange300, orange600 } from 'constants/color';
+import { Button, Dialog, DialogActions, DialogContent } from '@mui/material';
 import HeaderRight from 'components/molecules/challenge/HeaderRight';
 import { useNavigate } from 'react-router-dom';
 import { gpsCertificationPage, imageCertificationPage } from 'constants/pathname';
 import { useEffect, useState } from 'react';
 import { patchRandomChallengeApi, readRandomChallengeApi } from 'apis/challengeApi';
 import { toast } from 'react-toastify';
+import BottomLeft from 'components/molecules/challenge/BottomLeft';
 
 interface RandomChallengeResponse {
   id: number;
@@ -39,9 +39,9 @@ const RandomChallenge = () => {
 
   const certificationIcon =
     response && response.category === CATEGORY.photo ? (
-      <Camera color={orange300} />
+      <Camera size={20} color={orange600} />
     ) : (
-      <MapPin color={orange300} />
+      <MapPin size={20} color={orange600} />
     );
 
   const handleCertification = () => {
@@ -65,36 +65,33 @@ const RandomChallenge = () => {
 
   const handleRenewButton = async () => {
     setOpenModal(false);
-    const result = await toast.promise(patchRandomChallengeApi(), {
-      pending: '랜덤 도전을 갱신 중입니다',
-      error: '랜덤 도전 갱신에 실패했습니다',
-    });
+    const result = await patchRandomChallengeApi();
     if (result.status === 200) {
-      console.log(result.data);
       setResponse(result.data.data);
+    } else {
+      toast.error('랜덤 도전 갱신에 실패했습니다');
     }
   };
 
-  const button = (
-    <IconButton onClick={openRenewModal}>
-      <RotateCw />
-    </IconButton>
-  );
+  const button = <RotateCw size={20} color={gray500} onClick={openRenewModal} />;
 
   return (
     <>
-      {response && response.compFlag === true ? (
-        <SuccessChallenge title='오늘의 랜덤 도전을 성공했어요!' />
-      ) : (
-        <Challenge
-          headerLeft={
-            <HeaderLeft challengeCategory='랜덤' certificationCategory={certificationIcon} />
-          }
-          headerRight={<HeaderRight button={button} />}
-          bottomRight={<BottomButton title='인증' onClick={handleCertification} />}
-          content={response ? response.content : 'Loading...'}
-        />
-      )}
+      <Challenge
+        headerLeft={<HeaderLeft challengeCategory='랜덤' />}
+        headerRight={
+          response && response.compFlag === true ? <></> : <HeaderRight button={button} />
+        }
+        bottomLeft={<BottomLeft icon={certificationIcon} />}
+        bottomRight={
+          response && response.compFlag === true ? (
+            <BadgeCheck size={24} color={orange300} />
+          ) : (
+            <BottomButton title='인증' onClick={handleCertification} />
+          )
+        }
+        content={response ? response.content : 'Loading...'}
+      />
       {openModal && (
         <Dialog fullWidth open={openModal} onClose={handleCancelButton}>
           <DialogContent sx={{ display: 'flex', justifyContent: 'center' }}>

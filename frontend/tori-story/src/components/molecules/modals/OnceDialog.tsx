@@ -1,6 +1,6 @@
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText } from '@mui/material';
 
-interface OnceModallProps {
+interface OnceDialogProps {
   content: string;
   buttonTitle: string;
   openModal: boolean;
@@ -8,13 +8,13 @@ interface OnceModallProps {
   handleOnClick?: () => void;
 }
 
-const OnceModal = ({
+const OnceDialog = ({
   content,
   buttonTitle,
   openModal,
   setIsModalOpen,
   handleOnClick,
-}: OnceModallProps) => {
+}: OnceDialogProps) => {
   const handleClose = () => {
     setIsModalOpen(false);
     if (handleOnClick) {
@@ -36,4 +36,4 @@ const OnceModal = ({
   );
 };
 
-export default OnceModal;
+export default OnceDialog;

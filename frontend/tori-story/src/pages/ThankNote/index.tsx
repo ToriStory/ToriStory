@@ -33,8 +33,10 @@ const ThankNote = () => {
             <Label title='오늘의 일기' />
             <ThankNoteList />
             <br />
-            <div className={cls('fixed bottom-16 right-4')}>
-              <AddButton onClick={() => handleCreateThankNoteButton()} size={36} />
+            <div className={cls('fixed w-full inset-x-0 bottom-16 z-20')}>
+              <div className={cls('flex justify-center my-1')}>
+                <AddButton title='일기 작성' onClick={() => handleCreateThankNoteButton()} />
+              </div>
             </div>
           </div>
         </>
