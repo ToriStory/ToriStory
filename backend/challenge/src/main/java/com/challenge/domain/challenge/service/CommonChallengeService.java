@@ -22,4 +22,6 @@ public interface CommonChallengeService {
 
 	FindCommonEntryRes findCommonEntryChallenge(Long memberId, BigInteger commonChallengeId);
 
+	void receiveCommonReward();
+
 }
