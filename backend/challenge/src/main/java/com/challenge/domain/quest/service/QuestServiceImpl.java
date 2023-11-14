@@ -13,6 +13,7 @@ import com.challenge.global.exception.ChallengeException;
 import com.challenge.global.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -32,7 +33,9 @@ public class QuestServiceImpl implements QuestService {
     private final MemberAssetRepository memberAssetRepository;
     private final AssetRepository assetRepository;
 
-    private final static int REWARD_ACORN = 2;
+    private final static int REWARD_ACORN = 10;
+
+    private final RedisTemplate<String, String> redisTemplate;
 
     @Override
     public List<FindQuestRes> findTotalQuest(Long memberId) {
@@ -92,6 +95,34 @@ public class QuestServiceImpl implements QuestService {
                         .orElseThrow(() -> new ChallengeException(ErrorCode.ASSET_NOT_FOUND)))
                 .orElseThrow(() -> new ChallengeException(ErrorCode.MEMBER_ASSET_NOT_FOUND));
         memberAsset.plus(REWARD_ACORN);
+    }
+
+    @Override
+    public int findCompCnt(Long memberId) {
+        return questRepository.countByMemberIdAndCompFlagIsTrue(memberId);
+    }
+
+    @Override
+    public void receiveTotalReward(Long memberId) {
+        // 퀘스트 전체 달성 여부 확인
+        if(findCompCnt(memberId) != questRepository.countByMemberId(memberId))
+            throw new ChallengeException(ErrorCode.QUEST_NOT_COMPLETE);
+
+        // 오늘 이미 퀘스트 전체 달성 보상 받았는지 확인
+        if(redisTemplate.hasKey("TotalReward:"+memberId)){
+            if(redisTemplate.opsForValue().get("TotalReward:"+memberId).equals(LocalDate.now().toString())){
+                throw new ChallengeException(ErrorCode.REWARD_ALREADY_RECEIVED);
+            }
+        }
+
+        // 토토리 티켓 1장 지급
+        memberAssetRepository.findByMemberIdAndAsset(memberId, assetRepository.findByAssetNm("TOTORI_TICKET")
+                        .orElseThrow(() -> new ChallengeException(ErrorCode.ASSET_NOT_FOUND)))
+                .orElseThrow(() -> new ChallengeException(ErrorCode.MEMBER_ASSET_NOT_FOUND))
+                .plus(1);
+
+        // Redis에 보상 여부 업데이트
+        redisTemplate.opsForValue().set("TotalReward:"+memberId, LocalDate.now().toString());
     }
 
     private void createQuest(Long memberId) {
