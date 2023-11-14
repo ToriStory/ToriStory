@@ -1,4 +1,4 @@
-package com.challenge.domain.challenge.entity;
+package com.challenge.domain.setting.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -18,25 +18,25 @@ public class Setting {
 	@Column(nullable = false, columnDefinition = "INT UNSIGNED")
 	private Long memberId;
 
-	@Column(nullable = false, columnDefinition = "TINYINT(1)")
+	@Column(columnDefinition = "TINYINT(1) DEFAULT 1")
 	private boolean bgmFlag;
 
-	@Column(nullable = false, columnDefinition = "TINYINT(1)")
-	private boolean alarmFlag;
+	@Column(columnDefinition = "TINYINT(1) DEFAULT 1")
+	private boolean notificationFlag;
 
 	@Builder
-	public Setting(Long memberId, boolean bgmFlag, boolean alarmFlag) {
+	public Setting(Long memberId, boolean bgmFlag, boolean notificationFlag) {
 		this.memberId = memberId;
 		this.bgmFlag = bgmFlag;
-		this.alarmFlag = alarmFlag;
+		this.notificationFlag = notificationFlag;
 	}
 
 	public void modifyBgm() {
 		this.bgmFlag = !this.bgmFlag;
 	}
 
-	public void modifyAlarm() {
-		this.alarmFlag = !this.alarmFlag;
+	public void modifyNotification() {
+		this.notificationFlag = !this.notificationFlag;
 	}
 
 }

@@ -43,7 +43,10 @@ public enum ErrorCode {
 
 	// Asset
     MEMBER_ASSET_NOT_FOUND(404, "사용자 자산 정보 없음"),
-	ASSET_NOT_FOUND(404, "해당 자산 정보 없음")
+	ASSET_NOT_FOUND(404, "해당 자산 정보 없음"),
+
+	// setting
+	SETTING_NOT_FOUND(404, "설정을 찾을 수 없습니다."),
 
 	;
 
