@@ -22,7 +22,7 @@ public class Totori {
 	@Column(columnDefinition = "TINYINT UNSIGNED")
 	private Byte totoriId;
 
-	@Column(length = 10, nullable = false)
+	@Column(length = 20, nullable = false)
 	private String content;
 
 	@Column(nullable = false)
