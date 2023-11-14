@@ -23,6 +23,7 @@ public enum ErrorCode {
 	ATTEND_COMMON_CHALLENGE_NOT_FOUND(400, "참여한 공동 도전 과제 없음"),
 	COMMON_CHALLENGE_ALREADY_COMPLETE(400, "이미 인증한 공동 도전 과제"),
 	COMMON_CHALLENGE_NOT_COMPLETE(400, "아직 달성하지 못한 공동 도전 과제"),
+	COMMON_CHALLENGE_NOT_FOUND(404, "없는 공동 도전 과제"),
 
 	// JSON
 	JSON_PARSE_ERROR(500, "JSON 파싱 에러"),

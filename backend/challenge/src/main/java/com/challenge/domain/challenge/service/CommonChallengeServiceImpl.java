@@ -42,7 +42,7 @@ public class CommonChallengeServiceImpl implements CommonChallengeService {
 	private final AssetRepository assetRepository;
 	private final MemberAssetRepository memberAssetRepository;
 
-	private final int COMMON_COMP_ACORN = 1;
+	private final int COMMON_ACORN = 5;
 
 	@Override
 	public FindCommonRes findCommonChallenge(Long memberId) {
@@ -115,6 +115,19 @@ public class CommonChallengeServiceImpl implements CommonChallengeService {
 	}
 
 	@Override
+	@Scheduled(fixedDelay = 60000)
+	public void renewalCommonChallenge() {
+		CommonChallenge todayCommon = commonChallengeRepository.findByTodayFlagIsTrue()
+			.orElseThrow(() -> new ChallengeException(ErrorCode.TODAY_COMMON_CHALLENGE_NOT_FOUND));
+
+		CommonChallenge randomCommon = commonChallengeRepository.findCommonChallengeByLimited()
+			.orElseThrow(() -> new ChallengeException(ErrorCode.COMMON_CHALLENGE_NOT_FOUND));
+
+		todayCommon.renewal();
+		randomCommon.renewal();
+	}
+
+	@Override
 	public FindCommonCompRes modifyCommonCompFlag(Long memberId, BigInteger commonChallengeId) {
 
 		CommonEntry commonEntry = commonEntryRepository.findByMemberIdAndChallengeDtAndCommonChallenge(memberId, commonChallengeId)
@@ -127,7 +140,7 @@ public class CommonChallengeServiceImpl implements CommonChallengeService {
 		commonEntry.complete();
 
 		// 보상
-		rewardAcorn(memberId, COMMON_COMP_ACORN);
+		rewardAcorn(memberId, COMMON_ACORN);
 
 		return FindCommonCompRes.builder()
 			.compCnt(commonEntryRepository.countAllByChallengeDtAndCompFlagIsTrue())
@@ -189,7 +202,7 @@ public class CommonChallengeServiceImpl implements CommonChallengeService {
 			if (totalCompCnt < unit) {
 				break;
 			}
-			commonAcorn++;
+			commonAcorn+= COMMON_ACORN;
 		}
 		return commonAcorn;
 	}
