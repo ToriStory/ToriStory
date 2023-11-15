@@ -63,7 +63,7 @@ public class NotificationServiceImpl implements NotificationService {
 
     @Override
     @Transactional
-    @Scheduled(cron = "0 0 0/1 * * ?")
+    @Scheduled(cron = "0 0/1 * * * ?")
     public void sendLetterMessage() throws JsonProcessingException {
         List<Long> notificationMemberList = findNotificationMember();
 
