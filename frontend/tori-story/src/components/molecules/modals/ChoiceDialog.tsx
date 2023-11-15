@@ -33,7 +33,7 @@ const ChoiceDialog = ({
   };
 
   return (
-    <Dialog fullWidth open={openModal} onClose={handleClose}>
+    <Dialog fullWidth open={openModal} onClose={handleClose} sx={{ zIndex: 99999999 }}>
       <DialogContent sx={{ display: 'flex', flexDirection: 'column' }}>{content}</DialogContent>
       <DialogActions sx={{ display: 'flex', justifyContent: 'space-between' }}>
         <Button variant='contained' onClick={handleClose} color='primary'>
