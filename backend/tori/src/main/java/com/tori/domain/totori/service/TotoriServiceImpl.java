@@ -33,9 +33,12 @@ public class TotoriServiceImpl implements TotoriService {
     @Override
     public TotoriResponse<?> totori(Long memberId) {
 
-        MemberAsset totoriTicket = memberAssetRepository.findMemberAssetByMemberIdAndAsset(memberId, "TOTORI_TICKET");
+        MemberAsset totoriTicket = memberAssetRepository.findMemberAssetByMemberIdAndAsset(memberId, "DAILY_TOTORI_TICKET");
         if (totoriTicket.getAssetCnt() < 1) {
-            throw new ToriException(ErrorCode.TOTORI_TICKET_NOT_ENOUGH);
+            totoriTicket = memberAssetRepository.findMemberAssetByMemberIdAndAsset(memberId, "TOTORI_TICKET");
+            if (totoriTicket.getAssetCnt() < 1) {
+                throw new ToriException(ErrorCode.TOTORI_TICKET_NOT_ENOUGH);
+            }
         }
 
         totoriTicket.pay(1);
