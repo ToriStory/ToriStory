@@ -18,9 +18,11 @@ export const QuestButton = () => {
   };
 
   const handleIsQuestExistence = async () => {
-    const res = await isReceivedReward();
-    if (res.status === 200) {
-      setIsQuestExistence(res.data.data.unclaimedRewards);
+    if (accessToken) {
+      const res = await isReceivedReward();
+      if (res.status === 200) {
+        setIsQuestExistence(res.data.data.unclaimedRewards);
+      }
     }
   };
 

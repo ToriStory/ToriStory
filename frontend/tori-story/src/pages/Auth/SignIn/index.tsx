@@ -45,9 +45,11 @@ export default function SignIn() {
 
   const onSubmit = async (data: SignInInput) => {
     const signInToastId = toast.loading('로그인 중입니다');
+    const fcmToken = localStorage.getItem('fcmToken');
     const res = await signInAPI({
       email: data.email,
       password: data.password,
+      fcmToken: fcmToken,
     });
     if (res.status === 200) {
       updateToast(signInToastId, '로그인에 성공했습니다!', 'success');
