@@ -1,4 +1,5 @@
 import axios from 'apis';
+import { Response } from 'types';
 import {
   CustomChallengeCreateProps,
   CustomChallengeScrapProps,
@@ -26,6 +27,10 @@ export interface ChallengeDailyResponse {
 
 export interface MyChallengeDailyResponse extends Response {
   data: ChallengeDailyResponse[];
+}
+
+interface SettingResponse extends Response {
+  data: boolean;
 }
 
 // 자유 도전 과제 생성
@@ -185,5 +190,19 @@ export const isReceivedReward = async () => {
 export const getReward = async (questNo: number) => {
   const url = apiUrl + `quest/rewards/${questNo}`;
   const res = await axios.post(url);
+  return res;
+};
+
+// 푸시 알림 설정 조회
+export const getNotificationSettingApi = async () => {
+  const url = apiUrl + 'setting';
+  const res = await axios.get<SettingResponse>(url);
+  return res.data;
+};
+
+// 푸시 알림 설정 수정
+export const updateNotificationSettingApi = async (flag: boolean) => {
+  const url = apiUrl + 'setting';
+  const res = await axios.patch(url, { flag: flag });
   return res;
 };

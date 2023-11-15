@@ -20,6 +20,7 @@ interface SignUpProps {
 interface SignInProps {
   email: string;
   password: string;
+  fcmToken?: string | null;
 }
 
 interface SignUpResponse extends Response {
