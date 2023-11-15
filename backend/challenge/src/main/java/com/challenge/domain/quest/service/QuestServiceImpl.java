@@ -67,8 +67,21 @@ public class QuestServiceImpl implements QuestService {
 
     @Override
     public FindRewardRes checkReward(Long memberId) {
+
+        boolean unclaimedRewards = questRepository.existsByMemberIdAndCompFlagIsTrueAndRewardFlagIsFalse(memberId);
+
+        // 받지 않은 보상이 없고 모든 퀘스트를 완료했을 때
+        if(!unclaimedRewards && questRepository.countByMemberIdAndCompFlagIsTrue(memberId) == questRepository.countByMemberId(memberId)){
+            // 전체 퀘스트 보상도 받았는지 확인
+            if(redisTemplate.hasKey("TotalReward:"+memberId)){
+                if(!redisTemplate.opsForValue().get("TotalReward:"+memberId).equals(LocalDate.now().toString())){
+                    unclaimedRewards = true;
+                }
+            }
+        }
+
         return FindRewardRes.builder()
-                .unclaimedRewards(questRepository.existsByMemberIdAndCompFlagAndRewardFlag(memberId, true, false))
+                .unclaimedRewards(unclaimedRewards)
                 .build();
     }
 
