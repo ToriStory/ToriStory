@@ -17,6 +17,6 @@ public class Setting {
 
     private boolean bgmFlag;
 
-    private boolean alarmFlag;
+    private boolean notificationFlag;
 
 }
