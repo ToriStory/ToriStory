@@ -184,7 +184,7 @@ public class CustomChallengeServiceImpl implements CustomChallengeService {
         CustomEntry customEntry = customEntryRepository.findById(customEntryId)
                 .orElseThrow(() -> new ChallengeException(ErrorCode.CUSTOM_CHALLENGE_NOT_FOUND));
 
-        if (customEntry.getMemberId() != memberId) {
+        if (!customEntry.getMemberId().equals(memberId)) {
             throw new ChallengeException(ErrorCode.CUSTOM_MEMBER_NOT_MATCH);
         }
 
@@ -196,7 +196,7 @@ public class CustomChallengeServiceImpl implements CustomChallengeService {
         CustomEntry customEntry = customEntryRepository.findById(customEntryId)
                 .orElseThrow(() -> new ChallengeException(ErrorCode.CUSTOM_CHALLENGE_NOT_FOUND));
 
-        if (customEntry.getMemberId() != memberId) {
+        if (!customEntry.getMemberId().equals(memberId)) {
             throw new ChallengeException(ErrorCode.CUSTOM_MEMBER_NOT_MATCH);
         }
 
@@ -223,7 +223,7 @@ public class CustomChallengeServiceImpl implements CustomChallengeService {
         CustomEntry customEntry = customEntryRepository.findById(customEntryId)
                 .orElseThrow(() -> new ChallengeException(ErrorCode.CUSTOM_CHALLENGE_NOT_FOUND));
 
-        if (customEntry.getMemberId() != memberId) {
+        if (!customEntry.getMemberId().equals(memberId)) {
             throw new ChallengeException(ErrorCode.CUSTOM_MEMBER_NOT_MATCH);
         }
 
