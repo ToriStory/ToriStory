@@ -21,14 +21,14 @@ public class QuestController {
 
     @GetMapping
     @ApiOperation(value = "내 퀘스트 전체 조회", notes = "내 퀘스트 전체 조회")
-    public ResponseEntity<EnvelopRes<Map<String, Object>>> findTotalQuest(@RequestHeader("memberId") Long memberId) {
-        Map<String, Object> map = new HashMap<>();
-        map.put("questCompCnt", questService.findCompCnt(memberId));
-        map.put("questList", questService.findTotalQuest(memberId));
+    public ResponseEntity<EnvelopRes<Map<String, Object>>> findMyQuest(@RequestHeader("memberId") Long memberId) {
+        Map<String, Object> myQuestRes = new HashMap<>();
+        myQuestRes.put("totalQuest", questService.findTotalQuest(memberId));
+        myQuestRes.put("questList", questService.findAllQuest(memberId));
 
         return ResponseEntity.status(HttpStatus.OK)
                 .body(EnvelopRes.<Map<String, Object>>builder()
-                        .data(map)
+                        .data(myQuestRes)
                         .build());
     }
 

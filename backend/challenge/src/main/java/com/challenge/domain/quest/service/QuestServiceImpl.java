@@ -4,8 +4,9 @@ import com.challenge.domain.asset.entity.MemberAsset;
 import com.challenge.domain.asset.repository.AssetRepository;
 import com.challenge.domain.asset.repository.MemberAssetRepository;
 import com.challenge.domain.challenge.repository.CustomEntryRepository;
-import com.challenge.domain.quest.dto.response.FindQuestRes;
+import com.challenge.domain.quest.dto.response.FindQuestDto;
 import com.challenge.domain.quest.dto.response.FindRewardRes;
+import com.challenge.domain.quest.dto.response.FindTotalQuestDto;
 import com.challenge.domain.quest.entity.Quest;
 import com.challenge.domain.quest.model.QuestEnum;
 import com.challenge.domain.quest.repository.QuestRepository;
@@ -38,8 +39,7 @@ public class QuestServiceImpl implements QuestService {
     private final RedisTemplate<String, String> redisTemplate;
 
     @Override
-    public List<FindQuestRes> findTotalQuest(Long memberId) {
-
+    public List<FindQuestDto> findAllQuest(Long memberId) {
         // member_id로 quest 조회
         List<Quest> questList = questRepository.findAllByMemberId(memberId);
 
@@ -50,9 +50,9 @@ public class QuestServiceImpl implements QuestService {
         }
 
         // Dto에 담기
-        List<FindQuestRes> findQuestResList = new ArrayList<>();
+        List<FindQuestDto> findQuestDtoList = new ArrayList<>();
         for (Quest quest : questList) {
-            findQuestResList.add(FindQuestRes.builder()
+            findQuestDtoList.add(FindQuestDto.builder()
                     .questNo(quest.getQuestNo())
                     .questTitle(QuestEnum.findByQuestId(quest.getQuestNo()).getQuestTitle())
                     .compFlag(quest.isCompFlag())
@@ -62,19 +62,18 @@ public class QuestServiceImpl implements QuestService {
             );
         }
 
-        return findQuestResList;
+        return findQuestDtoList;
     }
 
     @Override
     public FindRewardRes checkReward(Long memberId) {
-
         boolean unclaimedRewards = questRepository.existsByMemberIdAndCompFlagIsTrueAndRewardFlagIsFalse(memberId);
 
         // 받지 않은 보상이 없고 모든 퀘스트를 완료했을 때
-        if(!unclaimedRewards && questRepository.countByMemberIdAndCompFlagIsTrue(memberId) == questRepository.countByMemberId(memberId)){
+        if (!unclaimedRewards && questRepository.countByMemberIdAndCompFlagIsTrue(memberId) == questRepository.countByMemberId(memberId)) {
             // 전체 퀘스트 보상도 받았는지 확인
-            if(redisTemplate.hasKey("TotalReward:"+memberId)){
-                if(!redisTemplate.opsForValue().get("TotalReward:"+memberId).equals(LocalDate.now().toString())){
+            if (redisTemplate.hasKey("TotalReward:" + memberId)) {
+                if (!redisTemplate.opsForValue().get("TotalReward:" + memberId).equals(LocalDate.now().toString())) {
                     unclaimedRewards = true;
                 }
             }
@@ -87,7 +86,6 @@ public class QuestServiceImpl implements QuestService {
 
     @Override
     public void receiveReward(Long memberId, byte questNo) {
-
         Quest quest = questRepository.findByMemberIdAndQuestNo(memberId, questNo)
                 .orElseThrow(() -> new ChallengeException(ErrorCode.QUEST_NOT_FOUND));
 
@@ -118,12 +116,12 @@ public class QuestServiceImpl implements QuestService {
     @Override
     public void receiveTotalReward(Long memberId) {
         // 퀘스트 전체 달성 여부 확인
-        if(findCompCnt(memberId) != questRepository.countByMemberId(memberId))
+        if (findCompCnt(memberId) != questRepository.countByMemberId(memberId))
             throw new ChallengeException(ErrorCode.QUEST_NOT_COMPLETE);
 
         // 오늘 이미 퀘스트 전체 달성 보상 받았는지 확인
-        if(redisTemplate.hasKey("TotalReward:"+memberId)){
-            if(redisTemplate.opsForValue().get("TotalReward:"+memberId).equals(LocalDate.now().toString())){
+        if (redisTemplate.hasKey("TotalReward:" + memberId)) {
+            if (redisTemplate.opsForValue().get("TotalReward:" + memberId).equals(LocalDate.now().toString())) {
                 throw new ChallengeException(ErrorCode.REWARD_ALREADY_RECEIVED);
             }
         }
@@ -135,22 +133,35 @@ public class QuestServiceImpl implements QuestService {
                 .plus(1);
 
         // Redis에 보상 여부 업데이트
-        redisTemplate.opsForValue().set("TotalReward:"+memberId, LocalDate.now().toString());
+        redisTemplate.opsForValue().set("TotalReward:" + memberId, LocalDate.now().toString());
+    }
+
+    @Override
+    public FindTotalQuestDto findTotalQuest(Long memberId) {
+        boolean compFlag = questRepository.countByMemberIdAndCompFlagIsTrue(memberId) == questRepository.countByMemberId(memberId);
+        boolean rewardFlag = false;
+
+        if (redisTemplate.hasKey("TotalReward:" + memberId)) {
+            rewardFlag = redisTemplate.opsForValue().get("TotalReward:" + memberId).equals(LocalDate.now().toString());
+        }
+
+        return FindTotalQuestDto.builder()
+                .compFlag(compFlag)
+                .rewardFlag(rewardFlag)
+                .build();
     }
 
     private void createQuest(Long memberId) {
-
         for (int i = 1; i <= 5; i++) {
             questRepository.save(Quest.builder()
                     .memberId(memberId)
                     .questNo((byte) i)
                     .build());
         }
-
     }
 
     @Scheduled(cron = "0 0 0 * * *")
-    public void resetQuest(){
+    public void resetQuest() {
         questRepository.setCompFlagAndRewardFlagFalse();
     }
 

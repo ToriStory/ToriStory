@@ -5,15 +5,9 @@ import lombok.Data;
 
 @Data
 @Builder
-public class FindQuestRes {
-
-    private int questNo;
-
-    private String questTitle;
+public class FindTotalQuestDto {
 
     private boolean compFlag;
-
-    private int compCnt;
 
     private boolean rewardFlag;
 
