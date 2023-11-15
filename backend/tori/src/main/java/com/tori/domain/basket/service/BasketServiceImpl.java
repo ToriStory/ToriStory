@@ -1,8 +1,6 @@
 package com.tori.domain.basket.service;
 
-import com.tori.domain.asset.entity.Asset;
 import com.tori.domain.asset.entity.MemberAsset;
-import com.tori.domain.asset.repository.AssetRepository;
 import com.tori.domain.asset.repository.MemberAssetRepository;
 import com.tori.domain.basket.dto.response.FindLetterRes;
 import com.tori.domain.basket.entity.Basket;
@@ -19,7 +17,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Optional;
 
 

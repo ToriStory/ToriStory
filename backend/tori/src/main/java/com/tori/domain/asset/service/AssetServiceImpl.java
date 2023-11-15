@@ -4,6 +4,7 @@ import com.tori.domain.asset.dto.response.FindAssetRes;
 import com.tori.domain.asset.entity.MemberAsset;
 import com.tori.domain.asset.repository.MemberAssetRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,6 +28,16 @@ public class AssetServiceImpl implements AssetService {
                             .AssetCnt(memberAsset.getAssetCnt())
                             .build()
         ).collect(Collectors.toList());
+    }
+
+    @Scheduled(cron = "0 0 0 * * 1-6")
+    public void sendDailyTotoriTicket() {
+        memberAssetRepository.setDailyAssetCntByAssetNm();
+    }
+
+    @Scheduled(cron = "0 0 0 * * 7")
+    public void sendSatTotoriTicket() {
+        memberAssetRepository.setSatAssetCntByAssetNm();
     }
 
 }
