@@ -115,7 +115,7 @@ public class CommonChallengeServiceImpl implements CommonChallengeService {
 	}
 
 	@Override
-	@Scheduled(fixedDelay = 60000)
+	@Scheduled(cron = "0 1 0 * * *")
 	public void renewalCommonChallenge() {
 		CommonChallenge todayCommon = commonChallengeRepository.findByTodayFlagIsTrue()
 			.orElseThrow(() -> new ChallengeException(ErrorCode.TODAY_COMMON_CHALLENGE_NOT_FOUND));
