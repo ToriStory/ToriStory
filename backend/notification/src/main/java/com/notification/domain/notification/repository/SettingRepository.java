@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface SettingRepository extends JpaRepository<Setting, Long> {
 
-    @Query("select s.memberId from Setting s where s.alarmFlag = true")
+    @Query("select s.memberId from Setting s where s.notificationFlag = true")
     List<Long> findMemberIdByAlarmFlagIsTrue();
 
 }

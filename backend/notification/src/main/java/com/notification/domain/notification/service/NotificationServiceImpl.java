@@ -84,7 +84,7 @@ public class NotificationServiceImpl implements NotificationService {
     private List<String> findNotificationToken(List<Long> notificationList) {
         List<String> fcmTokenList = new ArrayList<>();
         for (Long memberId : notificationList) {
-            if (redisTemplate.hasKey("FCM Token: " + memberId)) {
+            if (redisTemplate.hasKey("FCM Token: " + memberId) && !redisTemplate.opsForValue().get("FCM Token: " + memberId).equals("")) {
                 fcmTokenList.add(redisTemplate.opsForValue().get("FCM Token: " + memberId));
             }
         }
