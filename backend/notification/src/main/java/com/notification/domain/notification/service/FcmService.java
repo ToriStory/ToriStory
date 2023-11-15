@@ -57,7 +57,7 @@ public class FcmService {
                         .notification(FcmMessage.Notification.builder()
                                 .title(title)
                                 .body(body)
-                                .icon("https://tori-bucket.s3.ap-northeast-2.amazonaws.com/main_logo/icon-128x128.png")
+                                .image("https://tori-bucket.s3.ap-northeast-2.amazonaws.com/main_logo/icon-128x128.png")
                                 .build()
                         )
                         .build()
