@@ -186,7 +186,7 @@ public class RandomChallengeServiceImpl implements RandomChallengeService {
         RandomChallenge randomChallenge = randomChallengeRepository.findById(challengeId)
             .orElseThrow(() -> new ChallengeException(ErrorCode.RANDOM_CHALLENGE_NOT_FOUND));
 
-        if (randomChallenge.getMemberId() != memberId) {
+        if (!randomChallenge.getMemberId().equals(memberId)) {
             throw new ChallengeException(ErrorCode.RANDOM_MEMBER_NOT_MATCH);
         }
 
