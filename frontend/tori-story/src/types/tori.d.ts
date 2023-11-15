@@ -6,3 +6,9 @@ export interface ToriCollectionItemProps {
   limitedFlag: boolean;
   collectionFlag: boolean;
 }
+
+export interface LetterItemProps {
+  letter: string;
+  gift: string;
+  giftCnt: number;
+}
