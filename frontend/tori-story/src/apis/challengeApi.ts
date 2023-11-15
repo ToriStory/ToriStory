@@ -176,7 +176,7 @@ export const patchCommonChallengeReviewAPI = async (commonChallengeId: number, p
 export const getQuestApi = async () => {
   const url = apiUrl + 'quest';
   const res = await axios.get(url);
-  return res;
+  return res.data;
 };
 
 // 수령할 보상이 있는지 확인

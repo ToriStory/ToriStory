@@ -1,6 +1,12 @@
 import axios from 'apis';
+import { Response } from 'types';
+import { LetterItemProps } from 'types/tori';
 
 const apiUrl = '/tori/';
+
+interface LetterResponse extends Response {
+  data: LetterItemProps;
+}
 
 // 토리 도감 가져오기
 export const getToriCollection = async () => {
@@ -33,7 +39,7 @@ export const getBasket = async () => {
 // 쪽지 조회
 export const getLetter = async () => {
   const url = apiUrl + 'basket/letter';
-  const res = await axios.get(url);
+  const res = await axios.get<LetterResponse>(url);
   return res.data;
 };
 
