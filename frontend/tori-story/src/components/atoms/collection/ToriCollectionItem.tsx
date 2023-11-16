@@ -6,22 +6,25 @@ import { cls } from 'utils/cls';
 
 export const ToriCollectionItem = ({
   toriCollection,
-  myToriCollection,
-}: {
+  setIsCollectionListModalOpen,
+}: // myToriCollection,
+{
   toriCollection: ToriCollectionItemProps;
-  myToriCollection: number | undefined;
+  setIsCollectionListModalOpen: (isOpen: boolean) => void;
+  // myToriCollection: number | undefined;
 }) => {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  console.log(myToriCollection);
 
   return (
     <>
       <div
         className={cls(
           `w-full rounded-lg  ${
-            toriCollection.collectionFlag ? ' bg-white bg-opacity-40 ' : 'bg-[#FFEEC0] opacity-60'
+            toriCollection.collectionFlag
+              ? ' bg-[#fde7aa] bg-opacity-70 '
+              : 'bg-[#fef1cb] opacity-30'
           }`
         )}
         onClick={handleOpen}
@@ -40,7 +43,11 @@ export const ToriCollectionItem = ({
             'absolute top-1/2 right-1/2 translate-x-1/2 -translate-y-1/2 w-10/12 bg-white p-4 rounded-lg'
           )}
         >
-          <ToriCollectionDetail handleClose={handleClose} toriCollection={toriCollection} />
+          <ToriCollectionDetail
+            handleClose={handleClose}
+            toriCollection={toriCollection}
+            setIsCollectionListModalOpen={setIsCollectionListModalOpen}
+          />
         </div>
       </Modal>
     </>

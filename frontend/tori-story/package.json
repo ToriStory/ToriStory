@@ -16,6 +16,7 @@
     "@mui/x-date-pickers": "^6.16.3",
     "@sentry/react": "^7.77.0",
     "@sentry/vite-plugin": "^2.9.0",
+    "@types/canvas-confetti": "^1.6.3",
     "@types/lodash": "^4.14.200",
     "@types/prop-types": "^15.7.9",
     "@types/react-transition-group": "^4.4.8",
