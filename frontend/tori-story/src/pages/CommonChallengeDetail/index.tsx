@@ -81,7 +81,7 @@ const CommonChallengeDetail = () => {
       <ImgDialog
         openModal={showImgModal}
         setIsModalOpen={setShowImgModal}
-        child={<img srcSet={selectImg} src={selectImg} alt={selectImg} loading='lazy' />}
+        children={<img srcSet={selectImg} src={selectImg} alt={selectImg} loading='lazy' />}
       />
     </div>
   );

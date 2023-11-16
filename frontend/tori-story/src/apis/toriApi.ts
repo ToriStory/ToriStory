@@ -49,3 +49,10 @@ export const getToriAsset = async () => {
   const res = await axios.get(url);
   return res.data;
 };
+
+// 토토리 뽑아서 얻은 결과
+export const getTotori = async () => {
+  const url = apiUrl + 'totori';
+  const res = await axios.post(url);
+  return res;
+};
