@@ -45,7 +45,7 @@ public class SecurityConfig {
                                 .antMatchers(HttpMethod.POST, "/refresh").permitAll()
                                 .antMatchers(HttpMethod.POST, "/sendPwEmail").permitAll()
                                 .antMatchers(HttpMethod.POST, "/checkPwLink").permitAll()
-                                .antMatchers(HttpMethod.POST, "/modifyPw").permitAll()
+                                .antMatchers(HttpMethod.PATCH, "/modifyPw").permitAll()
                                 .antMatchers(HttpMethod.GET, "/profile/**").permitAll()
 
                                 // 그 외 요청은 모두 인증 필요
