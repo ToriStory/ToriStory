@@ -105,7 +105,7 @@ const TogetherCustomChallengeList = () => {
           className={cls('max-h-[calc(100%-56px)] overflow-y-auto pb-12')}
           ref={scrollContainerRef}
         >
-          {isLoading && (
+          {isLoading ? (
             <Skeleton
               variant='rounded'
               width='100%'
@@ -115,18 +115,7 @@ const TogetherCustomChallengeList = () => {
                 marginTop: '16px',
               }}
             />
-          )}
-          {error && (
-            <div
-              className={cls(
-                'bg-white w-full h- py-10 rounded-lg bg-opacity-90 flex flex-col items-center justify-center text-lg'
-              )}
-            >
-              <img src={ErrorMushRoom} alt='에러 이미지' />
-              <div className={cls('mt-4')}>데이터를 불러오는 중 오류가 생겼어요..</div>
-            </div>
-          )}
-          {searchResults && searchResults[0].totalCustomChallengeList.length > 0 ? (
+          ) : searchResults && searchResults[0].totalCustomChallengeList.length > 0 ? (
             <div className={cls('pb-10')}>
               {searchResults?.map((searchResultItem) =>
                 searchResultItem?.totalCustomChallengeList.map((result: CustomChallengeProps) => (
@@ -165,6 +154,16 @@ const TogetherCustomChallengeList = () => {
               <img src={ErrorMushRoom} alt='에러 이미지' />
               <div className={cls('mt-8')}>생성된 도전이 없어요</div>
               <div>도전을 만들어 봐요!</div>
+            </div>
+          )}
+          {error && (
+            <div
+              className={cls(
+                'bg-white w-full h- py-10 rounded-lg bg-opacity-90 flex flex-col items-center justify-center text-lg'
+              )}
+            >
+              <img src={ErrorMushRoom} alt='에러 이미지' />
+              <div className={cls('mt-4')}>데이터를 불러오는 중 오류가 생겼어요..</div>
             </div>
           )}
 

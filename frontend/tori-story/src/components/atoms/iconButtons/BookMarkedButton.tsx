@@ -28,7 +28,7 @@ export const BookMarkedButton = () => {
             )}
           >
             <div className={cls('w-fit h-fit')}>
-              <div className={cls('w-1/3 mx-auto')}>
+              <div className={cls('w-1/3 mx-auto animate__animated animate__bounceIn')}>
                 <h2
                   className={cls(
                     'text-center underline decoration-orange-400/60 font-bold text-2xl text-orange-900 p-1 rounded-xl -mt-5 bg-white bg-opacity-80'
@@ -40,7 +40,7 @@ export const BookMarkedButton = () => {
 
               <div
                 className={cls(
-                  'w-auto h-auto text-gray-700 relative flex items-center justify-center'
+                  'w-auto h-auto text-gray-700 relative flex items-center justify-center animate__animated animate__bounceIn'
                 )}
               >
                 <img src={OldPaperScroll} alt='도감 페이지' />
@@ -53,7 +53,7 @@ export const BookMarkedButton = () => {
                     'absolute h-5/6 w-2/3 overflow-y-scroll top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2'
                   )}
                 >
-                  <ToriCollectionList />
+                  <ToriCollectionList setIsCollectionListModalOpen={setIsModalOpen} />
                 </div>
               </div>
             </div>

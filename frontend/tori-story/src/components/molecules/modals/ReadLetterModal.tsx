@@ -21,9 +21,7 @@ export const ReadLetterModal = ({
   setImgUrl,
 }: ReadLetterModalProps) => {
   const handleCancelButton = () => {
-    console.log('닫기~');
-
-    // setOpenModal(false);
+    setOpenModal(false);
     setBasketState(0);
     setImgUrl(EmptyBasket);
   };
@@ -43,7 +41,7 @@ export const ReadLetterModal = ({
   return (
     <>
       {openModal && (
-        <Modal setIsModalOpen={setOpenModal} hasModalImg={true}>
+        <Modal setIsModalOpen={setOpenModal} hasModalImg={true} useModal={true}>
           <div
             className={cls(
               'fixed mx-6 inset-0 flex items-center top-16 bg-orange-500 justify-center animate__animated animate__fadeInDown'

@@ -4,7 +4,7 @@ import { useLocation } from 'react-router-dom';
 interface ModalProps {
   isOverlap?: boolean;
   hasModalImg?: boolean;
-  notUseModal?: boolean;
+  useModal?: boolean;
   setIsModalOpen: (isOpen: boolean) => void;
   children: React.ReactNode;
 }
@@ -12,14 +12,14 @@ interface ModalProps {
 export default function Modal({
   isOverlap,
   hasModalImg,
-  notUseModal,
+  useModal,
   setIsModalOpen,
   children,
 }: ModalProps) {
   const location = useLocation();
 
   const handleClose = () => {
-    if (notUseModal) {
+    if (!useModal) {
       setIsModalOpen(false);
     }
   };
