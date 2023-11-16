@@ -58,7 +58,10 @@ const CustomChallengeMemory = () => {
       <Typography sx={{ display: 'flex', justifyContent: 'end', color: orange200 }}>
         *촬영한 사진은 삭제되지 않습니다.
       </Typography>
-      <ImageUpload buttonProps={{ title: '등록하기', onClick: handleUploadMemory }} />
+      <ImageUpload
+        buttonProps={{ title: '등록하기', onClick: handleUploadMemory }}
+        optionProps={{ selectPhoto: true }}
+      />
       <OnceDialog
         content='사진이 등록되었습니다.'
         buttonTitle='확인'

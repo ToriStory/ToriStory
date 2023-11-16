@@ -1,15 +1,8 @@
-import {
-  Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
-} from '@mui/material';
+import { Button } from '@mui/material';
 import { AddSquareButton } from 'components/atoms/iconButtons/AddSquareButton';
 import { orange300 } from 'constants/color';
 import { atom, useAtom } from 'jotai';
-import { useEffect, useRef, useState } from 'react';
+import { useRef } from 'react';
 import { cls } from 'utils/cls';
 
 interface ImageUploadProps {
@@ -23,7 +16,6 @@ export interface ButtonProps {
 }
 
 export interface PhotoOptionProps {
-  takePhoto?: boolean;
   selectPhoto?: boolean;
 }
 
@@ -34,27 +26,14 @@ const ImageUpload = ({ buttonProps, optionProps = {} }: ImageUploadProps) => {
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const [file, setFile] = useAtom(fileAtom);
   const [selectedImage, setSelectedImage] = useAtom(selectedImageAtom);
-  const [usingModal, setUsingModal] = useState(false);
-  const [openModal, setOpenModal] = useState(false);
   const { title, onClick } = buttonProps;
-  const { takePhoto = true, selectPhoto = false } = optionProps;
-
-  useEffect(() => {
-    if (takePhoto && selectPhoto) {
-      setUsingModal(true);
-    }
-  }, []);
+  const { selectPhoto = false } = optionProps;
 
   const handleTakePhoto = () => {
     if (fileInputRef.current) {
       fileInputRef.current.click();
     }
-    handleCloseModal();
   };
-
-  // const handleSelectPhoto = () => {
-  //   handleCloseModal();
-  // };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
@@ -66,21 +45,13 @@ const ImageUpload = ({ buttonProps, optionProps = {} }: ImageUploadProps) => {
     }
   };
 
-  const handleOpenModal = () => {
-    setOpenModal(true);
-  };
-
-  const handleCloseModal = () => {
-    setOpenModal(false);
-  };
-
   return (
     <div className={cls('h-full flex flex-col justify-center items-center relative')}>
       {selectedImage ? (
         <img
           src={selectedImage}
           alt='Selected Image'
-          onClick={usingModal ? handleOpenModal : handleTakePhoto}
+          onClick={handleTakePhoto}
           className={cls('max-w-full max-h-[400px]')}
         />
       ) : (
@@ -88,7 +59,7 @@ const ImageUpload = ({ buttonProps, optionProps = {} }: ImageUploadProps) => {
           <AddSquareButton
             size={100}
             color={orange300}
-            onClick={usingModal ? handleOpenModal : handleTakePhoto}
+            onClick={handleTakePhoto}
             className={cls('flex justify-center items-center')}
           />
         </div>
@@ -115,25 +86,11 @@ const ImageUpload = ({ buttonProps, optionProps = {} }: ImageUploadProps) => {
       <input
         type='file'
         accept='image/*'
-        capture='environment'
+        {...(selectPhoto ? {} : { capture: 'environment' })}
         ref={fileInputRef}
         className={cls('hidden')}
         onChange={handleFileChange}
       />
-
-      <Dialog open={openModal} onClose={handleCloseModal}>
-        <DialogTitle>사진 선택 옵션</DialogTitle>
-        <DialogContent sx={{ display: 'flex', flexDirection: 'column' }}>
-          <DialogContentText></DialogContentText>
-          {takePhoto && <Button onClick={handleTakePhoto}>사진 촬영하기</Button>}
-          {/* {selectPhoto && <Button onClick={handleSelectPhoto}>앨범에서 선택하기</Button>} */}
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleCloseModal} color='primary'>
-            닫기
-          </Button>
-        </DialogActions>
-      </Dialog>
     </div>
   );
 };
