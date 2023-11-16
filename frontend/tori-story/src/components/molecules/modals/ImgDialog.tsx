@@ -5,12 +5,19 @@ import { cls } from 'utils/cls';
 
 interface ImgDialogProps {
   title?: string;
+  isExitAnimate?: boolean;
   openModal: boolean;
   setIsModalOpen: (isOpen: boolean) => void;
   children: React.ReactNode;
 }
 
-const ImgDialog = ({ title, children, openModal, setIsModalOpen }: ImgDialogProps) => {
+const ImgDialog = ({
+  title,
+  children,
+  openModal,
+  setIsModalOpen,
+  isExitAnimate,
+}: ImgDialogProps) => {
   const handleClose = () => {
     setIsModalOpen(false);
   };
@@ -21,7 +28,13 @@ const ImgDialog = ({ title, children, openModal, setIsModalOpen }: ImgDialogProp
         <div className={cls('relative p-2 flex flex-col bg-orange-50 rounded-sm')}>
           <div className={cls('relative flex mb-4 h-6 text-orange-800')}>
             {title && (
-              <div className={cls('absolute inset-x-0 top-0 text-center')}>
+              <div
+                className={cls(
+                  `absolute inset-x-0 top-0 text-center animate__animated animate__bounceIn ${
+                    isExitAnimate ? 'animate__animated animate__bounceOut' : ''
+                  }`
+                )}
+              >
                 <LabelSimple title={title} />
               </div>
             )}

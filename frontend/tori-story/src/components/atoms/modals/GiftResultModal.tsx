@@ -7,7 +7,7 @@ import TotoriTicket from 'assets/images/TotoriTicket.svg';
 import { Button } from '@mui/material';
 import { getTotori } from 'apis/toriApi';
 import { toast } from 'react-toastify';
-import { useAtom } from 'jotai';
+import { useAtom, useSetAtom } from 'jotai';
 import { dotoriCntAtom, randomCntAtom, totoriCntAtom } from 'stores/dotoriStore';
 
 interface GiftResultModalProps {
@@ -27,10 +27,10 @@ interface totoriMap {
 const GiftResultModal = ({ openModal, setIsModalOpen, handlePickButton }: GiftResultModalProps) => {
   const [modalTitle, setModalTitle] = useState<string>('');
   const [imgSrc, setImgSrc] = useState<string>('');
-  const [animateBox, setAnimateBox] = useState<boolean>(false);
+  const [isExitAnimate, setIsExitAnimate] = useState<boolean>(false);
   const [dotoriCnt, setDotoriCnt] = useAtom(dotoriCntAtom);
   const [randomCnt, setRandomCnt] = useAtom(randomCntAtom);
-  const [totoriCnt, setTotoriCnt] = useAtom(totoriCntAtom);
+  const setTotoriCnt = useSetAtom(totoriCntAtom);
 
   const assetList: totoriMap = {
     DOTORI: {
@@ -46,7 +46,7 @@ const GiftResultModal = ({ openModal, setIsModalOpen, handlePickButton }: GiftRe
     TOTORI_TICKET: {
       getTitle: (cnt?: number) => `토토리 티켓 ${cnt}개`,
       getSrc: (src: string | null) => src ?? `${TotoriTicket}`,
-      setAtom: (cnt: number) => setTotoriCnt(totoriCnt + cnt),
+      setAtom: (cnt: number) => setTotoriCnt((prev) => prev + cnt),
     },
     TORI: {
       getTitle: (_?: number, name?: string) => (name ? `${name}` : '이름 없음'),
@@ -82,9 +82,9 @@ const GiftResultModal = ({ openModal, setIsModalOpen, handlePickButton }: GiftRe
     if (result === false) {
       return;
     }
-    setAnimateBox(true);
+    setIsExitAnimate(true);
     setTimeout(function () {
-      setAnimateBox(false);
+      setIsExitAnimate(false);
       sendPick();
     }, 600);
   };
@@ -94,10 +94,19 @@ const GiftResultModal = ({ openModal, setIsModalOpen, handlePickButton }: GiftRe
   };
 
   return (
-    <ImgDialog title={modalTitle} openModal={openModal} setIsModalOpen={closeModal}>
+    <ImgDialog
+      title={modalTitle}
+      openModal={openModal}
+      setIsModalOpen={closeModal}
+      isExitAnimate={isExitAnimate}
+    >
       <div className={cls('flex justify-center items-center my-6')}>
         <img
-          className={cls(`w-20 ${animateBox ? 'animate__animated  animate__rotateOut' : ''}`)}
+          className={cls(
+            `w-20 animate__animated animate__bounceIn ${
+              isExitAnimate ? 'animate__animated animate__bounceOut' : ''
+            }`
+          )}
           src={imgSrc}
         ></img>
       </div>
