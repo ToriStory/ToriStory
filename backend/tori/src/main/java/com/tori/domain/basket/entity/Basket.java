@@ -1,6 +1,7 @@
 package com.tori.domain.basket.entity;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import javax.persistence.*;
 
@@ -35,16 +36,22 @@ public class Basket {
 	private byte giftCnt;
 
 	@Column(nullable = false)
-	private LocalDate sendDt;
+	private LocalDateTime sendDtm;
 
 	@Column(nullable = false, columnDefinition = "TINYINT(1)")
 	private boolean openFlag;
 
 	@Builder
-	public Basket(Long memberId, byte giftCnt, LocalDate sendDt) {
+	public Basket(Long memberId, Letter letter, Gift gift, byte giftCnt, LocalDateTime sendDtm) {
 		this.memberId = memberId;
+		this.letter = letter;
+		this.gift = gift;
 		this.giftCnt = giftCnt;
-		this.sendDt = sendDt;
+		this.sendDtm = sendDtm;
+	}
+
+	public void read() {
+		this.openFlag = true;
 	}
 
 }

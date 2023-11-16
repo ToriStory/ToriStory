@@ -1,17 +1,35 @@
 package com.tori.domain.collection.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
+import com.tori.domain.collection.dto.response.CollectionRes;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
+@SqlResultSetMapping(
+		name = "CollectionResMapping",
+		classes = @ConstructorResult(
+				targetClass = CollectionRes.class,
+				columns = {
+						@ColumnResult(name = "id", type = Byte.class),
+						@ColumnResult(name = "toriName", type = String.class),
+						@ColumnResult(name = "price", type = Integer.class),
+						@ColumnResult(name = "imgUrl", type = String.class),
+						@ColumnResult(name = "limitedFlag", type = Boolean.class),
+						@ColumnResult(name = "collectionFlag", type = Boolean.class)
+				}
+		)
+)
+@NamedNativeQuery(
+		name = "ToriCollection.findAllByMemberId",
+		query = "SELECT t.tori_collection_id as id, t.tori_nm as toriName, t.price as price, t.img_url as imgUrl, t.limited_flag as limitedFlag, " +
+				"(m.member_collection_id IS NOT NULL) as collectionFlag " +
+				"FROM tori_collection t " +
+				"LEFT JOIN member_collection m ON t.tori_collection_id = m.tori_collection_id AND m.member_id = :memberId",
+		resultSetMapping = "CollectionResMapping"
+)
 @Table(name = "tori_collection")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
