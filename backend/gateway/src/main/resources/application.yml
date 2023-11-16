@@ -1,3 +1,7 @@
+logging:
+  level:
+    com.gateway: DEBUG
+
 server:
   port: 8200
 
@@ -6,14 +10,24 @@ spring:
     gateway:
       routes:
         - id: auth-service
-          uri: http://k9a402.p.ssafy.io:8201
+          uri: http://tori-story.com:8201
           predicates:
             - Path=/member/**
         - id: challenge-service
-          uri: http://k9a402.p.ssafy.io:8202
+          uri: http://tori-story.com:8202
+          filters:
+            - AuthFilter
           predicates:
             - Path=/challenge/**
         - id: tori-service
-          uri: http://k9a402.p.ssafy.io:8203
+          uri: http://tori-story.com:8203
+          filters:
+            - AuthFilter
           predicates:
             - Path=/tori/**
+        - id: thank-service
+          uri: http://tori-story.com:8205
+          filters:
+            - AuthFilter
+          predicates:
+            - Path=/thank/**
