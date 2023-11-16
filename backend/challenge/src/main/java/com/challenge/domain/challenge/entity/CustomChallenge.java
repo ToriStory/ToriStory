@@ -20,7 +20,7 @@ public class CustomChallenge {
     @Column(columnDefinition = "BIGINT UNSIGNED")
     private BigInteger customChallengeId;
 
-    @Column(length = 20, nullable = false, columnDefinition = "INT UNSIGNED")
+    @Column(nullable = false, columnDefinition = "INT UNSIGNED")
     private Long memberId;
 
     @Column(length = 20, nullable = false)
@@ -45,6 +45,18 @@ public class CustomChallenge {
         this.memberId = memberId;
         this.content = content;
         this.displayFlag = displayFlag;
+    }
+
+    public void scrap() {
+        this.scrapCnt += 1;
+    }
+
+    public void report() {
+        this.reportCnt += 1;
+    }
+
+    public void blur() {
+        this.displayFlag = false;
     }
 
 }

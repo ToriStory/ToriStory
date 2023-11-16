@@ -1,16 +1,19 @@
 package com.challenge.domain.challenge.service;
 
 import com.challenge.domain.challenge.dto.response.FindRandomRes;
-import com.challenge.domain.challenge.dto.response.FindTotalChallengeRes;
 
 import java.math.BigInteger;
 
+import org.springframework.web.multipart.MultipartFile;
+
 public interface RandomChallengeService {
 
-    FindRandomRes findRandomChallenge(String accessToken);
+    FindRandomRes findRandomChallenge(Long memberId);
 
-    FindRandomRes modifyRandomId(String accessToken);
+    FindRandomRes modifyRandomId(Long memberId);
 
-    void modifyRandomCompFlag(String accessToken);
+    void modifyRandomCompFlag(Long memberId);
+
+    boolean findRandomCertAi(Long memberId, BigInteger challengeId, MultipartFile image);
 
 }

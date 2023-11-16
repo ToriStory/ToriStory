@@ -3,6 +3,7 @@ package com.tori.domain.collection.entity;
 import javax.persistence.*;
 
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -23,5 +24,11 @@ public class MemberCollection {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "tori_collection_id", nullable = false)
 	private ToriCollection toriCollection;
+
+	@Builder
+	public MemberCollection(Long memberId, ToriCollection toriCollection) {
+		this.memberId = memberId;
+		this.toriCollection = toriCollection;
+	}
 
 }

@@ -54,5 +54,8 @@ logging:
       apache:
         tiles: INFO
     root: INFO
+    com.auth: DEBUG
 server:
   port: 8201
+  servlet:
+    context-path: /member

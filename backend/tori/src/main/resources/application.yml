@@ -56,4 +56,5 @@ logging:
     root: INFO
 server:
   port: 8203
-
+  servlet:
+    context-path: /tori

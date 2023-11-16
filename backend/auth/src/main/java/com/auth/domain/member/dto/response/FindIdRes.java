@@ -7,6 +7,6 @@ import lombok.Getter;
 @Builder
 public class FindIdRes {
 
-    private int id;
+    private long id;
 
 }

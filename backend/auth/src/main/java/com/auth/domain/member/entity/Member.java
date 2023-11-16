@@ -15,7 +15,7 @@ public class Member {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(columnDefinition = "INT UNSIGNED")
-    private Integer memberId;
+    private Long memberId;
 
     @Column(nullable = false, unique = true, length = 320)
     private String email;
@@ -29,13 +29,29 @@ public class Member {
     @Column(nullable = false, length = 2048)
     private String imgUrl;
 
+    @Column(nullable = false, columnDefinition = "TINYINT UNSIGNED")
+    private Byte profile;
+
     @Builder
-    public Member(String email, String pw, String nickname, String imgUrl) {
+    public Member(String email, String pw, String nickname, String imgUrl, Byte profile) {
         this.email = email;
         this.pw = pw;
         this.nickname = nickname;
-        // TODO: 추후 기본 이미지 경로 수정
-        this.imgUrl = (imgUrl != null) ? imgUrl : "/img/default_profile.png";
+        this.imgUrl = imgUrl;
+        this.profile = profile;
+    }
+
+    public void changePassword(String pw) {
+        this.pw = pw;
+    }
+
+    public void changeNickname(String nickname) {
+        this.nickname = nickname;
+    }
+
+    public void changeProfile(String imgUrl, Byte profile) {
+        this.imgUrl = imgUrl;
+        this.profile = profile;
     }
 
 }
