@@ -19,11 +19,14 @@ public class CommonChallenge {
     @Column(nullable = false, length = 20)
     private String content;
 
-    @Enumerated(EnumType.STRING)
-    @Column(length = 5, nullable = false)
-    private Category category;
-
     @Column(nullable = false, columnDefinition = "tinyint(1)")
     private boolean todayFlag;
+
+    @Column(nullable = false, length = 20)
+    private String unit;
+
+    public void renewal() {
+        this.todayFlag = !this.todayFlag;
+    }
 
 }
