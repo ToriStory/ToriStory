@@ -6,6 +6,7 @@ import { dotoriCntAtom } from 'stores/dotoriStore';
 import { useSetAtom } from 'jotai';
 import { useState } from 'react';
 import { isQuestExistenceAtom } from 'stores/questStore';
+import { BadgeCheck } from 'lucide-react';
 
 export const ToriQuestItem = ({ questItem }: { questItem: RewardProps }) => {
   const setDotoriCnt = useSetAtom(dotoriCntAtom);
@@ -31,14 +32,16 @@ export const ToriQuestItem = ({ questItem }: { questItem: RewardProps }) => {
       <div className={cls('px-4 py-2')}>{questItem.questTitle}</div>
       <div
         className={cls(
-          `absolute flex inset-y-0 right-0 p-2 rounded-r-md questItem.rewardFlag w-16 justify-center ${
-            questItem.compFlag ? 'bg-orange-400 text-white' : 'bg-orange-50 text-gray-500'
+          `absolute flex inset-y-0 right-0 p-2 rounded-r-md questItem.rewardFlag w-16 justify-center items-center  ${
+            questItem.compFlag
+              ? ' border-l-2 border-orange-50 text-orange-300'
+              : 'bg-orange-50 text-gray-500'
           }`
         )}
         onClick={() => handleComplete()}
       >
         {isCompleted ? (
-          <div>완료</div>
+          <BadgeCheck />
         ) : questItem.compFlag || questItem.compCnt === -1 ? (
           <div className={cls('flex items-center justify-center text-center')}>
             <img

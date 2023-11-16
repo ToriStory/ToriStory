@@ -43,7 +43,7 @@ export const QuestButton = () => {
             <span className='absolute z-10 -top-1 -right-1 inline-flex rounded-full h-3 w-3 bg-red-400'></span>
           </>
         )}
-        <button className={cls('rounded-lg p-1 text-white bg-orange-300 w-fit mb-4')}>
+        <button className={cls('rounded-lg p-1 text-white bg-orange-300 w-fit')}>
           <ScrollText size={30} />
         </button>
       </div>

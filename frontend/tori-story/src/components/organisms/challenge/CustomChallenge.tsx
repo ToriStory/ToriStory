@@ -147,7 +147,7 @@ const CustomChallenge = ({
         <ImgDialog
           openModal={showImgModal}
           setIsModalOpen={setShowImgModal}
-          child={
+          children={
             <>
               <img srcSet={props.imgUrl} src={props.imgUrl} alt={props.imgUrl} loading='lazy' />
               <div className={cls('flex justify-center items-center mt-5')}>
