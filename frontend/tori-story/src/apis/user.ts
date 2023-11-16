@@ -149,7 +149,7 @@ export const withdrawalAPI = async () => {
 
 export const updateUserAPI = async (data: UpdateUserProps) => {
   const url = memberUrl;
-  const res = await axios.put<NonNullishResponse>(url, data);
+  const res = await axios.patch<NonNullishResponse>(url, data);
   return res;
 };
 
@@ -167,7 +167,7 @@ export const checkPasswordLinkAPI = async (data: CheckResetPasswordLinkCodeProps
 
 export const updatePasswordAPI = async (data: CheckResetPassword) => {
   const url = memberUrl + 'modifyPw';
-  const res = await axios.post<NonNullishResponse>(url, data);
+  const res = await axios.patch<NonNullishResponse>(url, data);
   return res;
 };
 
