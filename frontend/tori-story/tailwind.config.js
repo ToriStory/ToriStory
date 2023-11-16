@@ -52,6 +52,20 @@ export default {
         unbeePuding: ['unbeePuding'],
         unbeePudingBold: ['unbeePudingBold'],
       },
+      keyframes: {
+        wiggle: {
+          '0%, 100%': { transform: 'rotate(-5deg)' },
+          '50%': { transform: 'rotate(5deg)' },
+        },
+        shake: {
+          '0%, 100%': { transform: 'translateX(0.1rem)' },
+          '50%': { transform: 'translateX(-0.1rem)' },
+        },
+      },
+      animation: {
+        wiggle: 'wiggle 0.3s ease-in-out infinite',
+        shake: 'shake 0.3s ease-in-out infinite',
+      },
     },
   },
 };

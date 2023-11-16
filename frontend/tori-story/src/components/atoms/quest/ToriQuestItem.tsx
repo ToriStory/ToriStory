@@ -34,7 +34,9 @@ export const ToriQuestItem = ({ questItem }: { questItem: RewardProps }) => {
         className={cls(
           `absolute flex inset-y-0 right-0 p-2 rounded-r-md questItem.rewardFlag w-16 justify-center items-center  ${
             questItem.compFlag
-              ? ' border-l-2 border-orange-50 text-orange-300'
+              ? questItem.rewardFlag
+                ? 'border-l-2 border-orange-50 text-orange-300'
+                : 'bg-orange-400 text-white'
               : 'bg-orange-50 text-gray-500'
           }`
         )}

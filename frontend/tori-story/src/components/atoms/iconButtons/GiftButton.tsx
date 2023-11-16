@@ -62,7 +62,7 @@ export const GiftButton = () => {
       }
     } else {
       if (isFromContinue) {
-        setTotoriCnt(totoriCnt - 1);
+        setTotoriCnt((prev) => prev - 1);
       } else {
         setOpenUseTicketModal(true);
       }
@@ -89,14 +89,13 @@ export const GiftButton = () => {
       <ImgDialog title='토토리' openModal={openGiftModal} setIsModalOpen={setOpenGiftModal}>
         <div className={cls('relative flex flex-col justify-center items-center my-6')}>
           <img
-            className={cls(
-              `absolute w-[55%] z-20 ${
-                animateBox ? ' animate__animated animate__wobble animate__infinite' : ''
-              }`
-            )}
+            className={cls(`absolute w-[55%] z-20 ${animateBox ? 'animate-wiggle' : ''}`)}
             src={TotoriBoxHeader}
           ></img>
-          <img className={cls('w-1/2 z-10')} src={TotoriBoxBody}></img>
+          <img
+            className={cls(`w-1/2 z-10 ${animateBox ? 'animate-shake' : ''}`)}
+            src={TotoriBoxBody}
+          ></img>
         </div>
         <Button
           variant='contained'
