@@ -238,7 +238,7 @@ public class MemberController {
                         .build());
     }
 
-    @PostMapping("/modifyPw")
+    @PatchMapping("/modifyPw")
     @ApiOperation(value = "비밀번호 재설정")
     public ResponseEntity<EnvelopRes> modifyPw(@Valid @RequestBody ModifyPwReq modifyPwReq){
 
