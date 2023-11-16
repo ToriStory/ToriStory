@@ -26,16 +26,22 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
 
+        log.debug("request uri: {}", request.getRequestURI());
+        log.debug("request url: {}", request.getRequestURL());
         log.debug("JwtAuthenticationFilter::doFilterInternal() called");
 
         String token = request.getHeader("Authorization"); // header에서 token 꺼내기
 
         if (request.getHeader("Authorization") == null) {
+            log.debug("Authorization header is null");
             filterChain.doFilter(request, response);
             return;
         }
 
+        token = jwtProvider.removeBearer(token);
+        log.debug("Authentication Filter - token: {}", token);
         if (!jwtProvider.validateToken(token)){
+            log.debug("token is not valid");
             filterChain.doFilter(request, response);
             return;
         }

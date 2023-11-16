@@ -18,7 +18,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler({IllegalArgumentException.class, AuthException.class})
     protected ResponseEntity<EnvelopRes<String>> handleIllegalArgumentException(AuthException e) {
-        log.error("handleIllegalArgumentException", e.getErrorCode().getMessage());
+        log.error("handleIllegalArgumentException:{}", e.getErrorCode().getMessage());
         return ResponseEntity.status(e.getErrorCode().getCode()).body(
                 EnvelopRes.<String>builder()
                         .code(e.getErrorCode().getCode())
@@ -35,7 +35,7 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler({MethodArgumentNotValidException.class, UnexpectedTypeException.class})
     protected ResponseEntity<EnvelopRes<String>> handleValidationException(Exception e) {
-        log.error("handleIllegalArgumentException", e.getMessage());
+        log.error("handleIllegalArgumentException:{}", e.getMessage());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
                 EnvelopRes.<String>builder()
                         .code(HttpStatus.BAD_REQUEST.value())
