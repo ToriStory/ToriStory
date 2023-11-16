@@ -225,6 +225,9 @@ public class MemberServiceImpl implements MemberService {
 
             log.debug("Member Service: sendPwEmail() method called.........");
 
+            if(!memberRepository.existsByEmail(sendPwEmailReq.getEmail()))
+                throw new AuthException(ErrorCode.NO_SUCH_MEMBER);
+
             String setPwCode = createPwCode();
 
             // 이미 같은 코드가 있으면 중복 되지 않을 때까지 재생성
