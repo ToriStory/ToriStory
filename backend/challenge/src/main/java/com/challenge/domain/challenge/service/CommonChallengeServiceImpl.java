@@ -93,7 +93,7 @@ public class CommonChallengeServiceImpl implements CommonChallengeService {
 
 
 	@Override
-	@Scheduled(cron = "0 0 0 * * *")
+	@Scheduled(cron = "0 0 0 * * *", zone = "Asia/Seoul")
 	public void receiveCommonReward() {
 		// 오늘 공동 도전 과제 unit 값 가져오기
 		CommonChallenge todayChallenge = commonChallengeRepository.findByTodayFlagIsTrue().
@@ -115,7 +115,7 @@ public class CommonChallengeServiceImpl implements CommonChallengeService {
 	}
 
 	@Override
-	@Scheduled(cron = "0 1 0 * * *")
+	@Scheduled(cron = "0 1 0 * * *", zone = "Asia/Seoul")
 	public void renewalCommonChallenge() {
 		CommonChallenge todayCommon = commonChallengeRepository.findByTodayFlagIsTrue()
 			.orElseThrow(() -> new ChallengeException(ErrorCode.TODAY_COMMON_CHALLENGE_NOT_FOUND));
