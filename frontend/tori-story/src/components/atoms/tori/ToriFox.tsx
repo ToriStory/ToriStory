@@ -95,7 +95,7 @@ export const ToriFox = () => {
               placement='top'
               title='조금 기다리면 여우가 편지를 물고 올 거에요!'
             >
-              <img src={imgUrl} alt='산딸기 바구니' className={cls('w-28 pb-1')} />
+              <img src={imgUrl} alt='산딸기 바구니' className={cls('w-28 pb-4')} />
             </LightTooltip>
           </div>
         </ClickAwayListener>
@@ -104,7 +104,7 @@ export const ToriFox = () => {
           <img
             src={imgUrl}
             alt='여우'
-            className={cls(`${imgUrl === Fox ? 'w-32' : 'w-28 pb-1'}`)}
+            className={cls(`${imgUrl === Fox ? 'w-32' : 'w-28 pb-4'} `)}
           />
         </div>
       )}
