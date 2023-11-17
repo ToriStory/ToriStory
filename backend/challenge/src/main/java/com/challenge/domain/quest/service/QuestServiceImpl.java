@@ -160,7 +160,7 @@ public class QuestServiceImpl implements QuestService {
         }
     }
 
-    @Scheduled(cron = "0 0 0 * * *")
+    @Scheduled(cron = "0 0 0 * * *", zone = "Asia/Seoul")
     public void resetQuest() {
         questRepository.setCompFlagAndRewardFlagFalse();
     }
