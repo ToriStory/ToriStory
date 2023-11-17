@@ -27,7 +27,7 @@ public class NotificationServiceImpl implements NotificationService {
 
     @Override
     @Transactional
-    @Scheduled(cron = "0 0 9 * * ?")
+    @Scheduled(cron = "0 0 9 * * ?", zone = "Asia/Seoul")
     public void sendMorningMessage() throws JsonProcessingException {
 
         fcmService.sendNotificationByFCMToken(
@@ -39,7 +39,7 @@ public class NotificationServiceImpl implements NotificationService {
 
     @Override
     @Transactional
-    @Scheduled(cron = "0 0 13 * * ?")
+    @Scheduled(cron = "0 0 13 * * ?", zone = "Asia/Seoul")
     public void sendAfternoonMessage() throws JsonProcessingException {
 
         fcmService.sendNotificationByFCMToken(
@@ -51,7 +51,7 @@ public class NotificationServiceImpl implements NotificationService {
 
     @Override
     @Transactional
-    @Scheduled(cron = "0 0 21 * * ?")
+    @Scheduled(cron = "0 0 21 * * ?", zone = "Asia/Seoul")
     public void sendEveningMessage() throws JsonProcessingException {
 
         fcmService.sendNotificationByFCMToken(
@@ -63,7 +63,7 @@ public class NotificationServiceImpl implements NotificationService {
 
     @Override
     @Transactional
-    @Scheduled(cron = "0 0/1 * * * ?")
+    @Scheduled(cron = "0 0/1 * * * ?", zone = "Asia/Seoul")
     public void sendLetterMessage() throws JsonProcessingException {
         List<Long> notificationMemberList = findNotificationMember();
 
