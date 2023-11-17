@@ -11,17 +11,25 @@
 @font-face {
   font-weight: 700;
   font-family: 'unbeePudingBold';
-  src: url('./assets/fonts/puding Bold.ttf') format('truetype');
+  src: url('./assets/fonts/UhBee-puding-Bold.ttf') format('truetype');
 }
 
 @font-face {
   font-weight: 400;
   font-family: 'unbeePuding';
-  src: url('./assets/fonts/UnBee puding.ttf') format('truetype');
+  src: url('./assets/fonts/UhBee-puding.ttf') format('truetype');
 }
 
 @font-face {
   font-weight: 400;
   font-family: 'omyu';
   src: url('./assets/fonts/오뮤_다예쁨체.ttf') format('truetype');
+}
+
+body {
+  -ms-overflow-style: none;
+}
+
+::-webkit-scrollbar {
+  display: none;
 }

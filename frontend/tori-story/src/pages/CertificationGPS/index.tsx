@@ -1,24 +1,57 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { cls } from 'utils/cls';
 import './gpsAnimation.css';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { myChallengePage } from 'constants/pathname';
+import CertificationResultModal from 'components/organisms/certification/CerfiticationResultModal';
+import { patchCompRandomChallengeApi } from 'apis/challengeApi';
+import { useAtomValue } from 'jotai';
+import { profileToriImgUrlAtom } from 'stores/dotoriStore';
+import Bush from 'assets/images/Bush.png';
 
-interface CertificationGPSResponse {
-  result: boolean;
-}
+const delayedTime: number = 4000;
+const radius = 100;
 
 const CertificationGPS = () => {
+  const profileImg = useAtomValue<string>(profileToriImgUrlAtom);
+  const [result, setResult] = useState<boolean>(false);
+  const [showModal, setShowModal] = useState<boolean>(false);
   const navigate = useNavigate();
   const {
-    state: { id, type },
+    state: { keyword },
   } = useLocation();
+
+  const cerficicate = (latitude: number, longitude: number) => {
+    // 내 주변 반경 radius (m) 에 keyword가 포함된 장소 개수를 불러온다
+    const options = {
+      x: longitude,
+      y: latitude,
+      radius: radius,
+    };
+    const ps = new kakao.maps.services.Places();
+    const callback = function (_data: any, status: any) {
+      if (status === kakao.maps.services.Status.OK) {
+        setResult(true);
+        patchCompRandomChallengeApi();
+        setShowModal(true);
+      } else if (status === kakao.maps.services.Status.ZERO_RESULT) {
+        setResult(false);
+        setShowModal(true);
+      } else {
+        alert('서버 응답에 문제가 발생했습니다.');
+      }
+    };
+    if (keyword && keyword.trim().length !== 0) {
+      ps.keywordSearch(keyword, callback, options);
+    }
+  };
 
   const getLocation = () => {
     if ('geolocation' in navigator) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
-          sendRequest(position.coords.latitude, position.coords.longitude);
+          cerficicate(position.coords.latitude, position.coords.longitude);
         },
         (error) => {
           console.error('위치 정보를 가져오는 동안 오류가 발생했습니다:', error.message);
@@ -29,27 +62,22 @@ const CertificationGPS = () => {
     }
   };
 
-  const sendRequest = (latitude: number, longitude: number) => {
-    const requestDto = {
-      latitude: latitude,
-      longitude: longitude,
-      challengeId: id,
-      challengeType: type,
-    };
+  const handleNavigate = () => {
+    setShowModal(false);
+    navigate(myChallengePage.path, { replace: true });
+  };
 
-    console.log(requestDto); // api 요청
-    const response: CertificationGPSResponse = { result: false };
-    if (response.result === true) {
-      // 성공 모달
-      console.log('성공');
-    } else {
-      // 실패 모달
-      console.log('실패');
-    }
+  const handleRetry = () => {
+    setShowModal(false);
+    setTimeout(() => {
+      getLocation();
+    }, delayedTime);
   };
 
   useEffect(() => {
-    getLocation();
+    setTimeout(() => {
+      getLocation();
+    }, delayedTime);
   }, []);
 
   return (
@@ -70,25 +98,20 @@ const CertificationGPS = () => {
             'w-48 h-48 border-2 border-orange-300 rounded-full absolute z-30 animate-expand'
           )}
         ></div>
-        <div
-          className={cls('w-24 h-24 border-2 bg-orange-600 rounded-full z-40')}
-          onClick={() => navigate(myChallengePage.path, { replace: true })}
-        >
-          취소
+        <div className={cls('w-24 h-24 mt-32 z-30 absolute')}>
+          <img src={Bush} alt='bush'></img>
         </div>
-        <div
-          className={cls('w-24 h-24 border-2 bg-orange-600 rounded-full z-40')}
-          onClick={getLocation}
-        >
-          다시 시도
-        </div>
-        <div
-          className={cls('w-24 h-24 border-2 bg-orange-600 rounded-full z-40')}
-          onClick={() => navigate(myChallengePage.path, { replace: true })}
-        >
-          확인
+        <div className={cls('w-24 h-24 ml-4 z-40')}>
+          <img src={profileImg} alt='profile'></img>
         </div>
       </div>
+      {showModal && (
+        <CertificationResultModal
+          result={result}
+          handleNavigate={handleNavigate}
+          handleRetry={handleRetry}
+        />
+      )}
     </div>
   );
 };

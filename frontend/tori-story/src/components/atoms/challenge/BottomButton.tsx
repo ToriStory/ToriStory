@@ -1,24 +1,17 @@
-import { Button } from '@mui/material';
-// import useAppNavigation from 'hooks/useAppNavigation';
-// import { CATEGORY } from 'constants/certificationCategory';
+import { cls } from 'utils/cls';
 
-interface CardButtonProps {
+interface BottomButtonProps {
   title: string;
-  onClick: (e: React.MouseEvent<HTMLButtonElement>) => void;
+  onClick: (e: React.MouseEvent<HTMLDivElement>) => void;
+  className?: string;
 }
 
-const CardButton = ({ title, onClick }: CardButtonProps) => {
+const BottomButton = ({ title, onClick, className }: BottomButtonProps) => {
   return (
-    <Button
-      variant='contained'
-      sx={{ boxShadow: 'none', borderRadius: '0.6rem' }}
-      size='medium'
-      style={{ marginLeft: 'auto' }}
-      onClick={onClick}
-    >
-      {title}
-    </Button>
+    <div className={cls('p-1 px-4 bg-orange-400 rounded-lg text-white')} onClick={onClick}>
+      <div className={className ? className : ''}> {title}</div>
+    </div>
   );
 };
 
-export default CardButton;
+export default BottomButton;

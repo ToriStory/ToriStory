@@ -1,15 +1,7 @@
-import { orange100, orange600 } from 'constants/color';
+import { cls } from 'utils/cls';
 
 const ChallengeCategory = ({ title }: { title: string }) => {
-  return <div style={divStyle}>{title}</div>;
-};
-
-const divStyle = {
-  borderRadius: '0.6rem',
-  backgroundColor: orange100,
-  padding: '0px 16px',
-  margin: '0px 8px 0px 0px',
-  color: orange600,
+  return <div className={cls('p-1 px-4 bg-orange-100 rounded-2xl text-orange-600')}>{title}</div>;
 };
 
 export default ChallengeCategory;

@@ -1,10 +1,17 @@
+import { sentryVitePlugin } from '@sentry/vite-plugin';
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import jotaiDebugLabel from 'jotai/babel/plugin-debug-label';
 import jotaiReactRefresh from 'jotai/babel/plugin-react-refresh';
 
 export default defineConfig({
-  plugins: [react({ babel: { plugins: [jotaiDebugLabel, jotaiReactRefresh] } })],
+  plugins: [
+    react({ babel: { plugins: [jotaiDebugLabel, jotaiReactRefresh] } }),
+    sentryVitePlugin({
+      org: '3f56768989e9',
+      project: 'javascript-react',
+    }),
+  ],
   resolve: {
     alias: {
       src: '/src',
@@ -23,10 +30,20 @@ export default defineConfig({
       templates: '/src/components/templates',
     },
   },
+  build: {
+    rollupOptions: {
+      input: {
+        main: '/index.html',
+        sw: './sw.js',
+      },
+    },
+
+    sourcemap: true,
+  },
   server: {
     proxy: {
       '/api': {
-        target: 'http://k9a402.p.ssafy.io/',
+        target: 'https://tori-story.com',
         changeOrigin: true,
         secure: true,
       },

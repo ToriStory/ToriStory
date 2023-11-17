@@ -2,87 +2,150 @@ export const splashPage = {
   path: '/splash',
   label: '스플래시',
 };
-export const landingPage = {
+
+export const appPage = {
   path: '/',
+  label: '초기화면',
+};
+
+export const landingPage = {
+  path: '/landing',
   label: '랜딩',
 };
 
-export const appPage = {
-  path: '/app',
-  label: '초기화면',
-};
 export const signInPage = {
   path: '/auth/signin',
   label: '로그인',
 };
+
 export const signUpPage = {
   path: '/auth/signup',
   label: '회원가입',
 };
+
+export const findPasswordPage = {
+  path: '/auth/findpw',
+  label: '비밀번호 찾기',
+};
+
+export const resetPasswordPage = {
+  path: '/auth/resetpw',
+  label: '비밀번호 재설정',
+};
+
 export const myChallengePage = {
-  path: '/app/challenge/my',
+  path: '/challenge/my',
   label: '나의 도전',
 };
-export const togetherChallengePage = {
-  path: '/app/challenge/together',
-  label: '나도 도전',
+
+export const commonChallengeDetailPage = {
+  path: '/challenge/my/common',
+  label: '공동 도전 상세',
 };
+
+export const commonChallengeReviewPage = {
+  path: '/challenge/my/review',
+  label: '사진 공유',
+};
+
+export const customChallengeMemoryPage = {
+  path: '/challenge/my/memory',
+  label: '추억 남기기',
+};
+
+export const togetherChallengePage = {
+  path: '/challenge/together',
+  label: '함께 도전',
+};
+
+export const thankNotePage = {
+  path: '/thank',
+  label: '감사일기',
+};
+
+export const createThankNotePage = {
+  path: '/thank/create',
+  label: '감사일기 쓰기',
+};
+
 export const totoriPage = {
-  path: '/app/totori',
+  path: '/totori',
   label: '토토리',
 };
+
 export const createChallengePage = {
-  path: '/app/challenge/together/create',
+  path: '/challenge/together/create',
   label: '도전 생성',
 };
 
 export const gpsCertificationPage = {
-  path: '/app/challenge/my/certification/gps',
+  path: '/challenge/my/certification/gps',
   label: 'GPS 인증',
 };
+
 export const imageCertificationPage = {
-  path: '/app/challenge/my/certification/picture',
+  path: '/challenge/my/certification/picture',
   label: '사진 인증',
 };
-export const imageMemoryPage = {
-  path: '/app/challenge/my/memory/picture',
-  label: '추억 남기기',
-};
+
 export const myToriPage = {
-  path: '/app/mytori',
-  label: '나의 토리',
+  path: '/mytori',
+  label: '마이 토리',
 };
+
 export const myPagePage = {
-  path: '/app/mypage',
-  label: '나의 추억',
+  path: '/mypage',
+  label: '마이페이지',
 };
+
+export const updateUserInfoPage = {
+  path: '/mypage/update',
+  label: '회원정보 수정',
+};
+
 export const notificationPage = {
-  path: '/app/notification',
+  path: '/notification',
   label: '알림',
 };
+
 export const settingPage = {
-  path: '/app/setting',
+  path: '/setting',
   label: '설정',
 };
+
+export const privatePolicyPage = {
+  path: '/policy/private',
+  label: '개인정보처리방침',
+};
+
 export const testPage = {
-  path: '/app/test',
+  path: '/test',
   label: '설정',
 };
+
 export const pathname = [
   testPage,
+  thankNotePage,
+  createThankNotePage,
   splashPage,
   landingPage,
   signInPage,
   signUpPage,
+  findPasswordPage,
+  resetPasswordPage,
   myChallengePage,
+  commonChallengeDetailPage,
+  commonChallengeReviewPage,
+  customChallengeMemoryPage,
   togetherChallengePage,
   totoriPage,
   createChallengePage,
   gpsCertificationPage,
   imageCertificationPage,
-  imageMemoryPage,
   myToriPage,
   myPagePage,
+  updateUserInfoPage,
   notificationPage,
   settingPage,
+  privatePolicyPage,
 ];

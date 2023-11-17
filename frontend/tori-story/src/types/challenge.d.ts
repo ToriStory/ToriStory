@@ -1,4 +1,4 @@
-export interface customChallengeProps {
+export interface CustomChallengeProps {
   id: number;
   content: string;
   scrapCnt: number;
@@ -6,19 +6,42 @@ export interface customChallengeProps {
   regDtm: number;
 }
 
-export interface customChallengeListProps {
-  totalCustomChallengeList: customChallengeProps[];
+export interface CustomChallengeListProps {
+  totalCustomChallengeList: CustomChallengeProps[];
   hasNext: boolean;
   nextCursor: number;
   nextPage: number;
 }
 
-export interface customChallengeCreateProps {
+export interface CustomChallengeCreateProps {
   content: string;
   endDt: string | null;
   displayFlag: boolean;
 }
 
-export interface customChallengeScrapProps {
-  endDt: string;
+export interface CustomChallengeScrapProps {
+  endDt: string | null;
+}
+
+/* AI 인증 */
+export interface CertificationResponse {
+  result: boolean;
+}
+
+export interface FetchParams {
+  sort: number | null;
+  keyword?: string | null;
+}
+
+export interface ReportCustomChallenge {
+  customChallengeId: number;
+  reason: number;
+}
+
+export interface RewardProps {
+  questNo: number;
+  questTitle: string;
+  compFlag: boolean;
+  compCnt: number;
+  rewardFlag: boolean;
 }

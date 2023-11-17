@@ -1,116 +1,160 @@
 import Challenge from './Challenge';
 import HeaderLeft from 'components/molecules/challenge/HeaderLeft';
-import BottomButton from 'components/atoms/challenge/BottomButton';
-// import useAppNavigation from 'hooks/useAppNavigation';
-import { IconButton } from '@mui/material';
 import HeaderRight from 'components/molecules/challenge/HeaderRight';
-import { Siren, X } from 'lucide-react';
-import { cls } from 'utils/cls';
+import { BadgeCheck, BadgeX, Image, X } from 'lucide-react';
+import { gray500, orange300, orange500 } from 'constants/color';
 import { useState } from 'react';
-import ChoiceModal from 'components/molecules/modals/ChoiceModal';
-import useAppNavigation from 'hooks/useAppNavigation';
+import BottomLeft from 'components/molecules/challenge/BottomLeft';
+import dayjs from 'dayjs';
+import BottomButton from 'components/atoms/challenge/BottomButton';
+import ChoiceDialog from 'components/molecules/modals/ChoiceDialog';
+import { DialogContentText } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
+import { customChallengeMemoryPage } from 'constants/pathname';
+import ImgDialog from 'components/molecules/modals/ImgDialog';
+import { cls } from 'utils/cls';
 
 export interface CustomChallengeProps {
   id: number;
   content: string;
-  scrapCnt?: number;
-  reportCnt?: number;
-  regDtm?: number;
   startDt?: string;
-  endDt?: string;
+  endDt?: string | null;
   compFlag?: boolean;
-  imgUrl?: string;
+  imgUrl: string | null;
 }
 
 const CustomChallenge = ({
   props,
   deleteChallenge,
   completeChallenge,
+  isMyChallenge,
 }: {
   props: CustomChallengeProps;
   deleteChallenge?: (id: number) => void;
   completeChallenge?: (id: number) => void;
+  isMyChallenge?: boolean;
 }) => {
-  const navigate = useAppNavigation();
-
-  const [openModal, setOpenModal] = useState<boolean>(false);
-  const rightBottomButtonLabel = props.regDtm ? '나도!' : '완료';
+  const navigate = useNavigate();
+  const [openDeleteModal, setOpenDeleteModal] = useState<boolean>(false);
+  const [openMemoryModal, setOpenMemoryModal] = useState<boolean>(false);
+  const [showImgModal, setShowImgModal] = useState<boolean>(false);
 
   const handleCompleted = () => {
-    // navigate.navigateToMemory();
     if (completeChallenge) {
-      setOpenModal(true);
       completeChallenge(props.id);
     }
   };
 
   const handleDelete = () => {
+    setOpenDeleteModal(true);
+  };
+
+  const handleShowImage = () => {
+    if (props.imgUrl) {
+      setShowImgModal(true);
+    } else {
+      setOpenMemoryModal(true);
+    }
+  };
+
+  const handleDeleteButton = () => {
+    setOpenDeleteModal(false);
     if (deleteChallenge) {
-      alert('삭제하시겠습니까?');
       deleteChallenge(props.id);
-      // 삭제 request
     }
   };
 
-  const handleReport = () => {
-    alert('신고하시겠습니까?');
+  const handleNavigateMemory = () => {
+    navigate(customChallengeMemoryPage.path, {
+      state: { customEntryId: props.id },
+    });
   };
 
-  const button = (
-    <>
-      {'together' in location ? (
-        <IconButton onClick={handleReport}>
-          <Siren size={20} className={cls('text-gray-400')} />
-        </IconButton>
-      ) : (
-        <IconButton onClick={handleDelete}>
-          <X size={20} className={cls('text-gray-400')} />
-        </IconButton>
-      )}
-    </>
-  );
-
-  const handleCancelButton = () => {
-    setOpenModal(false);
-  };
-
-  const handleJoinButton = () => {
-    navigate.navigateToTogetherChallengeCreate();
-  };
-
-  const handleRightBottomButton = () => {
-    {
-      'together' in location ? handleCompleted : handleReport;
+  const getRemainingPeriod = (): string => {
+    if (!props.endDt) {
+      return '상시';
     }
+
+    const today = dayjs().startOf('day');
+    const endDay = dayjs(props.endDt).startOf('day');
+    const diff = endDay.diff(today, 'day');
+
+    if (diff === 0) {
+      return 'D-day';
+    }
+    return `D-${diff}`;
   };
+
+  const deleteIconButton = <X size={20} color={gray500} onClick={handleDelete} />;
+
+  const imgIconButton = <Image size={20} color={orange500} onClick={handleShowImage} />;
 
   return (
     <>
-      {openModal && (
-        <ChoiceModal
-          cancelButtonLabel={'취소하기'}
-          cancelButtonAction={() => handleCancelButton()}
-          okayButtonLabel={'참여하기'}
-          okayButtonAction={() => handleJoinButton()}
-          setIsModalOpen={setOpenModal}
-        >
-          <div className={cls('my-4 text-center')}>
-            <div className={cls('font-bold text-lg text-gray-800')}>도전명: {props.content}</div>
-            <div>해당 도전을 가져오시겠습니까?</div>
-          </div>
-        </ChoiceModal>
-      )}
-      {props.compFlag === true ? (
-        <></>
-      ) : (
+      {isMyChallenge ? (
         <Challenge
-          headerLeft={<HeaderLeft challengeCategory='자유' />}
-          headerRight={<HeaderRight button={button} />}
-          //   bottomRight={<BottomButton title='기록' onClick={handleMemory} />}
+          headerLeft={<HeaderLeft challengeCategory='자유' otherElement={imgIconButton} />}
+          headerRight={<HeaderRight button={deleteIconButton} />}
           bottomRight={
-            <BottomButton title={rightBottomButtonLabel} onClick={handleRightBottomButton} />
+            props.compFlag ? (
+              <BadgeCheck size={24} color={orange300} />
+            ) : (
+              <BadgeX size={16} color={gray500} />
+            )
           }
           content={props.content}
+        />
+      ) : (
+        <Challenge
+          headerLeft={<HeaderLeft challengeCategory='자유' otherElement={imgIconButton} />}
+          headerRight={<HeaderRight button={deleteIconButton} />}
+          bottomLeft={<BottomLeft content={getRemainingPeriod()} />}
+          bottomRight={
+            props.compFlag ? (
+              <BadgeCheck size={24} color={orange300} />
+            ) : (
+              <BottomButton title='완료' onClick={handleCompleted} />
+            )
+          }
+          content={props.content}
+        />
+      )}
+      <ChoiceDialog
+        openModal={openDeleteModal}
+        setIsModalOpen={setOpenDeleteModal}
+        content={
+          <>
+            <DialogContentText>삭제하시겠습니까?</DialogContentText>
+          </>
+        }
+        leftButtonTitle='취소'
+        rigthButtonTitle='삭제'
+        rightButtonOnClick={handleDeleteButton}
+      />
+      <ChoiceDialog
+        openModal={openMemoryModal}
+        setIsModalOpen={setOpenMemoryModal}
+        content={
+          <>
+            <DialogContentText>등록된 사진이 없습니다.</DialogContentText>
+            <DialogContentText>추억으로 사진을 남기시겠습니까?</DialogContentText>
+          </>
+        }
+        rigthButtonTitle='추억 남기기'
+        rightButtonOnClick={handleNavigateMemory}
+      />
+      {props.imgUrl && (
+        <ImgDialog
+          openModal={showImgModal}
+          setIsModalOpen={setShowImgModal}
+          children={
+            <>
+              <img srcSet={props.imgUrl} src={props.imgUrl} alt={props.imgUrl} loading='lazy' />
+              <div className={cls('flex justify-center items-center mt-5')}>
+                <BottomButton title='수정하기' onClick={handleNavigateMemory} />
+              </div>
+            </>
+          }
         />
       )}
     </>

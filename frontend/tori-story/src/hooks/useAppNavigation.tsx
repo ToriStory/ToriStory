@@ -2,9 +2,9 @@ import {
   createChallengePage,
   gpsCertificationPage,
   imageCertificationPage,
-  imageMemoryPage,
   landingPage,
   myChallengePage,
+  commonChallengeDetailPage,
   myPagePage,
   myToriPage,
   notificationPage,
@@ -66,8 +66,8 @@ export const useAppNavigation = () => {
     navigate(imageCertificationPage.path);
   };
 
-  const navigateToMemory = () => {
-    navigate(imageMemoryPage.path);
+  const navigateToCommonChallengeDetail = () => {
+    navigate(commonChallengeDetailPage.path);
   };
 
   // MyTory
@@ -98,9 +98,9 @@ export const useAppNavigation = () => {
     navigateToTogetherChallengeCreate,
     navigateToLanding,
     navigateToMyChallenge,
+    navigateToCommonChallengeDetail,
     navigateToCertificationGPS,
     navigateToCertificationPhoto,
-    navigateToMemory,
     navigateToSignup,
     navigateToMyTori,
     navigateToMyPage,

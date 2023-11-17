@@ -5,12 +5,14 @@ import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import { myChallengePage, signUpPage } from 'constants/pathname';
+import { findPasswordPage, myToriPage, signUpPage } from 'constants/pathname';
 import { Link, useNavigate } from 'react-router-dom';
 import AuthBackground from 'components/atoms/background/AuthBackground';
 import { useForm } from 'react-hook-form';
 import { FormInputText } from 'components/atoms/input/FormInputText';
-import { signInAPI } from 'apis/auth';
+import { signInAPI } from 'apis/user';
+import { toast } from 'react-toastify';
+import { updateToast } from 'utils/toast';
 
 // function Copyright(props: any) {
 //   return (
@@ -26,6 +28,12 @@ import { signInAPI } from 'apis/auth';
 // }
 
 // TODO remove, this demo shouldn't need to reset the theme.
+
+interface SignInInput {
+  email: string;
+  password: string;
+}
+
 export default function SignIn() {
   const navigate = useNavigate();
   const { handleSubmit, control } = useForm({
@@ -35,15 +43,20 @@ export default function SignIn() {
     },
   });
 
-  const onSubmit = async (data: any) => {
+  const onSubmit = async (data: SignInInput) => {
+    const signInToastId = toast.loading('로그인 중입니다');
+    const fcmToken = localStorage.getItem('fcmToken');
     const res = await signInAPI({
       email: data.email,
       password: data.password,
+      fcmToken: fcmToken,
     });
-    console.log(res);
     if (res.status === 200) {
+      updateToast(signInToastId, '로그인에 성공했습니다!', 'success');
       localStorage.setItem('accessToken', res.data.data.accessToken);
-      navigate(myChallengePage.path, { replace: true });
+      navigate(myToriPage.path, { replace: true });
+    } else {
+      updateToast(signInToastId, '로그인에 실패했습니다!', 'error');
     }
   };
 
@@ -82,7 +95,6 @@ export default function SignIn() {
                 }}
                 autoFocus
               />
-              <div className='h-5' />
               <FormInputText
                 name='password'
                 control={control}
@@ -94,8 +106,8 @@ export default function SignIn() {
                 rules={{
                   required: { value: true, message: '비밀번호를 입력해주세요!' },
                   pattern: {
-                    value: /^(?=.*[a-zA-Z])(?=.*[0-9]).{8,20}$/,
-                    message: '영어와 숫자를 모두 사용하여 8~20자로 작성해주세요!',
+                    value: /^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*\W)(?=\S+$).{8,20}$/,
+                    message: '영어와 숫자, 특수문자를 모두 사용하여 8~20자로 작성해주세요!',
                   },
                 }}
               />
@@ -113,7 +125,7 @@ export default function SignIn() {
               </Button>
               <Grid container>
                 <Grid item xs>
-                  <Link to='#' className='underline text-orange-400'>
+                  <Link to={findPasswordPage.path} className='underline text-orange-400'>
                     비밀번호 찾기
                   </Link>
                 </Grid>

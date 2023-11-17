@@ -1,24 +1,18 @@
 import ChallengeCategory from 'components/atoms/challenge/ChallengeCategory';
+import { cls } from 'utils/cls';
 
 interface HeaderProps {
   challengeCategory: string;
-  certificationCategory?: React.ReactElement;
+  otherElement?: React.ReactElement;
 }
 
-const HeaderLeft = ({ challengeCategory, certificationCategory }: HeaderProps) => {
+const HeaderLeft = ({ challengeCategory, otherElement }: HeaderProps) => {
   return (
-    <div style={divStyle}>
+    <div className={cls('flex justify-start items-center gap-2')}>
       <ChallengeCategory title={challengeCategory} />
-      {certificationCategory && <>{certificationCategory}</>}
+      {otherElement && <>{otherElement}</>}
     </div>
   );
-};
-
-/* style */
-const divStyle = {
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'flex-start',
 };
 
 export default HeaderLeft;

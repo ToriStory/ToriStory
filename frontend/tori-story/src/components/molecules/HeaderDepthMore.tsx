@@ -3,19 +3,25 @@ import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import { createCustomChallengeApi } from 'apis/challengeApi';
+import { createCustomChallengeApi, createOtherCustomChallengeApi } from 'apis/challengeApi';
+import useAppNavigation from 'hooks/useAppNavigation';
 import { useAtom, useAtomValue } from 'jotai';
 import { ChevronLeft } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import {
   createChallengeDate,
   createChallengeDisplayFlag,
   createChallengeTitle,
 } from 'stores/challengeStore';
-import { customChallengeCreateProps } from 'types/challenge';
+import { CustomChallengeCreateProps, CustomChallengeScrapProps } from 'types/challenge';
+import { updateToast } from 'utils/toast';
 
 export default function HeaderDepthMore({ pathname }: { pathname: string }) {
   const navigate = useNavigate();
+  const navigation = useAppNavigation();
+
+  const { content, id } = useLocation().state || { content: '', id: -1 };
 
   const [challengeTitle, setChallengeTitle] = useAtom(createChallengeTitle);
   const challengeDate = useAtomValue(createChallengeDate);
@@ -23,21 +29,51 @@ export default function HeaderDepthMore({ pathname }: { pathname: string }) {
 
   const handleGoBack = () => {
     navigate(-1);
+    if (pathname === '도전 생성') {
+      setChallengeTitle('');
+      setChallengeisplayFlag(true);
+    }
   };
 
   const handleCreateChallenge = async () => {
     if (challengeTitle !== '') {
-      const createChallengeResponse: customChallengeCreateProps = {
-        content: challengeTitle,
-        endDt: challengeDate,
-        displayFlag: challengeisplayFlag,
-      };
-      const result = await createCustomChallengeApi(createChallengeResponse);
-      console.log(result);
-
-      navigate(-1);
-      setChallengeTitle('');
-      setChallengeisplayFlag(true);
+      let result;
+      if (content === '') {
+        const createChallengeResponse: CustomChallengeCreateProps = {
+          content: challengeTitle,
+          endDt: challengeDate,
+          displayFlag: challengeisplayFlag,
+        };
+        result = await createCustomChallengeApi(createChallengeResponse);
+        if (result.data.code === 201) {
+          navigation.navigateToMyChallenge();
+        } else {
+          const createChallengeToastId = toast.loading('나도 도전 생성 중입니다');
+          updateToast(createChallengeToastId, '나도 도전 생성에 실패했습니다', 'error', false, () =>
+            navigation.navigateToMyChallenge()
+          );
+        }
+      } else {
+        if (id !== -1) {
+          const customChallengeId = parseInt(id);
+          const updateChallengeResponse: CustomChallengeScrapProps = {
+            endDt: challengeDate,
+          };
+          result = await createOtherCustomChallengeApi(customChallengeId, updateChallengeResponse);
+          if (result.data.code === 201) {
+            navigation.navigateToMyChallenge();
+          } else {
+            const scrapChallengeToastId = toast.loading('도전을 스크랩 중입니다');
+            updateToast(scrapChallengeToastId, '도전 스크랩에 실패했습니다', 'error', false, () =>
+              navigation.navigateToMyChallenge()
+            );
+          }
+        }
+      }
+      if (result?.data.code === 201) {
+        setChallengeTitle('');
+        setChallengeisplayFlag(true);
+      }
     }
   };
 
@@ -58,7 +94,7 @@ export default function HeaderDepthMore({ pathname }: { pathname: string }) {
             component='div'
             sx={{ flexGrow: 1, display: 'block', textAlign: 'justify' }}
           >
-            {pathname}
+            {id !== -1 && pathname === '도전 생성' ? '나도 도전' : pathname}
           </Typography>
           {pathname === '도전 생성' && (
             <div
@@ -67,6 +103,15 @@ export default function HeaderDepthMore({ pathname }: { pathname: string }) {
             >
               저장
             </div>
+          )}
+          {pathname === '감사일기 쓰기' && (
+            <button
+              className='flex gap-4 justify-center items-center font-jua text-orange-400'
+              type='submit'
+              form='thankNoteForm'
+            >
+              저장
+            </button>
           )}
         </Toolbar>
       </AppBar>

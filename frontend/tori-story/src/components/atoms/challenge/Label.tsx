@@ -1,17 +1,18 @@
 import { cls } from 'utils/cls';
+import FlowerLabel from 'assets/images/FlowerLabel.png';
 
-const Label = ({ title }: { title: string }) => {
+interface LabelProps {
+  title: string;
+  className?: string;
+}
+
+const Label = ({ title, className = cls('w-52') }: LabelProps) => {
   return (
-    <div>
-      <h2
-        className={cls(
-          ' flex justify-center items-center underline decoration-orange-400/60 font-bold text-2xl text-orange-900  p-2 rounded-xl'
-        )}
-      >
-        {title}
-      </h2>
+    <div className={cls('relative flex justify-center items-center')}>
+      <h2 className={cls('absolute mb-2 text-white text-lg z-20')}>{title}</h2>
+      <img className={cls(className)} src={FlowerLabel} alt={title} />
     </div>
   );
 };
-// underline decoration-orange-400/60
+
 export default Label;

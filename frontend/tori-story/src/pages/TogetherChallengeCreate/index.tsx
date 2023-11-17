@@ -19,9 +19,12 @@ import {
   createChallengeTitle,
 } from 'stores/challengeStore';
 import { DATETYPE } from 'constants/challengeDateType';
+import { useLocation } from 'react-router-dom';
 
 export const TogetherChallengeCreate = () => {
   const currentDate = dayjs();
+
+  const { content } = useLocation().state;
 
   const [challengeName, setChallengeName] = useAtom(createChallengeTitle);
   const setChallengeEndDate = useSetAtom(createChallengeDate);
@@ -54,23 +57,30 @@ export const TogetherChallengeCreate = () => {
 
   useEffect(() => {
     setChallengeEndDate(selectedDate === null ? null : selectedDate.format(`YYYY-MM-DD`));
-  }, [selectedDate]);
+  }, [selectedDate, setChallengeEndDate]);
+
+  useEffect(() => {
+    if (content !== null) setChallengeName(content);
+  }, []);
 
   return (
     <div>
       <TextField
         id='demo-helper-text-misaligned'
-        label='나도도전명'
+        label='도전명'
         className='w-full mt-4'
         value={challengeName}
+        disabled={content !== ''}
         onChange={handleChallengeNameChange}
       />
-      <div className={cls('mt-4')}>
-        <FormControlLabel
-          control={<Switch name='gilad' onChange={handleSwitchChange} defaultChecked={true} />}
-          label={challengeDisplayFlag ? '공개' : '비공개'}
-        />
-      </div>
+      {content === '' && (
+        <div className={cls('mt-4')}>
+          <FormControlLabel
+            control={<Switch name='gilad' onChange={handleSwitchChange} defaultChecked={true} />}
+            label={challengeDisplayFlag ? '공개' : '비공개'}
+          />
+        </div>
+      )}
       <ToggleButtonGroup
         color='primary'
         value={alignment}
