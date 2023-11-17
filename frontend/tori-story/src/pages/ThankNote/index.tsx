@@ -44,12 +44,13 @@ const ThankNote = () => {
         <>
           <div className='h-full w-full fixed -z-30  left-0 top-0 flex justify-center items-center before:w-full before:h-full before:bg-[url("/background.jpg")] before:bg-cover before:bg-no-repeat before:bg-[center_left_30%] before:sm:bg-center before:opacity-80' />
           <div className={cls('max-h-full overflow-y-auto')}>
-            <div className='sticky top-0'>
-              <Label title={dayjs(today).format('YYYY년 MM월 DD일')} />
-            </div>
-            <div className='flex flex-col items-center justify-center text-xl'>
-              <div>연속 {thankNoteStatistics.continueCnt}일째 작성 중!</div>
+            <Label title={dayjs(today).format('YYYY년 MM월 DD일')} />
+            <div className='py-4 flex flex-col items-center justify-center bg-[url("/woodBoard.png")]  bg-cover bg-no-repeat rounded-xl border-2 border-orange-800 text-lg text-orange-900'>
+              {thankNoteStatistics.continueCnt > 0 && (
+                <div>연속 {thankNoteStatistics.continueCnt}일째 작성 중!</div>
+              )}
               <div>지금까지 총 {thankNoteStatistics.totalCnt}일 동안 감사일기를 작성했어요</div>
+              {thankNoteStatistics.continueCnt === 0 && <div>오늘 하루는 어땠나요?</div>}
             </div>
             <Label title='오늘의 일기' />
             <ThankNoteList activeDate={todayDate} />
