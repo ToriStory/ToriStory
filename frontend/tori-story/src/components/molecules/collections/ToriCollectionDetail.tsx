@@ -10,7 +10,7 @@ import { updateToriProfile } from 'apis/user';
 import { useAtom, useSetAtom } from 'jotai';
 import { dotoriCntAtom, profileToriImgUrlAtom } from 'stores/dotoriStore';
 import LabelSimple from 'components/atoms/challenge/LabelSimple';
-
+import { useFireworks } from 'hooks/useFireworks';
 export const ToriCollectionDetail = ({
   toriCollection,
   handleClose,
@@ -25,6 +25,7 @@ export const ToriCollectionDetail = ({
   const setToriUrlImg = useSetAtom(profileToriImgUrlAtom);
   const [openModal, setOpenModal] = useState<boolean>(false);
   const [errorMsg, setErrorMsg] = useState('');
+  const { startFireworks } = useFireworks();
 
   const handleAdoptButton = async (toriCollectionId: number, toriCollectionPrice: number) => {
     if (accessToken) {
@@ -34,6 +35,7 @@ export const ToriCollectionDetail = ({
         toriCollection.collectionFlag = true;
         setDotoriCnt(dotoriCnt - toriCollectionPrice);
         //TODO: 펑 터지는 애니메이션 효과 넣기!
+        startFireworks();
       } else if (result.status === 400) {
         setErrorMsg(result.data.data);
       } else {

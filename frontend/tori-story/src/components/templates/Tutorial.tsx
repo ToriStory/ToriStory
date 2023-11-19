@@ -25,7 +25,7 @@ export const Tutorial = ({ onClose }: { onClose: () => void }) => {
   };
 
   return (
-    <div className='bg-black bg-opacity-30 fixed h-full w-full top-0 left-0'>
+    <div className='z-30 bg-black bg-opacity-30 fixed h-full w-full top-0 left-0'>
       <X className='absolute top-16 right-1 z-10' onClick={onClose} />
       {currentTutorial === 1 && (
         <div className='absolute top-[3.9rem] left-2 w-20 h-[7.5rem] border-solid border-4'></div>

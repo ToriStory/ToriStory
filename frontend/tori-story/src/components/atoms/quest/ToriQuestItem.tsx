@@ -19,6 +19,7 @@ export const ToriQuestItem = ({ questItem }: { questItem: RewardProps }) => {
       if (result.status === 200) {
         setDotoriCnt((prev) => prev + 2);
         setIsCompleted(true);
+        questItem.rewardFlag = true;
         const result = await isReceivedReward();
         if (result.status === 200) {
           setIsQuestExistence(result.data.data.unclaimedRewards);
