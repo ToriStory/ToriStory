@@ -6,6 +6,7 @@ import { useFieldArray, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { updateToast } from 'utils/toast';
+import Dictaphone from 'components/atoms/stt/Dictaphone';
 
 export const CreateThankNote = () => {
   const useFormReturn = useForm({
@@ -15,7 +16,7 @@ export const CreateThankNote = () => {
   });
 
   const navigate = useNavigate();
-  const { register, control, handleSubmit } = useFormReturn;
+  const { register, control, handleSubmit, watch } = useFormReturn;
   const { fields, append, remove } = useFieldArray({
     control,
     name: 'thankNote',
@@ -37,8 +38,7 @@ export const CreateThankNote = () => {
 
   return (
     <div className='w-full flex pb-4 font-omyu'>
-      <div className='h-full w-full fixed -z-30  left-0 top-0 flex justify-center items-center bg-white opacity-80 before:w-full before:h-full before:bg-[url("/background.jpg")] before:bg-cover before:bg-no-repeat before:bg-[center_left_30%] before:sm:bg-center before:opacity-60' />
-
+      <div className='h-full w-full fixed -z-30  left-0 top-0 flex justify-center items-center bg-white opacity-80 before:w-full before:h-full before:bg-[url("/background.jpg")] before:bg-cover before:bg-no-repeat before:bg-[center_left_30%] before:sm:bg-center before:opacity-80' />
       <form
         id='thankNoteForm'
         className='w-full h-full flex flex-col items-center gap-4'
@@ -65,11 +65,14 @@ export const CreateThankNote = () => {
                     multiline
                     id={field.id}
                     label={`${index + 1} `}
-                    className='w-full bg-white rounded [&_textarea]:pr-14'
+                    InputLabelProps={{
+                      shrink: watch(`thankNote.${index}.content`).length > 0 ? true : false,
+                    }}
+                    className='w-full bg-white rounded [&_textarea]:pr-20'
                     {...register(`thankNote.${index}.content`)}
                   />
                   <div className='flex justify-center items-center absolute right-2 h-full w-fit text-right rounded-e border-none'>
-                    감사합니다
+                    <Dictaphone useForm={useFormReturn} index={index} />
                   </div>
                 </div>
                 <button className=' text-orange-400' type='button' onClick={() => remove(index)}>

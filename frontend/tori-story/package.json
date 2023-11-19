@@ -19,6 +19,7 @@
     "@types/canvas-confetti": "^1.6.3",
     "@types/lodash": "^4.14.200",
     "@types/prop-types": "^15.7.9",
+    "@types/react-speech-recognition": "^3.9.4",
     "@types/react-transition-group": "^4.4.8",
     "@types/scheduler": "^0.16.5",
     "animate.css": "^4.1.1",
@@ -36,7 +37,10 @@
     "react-kakao-maps-sdk": "^1.1.24",
     "react-modal-sheet": "^2.2.0",
     "react-router-dom": "^6.17.0",
+    "react-speech-kit": "^3.0.1",
+    "react-speech-recognition": "^3.10.0",
     "react-toastify": "^9.1.3",
+    "regenerator-runtime": "^0.14.0",
     "swr": "^2.2.4"
   },
   "devDependencies": {
