@@ -65,7 +65,10 @@ const CommonChallengeReview = () => {
       <Typography sx={{ display: 'flex', justifyContent: 'end', color: orange200 }}>
         *촬영한 사진은 저장, 수정, 삭제되지 않습니다.
       </Typography>
-      <ImageUpload buttonProps={{ title: '업로드', onClick: handleUpload }} />
+      <ImageUpload
+        buttonProps={{ title: '업로드', onClick: handleUpload }}
+        optionProps={{ selectPhoto: true }}
+      />
       <OnceDialog
         content='사진이 업로드 되었습니다.'
         buttonTitle='확인'
