@@ -27,7 +27,8 @@ import lombok.NoArgsConstructor;
 		query = "SELECT t.tori_collection_id as id, t.tori_nm as toriName, t.price as price, t.img_url as imgUrl, t.limited_flag as limitedFlag, " +
 				"(m.member_collection_id IS NOT NULL) as collectionFlag " +
 				"FROM tori_collection t " +
-				"LEFT JOIN member_collection m ON t.tori_collection_id = m.tori_collection_id AND m.member_id = :memberId",
+				"LEFT JOIN member_collection m ON t.tori_collection_id = m.tori_collection_id AND m.member_id = :memberId " +
+				"ORDER BY collectionFlag DESC, t.tori_collection_id",
 		resultSetMapping = "CollectionResMapping"
 )
 @Table(name = "tori_collection")
