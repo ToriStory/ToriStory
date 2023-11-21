@@ -1,5 +1,5 @@
-import { Divider, Switch } from '@mui/material';
-import { getNotificationSettingApi, updateNotificationSettingApi } from 'apis/challengeApi';
+import { Divider } from '@mui/material';
+import { getNotificationSettingApi } from 'apis/challengeApi';
 import { WithdrawalModal } from 'components/molecules/modals/withdrawalModal';
 import { privatePolicyPage } from 'constants/pathname';
 import { ChevronRight } from 'lucide-react';
@@ -18,13 +18,13 @@ const Setting = () => {
   const { data } = useSWR('/api/challenge/setting', () => getNotificationSettingApi());
   console.log(data?.data);
 
-  const [notificationFlag, setNotificationFlag] = useState(true);
+  // const [notificationFlag, setNotificationFlag] = useState(true);
 
-  const handleSwitchChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
-    setNotificationFlag(event.target.checked);
-    const res = await updateNotificationSettingApi(event.target.checked);
-    console.log(res);
-  };
+  // const handleSwitchChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
+  //   setNotificationFlag(event.target.checked);
+  //   const res = await updateNotificationSettingApi(event.target.checked);
+  //   console.log(res);
+  // };
 
   const defaultSettingMenu = [
     {
@@ -63,7 +63,7 @@ const Setting = () => {
 
   return (
     <div>
-      {accessToken && (
+      {/* {accessToken && (
         <>
           <div className={cls('my-4')}>
             <div className={cls('flex items-center px-2')}>
@@ -80,7 +80,7 @@ const Setting = () => {
 
           <Divider variant='fullWidth' />
         </>
-      )}
+      )} */}
       {accessToken
         ? loggedSettingMenu.map((menu, i) => (
             <div key={i}>

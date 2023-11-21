@@ -3,6 +3,7 @@ import { ToriCollectionDetail } from 'components/molecules/collections/ToriColle
 import { useState } from 'react';
 import { ToriCollectionItemProps } from 'types/tori';
 import { cls } from 'utils/cls';
+import LimitedBadge from 'assets/images/LimitedBadge.png';
 
 export const ToriCollectionItem = ({
   toriCollection,
@@ -19,17 +20,24 @@ export const ToriCollectionItem = ({
 
   return (
     <>
-      <div
-        className={cls(
-          `w-full rounded-lg  ${
+      <div className={cls(`w-full rounded-lg  `)} onClick={handleOpen}>
+        {toriCollection.limitedFlag && (
+          <div className='relative w-full'>
+            <img
+              src={LimitedBadge}
+              alt='limited'
+              className={cls('absolute w-8 top-2 right-2 z-30')}
+            />
+          </div>
+        )}
+        <div
+          className={`relative w-full ${
             toriCollection.collectionFlag
               ? ' bg-[#fde7aa] bg-opacity-70 '
-              : 'bg-[#fef1cb] opacity-30'
-          }`
-        )}
-        onClick={handleOpen}
-      >
-        <div className='relative w-full' style={{ paddingTop: '100%' }}>
+              : 'bg-[#fde7aa] opacity-30'
+          }`}
+          style={{ paddingTop: '100%' }}
+        >
           <img
             src={toriCollection.imgUrl}
             alt={toriCollection.toriName}

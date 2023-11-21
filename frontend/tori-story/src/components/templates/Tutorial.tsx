@@ -28,7 +28,7 @@ export const Tutorial = ({ onClose }: { onClose: () => void }) => {
     <div className='z-30 bg-black bg-opacity-30 fixed h-full w-full top-0 left-0'>
       <X className='absolute top-16 right-1 z-10' onClick={onClose} />
       {currentTutorial === 1 && (
-        <div className='absolute top-[3.9rem] left-2 w-20 h-[7.5rem] border-solid border-4'></div>
+        <div className='absolute top-[3.9rem] left-2 w-28 h-[7.5rem] border-solid border-4'></div>
       )}
       {currentTutorial === 2 && (
         <div className='absolute top-[3.9rem] right-2 w-14 h-[9.8rem] border-solid border-4'></div>
@@ -39,7 +39,7 @@ export const Tutorial = ({ onClose }: { onClose: () => void }) => {
           {currentTutorial < 4 && (
             <button
               onClick={handelNextClick}
-              className='absolute flex z-10 bottom-8 right-2 transform -translate-x-1/2'
+              className='absolute p-2 flex z-10 bottom-8 right-2 transform -translate-x-1/2'
             >
               다음
             </button>
@@ -47,7 +47,7 @@ export const Tutorial = ({ onClose }: { onClose: () => void }) => {
           {currentTutorial > 0 && (
             <button
               onClick={handlePrevClick}
-              className='absolute flex z-10 bottom-8 left-9 transform -translate-x-1/2'
+              className='absolute p-2 flex z-10 bottom-8 left-9 transform -translate-x-1/2'
             >
               이전
             </button>
@@ -62,7 +62,9 @@ export const Tutorial = ({ onClose }: { onClose: () => void }) => {
       <div className={cls('h-full w-full')}>
         <div className={cls('absolute w-full bottom-[3rem] flex items-end justify-center px-4')}>
           {currentTutorial === 3 ? (
-            <div className={cls('relative border-solid border-4 bottom-[0.7rem] w-32 pb-3 h-20')} />
+            <div
+              className={cls('relative  border-solid border-4 bottom-[0.7rem] w-32 pb-3 h-20')}
+            />
           ) : (
             <div className={cls('relative bottom-[0.7rem] w-32 pb-3 h-20')} />
           )}
