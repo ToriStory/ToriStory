@@ -30,12 +30,12 @@ public class AssetServiceImpl implements AssetService {
         ).collect(Collectors.toList());
     }
 
-    @Scheduled(cron = "0 0 0 * * 1-6", zone = "Asia/Seoul")
+    @Scheduled(cron = "0 0 0 * * SUN-FRI", zone = "Asia/Seoul")
     public void sendDailyTotoriTicket() {
         memberAssetRepository.setDailyAssetCntByAssetNm();
     }
 
-    @Scheduled(cron = "0 0 0 * * 7", zone = "Asia/Seoul")
+    @Scheduled(cron = "0 0 0 * * SAT", zone = "Asia/Seoul")
     public void sendSatTotoriTicket() {
         memberAssetRepository.setSatAssetCntByAssetNm();
     }
