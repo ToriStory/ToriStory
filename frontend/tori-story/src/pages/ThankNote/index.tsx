@@ -2,7 +2,7 @@ import Label from 'components/atoms/challenge/Label';
 import { cls } from 'utils/cls';
 import { AddButton } from 'components/atoms/iconButtons/AddButton';
 import { useNavigate } from 'react-router-dom';
-import { createThankNotePage, signInPage } from 'constants/pathname';
+import { createThankNotePage } from 'constants/pathname';
 import ThankNoteList from 'components/organisms/thankNote/ThankNoteList';
 import ThankQuote from 'components/organisms/thankNote/ThankQuote';
 import { getThankNoteStatisticsAPI } from 'apis/thankNote';
