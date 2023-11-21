@@ -11,11 +11,10 @@ import { useEffect, useState } from 'react';
 import { patchRandomChallengeApi, readRandomChallengeApi } from 'apis/challengeApi';
 import { toast } from 'react-toastify';
 import BottomLeft from 'components/molecules/challenge/BottomLeft';
-import { randomCntAtom } from 'stores/dotoriStore';
-import { useAtom } from 'jotai';
 import ChoiceDialog from 'components/molecules/modals/ChoiceDialog';
 import OnceDialog from 'components/molecules/modals/OnceDialog';
 import { DialogContentText } from '@mui/material';
+import { getToriAsset } from 'apis/toriApi';
 
 interface RandomChallengeResponse {
   id: number;
@@ -27,7 +26,7 @@ interface RandomChallengeResponse {
 
 const RandomChallenge = () => {
   const cntNeededRenew: number = 1;
-  const [randomCnt, setRandomCnt] = useAtom(randomCntAtom);
+  const [randomCnt, setRandomCnt] = useState<number | undefined>();
   const [openModal, setOpenModal] = useState<boolean>(false);
   const [response, setResponse] = useState<RandomChallengeResponse>();
   const navigate = useNavigate();
@@ -41,6 +40,7 @@ const RandomChallenge = () => {
 
   useEffect(() => {
     getRandomChallenge();
+    handleGetAsset();
   }, []);
 
   const getRandomChallenge = async () => {
@@ -70,11 +70,18 @@ const RandomChallenge = () => {
   const handleRenewButton = async () => {
     setOpenModal(false);
     const result = await patchRandomChallengeApi();
-    if (result.status === 200) {
+    if (result.status === 200 && randomCnt) {
       setResponse(result.data.data);
       setRandomCnt(randomCnt - cntNeededRenew);
     } else {
       toast.error('랜덤 도전 갱신에 실패했습니다');
+    }
+  };
+
+  const handleGetAsset = async () => {
+    const res = await getToriAsset();
+    if (res.code === 200) {
+      setRandomCnt(res.data[2].assetCnt);
     }
   };
 
@@ -101,7 +108,7 @@ const RandomChallenge = () => {
         }
         content={response ? response.content : 'Loading...'}
       />
-      {openModal && randomCnt >= cntNeededRenew ? (
+      {openModal && randomCnt && randomCnt >= cntNeededRenew ? (
         <ChoiceDialog
           openModal={openModal}
           setIsModalOpen={setOpenModal}

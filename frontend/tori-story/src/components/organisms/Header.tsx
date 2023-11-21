@@ -7,6 +7,7 @@ function Header({ pathname }: { pathname: string }) {
       {pathname === '랜딩' ? (
         <></>
       ) : pathname === '마이 토리' ||
+        pathname === '감사일기' ||
         pathname === '마이페이지' ||
         pathname === '토토리' ||
         pathname === '함께 도전' ||
