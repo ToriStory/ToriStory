@@ -31,7 +31,7 @@ pipeline {
                 sh 'docker rm -f back-gateway'
 
                 // 새로운 이미지로 컨테이너를 백그라운드에서 실행
-                sh 'docker run -d --name back-gateway -p 8200:8200 -u root toristory-backend-gateway:latest'
+                sh 'docker run -d --name back-gateway -p 8200:8200 -e TZ=Asia/Seoul -u root toristory-backend-gateway:latest'
             }
         }
 
