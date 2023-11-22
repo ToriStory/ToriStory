@@ -18,11 +18,11 @@ public interface MemberAssetRepository extends JpaRepository<MemberAsset, Long> 
     MemberAsset findMemberAssetByMemberIdAndAsset(Long memberId, String assetNm);
 
     @Modifying(clearAutomatically = true)
-    @Query("update MemberAsset ma set ma.assetCnt = 1 where ma.asset.assetNm = 'DAILY_TOTORI_TICKET'")
+    @Query("update MemberAsset ma set ma.assetCnt = 1 where ma.asset.assetId IN (select a.assetId from Asset a where a.assetNm = 'DAILY_TOTORI_TICKET')")
     void setDailyAssetCntByAssetNm();
 
     @Modifying(clearAutomatically = true)
-    @Query("update MemberAsset ma set ma.assetCnt = 2 where ma.asset.assetNm = 'DAILY_TOTORI_TICKET'")
+    @Query("update MemberAsset ma set ma.assetCnt = 2 where ma.asset.assetId IN (select a.assetId from Asset a where a.assetNm = 'DAILY_TOTORI_TICKET')")
     void setSatAssetCntByAssetNm();
 
 }
