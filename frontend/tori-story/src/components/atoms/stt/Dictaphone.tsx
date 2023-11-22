@@ -31,7 +31,6 @@ const Dictaphone = ({
 
   return (
     <div className='flex justify-center items-center'>
-      <div>감사합니다</div>
       <button
         type='button'
         onClick={() =>
