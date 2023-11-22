@@ -30,7 +30,7 @@ pipeline {
                 sh 'docker rm -f back-auth'
 
                 // 새로운 이미지로 컨테이너를 백그라운드에서 실행
-                sh 'docker run -d --name back-auth -p 8201:8201 -u root toristory-backend-auth:latest'
+                sh 'docker run -d --name back-auth -p 8201:8201 -e TZ=Asia/Seoul -u root toristory-backend-auth:latest'
             }
         }
 
