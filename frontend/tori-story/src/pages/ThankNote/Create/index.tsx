@@ -16,7 +16,7 @@ export const CreateThankNote = () => {
   });
 
   const navigate = useNavigate();
-  const { register, control, handleSubmit, watch } = useFormReturn;
+  const { register, control, handleSubmit } = useFormReturn;
   const { fields, append, remove } = useFieldArray({
     control,
     name: 'thankNote',
@@ -47,10 +47,10 @@ export const CreateThankNote = () => {
             if (v.content) return true;
             else return false;
           });
-          const addedData = filteredData.map((v) => {
-            return v.content.trim() + ' 감사합니다';
+          const trimedData = filteredData.map((v) => {
+            return v.content.trim();
           });
-          addThankNote({ thankNotes: JSON.stringify(addedData) });
+          addThankNote({ thankNotes: JSON.stringify(trimedData) });
         })}
       >
         <Label title='감사일기 쓰기' />
@@ -66,9 +66,10 @@ export const CreateThankNote = () => {
                     id={field.id}
                     label={`${index + 1} `}
                     InputLabelProps={{
-                      shrink: watch(`thankNote.${index}.content`).length > 0 ? true : false,
+                      shrink: true,
                     }}
-                    className='w-full bg-white rounded [&_textarea]:pr-20'
+                    placeholder='하루를 잘 마무리할 수 있어 감사합니다'
+                    className='w-full bg-white rounded [&_textarea]:pr-8'
                     {...register(`thankNote.${index}.content`)}
                   />
                   <div className='flex justify-center items-center absolute right-2 h-full w-fit text-right rounded-e border-none'>
