@@ -34,7 +34,7 @@ pipeline {
                 sh 'docker rm -f front'
 
                 // 새로운 이미지로 컨테이너를 백그라운드에서 실행
-			        	sh 'docker run -d --name front -p 3126:3126 -u root toristory-frontend:latest'
+			        	sh 'docker run -d --name front -p 3126:3126 -e TZ=Asia/Seoul -u root toristory-frontend:latest'
             }
         }
 
