@@ -31,7 +31,7 @@ pipeline {
                 sh 'docker rm -f back-thank'
 
                 // 새로운 이미지로 컨테이너를 백그라운드에서 실행
-                sh 'docker run -d --name back-thank -p 8205:8205 -u root toristory-backend-thank:latest'
+                sh 'docker run -d --name back-thank -p 8205:8205 -e TZ=Asia/Seoul -u root toristory-backend-thank:latest'
             }
         }
 
