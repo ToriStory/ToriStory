@@ -31,7 +31,7 @@ pipeline {
                 sh 'docker rm -f back-challenge'
 
                 // 새로운 이미지로 컨테이너를 백그라운드에서 실행
-                sh 'docker run -d --name back-challenge -p 8202:8202 -u root toristory-backend-challenge:latest'
+                sh 'docker run -d --name back-challenge -p 8202:8202 -e TZ=Asia/Seoul -u root toristory-backend-challenge:latest'
             }
         }
 
