@@ -31,7 +31,7 @@ pipeline {
                 sh 'docker rm -f back-notification'
 
                 // 새로운 이미지로 컨테이너를 백그라운드에서 실행
-                sh 'docker run -d --name back-notification -p 8206:8206 -u root toristory-backend-notification:latest'
+                sh 'docker run -d --name back-notification -p 8206:8206 -e TZ=Asia/Seoul -u root toristory-backend-notification:latest'
             }
         }
 
