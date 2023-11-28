@@ -1,5 +1,5 @@
 import './App.css';
-import 'utils/fcm';
+// import 'utils/fcm';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import Header from 'components/organisms/Header';
 import BottomTabNavigation from 'components/organisms/BottomTabNavigation';

@@ -193,6 +193,13 @@ export const getReward = async (questNo: number) => {
   return res;
 };
 
+// 전체 달성 퀘스트 보상 받기
+export const getTotalReward = async () => {
+  const url = apiUrl + `quest/rewards/total`;
+  const res = await axios.post(url);
+  return res;
+};
+
 // 푸시 알림 설정 조회
 export const getNotificationSettingApi = async () => {
   const url = apiUrl + 'setting';
