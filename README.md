@@ -4,10 +4,10 @@
 2. [주요 기능](#-주요-기능)
 3. [시스템 아키텍처](#-시스템-아키텍처)
 4. [협업 툴](#-협업-툴)
-5. [기술 스택](#-기술-스택)<br/>
-   5.1 [프론트엔드](#-프론트엔드)<br/>
-   5.2 [백엔드](#-백엔드)<br/>
-   5.3 [인프라](#-인프라)<br/>
+5. [기술 스택](#%EF%B8%8F-기술-스택)<br/>
+   5.1 [프론트엔드](#--프론트엔드)<br/>
+   5.2 [백엔드](#--백엔드)<br/>
+   5.3 [인프라](#--인프라)<br/>
 6. [팀원 소개](#-팀원-소개)
 
 ## 🍂 서비스 소개
@@ -92,13 +92,13 @@
 - 여우에게 산딸기를 주고 `따뜻한 편지`와 선물을 받을 수 있습니다.
 - `긍정적 피드백`을 통해 **우울함을 완화**할 수 있습니다.
     <!-- 여우에게 먹이 주고 여우 오는거 GIF 넣기 -->
-    <div style="text-align: left;">
-    <div style="display: inline-block !important; margin: 10px;">
+    <div style="text-align: left; display: flex;">
+    <div style="margin: 10px;">
     <b> | 여우에게 먹이 주기 </b>
 
     <img src="https://github.com/Endura0535/Endura0535/assets/12527782/8665f13e-76b7-4cce-8d7e-643bcbfd20f5" width="200"/>
     </div>
-    <div style="display: inline-block !important; margin: 10px;">
+    <div style="margin: 10px;">
     <b> | 여우에게 받은 편지 보기 </b>
     
     <img src="https://github.com/Endura0535/Endura0535/assets/12527782/8fcc5dc7-4c3e-48c1-adc1-9147b89c3498" width="200"/>
