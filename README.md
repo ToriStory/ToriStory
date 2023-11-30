@@ -93,12 +93,12 @@
 - `긍정적 피드백`을 통해 **우울함을 완화**할 수 있습니다.
     <!-- 여우에게 먹이 주고 여우 오는거 GIF 넣기 -->
     <div style="text-align: left;">
-    <div style="display: inline-block; margin: 10px;">
+    <div style="display: inline-block !important; margin: 10px;">
     <b> | 여우에게 먹이 주기 </b>
 
     <img src="https://github.com/Endura0535/Endura0535/assets/12527782/8665f13e-76b7-4cce-8d7e-643bcbfd20f5" width="200"/>
     </div>
-    <div style="display: inline-block; margin: 10px;">
+    <div style="display: inline-block !important; margin: 10px;">
     <b> | 여우에게 받은 편지 보기 </b>
     
     <img src="https://github.com/Endura0535/Endura0535/assets/12527782/8fcc5dc7-4c3e-48c1-adc1-9147b89c3498" width="200"/>
@@ -152,7 +152,7 @@
 
 ## ⚙️ 기술 스택
 
-### 🧷 프론트엔드
+### 🧷 <u> 프론트엔드 </u>
 
 <img src="https://img.shields.io/badge/TypeScript-3178C6?style=flat&logo=typescript&logoColor=white"/> <img src="https://img.shields.io/badge/React-61DAFB?style=flat&logo=React&logoColor=white"/> <img src="https://img.shields.io/badge/Vite-646CFF?style=flat&logo=vite&logoColor=white"/> <img src="https://img.shields.io/badge/Node.js-339933?style=flat&logo=node.js&logoColor=white"/> <img src="https://img.shields.io/badge/tailwind css-06B6D4?style=flat&logo=tailwindcss&logoColor=white"/> <img src="https://img.shields.io/badge/Jotai-575757?style=flat&logo=jotai&logoColor=white"/> <img src="https://img.shields.io/badge/Axios-5A29E4?style=flat&logo=axios&logoColor=white"/> <img src="https://img.shields.io/badge/SWR-000000?style=flat&logo=swr&logoColor=white"/> <img src="https://img.shields.io/badge/PWA-5A0FC8?style=flat&logo=pwa&logoColor=white"/> <img src="https://img.shields.io/badge/MUI-007FFF?style=flat&logo=mui&logoColor=white"/> <img src="https://img.shields.io/badge/pnpm-F69220?style=flat&logo=pnpm&logoColor=white"/>
 
@@ -166,7 +166,7 @@
 
 <br><br>
 
-### 🧷 백엔드
+### 🧷 <u> 백엔드 </u>
 
 <img src="https://img.shields.io/badge/Spring-6DB33F?style=flat&logo=Spring&logoColor=white"/> <img src="https://img.shields.io/badge/Spring Boot-6DB33F?style=flat&logo=SpringBoot&logoColor=white"/> <img src="https://img.shields.io/badge/Spring Security-6DB33F?style=flat&logo=Spring&logoColor=white"/> <img src="https://img.shields.io/badge/MariaDB-003545?style=flat-square&logo=mariaDB&logoColor=white"/>
 <img src="https://img.shields.io/badge/gradle-02303A?style=flat&logo=gradle&logoColor=white"/> <img src="https://img.shields.io/badge/redis-DC382D?style=flat&logo=redis&logoColor=white"/>
@@ -185,7 +185,7 @@
 
 <br><br>
 
-### 🧷 인프라
+### 🧷 <u> 인프라 </u>
 
 <img src="https://img.shields.io/badge/ubuntu-E95420?style=flat&logo=ubuntu&logoColor=white"/> <img src="https://img.shields.io/badge/Jenkins-D24939?style=flat&logo=jenkins&logoColor=white"/> <img src="https://img.shields.io/badge/Amazon EC2-FF9900?style=flat&logo=amazonec2&logoColor=white"/> <img src="https://img.shields.io/badge/nginx-009639?style=flat&logo=nginx&logoColor=white"/> <img src="https://img.shields.io/badge/amazons3-569A31?style=flat&logo=amazons3&logoColor=white"/> <img src="https://img.shields.io/badge/docker-2496ED?style=flat&logo=docker&logoColor=white"/>
 
