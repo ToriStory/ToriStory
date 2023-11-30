@@ -1,14 +1,14 @@
 ## 목차
 
-1. [서비스 소개](#🍂-서비스-소개)
-2. [주요 기능](#🍁-주요-기능)
-3. [시스템 아키텍처](#📏-시스템-아키텍처)
-4. [협업 툴](#💻-협업-툴)
-5. [기술 스택](#⚙️-기술-스택)<br/>
-   5.1 [프론트엔드](#🧷-프론트엔드)<br/>
-   5.2 [백엔드](#🧷-백엔드)<br/>
-   5.3 [인프라](#🧷-인프라)<br/>
-6. [팀원 소개](#🙌🏻-팀원-소개)
+1. [서비스 소개](#%F0%9F%8D%82-서비스-소개)
+2. [주요 기능](#%F0%9F%8D%81-주요-기능)
+3. [시스템 아키텍처](#%F0%9F%93%8F-시스템-아키텍처)
+4. [협업 툴](#%F0%9F%92%BB-협업-툴)
+5. [기술 스택](#%E2%9A%99%EF%B8%8F-기술-스택)<br/>
+   5.1 [프론트엔드](#%F0%9F%A7%B7-프론트엔드)<br/>
+   5.2 [백엔드](#%F0%9F%A7%B7-백엔드)<br/>
+   5.3 [인프라](#%F0%9F%A7%B7-인프라)<br/>
+6. [팀원 소개](#%F0%9F%99%8C%F0%9F%8F%BB-팀원-소개)
 
 ## 🍂 서비스 소개
 
@@ -152,7 +152,7 @@
 
 ## ⚙️ 기술 스택
 
-### 🧷 <u> 프론트엔드 </u>
+### 🧷 프론트엔드
 
 <img src="https://img.shields.io/badge/TypeScript-3178C6?style=flat&logo=typescript&logoColor=white"/> <img src="https://img.shields.io/badge/React-61DAFB?style=flat&logo=React&logoColor=white"/> <img src="https://img.shields.io/badge/Vite-646CFF?style=flat&logo=vite&logoColor=white"/> <img src="https://img.shields.io/badge/Node.js-339933?style=flat&logo=node.js&logoColor=white"/> <img src="https://img.shields.io/badge/tailwind css-06B6D4?style=flat&logo=tailwindcss&logoColor=white"/> <img src="https://img.shields.io/badge/Jotai-575757?style=flat&logo=jotai&logoColor=white"/> <img src="https://img.shields.io/badge/Axios-5A29E4?style=flat&logo=axios&logoColor=white"/> <img src="https://img.shields.io/badge/SWR-000000?style=flat&logo=swr&logoColor=white"/> <img src="https://img.shields.io/badge/PWA-5A0FC8?style=flat&logo=pwa&logoColor=white"/> <img src="https://img.shields.io/badge/MUI-007FFF?style=flat&logo=mui&logoColor=white"/> <img src="https://img.shields.io/badge/pnpm-F69220?style=flat&logo=pnpm&logoColor=white"/>
 
@@ -166,7 +166,7 @@
 
 <br><br>
 
-### 🧷 <u> 백엔드 </u>
+### 🧷 백엔드
 
 <img src="https://img.shields.io/badge/Spring-6DB33F?style=flat&logo=Spring&logoColor=white"/> <img src="https://img.shields.io/badge/Spring Boot-6DB33F?style=flat&logo=SpringBoot&logoColor=white"/> <img src="https://img.shields.io/badge/Spring Security-6DB33F?style=flat&logo=Spring&logoColor=white"/> <img src="https://img.shields.io/badge/MariaDB-003545?style=flat-square&logo=mariaDB&logoColor=white"/>
 <img src="https://img.shields.io/badge/gradle-02303A?style=flat&logo=gradle&logoColor=white"/> <img src="https://img.shields.io/badge/redis-DC382D?style=flat&logo=redis&logoColor=white"/>
@@ -185,7 +185,7 @@
 
 <br><br>
 
-### 🧷 <u> 인프라 </u>
+### 🧷 인프라
 
 <img src="https://img.shields.io/badge/ubuntu-E95420?style=flat&logo=ubuntu&logoColor=white"/> <img src="https://img.shields.io/badge/Jenkins-D24939?style=flat&logo=jenkins&logoColor=white"/> <img src="https://img.shields.io/badge/Amazon EC2-FF9900?style=flat&logo=amazonec2&logoColor=white"/> <img src="https://img.shields.io/badge/nginx-009639?style=flat&logo=nginx&logoColor=white"/> <img src="https://img.shields.io/badge/amazons3-569A31?style=flat&logo=amazons3&logoColor=white"/> <img src="https://img.shields.io/badge/docker-2496ED?style=flat&logo=docker&logoColor=white"/>
 
