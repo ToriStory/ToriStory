@@ -16,6 +16,10 @@
 
 ‘토리스토리’는 우울감을 느끼는 20대를 대상으로 소소한 도전 과제 달성을 통해 성취감 및 자존감을 높이는 것을 목표로 하는 서비스입니다.
 
+<style>
+[class="align-images"] { display: flex; }
+</style>
+
 <div markdown="1">
     <img src="https://github.com/ToriStory/ToriStory/assets/56223389/08e8208b-c701-474a-96f9-edf6cbbdbce8" width='100%'/>
 </div>
@@ -92,26 +96,18 @@
 - 여우에게 산딸기를 주고 `따뜻한 편지`와 선물을 받을 수 있습니다.
 - `긍정적 피드백`을 통해 **우울함을 완화**할 수 있습니다.
     <!-- 여우에게 먹이 주고 여우 오는거 GIF 넣기 -->
-    <!-- <div style="text-align: left; display: flex;"> -->
-    <table>
-    <tr>
-    <td>
-    <span style="margin: 10px;">
+    <div class="align-images" style="text-align: left;">
+    <div style="margin: 10px;">
     <b> | 여우에게 먹이 주기 </b>
 
     <img src="https://github.com/Endura0535/Endura0535/assets/12527782/8665f13e-76b7-4cce-8d7e-643bcbfd20f5" width="200"/>
-    </span>
-    </td>
-    <td>
-    <span style="margin: 10px;">
+    </div>
+    <div style="margin: 10px;">
     <b> | 여우에게 받은 편지 보기 </b>
     
     <img src="https://github.com/Endura0535/Endura0535/assets/12527782/8fcc5dc7-4c3e-48c1-adc1-9147b89c3498" width="200"/>
-    </span>
-    </td>
-    </tr>
-    </table>
-    <!-- </div> -->
+    </div>
+    </div>
 🎰 <b>토토리</b>
 
 - 토토리 티켓을 사용하여 보상(도토리, 랜덤 도전 갱신 티켓, 토토리 티켓)을 뽑을 수 있습니다.
@@ -131,7 +127,7 @@
 - 완료한 도전은 마이페이지의 달력에서 날짜를 선택하여 확인할 수 있습니다. 
 - 음성 인식을 통해 편리하게 작성할 수 있습니다. 
     <div style="text-align: left;">
-    <div style="display: inline-block; margin: 10px;">
+    <div class="align-images" style="display: inline-block; margin: 10px;">
 
     <!-- 감사 일기 STT 작성 및 달력에서 확인 GIF -->
     <b> | 감사 일기 STT 작성 </b>
