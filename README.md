@@ -92,18 +92,26 @@
 - 여우에게 산딸기를 주고 `따뜻한 편지`와 선물을 받을 수 있습니다.
 - `긍정적 피드백`을 통해 **우울함을 완화**할 수 있습니다.
     <!-- 여우에게 먹이 주고 여우 오는거 GIF 넣기 -->
-    <div style="text-align: left; display: flex;">
-    <div style="margin: 10px;">
+    <!-- <div style="text-align: left; display: flex;"> -->
+    <table>
+    <tr>
+    <td>
+    <span style="margin: 10px;">
     <b> | 여우에게 먹이 주기 </b>
 
     <img src="https://github.com/Endura0535/Endura0535/assets/12527782/8665f13e-76b7-4cce-8d7e-643bcbfd20f5" width="200"/>
-    </div>
-    <div style="margin: 10px;">
+    </span>
+    </td>
+    <td>
+    <span style="margin: 10px;">
     <b> | 여우에게 받은 편지 보기 </b>
     
     <img src="https://github.com/Endura0535/Endura0535/assets/12527782/8fcc5dc7-4c3e-48c1-adc1-9147b89c3498" width="200"/>
-    </div>
-    </div>
+    </span>
+    </td>
+    </tr>
+    </table>
+    <!-- </div> -->
 🎰 <b>토토리</b>
 
 - 토토리 티켓을 사용하여 보상(도토리, 랜덤 도전 갱신 티켓, 토토리 티켓)을 뽑을 수 있습니다.
@@ -152,48 +160,42 @@
 
 ## ⚙️ 기술 스택
 
-### 🧷 <u> 프론트엔드 </u>
+### 🧷 프론트엔드
+
+|||
+|------|---------------------|
+|<b>Language</b>|TypeScript|
+|<b>Framework</b>|React 18.2.0|
+|<b>Engine</b>|Node 18.17.1|
+|<b>Library</b>|Jotai, Tailwind CSS, Axios, SWR, PWA, MUI|
 
 <img src="https://img.shields.io/badge/TypeScript-3178C6?style=flat&logo=typescript&logoColor=white"/> <img src="https://img.shields.io/badge/React-61DAFB?style=flat&logo=React&logoColor=white"/> <img src="https://img.shields.io/badge/Vite-646CFF?style=flat&logo=vite&logoColor=white"/> <img src="https://img.shields.io/badge/Node.js-339933?style=flat&logo=node.js&logoColor=white"/> <img src="https://img.shields.io/badge/tailwind css-06B6D4?style=flat&logo=tailwindcss&logoColor=white"/> <img src="https://img.shields.io/badge/Jotai-575757?style=flat&logo=jotai&logoColor=white"/> <img src="https://img.shields.io/badge/Axios-5A29E4?style=flat&logo=axios&logoColor=white"/> <img src="https://img.shields.io/badge/SWR-000000?style=flat&logo=swr&logoColor=white"/> <img src="https://img.shields.io/badge/PWA-5A0FC8?style=flat&logo=pwa&logoColor=white"/> <img src="https://img.shields.io/badge/MUI-007FFF?style=flat&logo=mui&logoColor=white"/> <img src="https://img.shields.io/badge/pnpm-F69220?style=flat&logo=pnpm&logoColor=white"/>
 
-**Language |** TypeScript
 
-**Framework |** React 18.2.0
 
-**Engine |** Node 18.17.1
+### 🧷 백엔드
 
-**Library |** Jotai, Tailwind CSS, Axios, SWR, PWA, MUI
-
-<br><br>
-
-### 🧷 <u> 백엔드 </u>
+|||
+|------|---------------------|
+|<b>Language</b>|Java 11|
+|<b>Framework</b>|Spring Boot 2.7.16|
+|<b>Data(RDBMS)</b>|Spring-Data-JPA 2.7.16, MariaDB 10.11.5|
+|<b>Cache</b>|Redis 2.7.16|
+|<b>Build Tool</b>|Gradle|
+|<b>Test</b>|Swagger 3.0.0|
 
 <img src="https://img.shields.io/badge/Spring-6DB33F?style=flat&logo=Spring&logoColor=white"/> <img src="https://img.shields.io/badge/Spring Boot-6DB33F?style=flat&logo=SpringBoot&logoColor=white"/> <img src="https://img.shields.io/badge/Spring Security-6DB33F?style=flat&logo=Spring&logoColor=white"/> <img src="https://img.shields.io/badge/MariaDB-003545?style=flat-square&logo=mariaDB&logoColor=white"/>
 <img src="https://img.shields.io/badge/gradle-02303A?style=flat&logo=gradle&logoColor=white"/> <img src="https://img.shields.io/badge/redis-DC382D?style=flat&logo=redis&logoColor=white"/>
 
-**Language |** Java 11
+### 🧷 인프라
 
-**Framework |** Spring Boot 2.7.16
-
-**Data(RDBMS) |** Spring-Data-JPA 2.7.16, MariaDB 10.11.5
-
-**Cache |** Redis 2.7.16
-
-**Build Tool |** Gradle
-
-**Test |** Swagger 3.0.0
-
-<br><br>
-
-### 🧷 <u> 인프라 </u>
+|||
+|------|---------------------|
+|<b>Infra</b>|AWS EC2, Nginx|
+|<b>DB</b>|H2, MySQL 8|
+|<b>CI/CD</b>|Git, Jenkins|
 
 <img src="https://img.shields.io/badge/ubuntu-E95420?style=flat&logo=ubuntu&logoColor=white"/> <img src="https://img.shields.io/badge/Jenkins-D24939?style=flat&logo=jenkins&logoColor=white"/> <img src="https://img.shields.io/badge/Amazon EC2-FF9900?style=flat&logo=amazonec2&logoColor=white"/> <img src="https://img.shields.io/badge/nginx-009639?style=flat&logo=nginx&logoColor=white"/> <img src="https://img.shields.io/badge/amazons3-569A31?style=flat&logo=amazons3&logoColor=white"/> <img src="https://img.shields.io/badge/docker-2496ED?style=flat&logo=docker&logoColor=white"/>
-
-**Infra |** AWS EC2, Nginx
-
-**DB |** H2, MySQL 8
-
-**CI/CD |** Git, Jenkins
 
 <br><br>
 
