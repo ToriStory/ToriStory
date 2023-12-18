@@ -16,10 +16,10 @@
 
 ‘토리스토리’는 우울감을 느끼는 20대를 대상으로 소소한 도전 과제 달성을 통해 성취감 및 자존감을 높이는 것을 목표로 하는 서비스입니다.
 
-<style>
+<!-- <style>
 .align-images { display: flex; gap: 10px; }
 .image-item { width: fit-content; }
-</style>
+</style> -->
 
 <div markdown="1">
     <img src="https://github.com/ToriStory/ToriStory/assets/56223389/08e8208b-c701-474a-96f9-edf6cbbdbce8" width='100%'/>
@@ -48,16 +48,15 @@
 - 시스템에서 성공 여부를 판별함으로써 기능에 대한 흥미를 유발하고 인정 받는 느낌을 강화했습니다.
 - 완료한 참가자 수가 증가할 수록 더 많은 도토리를 얻을 수 있습니다. 
 - 랜덤 도전 갱신 티켓을 통해 다른 과제로 변경할 수 있습니다. 
-    <div style="text-align: left;">
-    <div style="display: inline-block; margin: 10px;">
-    <!-- GPS 인증 -->
-    <b> | GPS 인증 </b>
+    <div class="align-images">
+    <div class="image-item">
+    <b><div> | GPS 인증 </div></b>
 
     <img src="https://github.com/chaejeong-lee/chaejeong-lee/assets/112626357/1c3cf995-1531-41df-9b14-a9d0cee4afc6" width="200"/>
     </div>
-    <div style="display: inline-block; margin: 10px;">
+    <div class="image-item">
     <!-- AI 인증 GIF 넣기 -->
-    <b> | AI 사진 인증 </b>
+    <b><div> | AI 사진 인증 </div></b>
     
     <!-- <img src="https://github.com/chaejeong-lee/chaejeong-lee/assets/112626357/ad795175-c376-4431-bdf4-60d2cd690d0c" width="200"/> -->
     </div>
@@ -81,8 +80,8 @@
 - 데일리 퀘스트를 통해 다양한 기능을 이용하도록 사용자에게 **동기**를 부여했습니다.
 - 모든 퀘스트를 완료하면 토토리 티켓을 얻을 수 있습니다.
 
-<!-- 퀘스트 GIF -->
-<img src="https://github.com/chaejeong-lee/chaejeong-lee/assets/112626357/ad795175-c376-4431-bdf4-60d2cd690d0c" width="200"/>
+   <!-- 퀘스트 GIF -->
+   <img src="https://github.com/chaejeong-lee/chaejeong-lee/assets/112626357/ad795175-c376-4431-bdf4-60d2cd690d0c" width="200"/>
 
 📚 <b>토리 도감</b>
 
