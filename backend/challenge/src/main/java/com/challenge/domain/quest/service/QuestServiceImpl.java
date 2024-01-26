@@ -34,7 +34,7 @@ public class QuestServiceImpl implements QuestService {
     private final MemberAssetRepository memberAssetRepository;
     private final AssetRepository assetRepository;
 
-    private final static int REWARD_ACORN = 10;
+    private final static int REWARD_ACORN = 2;
 
     private final RedisTemplate<String, String> redisTemplate;
 
